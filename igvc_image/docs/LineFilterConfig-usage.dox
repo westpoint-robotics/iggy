@@ -1,0 +1,32 @@
+\subsubsection usage Usage
+\verbatim
+<node name="line_filter" pkg="igvc_image" type="line_filter">
+  <param name="hue_lower" type="int" value="85" />
+  <param name="hue_upper" type="int" value="120" />
+  <param name="saturation_lower" type="int" value="0" />
+  <param name="saturation_upper" type="int" value="25" />
+  <param name="value_lower" type="int" value="240" />
+  <param name="value_upper" type="int" value="255" />
+  <param name="threshold_image_debug" type="bool" value="False" />
+  <param name="blur_kernel_size" type="int" value="7" />
+  <param name="erosion_bool" type="bool" value="True" />
+  <param name="erosion_element" type="int" value="2" />
+  <param name="erosion_size" type="int" value="2" />
+  <param name="dilation_bool" type="bool" value="True" />
+  <param name="dilation_element" type="int" value="2" />
+  <param name="dilation_size" type="int" value="7" />
+  <param name="morphology_bool" type="bool" value="True" />
+  <param name="morphology_operation" type="int" value="1" />
+  <param name="morphology_element" type="int" value="2" />
+  <param name="morphology_size" type="int" value="6" />
+  <param name="canny_thresh1" type="double" value="50.0" />
+  <param name="canny_thresh2" type="double" value="250.0" />
+  <param name="canny_apeture_size" type="int" value="3" />
+  <param name="hough_rho" type="double" value="1.0" />
+  <param name="hough_theta" type="double" value="0.0174532925199" />
+  <param name="hough_threshold" type="int" value="50" />
+  <param name="hough_min_line_length" type="double" value="20.0" />
+  <param name="hough_min_line_gap" type="double" value="10.0" />
+</node>
+\endverbatim
+

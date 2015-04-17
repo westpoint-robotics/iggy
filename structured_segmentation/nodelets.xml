@@ -1,0 +1,19 @@
+<!--
+Copyright 2011, 2012 Massachusetts Institute of Technology
+
+This work is sponsored by the Department of the Air Force under Air Force 
+Contract #FA8721-05-C-0002. Opinions, interpretations, conclusions and 
+recommendations are those of the authors and are not necessarily endorsed by the 
+United States Government.
+-->
+
+<library path="/lib/libstructured_segmentation">
+    <class name="structured_segmentation/ground_segmenter"
+           type="structured_segmentation::GroundSegmenter"
+           base_class_type="nodelet::Nodelet">
+        <description>
+          Takes in a structured pointcloud and segments out the ground and
+          publishes ground and no-ground pointclouds
+        </description>
+    </class>
+</library>

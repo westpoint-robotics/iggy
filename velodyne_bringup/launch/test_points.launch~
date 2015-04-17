@@ -1,0 +1,121 @@
+<!-- Required parameters -->
+<launch>
+
+  <node pkg="tf" type="static_transform_publisher" name="lidar_tf_broadcaster"
+        args="0 0 0.86121875 0 0 0 base_link velodyne 100" />
+                
+  <!-- Required parameters -->ros
+  <arg name="manager" value="velodyne_nodelet_manager"/>
+  <arg name="output_topic" value="/velodyne"/>
+
+  <!--declare arguments with default values -->
+  <arg name="pcap" default="" /> 
+  <!--<arg name="pcap" default="" />-->
+  <!-- <arg name="pcap" default="/velodyne" /> -->
+  <!--<arg name="calibration" default="$(find velodyne_pointcloud)/params/64e_utexas.yaml"/> -->
+  <arg name="structured" default="false"/>
+  <arg name="calibration" default="$(find velodyne_pointcloud)/params/64e_utexas.yaml" />
+
+  <!-- start nodelet manager and driver nodelets -->
+  <node pkg="nodelet" type="nodelet" name="velodyne_nodelet_manager"
+        args="manager" />
+  <arg name="model" default="64E" />
+ <!-- <arg name="pcap" default="" />-->
+  <arg name="read_once" default="false" />
+  <arg name="read_fast" default="false" />
+  <arg name="repeat_delay" default="0.0" />
+  <arg name="rpm" default="600.0" />
+  <arg name="frame_id" default="velodyne" />
+  <node pkg="nodelet" type="nodelet" name="driver_nodelet"
+        args="load velodyne_driver/DriverNodelet velodyne_nodelet_manager" >
+    <param name="model" value="$(arg model)"/>
+    <param name="pcap" value="$(arg pcap)"/>
+    <param name="read_once" value="$(arg read_once)"/>
+    <param name="read_fast" value="$(arg read_fast)"/>
+    <param name="repeat_delay" value="$(arg repeat_delay)"/>
+    <param name="rpm" value="$(arg rpm)"/>
+    <param name="frame_id" value="$(arg frame_id)"/>
+  </node>    
+  
+  <node pkg="nodelet" type="nodelet" name="cloud_nodelet"
+        args="load velodyne_pointcloud/CloudNodelet velodyne_nodelet_manager">
+    <param name="calibration" value="$(arg calibration)"/>
+  </node>
+  
+    <!--
+    <node name="ground_filter" pkg="omap" type="planerSegmentation" args="/input:=/velodyne_points /output:=/cloud_in"/>
+    
+      <node name="octomap_server" pkg="octomap_server" type="octomap_server_node" args="/projected_map:=/map">
+      <param name="filter_ground" value="false" /> 
+      <param name="ground_filter/distance" value=".01" />
+    </node>
+-->
+
+<!--
+Conver the pointcloud to a laser scan while z-filtering -->
+
+<!-- 
+    <node name="ground_filter" pkg="omap" type="planerSegmentation" args="/input:=/velodyne_points /output:=/cloud_in"/>
+    
+      <node name="octomap_server" pkg="octomap_server" type="octomap_server_node" args="/projected_map:=/map">
+      <param name="filter_ground" value="false" /> 
+      <param name="ground_filter/distance" value=".01" />
+    </node>
+-->
+
+
+  <!-- Conver the pointcloud to a laser scan while z-filtering  
+    <node pkg="nodelet" type="nodelet" name="zPassThroughFilter" args="load pcl/PassThrough $(arg manager)">
+        <remap from="~input" to="/velodyne_points"/>
+        <remap from="~output" to="laser_scan"/>
+        <param name="filter_field_name" value="z" />
+        <param name="filter_limit_min" value="-1.0" />
+        <param name="filter_limit_max" value="-0.1" />
+        <param name="filter_limit_negative" value="false" />
+        <param name="input_frame" value="$(arg output_topic)" />
+        <param name="output_frame" value="$(arg output_topic)" />
+    </node>
+
+
+
+    <node pkg="nodelet" type="nodelet" name="zPassThroughFilter" args="l
+oad pcl/PassThrough $(arg manager)">
+        <remap from="~input" to="/velodyne_points"/>
+        <remap from="~output" to="laser_scan"/>
+        <param name="filter_field_name" value="z" />
+        <param name="filter_limit_min" value="-10" />
+        <param name="filter_limit_max" value="10" />
+        <param name="filter_limit_negative" value="false" />
+        <param name="input_frame" value="$(arg output_topic)" />
+        <param name="output_frame" value="$(arg output_topic)" />
+    </node>
+
+-->
+
+<!--
+<node name="pointcloud_to_laserscan" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
+
+
+
+
+    <remap from="cloud_in" to="/velodyne_points"/>
+    <remap from="scan" to="laser_scan"/>
+    <param name="output_frame_id" value="/velodyne"/>    
+    <param name="min_height" value="-10"/>
+    <param name="max_height" value="10.0"/>
+    <param name="angle_min" value="-3.14159"/>
+    <param name="angle_max" value="3.14159"/>
+    <param name="scan_time" value="1/1000.0"/>
+    <param name="range_min" value="0"/>
+    <param name="range_max" value="50"/>
+    
+
+</node>
+  -->
+  <!--Run the pointcloud segmenter to remove the ground -->
+  <node pkg="nodelet" type="nodelet" name="segmenter_nodelet" args="load structured_segmentation/ground_segmenter velodyne_nodelet_manager" output="screen">
+    <remap from="~input" to="/velodyne_points"/>
+  </node>
+ 
+ 
+</launch>

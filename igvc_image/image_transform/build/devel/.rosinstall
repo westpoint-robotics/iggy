@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/igvc/sandboxROS/igvc_image_pipeline/image_transform/build/devel/setup.sh

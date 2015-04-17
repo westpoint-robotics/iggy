@@ -1,0 +1,49 @@
+<!--
+Copyright 2011, 2012 Massachusetts Institute of Technology
+
+This work is sponsored by the Department of the Air Force under Air Force
+Contract #FA8721-05-C-0002. Opinions, interpretations, conclusions and
+recommendations are those of the authors and are not necessarily endorsed by the
+United States Government.
+-->
+
+<!--
+    Playback velodyne data from a given rosbag file.
+
+    This launch file will start its own nodelet manager.
+
+    Required Arguments:
+     - bag - (str) Path to the bag file to be played back.
+
+    Optional Arguments:
+     - manager - (str) Override the default manager name
+     - rate - (float) Adjust the playback rate of the bag file
+     - rosbag_args - (str) additional rosbag arguments (such as - -loop)
+-->
+
+<launch>
+    <!-- Optional Parameters -->
+    <arg name="rate" default="1.0"/>
+    <arg name="manager" default="velodyne_nodelet_manager"/>
+    <arg name="pcap" default=""/>
+    <arg name="run_driver" default="true"/>
+    <arg name="calibration" default="$(find velodyne_pointcloud_structured)/params/HDL64ECalib.yaml" />
+
+    <node pkg="nodelet" type="nodelet" name="$(arg manager)" args="manager"/>
+
+    <node pkg="nodelet" type="nodelet" name="driver_nodelet"
+        args="load velodyne_driver/DriverNodelet $(arg manager)" output="screen">
+        <param name="model" value="64E"/>
+        <param name="pcap" value="$(arg pcap)" />
+        <param name="rpm" value="450"/>
+    </node>
+
+    <node pkg="nodelet" type="nodelet" name="structured_cloud_nodelet"
+        args="load velodyne_pointcloud_structured/CloudNodeletStruct $(arg manager)" output="screen">
+        <param name="calibration" value="$(arg calibration)"/>
+    </node>
+
+    <node pkg="nodelet" type="nodelet" name="velodyne_colored"  output="screen"
+      args="load velodyne_pointcloud_structured/ColorsNodelet $(arg manager)"/>
+
+</launch>

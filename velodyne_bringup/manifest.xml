@@ -1,0 +1,30 @@
+<!--
+Copyright 2011, 2012 Massachusetts Institute of Technology
+
+This work is sponsored by the Department of the Air Force under Air Force 
+Contract #FA8721-05-C-0002. Opinions, interpretations, conclusions and 
+recommendations are those of the authors and are not necessarily endorsed by the 
+United States Government.
+-->
+
+<package>
+  <description brief="Velodyne Bringup (Launch and Configuration)">
+    Lincoln laboratory specific velodyne configuration, calibration,
+    and launch files.
+
+    Copyright 2011, 2012 Massachusetts Institute of Technology
+
+    This work is sponsored by the Department of the Air Force under Air Force
+    Contract #FA8721-05-C-0002. Opinions, interpretations, conclusions and
+    recommendations are those of the authors and are not necessarily endorsed by the
+    United States Government.
+  </description>
+  <author>Michael Carroll</author>
+  <license>MITLL</license>
+  <review status="unreviewed" notes=""/>
+
+  <depend package="velodyne_driver"/>
+  <depend package="velodyne_pointcloud"/>
+  <depend package="velodyne_pointcloud_structured"/>
+
+</package>

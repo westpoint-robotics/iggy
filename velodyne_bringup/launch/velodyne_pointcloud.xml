@@ -1,0 +1,33 @@
+<!--
+Copyright 2011, 2012 Massachusetts Institute of Technology
+
+This work is sponsored by the Department of the Air Force under Air Force
+Contract #FA8721-05-C-0002. Opinions, interpretations, conclusions and
+recommendations are those of the authors and are not necessarily endorsed by the
+United States Government.
+-->
+
+<launch>
+    <!-- Required parameters -->
+    <arg name="manager"/>
+
+    <!-- Optional parameters -->
+    <arg name="structured" default="false"/>
+    <arg name="calibration" default="$(find velodyne_bringup)/params/HDL64ECalib.yaml" />
+
+
+    <group if="$(arg structured)">
+        <node pkg="nodelet" type="nodelet" name="structured_cloud_nodelet"
+            args="load velodyne_pointcloud_structured/CloudNodeletStruct $(arg manager)">
+            <param name="calibration" value="$(arg calibration)"/>
+        </node>
+    </group>
+
+    <group unless="$(arg structured)">
+        <node pkg="nodelet" type="nodelet" name="cloud_nodelet"
+            args="load velodyne_pointcloud/CloudNodelet $(arg manager)">
+            <param name="calibration" value="$(arg calibration)"/>
+        </node>
+    </group>
+
+</launch>

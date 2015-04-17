@@ -1,0 +1,10 @@
+<library path="lib/libLineFilter">
+
+    <class name="igvc_image_pipeline/LineFilter" type="igvc_image_pipeline::LineFilter"
+        base_class_type="nodelet::Nodelet">
+        <description>
+            Image processing nodelet that takes in a standard BGR image and manipulates it to produce an image of the white lines in the engironment.
+        </description>
+    </class>
+
+</library>
