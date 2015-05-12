@@ -406,6 +406,10 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                                                             bgruImage[LEFT],
                                                             packedColorImage );
 
+
+///add segmentation code to here.. either pub/sub (slower processing) to code or add .h file (more work)
+
+
         if (fc2TriclopsError != FC2T::ERRORTYPE_OK)
         {
             return handleFc2TriclopsError(fc2TriclopsError, 

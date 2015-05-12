@@ -9,6 +9,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   pcl_ros
+  image_transport
+  cv_bridge
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -96,7 +99,7 @@ find_library(PNMUTILS_LIB pnmutils)
 find_library(FLYCAPTURE_LIB flycapture)
 find_library(FLYCAPTURE2BRIDGE_LIB flycapture2bridge)
 
-find_path(TRICLOPS_INCLUDE_DIR triclops.h)
+find_path(TRICLOPS_INCLUDE_DIR triclops.h HINT "/usr/include/triclops")
 find_path(FLYCAPTURE_INCLUDE_DIR FlyCapture2.h HINT "/usr/include/flycapture")
 
 #set(TRICLOPS_INCLUDE_DIR "/usr/include/triclops")
