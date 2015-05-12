@@ -30,6 +30,8 @@
 
     Tested on 08MAY2015 at full speed and averaged publishing 33.5 clouds/sec then
     throttled back to 20 clouds/sec.
+
+    TODO This code is a mess. Use as a prototype and design a clean solution implementing OOP.
 */
 #include "triclops.h"
 
@@ -43,6 +45,12 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <pcl_ros/point_cloud.h>
 #include "triclops_vision/typedefs.h"
+#include <image_transport/image_transport.h>
+
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 //
 // Macro to check, report on, and handle Triclops API error codes.
 //
@@ -57,6 +65,8 @@
       exit( 1 ); \
    } \
 } \
+
+bool SHOW_OPENCV_VIDEO = false;
 
 // aliases namespaces
 namespace FC2 = FlyCapture2;
@@ -88,11 +98,16 @@ int grabImage ( FC2::Camera & camera, FC2::Image & grabbedImage );
 // convert image to BRGU
 int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage );
 
+// convert image to BRG
+int convertToBGR( FC2::Image & image, FC2::Image & convertedImage );
+
 // generate triclops input necessary to carry out stereo processing
 int generateTriclopsInput( FC2::Image const & grabbedImage, 
                            ImageContainer   & imageContainer,
                            TriclopsInput    & colorData,
-                           TriclopsInput    & stereoData );
+                           TriclopsInput    & stereoData,
+                           cv::Mat          & leftImageBGR,
+                           cv::Mat          & rightImageBGR);
 
 // carry out stereo processing pipeline
 int doStereo( TriclopsContext const & triclops, 
@@ -111,16 +126,14 @@ int get3dPoints(  PointCloud       & returnPoints,
                   TriclopsImage16 const & disparityImage16, 
                   TriclopsInput   const & colorData );
 
-
-
 int main(int  argc, char **argv)
 {
     ros::init(argc, argv, "talker");
-    ros::NodeHandle n;
-    ros::Publisher pc2_pub = n.advertise<sensor_msgs::PointCloud2>("points", 0);
-    //ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+    ros::NodeHandle nh;
+    ros::Publisher pc2_pub = nh.advertise<sensor_msgs::PointCloud2>("points", 0);
+    image_transport::ImageTransport it(nh);
+    image_transport::Publisher image_pub_= it.advertise("camera/left/rgb", 1);
     ros::Rate loop_rate(10);
-    //PointCloud points;
 
     TriclopsInput triclopsColorInput, triclopsMonoInput;
     TriclopsContext triclops;
@@ -143,11 +156,22 @@ int main(int  argc, char **argv)
     FC2::Error fc2Error = camera.StartCapture();
     if (fc2Error != FC2::PGRERROR_OK)
     {
-
-    return FC2T::handleFc2Error(fc2Error);
+        return FC2T::handleFc2Error(fc2Error);
     }
-    //ROS_INFO("%s", msg.data.c_str());
-    ROS_INFO("Before the while loop ---------------");
+
+    // Get the camera info and print it out
+    FC2::CameraInfo camInfo;
+    fc2Error = camera.GetCameraInfo( &camInfo );
+    if ( fc2Error != FC2::PGRERROR_OK )
+    {
+        std::cout << "Failed to get camera info from camera" << std::endl;
+        return false;
+    }
+    else
+    {
+        ROS_INFO("CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
+    }
+
     while (ros::ok())
     {      
         //ROS_INFO("Top of the while loop ---------------");
@@ -161,11 +185,23 @@ int main(int  argc, char **argv)
 
         // Container of Images used for processing
         ImageContainer imageContainer;
+        cv::Mat      leftImage;
+        cv::Mat      rightImage;
         // generate triclops inputs from grabbed image
-        if (generateTriclopsInput(grabbedImage, imageContainer, triclopsColorInput, triclopsMonoInput))
+        if (generateTriclopsInput(grabbedImage, imageContainer, triclopsColorInput, triclopsMonoInput, leftImage, rightImage))
         {
 		    return EXIT_FAILURE;
         }
+        if (SHOW_OPENCV_VIDEO)
+        {
+            cv::imshow("Image Right", rightImage);
+            cv::imshow("Image Left", leftImage);
+            cv::waitKey(3);
+         }
+
+        sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
+        image_pub_.publish(msg);
+
 
         // output image disparity image with subpixel interpolation
         TriclopsImage16 disparityImage16;
@@ -191,7 +227,6 @@ int main(int  argc, char **argv)
             pc2_pub.publish(points);
         }
         ros::spinOnce();
-
         loop_rate.sleep();
     }
     // Close the camera and disconnect
@@ -225,8 +260,7 @@ int grabImage ( FC2::Camera & camera, FC2::Image& grabbedImage )
 {
 	FC2::Error fc2Error = camera.StartCapture();
 	if (fc2Error != FC2::PGRERROR_OK)
-	{
-    
+	{    
 		return FC2T::handleFc2Error(fc2Error);
 	}
 
@@ -279,10 +313,30 @@ int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
     return 0;
 }
 
+int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
+{
+    FC2::Error fc2Error;
+    fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    fc2Error = image.Convert(FC2::PIXEL_FORMAT_BGR, &convertedImage);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    return 0;
+}
+
 int generateTriclopsInput( FC2::Image const & grabbedImage, 
                             ImageContainer  & imageContainer,
                             TriclopsInput   & triclopsColorInput,
-                            TriclopsInput   & triclopsMonoInput ) 
+                            TriclopsInput   & triclopsMonoInput,
+                            cv::Mat         & leftImageBGR,
+                            cv::Mat         & rightImageBGR)
 {
     FC2::Error fc2Error;
     FC2T::ErrorType fc2TriclopsError; 
@@ -313,6 +367,7 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
     if ( unprocessedImage[RIGHT].GetBayerTileFormat() != FC2::NONE )
     {
         FC2::Image * bgruImage = imageContainer.bgru;
+        FC2::Image * bgrImage = imageContainer.bgru;
 
         for ( int i = 0; i < 2; ++i )
         {
@@ -321,6 +376,22 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                 return 1;
             }
         }
+
+        //DML get left and right image into opencv Mat
+        for ( int i = 0; i < 2; ++i )
+        {
+            if ( convertToBGR(unprocessedImage[i], bgrImage[i]) )
+            {
+                return 1;
+            }
+        }
+        // convert Left image to OpenCV Mat TODO Find a better way to do this.
+        unsigned int rowBytes = (double)bgrImage[LEFT].GetReceivedDataSize()/(double)bgrImage[LEFT].GetRows();
+        leftImageBGR = cv::Mat(bgrImage[LEFT].GetRows(), bgrImage[LEFT].GetCols(), CV_8UC3, bgrImage[LEFT].GetData(),rowBytes);
+
+        // convert Right image to OpenCV Mat TODO Find a better way to do this.
+        rowBytes = (double)bgrImage[RIGHT].GetReceivedDataSize()/(double)bgrImage[RIGHT].GetRows();
+        rightImageBGR = cv::Mat(bgrImage[RIGHT].GetRows(), bgrImage[RIGHT].GetCols(), CV_8UC3, bgrImage[RIGHT].GetData(),rowBytes);
 
         FC2::PNGOption pngOpt;
         pngOpt.interlaced = false;
@@ -491,6 +562,7 @@ int get3dPoints( PointCloud      & returnedPoints,
 
                 // look at points within a range
                 if ( z < 5.0)
+                //if ( z < 5.0 and y > 0.3)
                 {
                     if ( isColor )
                     {
