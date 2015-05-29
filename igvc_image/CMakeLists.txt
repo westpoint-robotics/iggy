@@ -126,6 +126,16 @@ add_dependencies(LineFilter2 ${catkin_EXPORTED_TARGETS})
 add_executable(DMLineFilter line_filter/src/line_filterDML.cpp)
 target_link_libraries(DMLineFilter ${catkin_LIBRARIES})
 add_dependencies(DMLineFilter ${catkin_EXPORTED_TARGETS})
+
+add_executable(DMLineFilterRight line_filter/src/line_filterDMLRight.cpp)
+target_link_libraries(DMLineFilterRight ${catkin_LIBRARIES})
+add_dependencies(DMLineFilterRight ${catkin_EXPORTED_TARGETS})
+
+add_executable(DMLineFilterLeft line_filter/src/line_filterDMLLeft.cpp)
+target_link_libraries(DMLineFilterLeft ${catkin_LIBRARIES})
+add_dependencies(DMLineFilterLeft ${catkin_EXPORTED_TARGETS})
+
+
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 

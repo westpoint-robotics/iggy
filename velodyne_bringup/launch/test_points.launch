@@ -4,7 +4,7 @@
   <node pkg="tf" type="static_transform_publisher" name="lidar_tf_broadcaster"
         args="0 0 0.86121875 0 0 0 base_link velodyne 100" />
                 
-  <!-- Required parameters -->ros
+  <!-- Required parameters -->
   <arg name="manager" value="velodyne_nodelet_manager"/>
   <arg name="output_topic" value="/velodyne"/>
 

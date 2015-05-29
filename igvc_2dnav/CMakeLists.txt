@@ -1,17 +1,19 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(igvc_image)
+project(igvc_2dnav)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy image_transport cv_bridge sensor_msgs pcl_conversions pcl_ros dynamic_reconfigure)
-generate_dynamic_reconfigure_options(
- line_filter/cfg/LineFilter.cfg
- image_to_pointcloud/cfg/ImageToPointCloud.cfg
+find_package(catkin REQUIRED COMPONENTS
+  move_base
+#  my_odom_configuration_dep
+#  my_sensor_configuration_dep
+#  my_tf_configuration_dep
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -80,75 +82,45 @@ generate_dynamic_reconfigure_options(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES igvc_image
-#  CATKIN_DEPENDS other_catkin_pkg
+#  LIBRARIES igvc_2dnav
+#  CATKIN_DEPENDS move_base my_odom_configuration_dep my_sensor_configuration_dep my_tf_configuration_dep
 #  DEPENDS system_lib
 )
 
 ###########
 ## Build ##
 ###########
-include_directories( include
-  ${catkin_INCLUDE_DIRS}
-)
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Declare a cpp library
-# add_library(igvc_image
-#   src/${PROJECT_NAME}/igvc_image.cpp
+# add_library(igvc_2dnav
+#   src/${PROJECT_NAME}/igvc_2dnav.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(igvc_image_node src/igvc_image_node.cpp)
+# add_executable(igvc_2dnav_node src/igvc_2dnav_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(igvc_image_node igvc_image_generate_messages_cpp)
+# add_dependencies(igvc_2dnav_node igvc_2dnav_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(igvc_image_node
+# target_link_libraries(igvc_2dnav_node
 #   ${catkin_LIBRARIES}
 # )
 
 #############
 ## Install ##
 #############
-add_library(LineFilter line_filter/src/line_filter_nodelet.cc)
-add_dependencies(LineFilter ${PROJECT_NAME}_gencfg)
-
-add_executable(LineFilter2 line_filter/src/line_filter.cpp)
-target_link_libraries(LineFilter2 ${catkin_LIBRARIES})
-add_dependencies(LineFilter2 ${catkin_EXPORTED_TARGETS})
-
-
-add_executable(DMLineFilter line_filter/src/line_filterDML.cpp)
-target_link_libraries(DMLineFilter ${catkin_LIBRARIES})
-add_dependencies(DMLineFilter ${catkin_EXPORTED_TARGETS})
-
-add_executable(DMLineFilterRight line_filter/src/line_filterDMLright.cpp)
-target_link_libraries(DMLineFilterRight ${catkin_LIBRARIES})
-add_dependencies(DMLineFilterRight ${catkin_EXPORTED_TARGETS})
-
-add_executable(DMLineFilterLeft line_filter/src/line_filterDMLleft.cpp)
-target_link_libraries(DMLineFilterLeft ${catkin_LIBRARIES})
-add_dependencies(DMLineFilterLeft ${catkin_EXPORTED_TARGETS})
-
 
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
-# add_executable(linefilterTest line_filter/src/linefilterTest.cpp)
-# target_link_libraries(linefilterTest ${catkin_LIBRARIES})
-# add_dependencies(linefilterTest ${catkin_EXPORTED_TARGETS})
-# 
-# add_executable(linefilterV2 line_filter/src/line_filterV2.cpp)
-# target_link_libraries(linefilterV2 ${catkin_LIBRARIES})
-# add_dependencies(linefilterV2 ${catkin_EXPORTED_TARGETS})
-
-
-
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
@@ -158,24 +130,12 @@ add_dependencies(DMLineFilterLeft ${catkin_EXPORTED_TARGETS})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS igvc_image igvc_image_node
+# install(TARGETS igvc_2dnav igvc_2dnav_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-
-#add_library(image_to_pointcloud3 image_to_pointcloud/src/image_to_pointcloud3.cc)
-#add_dependencies(image_to_pointcloud3 ${PROJECT_NAME}_gencfg)
-
-add_executable(image_to_pointcloud image_to_pointcloud/src/image_to_pointcloud2V3.cpp)
-target_link_libraries(image_to_pointcloud ${catkin_LIBRARIES})
-add_dependencies(image_to_pointcloud ${catkin_EXPORTED_TARGETS})
-
-
-add_executable(image_transform image_transform/src/image_transform2.cpp)
-target_link_libraries(image_transform ${catkin_LIBRARIES})
-add_dependencies(image_transform ${catkin_EXPORTED_TARGETS})
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
 #   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
@@ -195,7 +155,7 @@ add_dependencies(image_transform ${catkin_EXPORTED_TARGETS})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_igvc_image.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_igvc_2dnav.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

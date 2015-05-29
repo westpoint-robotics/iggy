@@ -26,13 +26,13 @@ outFile = open("novatelLog.txt", "wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')
-#ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.5\r\n')
+ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.5\r\n')
 ##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
 align = input("What directions  in degrees is the robot facing:")
 command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
 ser.write(command)
 print command
-ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
+#ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('fix', NavSatFix, queue_size=1)

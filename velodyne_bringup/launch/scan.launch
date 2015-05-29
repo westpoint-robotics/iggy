@@ -1,9 +1,8 @@
-<!--hi-->    
+<!--igvc_configuration.launch-->
 <launch>
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /base_link /laser 40" />
-
- <arg name="manager" value="velodyne_nodelet_manager"/>
+                
+  <!-- Required parameters -->
+  <arg name="manager" value="velodyne_nodelet_manager"/>
   <arg name="output_topic" value="/velodyne"/>
 
   <!-- declare arguments with default values -->
@@ -41,17 +40,10 @@
     <param name="scan_time" value="1/1000.0"/>
     <param name="range_min" value="0"/>
     <param name="range_max" value="50"/>
+
     
 </node>
 
-<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" 
-    name="laser_scan_matcher_node" output="screen">
-
-    <param name="fixed_frame" value = "odom"/>
-    <param name="use_alpha_beta" value="true"/>
-    <param name="max_iterations" value="20"/>
-
-  </node>
 
 <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
         <!--remap from="scan" to="b=base_scan"/-->
@@ -85,5 +77,6 @@
         <param name="lasamplerange" value="0.005"/>
         <param name="lasamplestep" value="0.005"/>
 </node>
+
 
 </launch>

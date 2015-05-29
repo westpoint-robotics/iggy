@@ -52,8 +52,8 @@ public:
     h_maxLineGap(7) // 30
 
   {
-    image_pub_ = it_.advertise("filter_out", 1);
-    image_sub_ = it_.subscribe("/camera/left/rgb", 1, &ImageConverter::imageCb, this);
+    image_pub_ = it_.advertise("filter_out_right", 1);
+    image_sub_ = it_.subscribe("/camera/right/rgb", 1, &ImageConverter::imageCb, this);
 
     cv::namedWindow("Input Image", CV_WINDOW_AUTOSIZE);
     cv::namedWindow("Output Image", CV_WINDOW_AUTOSIZE);
@@ -153,7 +153,7 @@ Split for header
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "line_filter");
+  ros::init(argc, argv, "line_filter_right");
   ImageConverter ic;
   ros::spin();
   return 0;
