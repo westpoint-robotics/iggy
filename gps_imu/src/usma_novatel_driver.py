@@ -3,6 +3,7 @@ import time
 import serial
 import rospy
 from sensor_msgs.msg import NavSatFix
+from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 from usma_novatel_parser import *
@@ -22,21 +23,20 @@ ser.open()
 
 # Create a log file
 outFile = open("novatelLog.txt", "wb")
-
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')
-ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.5\r\n')
+#ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.5\r\n')
 ##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
 align = input("What directions  in degrees is the robot facing:")
 command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
 ser.write(command)
 print command
-#ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
+ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 
 # Start the ROS node and create the ROS publisher    
-gpsPub = rospy.Publisher('fix', NavSatFix, queue_size=1)
-imuPub = rospy.Publisher('Pose2D',Twist, queue_size=1)
+gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
+imuPub = rospy.Publisher('imu/data', Imu, queue_size=1)
 #novaPub = rospy.Publisher(???,???, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(5) # 10hz

@@ -3,6 +3,9 @@ import rospy
 from sensor_msgs.msg import NavSatFix
 from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Imu
+from geometry_msgs.msg import Quaternion
+
 
 def parse_novatelGPS(gpsString):    
     # ----- parse the data string from fields to variables -----
@@ -90,26 +93,36 @@ def parse_novatelINSPVA(insString):
     latitude = insString[2] # Latitude (WGS84)
     longitude = insString[3] # Longitude (WGS84)
     heightMSL = insString[4] # Ellipsoidal Height (WGS84) [m]
-    velNorth = insString[5] # Velocity in northerly direction [m/s] (negative for south)
-    velEast = insString[6] # Velocity in easterly direction [m/s] (negative for west)
-    velUp = insString[7] # Velocity in upward direction [m/s]
-    roll = insString[8] # Roll - Right-handed rotation from local level around Y-axis in degrees
-    pitch = insString[9] # Pitch - Right-handed rotation from local level around X-axis in degrees
-    azimuth = insString[10] # Azimuth - Left-handed rotation around Z-axis in degrees clockwise from North
+    velcnsZ = insString[5] # Velocity in northerly direction [m/s] (negative for south)
+    velcnsY = insString[6] # Velocity in easterly direction [m/s] (negative for west)
+    velcnsX = insString[7] # Velocity in upward direction [m/s]
+    #last_oriencnsZ = oriencnsZ
+    #last_oriencnsY = oriencnsY 
+    #last_oriencnsX = oriencnsX 
+    oriencnsZ = insString[8] # Roll - Right-handed rotation from local level around Y-axis in degrees
+    oriencnsY = insString[9] # Pitch - Right-handed rotation from local level around X-axis in degrees
+    oriencnsX = insString[10] # Azimuth - Left-handed rotation around Z-axis in degrees clockwise from North
     inertialStatus = insString[11].split('*')[0] # Inertial status
     #print "inertialStatus",inertialStatus
     fix_msg = NavSatFix()
+    fix_msg.header.stamp = rospy.time.now()
+    fix_msg.header.frame_id = 'gps_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
 
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
-    imu_msg = Twist()
-    imu_msg.linear.x = float(velEast)*.05/pow(2,15)
-    imu_msg.linear.y = float(velNorth)*.05/pow(2,15)
-    imu_msg.linear.z = float(velUp)*.05/pow(2,15)
-    imu_msg.angular.x = float(pitch)
-    imu_msg.angular.y = float(roll)
+    imu_msg = Imu()
+    imu_msg.header.stamp = rospy.time.now()
+    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.linear_acceleration.x = float(velcnsZ)*10000000#*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = float(velcnsY)*10000000#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = float(velcnsX)*10000000#*.05/pow(2,15)
+    #imu_msg.orientation_covariance.x = float(angcnsY)
+
+    imu_msg.angular_velocity.x = float(oriencnsY)
+    imu_msg.angular_velocity.y = float(oriencnsX)
+    imu_msg.angular_velocity.z = float(oriencnsZ)
     #velx = float(velEast)*.05/pow(2,15)
     #vely = float(velNorth)*.05/pow(2,15)
     #velz = float(velUp)*.05/pow(2,15)

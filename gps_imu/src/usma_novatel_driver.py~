@@ -3,6 +3,7 @@ import time
 import serial
 import rospy
 from sensor_msgs.msg import NavSatFix
+from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 from usma_novatel_parser import *
@@ -35,8 +36,8 @@ print command
 ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 
 # Start the ROS node and create the ROS publisher    
-gpsPub = rospy.Publisher('fix', NavSatFix, queue_size=1)
-imuPub = rospy.Publisher('Pose2D',Twist, queue_size=1)
+gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
+imuPub = rospy.Publisher('imu/data', Imu, queue_size=1)
 #novaPub = rospy.Publisher(???,???, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(5) # 10hz
