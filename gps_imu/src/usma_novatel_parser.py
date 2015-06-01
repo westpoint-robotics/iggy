@@ -5,6 +5,15 @@ from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion
+import tf
+
+curTime = rospy.Time()
+curRoll = float(0.0)
+curPitch = float(0.0)
+curYaw = float(0.0)
+lastYaw = float(0.0)
+lastPitch = float(0.0)
+lastRoll = float(0.0)
 
 
 def parse_novatelGPS(gpsString):    
@@ -96,33 +105,61 @@ def parse_novatelINSPVA(insString):
     velcnsZ = insString[5] # Velocity in northerly direction [m/s] (negative for south)
     velcnsY = insString[6] # Velocity in easterly direction [m/s] (negative for west)
     velcnsX = insString[7] # Velocity in upward direction [m/s]
-    #last_oriencnsZ = oriencnsZ
-    #last_oriencnsY = oriencnsY 
-    #last_oriencnsX = oriencnsX 
-    oriencnsZ = insString[8] # Roll - Right-handed rotation from local level around Y-axis in degrees
-    oriencnsY = insString[9] # Pitch - Right-handed rotation from local level around X-axis in degrees
-    oriencnsX = insString[10] # Azimuth - Left-handed rotation around Z-axis in degrees clockwise from North
+    cnsYaw = insString[8] # yaw/azimuth - Right-handed rotation from local level around Z-axis
+    cnsRoll = insString[9] # roll - (neg) Right-handed rotation from local level around y-axis
+    cnsPitch = insString[10] # pitch -Right-handed rotation from local level around x-axis
     inertialStatus = insString[11].split('*')[0] # Inertial status
+   
     #print "inertialStatus",inertialStatus
     fix_msg = NavSatFix()
-    fix_msg.header.stamp = rospy.time.now()
+    fix_msg.header.stamp = rospy.get_rostime()
     fix_msg.header.frame_id = 'gps_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
 
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
-    imu_msg = Imu()
-    imu_msg.header.stamp = rospy.time.now()
-    imu_msg.header.frame_id = 'imu_frame'
-    imu_msg.linear_acceleration.x = float(velcnsZ)*10000000#*.05/pow(2,15)
-    imu_msg.linear_acceleration.y = float(velcnsY)*10000000#*.05/pow(2,15)
-    imu_msg.linear_acceleration.z = float(velcnsX)*10000000#*.05/pow(2,15)
-    #imu_msg.orientation_covariance.x = float(angcnsY)
+    global curTime
+    global curRoll
+    global curYaw
+    global curPitch
+    global lastRoll
+    global lastYaw
+    global lastPitch
 
-    imu_msg.angular_velocity.x = float(oriencnsY)
-    imu_msg.angular_velocity.y = float(oriencnsX)
-    imu_msg.angular_velocity.z = float(oriencnsZ)
+    #cns to imu coordinate sytem conversion --> cnsX = -imuY, cnsY = imuX, cnsZ = imuZ
+    #imuY comes in as negative of value --> cancels out negative conversion
+    imuRoll = cnsPitch
+    imuPitch = cnsRoll
+    imuYaw = cnsYaw   
+    
+    lastYaw = curYaw
+    curYaw = float(imuYaw)
+    lastPitch = curPitch
+    curPitch = float(imuPitch)
+    lastRoll = curRoll
+    curRoll   = float(imuRoll)
+
+    lastTime = curTime    
+    curTime = rospy.Time.now()
+    deltime = (curTime-lastTime).to_sec()
+
+    imu_msg = Imu()
+    imu_msg.header.stamp = curTime
+    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.linear_acceleration.x = float(velcnsZ)#*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = float(velcnsY)#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = float(velcnsX)#*.05/pow(2,15)
+    #imu_msg.orientation_covariance.x = float(angcnsY)
+    quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
+    #type(pose) = geometry_msgs.msg.Pose
+    imu_msg.orientation.x = quaternion[0]
+    imu_msg.orientation.y = quaternion[1]
+    imu_msg.orientation.z = quaternion[2]
+    imu_msg.orientation.w = quaternion[3]
+    imu_msg.angular_velocity.x = (curPitch-lastPitch)/deltime
+    imu_msg.angular_velocity.y = (curRoll-lastRoll)/deltime
+    imu_msg.angular_velocity.z = (curYaw-lastYaw)/deltime
     #velx = float(velEast)*.05/pow(2,15)
     #vely = float(velNorth)*.05/pow(2,15)
     #velz = float(velUp)*.05/pow(2,15)

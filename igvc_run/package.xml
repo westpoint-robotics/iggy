@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package>
-  <name>triclops_vision</name>
+  <name>igvc_run</name>
   <version>0.0.0</version>
-  <description>The triclops_vision package</description>
+  <description>The igvc_run package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="user1@todo.todo">user1</maintainer>
+  <maintainer email="igvc@todo.todo">igvc</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/triclops_vision</url> -->
+  <!-- <url type="website">http://wiki.ros.org/igvc_run</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -40,20 +40,6 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>rospy</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_depend>image_transport</build_depend>
-  <build_depend>cv_bridge</build_depend>
-  <build_depend>sensor_msgs</build_depend>
-  <build_depend>opencv2</build_depend>
-  <run_depend>roscpp</run_depend>
-  <run_depend>rospy</run_depend>
-  <run_depend>std_msgs</run_depend>
-  <run_depend>image_transport</run_depend>
-  <run_depend>cv_bridge</run_depend>
-  <run_depend>sensor_msgs</run_depend>
-  <run_depend>opencv2</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

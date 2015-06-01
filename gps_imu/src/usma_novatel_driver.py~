@@ -23,7 +23,6 @@ ser.open()
 
 # Create a log file
 outFile = open("novatelLog.txt", "wb")
-
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')

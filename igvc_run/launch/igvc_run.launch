@@ -1,0 +1,16 @@
+<!--igvc_run.launch-->
+<launch>
+    <master auto="start"/>
+    <include file="$(find velodyne_bringup)/launch/move_base.launch">
+    </include>
+    <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
+    </include>
+    <include file="$(find velodyne_bringup)/launch/igvc_configuration.launch">
+
+    <include file="$(find igvc)/launch/navsat_transform.launch">
+    </include>
+
+
+</include>
+</launch>
+
