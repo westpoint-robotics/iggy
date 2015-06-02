@@ -1,16 +1,46 @@
 <!--igvc_run.launch-->
 <launch>
     <master auto="start"/>
-    <include file="$(find velodyne_bringup)/launch/move_base.launch">
+<!-- =============   TRANSFORMS  ======================= -->
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
+        args="0.1 0.1 1.14 0 0 0 base_link velodyne 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
+        args="-0.52 0.4 0.92 0 0 0 base_link gps_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
+        args="0 0 0 0 0 0 base_link imu_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_camera_frame"
+        args="0.27 0.06 1.08 0 0.75 0 base_link left_camera_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_camera_frame"
+        args="0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
+        args="0.27 0.28 -0.47 0 0 0 base_link left_wheel_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
+        args="0.27 -0.28 -0.47 0 0 0 base_link right_wheel_frame 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link"
+        args="0 0 -0.44 0 0 0 odom base_link 100" />
+
+<!-- =============  NODES  ======================= -->
+    <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
+
+    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
     </include>
-    <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
+
+<!--    <include file="$(find velodyne_bringup)/launch/move_base.launch">
     </include>
-    <include file="$(find velodyne_bringup)/launch/igvc_configuration.launch">
 
     <include file="$(find igvc)/launch/navsat_transform.launch">
     </include>
+    <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
+    </include>
+    <include file="$(find velodyne_bringup)/launch/igvc_configuration.launch">-->
 
 
-</include>
 </launch>
 

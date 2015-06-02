@@ -39,13 +39,13 @@ gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
 imuPub = rospy.Publisher('imu/data', Imu, queue_size=1)
 #novaPub = rospy.Publisher(???,???, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
-rate = rospy.Rate(5) # 10hz
+rate = rospy.Rate(20) # 10hz
 try:
     while not rospy.is_shutdown():  
         while ser.inWaiting() > 0: # While data is in the buffer
             velodyne_output = ser.readline() # Read data a line of data from buffer
             outFile.write(velodyne_output) # Option to log data to file
-            print(velodyne_output)
+            #print(velodyne_output)
                 
             if (velodyne_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message
                 #print "Inside best gps"

@@ -2,11 +2,11 @@
 <launch>
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="0 0 1.14 0 0 0 base_link velodyne 100" />
+        args="0.1 0.1 1.14 0 0 0 base_link velodyne 100" />
 
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-        args="-0.45 0.4 0.92 0 0 0 base_link gps_frame 100" />
+        args="-0.52 0.4 0.92 0 0 0 base_link gps_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
         args="0 0 0 0 0 0 base_link imu_frame 100" />
@@ -70,7 +70,7 @@
     <param name="range_max" value="50"/>
     
 </node>
-
+<!-- DML I could find a good reason to run this and it is generating errors
  <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" 
     name="laser_scan_matcher_node" output="screen">
 
@@ -78,10 +78,10 @@
     <param name="max_iterations" value="10"/>
 
   </node>
-
-
-<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
-        <!--remap from="scan" to="b=base_scan"/-->
+-->
+<!-- for indoor use, use this instead of amcl-->
+<!--node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen"-->
+        <!--remap from="scan" to="b=base_scan"/->
         <param name="odom_frame" value="odom"/>
         <param name="map_update_interval" value="2.0"/>
         <param name="maxUrange" value="6.0"/>
@@ -97,8 +97,8 @@
         <param name="srt" value="0.02"/>
         <param name="str" value="0.01"/>
         <param name="stt" value="0.02"/>
-        <param name="linearUpdate" value="0.25"/>     <!-- param name="linearUpdate" value="0.5"/-->
-        <param name="angularUpdate" value="0.262"/>   <!--param name="angularUpdate" value="0.436"/-->
+        <param name="linearUpdate" value="0.25"/-->     <!-- param name="linearUpdate" value="0.5"/->
+        <param name="angularUpdate" value="0.262"/-->   <!--param name="angularUpdate" value="0.436"/->
         <param name="temporalUpdate" value="-1.0"/>
         <param name="resampleThreshold" value="0.5"/>
         <param name="particles" value="300"/>
@@ -111,7 +111,7 @@
         <param name="llsamplestep" value="0.01"/>
         <param name="lasamplerange" value="0.005"/>
         <param name="lasamplestep" value="0.005"/>
-</node>
+</node-->
 
 
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>

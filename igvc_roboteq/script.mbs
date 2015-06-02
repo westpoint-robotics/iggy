@@ -1,0 +1,79 @@
+SCRIPT_VER=8
+' Motor controller configuration. Much of this is particular to Grizzly
+' and can be generalized/parameterized as the need arises. Page numbers
+' are a reference to this document:
+' www.roboteq.com/index.php/docman/motor-controllers-documents-and-files/documentation/user-manual/7-nextgen-controllers-user-manual/file
+
+setconfig(_ECHOF, 1) ' Serial echo off (p195)
+'setconfig(_RWD, 110) ' Watchdog timeout, milliseconds (p195)
+
+' setconfig(_AMOD, 1, 1) ' Analog input 1 absolute mode
+' setconfig(_AMOD, 2, 1) ' Analog input 2 absolute mode1
+	'make all analog inputs analog
+	
+
+' mixed mode
+setconfig(_MXMD, 1)
+
+' Undervoltage/overvoltage limits (p214)
+setconfig(_OVL, 350)
+setconfig(_UVL, 180)
+
+' Motor acceleration/deceleration (p219)
+setconfig(_MAC, 1, 20000)
+setconfig(_MAC, 2, 20000)
+setconfig(_MDEC, 1, 100000)
+setconfig(_MDEC, 2, 100000)
+' Max RPM Value
+setconfig(_MXRPM, 1, 3500)
+
+top:
+for ch = 1 andwhile ch <= 2 evaluate ch++
+if getvalue(_BOOL, ch) = 1 then
+GoSub PrintFeedback ' 25 Hz
+end if
+next
+c++
+if c = 5 then
+GoSub PrintStatus ' 5 Hz
+c = 0
+end if
+goto top
+
+PrintFeedback:
+print("&f:", ch)
+'print(":", getvalue(_MOTAMPS, ch))
+print(":", getvalue(_C, 1))	
+print(":", getvalue(_MOTCMD, ch))
+'print(":", getvalue(_MOTPWR, ch))
+print(":", getvalue(_C, 2))	
+print(":", getvalue(_ABSPEED, ch))
+print(":", getvalue(_ABCNTR, ch))
+print(":", getvalue(_VOLTS, 2))
+print(":", getvalue(_BATAMPS, ch))
+'print(":", getvalue(_ANAIN, ch))
+'print(":", getvalue(_TEMP, ch+1))
+		'encoder wheel 1
+		'encoder wheel 2
+print(":", getvalue(_PI, 3))		'pulse input for RC3
+print(":", getvalue(_PI, 4))		'pulse input for RC4
+print("\r")
+Return
+
+PrintStatus:
+print("&s:", SCRIPT_VER)
+print(":", getvalue(_FLTFLAG))
+print(":", getvalue(_STFLAG))
+print(":", getvalue(_VOLTS, 1))
+print(":", getvalue(_VOLTS, 3))
+print(":", getvalue(_TEMP, 1))
+print("\r")
+Return
+
+'Wireless E-stop
+'if getvalue(_PLSIN, 3) > 1700 then '400 low and 800 high ' 1000 low, 2000 high
+'setcommand(EX)
+'end if
+
+'LED (RS232 pin 1 = DOUT1 = white) (RS232 pin 9 = DOUT2 = green)
+'if getvalue(_PLSIN, 4) > 700 then '400 low and 800 high

@@ -39,7 +39,7 @@ gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
 imuPub = rospy.Publisher('imu/data', Imu, queue_size=1)
 #novaPub = rospy.Publisher(???,???, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
-rate = rospy.Rate(5) # 10hz
+rate = rospy.Rate(10) # 10hz
 try:
     while not rospy.is_shutdown():  
         while ser.inWaiting() > 0: # While data is in the buffer

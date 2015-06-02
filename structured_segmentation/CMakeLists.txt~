@@ -74,7 +74,6 @@ find_package(catkin REQUIRED COMPONENTS
 #   sensor_msgs
 # )
 
-
 generate_dynamic_reconfigure_options(cfg/GroundSegmenter.cfg)
 
 ###################################
@@ -113,7 +112,7 @@ add_library(structured_segmentation
 )
 
 ## Declare a cpp executable
-# add_executable(structured_segmentation_node src/structured_segmentation_node.cpp)
+#add_executable(structured_segmentation_node src/structured_segmentation_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
