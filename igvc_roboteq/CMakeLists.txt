@@ -57,7 +57,6 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-#add_executable(igvc_roboteq_node src/igvc_roboteq_driver.cpp)
 add_executable(igvc_roboteq_odom_node src/igvc_odometry_pub.cpp)
 
 

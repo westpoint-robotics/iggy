@@ -1,0 +1,17 @@
+<!--igvc_run.launch-->
+<launch>
+    <master auto="start"/>
+<!-- =============  NODES  ======================= -->
+     <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
+
+    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
+    </include>      
+
+    <node name="roboteq_driver" pkg="igvc_roboteq" type="igvc_roboteq_driver.py" output="screen"/>
+ 
+
+<!--home/igvc/catkin_ws/src/triclops_vision/triclops_vision_node -->
+
+
+</launch>
+

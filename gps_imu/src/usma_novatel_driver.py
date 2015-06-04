@@ -31,7 +31,6 @@ ser.write('unlogall\r\n')
 align = input("What directions  in degrees is the robot facing:")
 command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
 ser.write(command)
-print command
 ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 
 # Start the ROS node and create the ROS publisher    
@@ -46,6 +45,7 @@ try:
             velodyne_output = ser.readline() # Read data a line of data from buffer
             outFile.write(velodyne_output) # Option to log data to file
             #print(velodyne_output)
+            #TODO print once when gets into different mode like initializing, finesteering, etc
                 
             if (velodyne_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message
                 #print "Inside best gps"

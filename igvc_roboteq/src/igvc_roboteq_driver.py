@@ -12,13 +12,25 @@ from geometry_msgs.msg import Vector3
 
 #print("here1")
 # configure the serial connections 
-ser = serial.Serial(
-    port='/dev/ttyACM0',
-    baudrate=115200, #8N1
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS
-)
+try:
+    ser = serial.Serial(
+        port='/dev/ttyACM0',
+        baudrate=115200, #8N1
+        parity=serial.PARITY_NONE,
+        stopbits=serial.STOPBITS_ONE,
+        bytesize=serial.EIGHTBITS
+    )
+except:
+    try:
+        ser = serial.Serial(
+            port='/dev/ttyACM1',
+            baudrate=115200, #8N1
+            parity=serial.PARITY_NONE,
+            stopbits=serial.STOPBITS_ONE,
+            bytesize=serial.EIGHTBITS
+        )
+    except:
+        raise
 
 if (ser.isOpen()):
     ser.close()
@@ -68,17 +80,19 @@ def makeCleanMsgTwoLetters(message):
     #if cleanmsg.split 
 
 def getEncoders():
+    #print("here") 
     try:
         time.sleep(.01)
         getdata()   #clear buffer     
         ser.write('?C 1\r')  #enc left wheel
         time.sleep(.005)
-        leftWheel = getdata() 
+        leftWheel = getdata()
         ser.write('?C 2\r')  #enc right wheel
         time.sleep(.005)
         rightWheel = getdata()
         leftWheel = makeCleanMsgOneLetter(leftWheel)
         rightWheel = makeCleanMsgOneLetter(rightWheel)
+        #print("enc = ", leftWheel, rightWheel) 
     except: # catch *all* exceptions
         leftWheel = 10000000
         rightWheel = 10000000 
@@ -174,11 +188,12 @@ if __name__ == '__main__':
         while not rospy.is_shutdown():
             #print('here234')
             enclist = getEncoders()
-            if (enclist[0] == 10000000 or enclist[1] == 10000000 ):
+            if (enclist[0] == 10000000 or enclist[1] == 10000000 or enclist[0] == None or enclist[1] == None):
                 #print ('error happened')
                 pass
             else:
                 #odom_msg = valsToOdom(encoders)
+                
                 encodermsg.x = enclist[0]
                 encodermsg.y = enclist[1]
                 pub.publish(encodermsg)

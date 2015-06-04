@@ -53,21 +53,21 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "odometry_publisher");
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe("enc_raw", 100, WheelCallback);
-  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odometry/filtered", 50);   
+  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("wheels/odom", 50);   
   tf::TransformBroadcaster odom_broadcaster;
 
 
   ros::Time current_time, last_time;
   current_time = ros::Time::now();
   last_time = ros::Time::now();
-double x;
-double y;
-double th;
-double vth;
+  double x;
+  double y;
+  double th;
+  double vth;
   ros::Rate loop_rate(10);
   while(ros::ok()){
 
-//    current_time = ros::Time::now();
+    current_time = ros::Time::now();
 
     //compute odometry in a typical way given the velocities of the robot
     double dt = (current_time - last_time).toSec();
@@ -94,7 +94,7 @@ double vth;
     odom_trans.transform.rotation = odom_quat;
 
     //send the transform
-    odom_broadcaster.sendTransform(odom_trans);
+    //odom_broadcaster.sendTransform(odom_trans);
 
     //next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;

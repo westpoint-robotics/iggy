@@ -35,7 +35,7 @@
     <include file="$(find velodyne_bringup)/launch/move_base.launch">
     </include>-->
 
-    <include file="$(find igvc)/launch/navsat_transform.launch">
+    <include file="$(find igvc_run)/launch/navsat_transform.launch">
     </include>
     <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
     </include>

@@ -105,9 +105,9 @@ def parse_novatelINSPVA(insString):
     velcnsZ = insString[5] # Velocity in northerly direction [m/s] (negative for south)
     velcnsY = insString[6] # Velocity in easterly direction [m/s] (negative for west)
     velcnsX = insString[7] # Velocity in upward direction [m/s]
-    cnsYaw = insString[8] # yaw/azimuth - Right-handed rotation from local level around Z-axis
-    cnsRoll = insString[9] # roll - (neg) Right-handed rotation from local level around y-axis
-    cnsPitch = insString[10] # pitch -Right-handed rotation from local level around x-axis
+    cnsYaw = float(insString[8])*(3.14159265/180) # yaw/azimuth - Right-handed rotation from local level around Z-axis -- changed from degress to radians (pi/180 deg)
+    cnsRoll = float(insString[9])*(3.14159265/180)  # roll - (neg) Right-handed rotation from local level around y-axis  -- changed from degress to radians (pi/180 deg)
+    cnsPitch = float(insString[10])*(3.14159265/180)  # pitch -Right-handed rotation from local level around x-axis  -- changed from degress to radians (pi/180 deg)
     inertialStatus = insString[11].split('*')[0] # Inertial status
    
     #print "inertialStatus",inertialStatus
@@ -134,11 +134,11 @@ def parse_novatelINSPVA(insString):
     imuYaw = cnsYaw   
     
     lastYaw = curYaw
-    curYaw = float(imuYaw)
+    curYaw = imuYaw
     lastPitch = curPitch
-    curPitch = float(imuPitch)
+    curPitch = imuPitch
     lastRoll = curRoll
-    curRoll   = float(imuRoll)
+    curRoll   = imuRoll
 
     lastTime = curTime    
     curTime = rospy.Time.now()

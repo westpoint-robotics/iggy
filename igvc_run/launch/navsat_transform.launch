@@ -38,7 +38,7 @@
 
       <!-- If this is true, the transform world_frame->utm transform is broadcast
            for use by other nodes. -->
-      <param name="broadcast_utm_transform" value="false"/>
+      <param name="broadcast_utm_transform" value="true"/>
 
       <!-- Placeholders for input remapping. Set your topic names as the "to" values.
       <remap from="/imu/data" to="" />
