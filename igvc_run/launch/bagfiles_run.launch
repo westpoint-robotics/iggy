@@ -17,16 +17,7 @@
 <arg name="pCloud" default="$(arg path)pointcloud.bag" />
 
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args="--clock -l $(arg path)$(arg file_6).bag"/>
-
-<arg name="file_1" default="enc_raw" />
-<arg name="file_2" default="gps_fix" />
-<arg name="file_3" default="imudata" />
-<arg name="file_4" default="right_camera" />
-<arg name="file_5" default="left_camera" />
-<arg name="file_6" default="pointcloud" />
-<node pkg="rosbag" type="play" name="player" output="screen" 
-    args="--clock -l $(arg path)$(arg file_6).bag"/>
+    args="--clock -l $(arg enc) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera) $(arg pCloud) "/>
 
 </launch>
 
