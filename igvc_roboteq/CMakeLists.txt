@@ -45,7 +45,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
@@ -57,7 +57,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-add_executable(igvc_roboteq_odom_node src/igvc_odometry_pub.cpp)
+add_executable(igvc_roboteq_odom_node src/oop_igvc_odometry.cpp)
 
 
 ## Add cmake target dependencies of the executable/library

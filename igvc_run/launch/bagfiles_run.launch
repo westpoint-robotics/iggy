@@ -4,23 +4,29 @@
 <!-- =============   bagfiles  ======================= -->
 
 		<!-- field 1, no obstacles -->
-<arg name="path" default="/home/igvc/catkin_ws/rosbags/field1/" />
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />
 		<!-- field 2, obstacles -->
-<!--<arg name="path" default="/home/igvc/catkin_ws/rosbags/field2/" />-->
+<!--<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field2/" />-->
 
+
+<arg name="enc" default="$(arg path)enc_raw.bag" />
+<arg name="gps" default="$(arg path)gps_fix.bag" />
+<arg name="imu" default="$(arg path)imudata.bag" />
+<arg name="rCamera" default="$(arg path)right_camera.bag" />
+<arg name="lCamera" default="$(arg path)left_camera.bag" />
+<arg name="pCloud" default="$(arg path)pointcloud.bag" />
+
+<node pkg="rosbag" type="play" name="player" output="screen" 
+    args="--clock -l $(arg path)$(arg file_6).bag"/>
 
 <arg name="file_1" default="enc_raw" />
 <arg name="file_2" default="gps_fix" />
 <arg name="file_3" default="imudata" />
 <arg name="file_4" default="right_camera" />
 <arg name="file_5" default="left_camera" />
-<node pkg="rosbag" type="play" name="player" output="screen" args="--clock -l $(arg path)$(arg file_1).bag $(arg path)$(arg file_2).bag $(arg path)$(arg file_3).bag $(arg path)$(arg file_4).bag $(arg path)$(arg file_5).bag"/> <!--$(arg path)$(arg file_6).bag"/>
-<arg name="file_6" default="pointcloud" /> -->
-
-
-
-
-
+<arg name="file_6" default="pointcloud" />
+<node pkg="rosbag" type="play" name="player" output="screen" 
+    args="--clock -l $(arg path)$(arg file_6).bag"/>
 
 </launch>
 

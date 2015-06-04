@@ -5,18 +5,14 @@
 #include <geometry_msgs/Vector3.h>
 #include <time.h>
 
-
-
 ros::Time current_time_encoder;
 double DistancePerCount = 0.021927;  //meters per count
 
 //math for measured --> 70.16cm per rotation /32 = .021927 meters per count
 //math from calc --> (3.14159265 * 0.2286) / 32;  //meters per count (pie * diameter) / #black+white
 
-
-
 double vx;
-double vy;
+double vy;//wertr
 long _PreviousLeftEncoderCounts = 0;
 long _PreviousRightEncoderCounts = 0;
 
