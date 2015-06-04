@@ -1,2 +1,0 @@
-- setup-file:
-    local-name: /home/igvc/sandboxROS/igvc_image_pipeline/image_to_pointcloud/build/devel/setup.sh
