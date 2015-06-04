@@ -22,10 +22,10 @@ public:
     y = 0;
 
     //Topic you want to publish
-    pub_ = n_.advertise<geometry_msgs::Vector3>("/published_topic", 1);
+    pub_ = n_.advertise<nav_msgs::Odometry>("/odom", 1);
 
     //Topic you want to subscribe
-    sub_ = n_.subscribe("/subscribed_topic", 1, &IgvcOdometry::callback, this);
+    sub_ = n_.subscribe("/enc_raw", 1, &IgvcOdometry::callback, this);
   }
 
   void callback(const geometry_msgs::Vector3::ConstPtr& ticks)
