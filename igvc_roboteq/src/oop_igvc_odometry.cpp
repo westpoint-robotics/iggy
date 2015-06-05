@@ -38,12 +38,13 @@ public:
     current_time_encoder = ros::Time::now();
     deltaTime = (current_time_encoder - last_time_encoder).toSec();
 
-    //ROS_INFO("vx %f, vy %f, deltaTime %f", vx, vy, deltaTime);
 
-    if (deltaTime > 0.05) {
 
-        deltaLeft = ticks->x - _PreviousLeftEncoderCounts;
-        deltaRight = ticks->y - _PreviousRightEncoderCounts;
+    if (deltaTime > 0.00) {
+        float leftTicks = ticks->x;
+        float rightTicks = ticks->y;
+        deltaLeft = leftTicks - _PreviousLeftEncoderCounts;
+        deltaRight = rightTicks - _PreviousRightEncoderCounts;
 
         geometry_msgs::Vector3 output;
         //.... do something with the input and generate the output...
@@ -52,7 +53,7 @@ public:
         float vLeftLast = vLeft;
         vRight = deltaRight * DistancePerCount / deltaTime;
         vLeft = deltaLeft * DistancePerCount / deltaTime;
-
+        ROS_INFO("deltaTime %f, left_enc: %f, left_vel: %f, right_enc: %f, right_vel: %f", deltaTime, leftTicks, vLeft, rightTicks, vRight);
 //    vRight = aRight*deltaTime + vRightLast
     
 

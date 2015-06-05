@@ -1,5 +1,4 @@
 #!/usr/bin/python
-import serial
 import rospy
 import time
 from std_msgs.msg import String
@@ -9,75 +8,6 @@ from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Vector3
 
 
-
-#print("here1")
-# configure the serial connections 
-try:
-    ser = serial.Serial(
-        port='/dev/ttyACM0',
-        baudrate=115200, #8N1
-        parity=serial.PARITY_NONE,
-        stopbits=serial.STOPBITS_ONE,
-        bytesize=serial.EIGHTBITS
-    )
-except:
-    try:
-        ser = serial.Serial(
-            port='/dev/ttyACM1',
-            baudrate=115200, #8N1
-            parity=serial.PARITY_NONE,
-            stopbits=serial.STOPBITS_ONE,
-            bytesize=serial.EIGHTBITS
-        )
-    except:
-        raise
-
-if (ser.isOpen()):
-    ser.close()
-ser.open()
-
-# Create a log file
-#outFile = open("roboteqLog.txt", "wb")
-#print("here2")
-
-
-
-estopCount = False
-
-
-def getdata():
-    info = ''
-    while ser.inWaiting() > 0: # While data is in the buffer
-        info += str(ser.read())
-    return info
-
-def makeCleanMsgOneLetter(message):
-    cleanmsg = ''
-    try:    
-        for i in range(2,15):
-            #print (message[i])
-            if (message[i]== '\r'):
-                cleanmsg = int(cleanmsg)
-                return cleanmsg
-            cleanmsg += message[i]
-    except:
-                #return 'error'                
-        return int(10000000)
-        
-def makeCleanMsgTwoLetters(message):
-    cleanmsg = ''
-    try:    
-        for i in range(3,15):
-            #print (message[i])
-            if (message[i]== '\r'):
-                cleanmsg = int(cleanmsg)
-                return cleanmsg
-            cleanmsg += message[i]
-    except:
-                #return 'error'                
-        return int(10000000)
-        
-    #if cleanmsg.split 
 
 def getEncoders():
     #print("here") 
