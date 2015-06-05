@@ -14,7 +14,7 @@
 <node pkg="rosbag" type="play" name="player" output="screen" 
     args="--clock -l $(arg enc) $(arg imu)"/>
 
-<!-- =============   bagfiles  ======================= -->
+<!-- =============   Nodes  ======================= -->
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
   </node> 
 

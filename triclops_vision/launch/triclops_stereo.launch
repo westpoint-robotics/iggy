@@ -1,0 +1,7 @@
+<!--igvc_run.launch-->
+<launch>
+    <master auto="start"/>
+  <node pkg="triclops_vision" type="triclops_stereo_node" name="triclops_stereo_node">
+  </node> 
+</launch>
+
