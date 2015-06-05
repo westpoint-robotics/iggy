@@ -11,8 +11,9 @@
 
   <node pkg="igvc_roboteq" type="igvc_roboteq_driver.py" name="roboteq_driver">
   </node> 
-
+ 
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
+<!--  <remap from="odom" to="odometry/filtered"/> -->
   </node> 
 
 </launch>

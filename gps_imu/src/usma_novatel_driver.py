@@ -35,7 +35,7 @@ ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
-imuPub = rospy.Publisher('imu/data', Imu, queue_size=1)
+imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
 #novaPub = rospy.Publisher(???,???, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(10) # 10hz

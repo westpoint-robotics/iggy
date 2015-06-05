@@ -44,7 +44,7 @@ try:
         while ser.inWaiting() > 0: # While data is in the buffer
             velodyne_output = ser.readline() # Read data a line of data from buffer
             outFile.write(velodyne_output) # Option to log data to file
-            print(velodyne_output)
+            #print(velodyne_output)
             #TODO print once when gets into different mode like initializing, finesteering, etc
                 
             if (velodyne_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message

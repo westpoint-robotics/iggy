@@ -22,7 +22,7 @@ public:
     y = 0;
 
     //Topic you want to publish
-    pub_ = n_.advertise<nav_msgs::Odometry>("/odom", 1);
+    pub_ = n_.advertise<nav_msgs::Odometry>("/wheels/odom", 1);
 
     //Topic you want to subscribe
     sub_ = n_.subscribe("/enc_raw", 1, &IgvcOdometry::callback, this);
@@ -60,8 +60,8 @@ public:
 
 
         if (fabs(deltaLeft - deltaRight) < 1.0e-6) { // basically going straight
-            float new_x = x + deltaLeft * cos(heading);
-            float new_y = y + deltaRight * sin(heading);
+            x = x + deltaLeft * cos(heading);
+            y = y + deltaRight * sin(heading);
             //float heading = heading;
             changeHeading = 1;
         } else {
@@ -69,11 +69,12 @@ public:
             //R = turn radius for circular traj of robot center
             float wd = (deltaRight - deltaLeft) / axisWidth;  
 
-            float new_x = x + R * sin(wd + heading) - R * sin(heading);
-            float new_y = y - R * cos(wd + heading) + R * cos(heading);
+            x = x + R * sin(wd + heading) - R * sin(heading);
+            y = y - R * cos(wd + heading) + R * cos(heading);
             //heading = boundAngle(heading + wd);
             changeHeading = 0;
         }
+            ROS_INFO("x: %f, y: %f", x, y);
             float aRight = (vRight - vRightLast)/deltaTime;
             float aLeft = (vLeft - vLeftLast)/deltaTime;
                                    
@@ -87,7 +88,9 @@ public:
             float deltaHeading = (heading - newHeading)/ deltaTime;
 
     //pub things
-        geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(heading);
+        double yaw = double(heading);
+        ROS_INFO(" yaw: %f", yaw);
+        geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(yaw);
 
         //send the transform
 /*        geometry_msgs::TransformStamped odom_trans;
@@ -110,11 +113,22 @@ public:
         odom.pose.pose.position.y = y;
         odom.pose.pose.position.z = 0.0;
         odom.pose.pose.orientation = odom_quat;
+        //ROS_INFO("odom_quat: %f", odom_quat);
+        odom.pose.covariance[0] = 2.0;
+        odom.pose.covariance[7] = 2.0;
+        odom.pose.covariance[14] = 2.0;
+        odom.pose.covariance[21] = 2.0;
+        odom.pose.covariance[28] = 2.0;
+        odom.pose.covariance[35] = 2.0;
         //set the velocity
         odom.child_frame_id = "base_link";
         odom.twist.twist.linear.x = vx;
         odom.twist.twist.linear.y = vy;
         odom.twist.twist.angular.z = deltaHeading;
+        for(size_t ind = 0; ind < 36; ind+=7)
+        {
+          odom.twist.covariance[ind] = 1e-6;
+        }
 
     
         pub_.publish(odom);

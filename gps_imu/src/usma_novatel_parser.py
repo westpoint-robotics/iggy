@@ -117,6 +117,7 @@ def parse_novatelINSPVA(insString):
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
+    fix_msg.position_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
 
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
@@ -150,6 +151,7 @@ def parse_novatelINSPVA(insString):
     imu_msg.linear_acceleration.x = float(velcnsZ)#*.05/pow(2,15)
     imu_msg.linear_acceleration.y = float(velcnsY)#*.05/pow(2,15)
     imu_msg.linear_acceleration.z = float(velcnsX)#*.05/pow(2,15)
+    imu_msg.linear_acceleration_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
     #imu_msg.orientation_covariance.x = float(angcnsY)
     quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
@@ -157,13 +159,18 @@ def parse_novatelINSPVA(insString):
     imu_msg.orientation.y = quaternion[1]
     imu_msg.orientation.z = quaternion[2]
     imu_msg.orientation.w = quaternion[3]
+    imu_msg.orientation_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
     imu_msg.angular_velocity.x = (curPitch-lastPitch)/deltime
     imu_msg.angular_velocity.y = (curRoll-lastRoll)/deltime
     imu_msg.angular_velocity.z = (curYaw-lastYaw)/deltime
+    imu_msg.angular_velocity_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
     #velx = float(velEast)*.05/pow(2,15)
     #vely = float(velNorth)*.05/pow(2,15)
     #velz = float(velUp)*.05/pow(2,15)
     #imu_msg = Vector3(velx,vely,velz,pitch,roll)
+    imu_msg.orientation.w = 0.01
+
+
     retrnList = [imu_msg, fix_msg]
     return retrnList
     #TODO put data into a ROS MSG and return it

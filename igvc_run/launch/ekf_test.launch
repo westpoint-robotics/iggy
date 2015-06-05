@@ -1,7 +1,7 @@
 <!--igvc_run.launch-->
 <launch>
     <master auto="start"/>
-<!-- =============   bagfiles  ======================= -->
+<!-- =============   bagfiles  =======================
 <arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />
 
 <arg name="enc" default="$(arg path)enc_raw.bag" />
@@ -12,9 +12,9 @@
 <arg name="pCloud" default="$(arg path)pointcloud.bag" />
 
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args="--clock -l $(arg enc) $(arg imu)"/>
-
-<!-- =============   Nodes  ======================= -->
+    args="-clock -l $(arg enc) $(arg imu)"/>
+-->
+<!-- =============   Nodes  =======================-->
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
   </node> 
 
@@ -24,10 +24,14 @@
     <param name="sensor_timeout" value="1.0"/>
     <param name="odom_used" value="true"/>
     <param name="imu_used" value="true"/>
-    <param name="vo_used" value="false"/>
+    <param name="vo_used" value="true"/>
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
+    <remap from="base_footprint" to="base_link"/>
+ <!--   <remap from="robot_pose_ekf/odom_combined" to="odom"/>-->
   </node>
+
+
 
 </launch>
 

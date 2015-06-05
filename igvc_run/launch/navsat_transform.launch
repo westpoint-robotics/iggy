@@ -41,14 +41,18 @@
       <param name="broadcast_utm_transform" value="true"/>
 
       <!-- Placeholders for input remapping. Set your topic names as the "to" values.
-      <remap from="/imu/data" to="" />
-      <remap from="/odometry/filtered" to="" />
+      
+      <remap from="/odometry/filtered" to="wheels/odom" />
       <remap from="/gps/fix" to="" />
       -->
+      <remap from="/imu/data" to="imu_data" />
+      
+
+
 
       <!-- Placeholders for output remapping.-->
-      <remap from="/odometry/gps" to="odom" />
-   
+      <remap from="/odometry/gps" to="vo" />
+      
 
     </node>
 

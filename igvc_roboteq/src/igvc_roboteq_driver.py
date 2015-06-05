@@ -183,7 +183,7 @@ if __name__ == '__main__':
 
     try:
         #print('try.. try again')
-        rate = rospy.Rate(1)
+        rate = rospy.Rate(3)
         encodermsg = Vector3()
         while not rospy.is_shutdown():
             #print('here234')

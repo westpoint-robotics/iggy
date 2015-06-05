@@ -13,5 +13,10 @@
  
 <!--home/igvc/catkin_ws/src/triclops_vision/triclops_vision_node -->
 
+    <include file="$(find igvc_run)/launch/ekf_test.launch">
+    </include>   
+
 </launch>
+
+
 

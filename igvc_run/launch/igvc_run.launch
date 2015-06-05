@@ -23,11 +23,12 @@
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
         args="0.27 -0.28 -0.47 0 0 0 base_link right_wheel_frame 100" />
 
- <!-- bad?  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link"
-        args="0 0 -0.44 0 0 0 odom base_link 100" />-->
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link"
+        args="0 0 -0.44 0 0 0 base_footprint base_link 100" />
 
 <!-- =============  NODES  ======================= -->
- <!--    <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
+    <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
 
     <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
     </include>
@@ -37,16 +38,15 @@
 
     <include file="$(find igvc_run)/launch/navsat_transform.launch">
     </include>
-
+ <!--
     <include file="$(find igvc_run)/launch/ekf_transform.launch">
     </include>
 
-    <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
-    </include>
-
+   <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
+    </include> 
+-->
     <include file="$(find velodyne_bringup)/launch/igvc_configuration.launch">
     </include>
--->
 
 </launch>
 

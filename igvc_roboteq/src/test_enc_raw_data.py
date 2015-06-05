@@ -9,128 +9,43 @@ from geometry_msgs.msg import Vector3
 
 
 
-def getEncoders():
-    #print("here") 
-    try:
-        time.sleep(.01)
-        getdata()   #clear buffer     
-        ser.write('?C 1\r')  #enc left wheel
-        time.sleep(.005)
-        leftWheel = getdata()
-        ser.write('?C 2\r')  #enc right wheel
-        time.sleep(.005)
-        rightWheel = getdata()
-        leftWheel = makeCleanMsgOneLetter(leftWheel)
-        rightWheel = makeCleanMsgOneLetter(rightWheel)
-        #print("enc = ", leftWheel, rightWheel) 
-    except: # catch *all* exceptions
-        leftWheel = 10000000
-        rightWheel = 10000000 
-        print( "Error: getEncoders" )
-    #print(leftWheel)
-    return leftWheel, rightWheel
-
-def getRCInput():
-    try:
-        time.sleep(.01)
-        getdata()   #clear buffer     
-        ser.write('?PI 3\r') #pulse input of channel 3 (rc3 button) (estop)
-        time.sleep(.005)
-        estopVal = getdata()
-        ser.write('?PI 4\r') #pulse input of channel 4 (rc4 button) (switch)
-        time.sleep(.005)
-        switch = getdata()
-        estopVal = makeCleanMsgTwoLetters(estopVal)
-        switch = makeCleanMsgTwoLetters(switch)
-    except: # catch *all* exceptions
-        print( "Error: getRCInput" )
-        estopVal = 1000
-        switch = 1900
-
-    return estopVal, switch
-
-
-def moveWheels(speed):
-    try:
-        for i in range(1000):
-            ser.write('!G 1 1000\r')
-            time.sleep(.010)
-    except: # catch *all* exceptions
-        print( "Error: moveWheels" )
-
-
-def moveCallback(data):
-    global estopCount
-    #print('im here')
-    RCVals = getRCInput()
-    estopValue = RCVals[0]
-    switchValue = RCVals[1]
-    if (estopValue > 1500):  #estop button pushed
-        ser.write('!EX\r')
-        estopCount = True
-        #print(estopValue)
-    elif (estopCount == True):
-        ser.write('!MG\r')
-        estopCount = False
-        #print('switch back on')
-    else:
-        if (switchValue > 1500):  #switch in RC mode
-            #do RC commands
-            #print ('RC things')
-            things = 'RC'
-        else:                     
-            #print('sending command')
-            #print('comp things')
-            #print(switchValue)
-            if (abs(data.linear.x) > 0.01 or abs(data.angular.z) > 0.01):
-                #rospy.loginfo("I heard %f %f",data.linear.x,data.angular.z)
-                speed = data.linear.x *2000
-                turn = data.angular.z *1000
-                #print(speed,turn)
-                cmd = '!G 1 ' + str(speed) + '\r'
-                ser.write(cmd)
-                #getdata()
-                #print(cmd)
-                cmd = '!G 2 ' + str(turn) + '\r'
-                ser.write(cmd)
-                #getdata()
-                #print(cmd)
-   
-
-
-#def valsToOdom(encVals):
-#    leftenc = encVals[0]
-#    rightenc = encVals[1]
-#    odom_mes = Odometry()
-#    return odom_mes
-
-
 if __name__ == '__main__':
     rospy.init_node('igvc_roboteq', anonymous=True)
     #print('hello world')
     pub = rospy.Publisher("enc_raw", Vector3, queue_size=1) 
-    rospy.Subscriber("roboteq_driver/cmd", Twist, moveCallback)
+    flipcount = 0
 
     try:
         #print('try.. try again')
         rate = rospy.Rate(1)
         encodermsg = Vector3()
+        encodermsg.x = 0  #left
+        encodermsg.y = 0  #right
         while not rospy.is_shutdown():
+            flipcount += 1
+            if (flipcount > 29):  #turn left
+                encodermsg.x += 6.0
+                encodermsg.y += 13.0
+                #print ("x + 6, y + 13")
+                flipcount = 0
+            elif (flipcount > 20):  #turn left
+                encodermsg.x += 6.0
+                encodermsg.y += 13.0
+                #print ("x + 6, y + 13")
+            elif (flipcount > 10): #go straight 
+                encodermsg.x += 9.0
+                encodermsg.y += 9.0
+                #print ("x + 9, y + 9")
+            else:                  #turn right
+                encodermsg.x += 13.0
+                encodermsg.y += 6.0
+                #print ("x + 13, y + 6")
             #print('here234')
-            enclist = getEncoders()
-            if (enclist[0] == 10000000 or enclist[1] == 10000000 or enclist[0] == None or enclist[1] == None):
-                #print ('error happened')
-                pass
-            else:
-                #odom_msg = valsToOdom(encoders)
-                
-                encodermsg.x = enclist[0]
-                encodermsg.y = enclist[1]
-                pub.publish(encodermsg)
-                #print(odom_msg)            
-                #print (encoders)
-                #moveCallback()
-                #look at move subcriber, if not empty, move = true
+            pub.publish(encodermsg)
+            #print(odom_msg)            
+            #print (encoders)
+            #moveCallback()
+            #look at move subcriber, if not empty, move = true           
             rate.sleep()
 
 
