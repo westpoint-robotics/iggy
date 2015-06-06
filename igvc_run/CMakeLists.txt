@@ -10,6 +10,18 @@ find_package(catkin REQUIRED)
 # find_package(Boost REQUIRED COMPONENTS system)
 
 
+
+#add_executable(wheel_odom_tf_broadcaster src/wheel_odom_tf_broadcaster.cpp)
+#target_link_libraries(wheel_odom_broadcaster ${catkin_LIBRARIES})
+
+add_executable(igvc_run src/wheel_odom_tf_broadcaster.cpp)
+target_link_libraries(igvc_run ${catkin_LIBRARIES})
+
+
+
+
+
+
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
