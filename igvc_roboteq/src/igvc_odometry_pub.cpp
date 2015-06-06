@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "odometry_publisher");
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe("enc_raw", 100, WheelCallback);
-  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);   
+  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("wheels_odom", 50);   
   tf::TransformBroadcaster odom_broadcaster;
 
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
     odom_trans.transform.rotation = odom_quat;
 
     //send the transform
-    //odom_broadcaster.sendTransform(odom_trans);
+    odom_broadcaster.sendTransform(odom_trans);
 
     //next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;

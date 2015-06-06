@@ -6,9 +6,9 @@
 		<!-- field 1, no obstacles -->
 <!--<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />-->
 		<!-- field 2, obstacles -->
-<!--<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field2/" />-->
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field2/" />
 		<!-- weMadeIt, on course 1 -->
-<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt/" />
+<!--<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt/" /-->
 
 <arg name="enc_raw" default="$(arg path)enc_raw.bag" />
 <arg name="gps" default="$(arg path)gps_fix.bag" />

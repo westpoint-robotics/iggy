@@ -13,7 +13,7 @@
   </node> 
  
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
-  <remap from="wheels/odom" to="odom"/>
+  <!--remap from="wheels/odom" to="odom"/-->
   </node> 
 
 </launch>

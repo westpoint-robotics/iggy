@@ -32,26 +32,27 @@
       <!-- Your IMU should read 0 for yaw at *magnetic* north. If it doesn't,
            enter the offset here (desired_value = offset + sensor_raw_value). -->
       <param name="yaw_offset" value="0"/>
+      <!--TODO!!!!!!!! our IMU is off centered, put in its actual value -->
 
       <!-- If this is true, the altitude is set to 0 in the output odometry message -->
       <param name="zero_altitude" value="false"/>
 
       <!-- If this is true, the transform world_frame->utm transform is broadcast
            for use by other nodes. -->
-      <param name="broadcast_utm_transform" value="true"/>
+      <param name="broadcast_utm_transform" value="false"/>
 
       <!-- Placeholders for input remapping. Set your topic names as the "to" values.
-      <remap from="/odometry/gps" to="vo" />
-      <remap from="/odometry/filtered" to="wheels/odom" />
+      
+      <remap from="/imu/data" to="imu_data" />
       <remap from="/gps/fix" to="" />
       -->
-      <remap from="/imu/data" to="imu_data" />
       
+      <remap from="/odometry/filtered" to="wheels/odom" />
 
 
 
       <!-- Placeholders for output remapping.-->
-      
+      <remap from="/odometry/gps" to="odom" />
       
 
     </node>

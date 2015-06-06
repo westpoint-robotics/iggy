@@ -91,9 +91,9 @@ public:
         double yaw = double(heading);
         ROS_INFO(" yaw: %f", yaw);
         geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(yaw);
-
+/*
         //send the transform
-/*        geometry_msgs::TransformStamped odom_trans;
+        geometry_msgs::TransformStamped odom_trans;
         odom_trans.header.stamp = current_time_encoder;
         odom_trans.header.frame_id = "wheels_odom";
         odom_trans.child_frame_id = "base_link";
@@ -102,7 +102,9 @@ public:
         odom_trans.transform.translation.y = y;
         odom_trans.transform.translation.z = 0.0;
         odom_trans.transform.rotation = odom_quat;
+        tf::TransformBroadcaster odom_broadcaster;
         odom_broadcaster.sendTransform(odom_trans);
+
 */
         //header
         nav_msgs::Odometry odom;
