@@ -16,6 +16,6 @@
     <rosparam file="$(find igvc_2dnav)/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find igvc_2dnav)/base_local_planner_params.yaml" command="load" />
     <remap from="cmd_vel" to="roboteq_driver/cmd"/>
-    <!--<remap from="odom" to="vo"/>   -->
+    <remap from="odom" to="odometry/filtered"/> 
   </node>
 </launch>

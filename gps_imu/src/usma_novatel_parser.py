@@ -162,8 +162,8 @@ def parse_novatelINSPVA(insString):
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
-    fix_msg.position_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
-
+    fix_msg.position_covariance = [0.01,0.0,0.0,0.0,0.01,0.0,0.0,0.0,999.0]
+    fix_msg.position_covariance_type = 1
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
     global curRoll
@@ -199,7 +199,7 @@ def parse_novatelINSPVA(insString):
     imu_msg.linear_acceleration_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
     #imu_msg.orientation_covariance.x = float(angcnsY)
     euler = Vector3(curRoll, curPitch, curYaw)
-    euler = vector_norm(euler)
+    #euler = vector_norm(euler)
     quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
     imu_msg.orientation.x = quaternion[0]

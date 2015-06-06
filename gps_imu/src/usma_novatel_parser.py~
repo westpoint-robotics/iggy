@@ -123,7 +123,7 @@ def vector_norm(data, axis=None, out=None):
     1.0
 
     """
-    data = numpy.array(data, dtype=numpy.float64, copy=True)
+    data = numpy.array(data, dtype=numpy, copy=True)
     if out is None:
         if data.ndim == 1:
             return math.sqrt(numpy.dot(data, data))
@@ -162,8 +162,8 @@ def parse_novatelINSPVA(insString):
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
-    fix_msg.position_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
-
+    fix_msg.position_covariance = [0.01,0.0,0.0,0.0,0.01,0.0,0.0,0.0,999.0]
+    fix_msg.position_covariance_type = 1
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
     global curRoll
