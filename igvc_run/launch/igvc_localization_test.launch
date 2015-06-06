@@ -25,7 +25,7 @@
 
 
   <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link"
-        args="0 0 -0.44 0 0 0 base_footprint base_link 100" />
+        args="0 0 -0.44 0 0 0 base_link odom 100" />
 
 <!-- =============  NODES  ======================= -->
     <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>

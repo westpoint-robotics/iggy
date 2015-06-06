@@ -121,20 +121,30 @@ include_directories(include
 
 ## Declare a cpp executable
 #add_executable(triclops_stereoto3d src/stereoto3dpoints.cpp)
- add_executable(triclops_vision_node src/bb2_image_pointCloud.cpp)
+ add_executable(triclops_pointcloud_node src/bb2_image_pointCloud.cpp)
  add_executable(triclops_stereo_node src/triclops_stereo_node.cpp)
+ add_executable(line_detector_node src/line_detector.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(triclops_vision_node triclops_vision_generate_messages_cpp)
 ## Specify libraries to link a library or executable target against
- target_link_libraries(triclops_vision_node
+ target_link_libraries(line_detector_node
    ${catkin_LIBRARIES}
    ${TRICLOPS_LIB}
    ${FLYCAPTURE_LIB}
    ${FLYCAPTURE2BRIDGE_LIB}
    ${PNMUTILS_LIB}
  )
+
+ target_link_libraries(triclops_pointcloud_node
+   ${catkin_LIBRARIES}
+   ${TRICLOPS_LIB}
+   ${FLYCAPTURE_LIB}
+   ${FLYCAPTURE2BRIDGE_LIB}
+   ${PNMUTILS_LIB}
+ )
+
  target_link_libraries(triclops_stereo_node
    ${catkin_LIBRARIES}
    ${TRICLOPS_LIB}

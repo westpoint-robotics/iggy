@@ -18,7 +18,7 @@
 
 
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args="--clock -l $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
+    args="--clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
 
 </launch>
 
