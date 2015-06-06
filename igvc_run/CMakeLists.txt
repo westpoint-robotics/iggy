@@ -32,5 +32,3 @@ include_directories(
 add_executable(wheel_odom_tf_broadcaster src/wheel_odom_tf_broadcaster.cpp)
 target_link_libraries(wheel_odom_tf_broadcaster ${catkin_LIBRARIES})
 
-
-

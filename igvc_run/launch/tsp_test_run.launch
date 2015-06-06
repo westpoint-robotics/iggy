@@ -51,15 +51,15 @@
     <param name="self_diagnose" value="false"/>
 
     <remap from="odom" to="wheels/odom"/>
-    <remap from="robot_pose_ekf/odom_combined" to="odometry/filtered"/>
+    <!--remap from="robot_pose_ekf/odom_combined" to="odometry/filtered"/-->
   </node>
 
 
   <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
     </include>
 
-  <!--include file="$(find velodyne_bringup)/launch/move_base.launch">
-    </include-->
+  <include file="$(find velodyne_bringup)/launch/move_base.launch">
+    </include>
 
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
 
