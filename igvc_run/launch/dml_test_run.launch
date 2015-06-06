@@ -6,7 +6,7 @@
 		<!-- field 1, no obstacles -->
 <!--<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />-->
 		<!-- field 2, obstacles -->
-<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field2/" />
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt2/" />
 		<!-- weMadeIt, on course 1 -->
 <!--<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt/" />-->
 
@@ -42,32 +42,41 @@
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
         args="0.27 -0.28 -0.47 0 0 0 base_link right_wheel_frame 100" />
 
-<!--
   <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link"
-        args="0 0 -0.44 0 0 0 odom base_link 100" />
+        args="0 0 -0.44 0 0 0 base_footprint base_link 100" />
+
+<!-- =============   Nodes  ======================= 
+
+    <include file="$(find igvc_run)/launch/navsat_transform.launch">
+    </include>
+
+    <include file="$(find velodyne_bringup)/launch/move_base.launch">
+    </include>
 -->
-<!-- =============   Nodes  ======================= -->
+<node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+  <remap from="odom" to="vo"/>
+  <remap from="fix" to="/gps/fix" />
+  <param name="rot_covariance" value="99999" />
+  <param name="frame_id" value="base_footprint" />
+</node>
+
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
+    <remap from="wheels/odom" to="odom"/>
   </node>
-<!--
+
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom"/>
     <param name="freq" value="30.0"/>
     <param name="sensor_timeout" value="1.0"/>
     <param name="odom_used" value="true"/>
     <param name="imu_used" value="true"/>
-    <param name="vo_used" value="false"/>
+    <param name="vo_used" value="true"/>
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
-    <remap from="odom" to="base_link"/>
-    <remap from="wheels/odom" to="odom"/>
-  </node>
--->
-    <include file="$(find velodyne_bringup)/launch/move_base.launch">
-    </include>
 
-    <include file="$(find igvc_run)/launch/navsat_transform.launch">
-    </include>
+    <remap from="wheels/odom" to="odom"/>
+    <remap from="robot_pose_ekf/odom_combined" to="odometry/filtered"/>
+  </node>
 
 </launch>
 

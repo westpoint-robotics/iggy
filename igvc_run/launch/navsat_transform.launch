@@ -47,10 +47,15 @@
       <remap from="/gps/fix" to="" />
       -->
       <remap from="/imu/data" to="imu_data" />
+<<<<<<< HEAD
+     
+    <remap from="/odometry/filtered" to="wheels/odom" />
+=======
       <remap from="/odometry/filtered" to="wheels/odom" />
 
 
 
+>>>>>>> aa7b486038bfbe60f4a52caba73657615a184b34
       <!-- Placeholders for output remapping.-->
       <remap from="/odometry/gps" to="odom" />
       
