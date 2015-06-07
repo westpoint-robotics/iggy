@@ -23,7 +23,6 @@
       
 """
 
-import roslib
 import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry
@@ -34,7 +33,7 @@ class OdomEKF():
         rospy.init_node('odom_ekf', anonymous=False)
 
         # Publisher of type nav_msgs/Odometry
-        self.ekf_pub = rospy.Publisher('odometry_final', Odometry)
+        self.ekf_pub = rospy.Publisher('odometry_final', Odometry, queue_size=1)
         
         # Wait for the /odom topic to become available
         rospy.wait_for_message('robot_pose_ekf/odom_combined', PoseWithCovarianceStamped)

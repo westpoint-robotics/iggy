@@ -7,8 +7,8 @@
 -->
 
   <!--- Run AMCL 
-  <include file="$(find amcl)/examples/amcl_diff.launch" />-->
-
+  <include file="$(find amcl)/examples/amcl_diff.launch" />
+-->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find igvc_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find igvc_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap"/>
@@ -16,6 +16,9 @@
     <rosparam file="$(find igvc_2dnav)/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find igvc_2dnav)/base_local_planner_params.yaml" command="load" />
     <remap from="cmd_vel" to="roboteq_driver/cmd"/>
-    <remap from="odom" to="odometry/filtered"/> 
+    <remap from="odom" to="odometry_final"/> 
   </node>
+
+  <node pkg="map_server" type="map_server" name="map_server" output="screen"
+    args="/home/igvc/catkin_ws/src/igvc_2dnav/my_map.yaml" />
 </launch>
