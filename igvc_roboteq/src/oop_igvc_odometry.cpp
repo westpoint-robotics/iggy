@@ -11,6 +11,7 @@ class IgvcOdometry
 public:
   IgvcOdometry()
   {
+    odom_broadcaster = new tf::TransformBroadcaster;
     _PreviousLeftEncoderCounts = 0;
     _PreviousRightEncoderCounts = 0; 
     //math for measured --> 70.16cm per rotation /32 = .021927 meters per count
@@ -91,7 +92,6 @@ public:
         double yaw = double(heading);
         ROS_INFO(" yaw: %f", yaw);
         geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(yaw);
-        tf::TransformBroadcaster odom_broadcaster;
 
         //send the transform
         geometry_msgs::TransformStamped odom_trans;
@@ -103,7 +103,7 @@ public:
         odom_trans.transform.translation.y = y;
         odom_trans.transform.translation.z = 0.0;
         odom_trans.transform.rotation = odom_quat;
-        odom_broadcaster.sendTransform(odom_trans);
+        odom_broadcaster->sendTransform(odom_trans);
 
         //header
         nav_msgs::Odometry odom;
@@ -158,6 +158,7 @@ private:
     ros::NodeHandle n_;
     ros::Publisher pub_;
     ros::Subscriber sub_;
+    tf::TransformBroadcaster *odom_broadcaster;
 
 };//End of class IgvcOdometry
 
