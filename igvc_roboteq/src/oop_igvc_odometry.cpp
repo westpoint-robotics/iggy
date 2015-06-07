@@ -87,14 +87,14 @@ public:
             float newHeading = (C*deltaTime*deltaTime + D*deltaTime)*changeHeading + heading;
             float deltaHeading = (heading - newHeading)/ deltaTime;
 
-    //pub things
+    //pub things  
         double yaw = double(heading);
         ROS_INFO(" yaw: %f", yaw);
         geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(yaw);
         tf::TransformBroadcaster odom_broadcaster;
 
         //send the transform
-     /*   geometry_msgs::TransformStamped odom_trans;
+        geometry_msgs::TransformStamped odom_trans;
         odom_trans.header.stamp = current_time_encoder;
         odom_trans.header.frame_id = "wheels_odom";
         odom_trans.child_frame_id = "base_link";
@@ -103,12 +103,13 @@ public:
         odom_trans.transform.translation.y = y;
         odom_trans.transform.translation.z = 0.0;
         odom_trans.transform.rotation = odom_quat;
-        odom_broadcaster.sendTransform(odom_trans);*/
+        odom_broadcaster.sendTransform(odom_trans);
 
         //header
         nav_msgs::Odometry odom;
         odom.header.stamp = current_time_encoder;
         odom.header.frame_id = "wheels_odom";
+        
         //set the position
         odom.pose.pose.position.x = x;
         odom.pose.pose.position.y = y;
@@ -117,19 +118,21 @@ public:
         //ROS_INFO("odom_quat: %f", odom_quat);
         odom.pose.covariance[0] = 2.0;
         odom.pose.covariance[7] = 2.0;
-        odom.pose.covariance[14] = 2.0;
-        odom.pose.covariance[21] = 2.0;
-        odom.pose.covariance[28] = 2.0;
-        odom.pose.covariance[35] = 2.0;
+        odom.pose.covariance[14] = 9999.0;
+        odom.pose.covariance[21] = 9999.0;
+        odom.pose.covariance[28] = 9999.0;
+        odom.pose.covariance[35] = 9999.0;
         //set the velocity
         odom.child_frame_id = "base_link";
         odom.twist.twist.linear.x = vx;
         odom.twist.twist.linear.y = vy;
         odom.twist.twist.angular.z = deltaHeading;
-        for(size_t ind = 0; ind < 36; ind+=7)
-        {
-          odom.twist.covariance[ind] = 1e-6;
-        }
+        odom.twist.covariance[0] = 5.0;
+        odom.twist.covariance[7] = 99999.0;
+        odom.twist.covariance[14] = 9999.0;
+        odom.twist.covariance[21] = 9999.0;
+        odom.twist.covariance[28] = 9999.0;
+        odom.twist.covariance[35] = 9999.0;
 
     
         pub_.publish(odom);

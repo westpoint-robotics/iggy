@@ -50,7 +50,8 @@
     <include file="$(find igvc_run)/launch/navsat_transform.launch">
     </include>
 
-    <include file="$(find velodyne_bringup)/launch/move_base.launch">
+
+  <include file="$(find velodyne_bringup)/launch/move_base.launch">
     </include>
 -->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
@@ -61,7 +62,6 @@
 </node>
 
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
-    <remap from="wheels/odom" to="odom"/>
   </node>
 
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
@@ -74,9 +74,9 @@
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
 
-    <remap from="wheels/odom" to="odom"/>
-    <remap from="robot_pose_ekf/odom_combined" to="odometry/filtered"/>
+    <remap from="odom" to="wheels/odom"/>
   </node>
+
 
 </launch>
 

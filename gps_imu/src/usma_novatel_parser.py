@@ -98,48 +98,6 @@ def parse_novatelIMU(imuString):
     imu_msg = Vector3(velx,vely,velz)
     return imu_msg
    
-def vector_norm(data, axis=None, out=None):
-    """Return length, i.e. eucledian norm, of ndarray along axis.
-
-    >>> v = numpy.random.random(3)
-    >>> n = vector_norm(v)
-    >>> numpy.allclose(n, numpy.linalg.norm(v))
-    True
-    >>> v = numpy.random.rand(6, 5, 3)
-    >>> n = vector_norm(v, axis=-1)
-    >>> numpy.allclose(n, numpy.sqrt(numpy.sum(v*v, axis=2)))
-    True
-    >>> n = vector_norm(v, axis=1)
-    >>> numpy.allclose(n, numpy.sqrt(numpy.sum(v*v, axis=1)))
-    True
-    >>> v = numpy.random.rand(5, 4, 3)
-    >>> n = numpy.empty((5, 3), dtype=numpy.float64)
-    >>> vector_norm(v, axis=1, out=n)
-    >>> numpy.allclose(n, numpy.sqrt(numpy.sum(v*v, axis=1)))
-    True
-    >>> vector_norm([])
-    0.0
-    >>> vector_norm([1.0])
-    1.0
-
-    """
-    data = numpy.array(data, dtype=numpy, copy=True)
-    if out is None:
-        if data.ndim == 1:
-            return math.sqrt(numpy.dot(data, data))
-        data *= data
-        out = numpy.atleast_1d(numpy.sum(data, axis=axis))
-        numpy.sqrt(out, out)
-        return out
-    else:
-        data *= data
-        numpy.sum(data, axis=axis, out=out)
-        numpy.sqrt(out, out)
-
-
-
-
-
 def parse_novatelINSPVA(insString):
     #print "++++instring:",insString
     gnssWeek = insString[0] # GNSS week
@@ -162,8 +120,13 @@ def parse_novatelINSPVA(insString):
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
+<<<<<<< HEAD
+    fix_msg.position_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,99999.0]
+
+=======
     fix_msg.position_covariance = [0.01,0.0,0.0,0.0,0.01,0.0,0.0,0.0,999.0]
     fix_msg.position_covariance_type = 1
+>>>>>>> c7205a3ef8575bf94933c945e2ec058aa050856e
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
     global curRoll
@@ -196,7 +159,7 @@ def parse_novatelINSPVA(insString):
     imu_msg.linear_acceleration.x = float(velcnsZ)#*.05/pow(2,15)
     imu_msg.linear_acceleration.y = float(velcnsY)#*.05/pow(2,15)
     imu_msg.linear_acceleration.z = float(velcnsX)#*.05/pow(2,15)
-    imu_msg.linear_acceleration_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
+    imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #imu_msg.orientation_covariance.x = float(angcnsY)
     euler = Vector3(curRoll, curPitch, curYaw)
     #euler = vector_norm(euler)
@@ -206,16 +169,16 @@ def parse_novatelINSPVA(insString):
     imu_msg.orientation.y = quaternion[1]
     imu_msg.orientation.z = quaternion[2]
     imu_msg.orientation.w = quaternion[3]
-    imu_msg.orientation_covariance = [9999,9999,9999,9999,9999,9999,9999,9999,9999]
+    imu_msg.orientation_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     imu_msg.angular_velocity.x = (curPitch-lastPitch)/deltime
     imu_msg.angular_velocity.y = (curRoll-lastRoll)/deltime
     imu_msg.angular_velocity.z = (curYaw-lastYaw)/deltime
-    imu_msg.angular_velocity_covariance = [0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
+    imu_msg.angular_velocity_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #velx = float(velEast)*.05/pow(2,15)
     #vely = float(velNorth)*.05/pow(2,15)
     #velz = float(velUp)*.05/pow(2,15)
     #imu_msg = Vector3(velx,vely,velz,pitch,roll)
-    imu_msg.orientation.w = 0.01
+    #imu_msg.orientation.w = 0.01
 
 
     retrnList = [imu_msg, fix_msg]
