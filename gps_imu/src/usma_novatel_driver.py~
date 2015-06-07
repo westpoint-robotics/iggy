@@ -7,6 +7,7 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 from usma_novatel_parser import *
+from os.path import expanduser
 
 # configure the serial connections 
 ser = serial.Serial(
@@ -22,7 +23,9 @@ if (ser.isOpen()):
 ser.open()
 
 # Create a log file
-outFile = open("novatelLog.txt", "wb")
+home = expanduser("~")
+fName = home+"/catkin_ws/rosbags/novatelLog.txt"
+outFile = open(fName, wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')
@@ -35,7 +38,7 @@ ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
-imuPub = rospy.Publisher('imu/data', Imu, queue_size=1)
+imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
 #novaPub = rospy.Publisher(???,???, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(10) # 10hz

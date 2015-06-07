@@ -7,6 +7,7 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 from usma_novatel_parser import *
+from os.path import expanduser
 
 # configure the serial connections 
 ser = serial.Serial(
@@ -22,7 +23,9 @@ if (ser.isOpen()):
 ser.open()
 
 # Create a log file
-outFile = open("novatelLog.txt", "wb")
+home = expanduser("~")
+fName = home+"/catkin_ws/rosbags/novatelLog.txt"
+outFile = open(fName, "wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')

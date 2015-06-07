@@ -9,6 +9,7 @@ from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Vector3
 
 
+RCmode = 2
 
 #print("here1")
 # configure the serial connections 
@@ -21,16 +22,17 @@ try:
         bytesize=serial.EIGHTBITS
     )
 except:
-    try:
-        ser = serial.Serial(
-            port='/dev/ttyACM1',
-            baudrate=115200, #8N1
-            parity=serial.PARITY_NONE,
-            stopbits=serial.STOPBITS_ONE,
-            bytesize=serial.EIGHTBITS
-        )
-    except:
-        raise
+    raise
+#    try:
+#        ser = serial.Serial(
+#            port='/dev/ttyACM1',
+#            baudrate=115200, #8N1
+#            parity=serial.PARITY_NONE,
+#            stopbits=serial.STOPBITS_ONE,
+#            bytesize=serial.EIGHTBITS
+#        )
+#    except:
+#        raise
 
 if (ser.isOpen()):
     ser.close()
@@ -90,6 +92,7 @@ def getEncoders():
         ser.write('?C 2\r')  #enc right wheel
         time.sleep(.005)
         rightWheel = getdata()
+        print("enc = ", leftWheel, rightWheel) 
         leftWheel = makeCleanMsgOneLetter(leftWheel)
         rightWheel = makeCleanMsgOneLetter(rightWheel)
         #print("enc = ", leftWheel, rightWheel) 
@@ -131,6 +134,7 @@ def moveWheels(speed):
 
 def moveCallback(data):
     global estopCount
+    global RCmode
     #print('im here')
     RCVals = getRCInput()
     estopValue = RCVals[0]
@@ -138,16 +142,18 @@ def moveCallback(data):
     if (estopValue > 1500):  #estop button pushed
         ser.write('!EX\r')
         estopCount = True
+        RCmode = 3
         #print(estopValue)
     elif (estopCount == True):
         ser.write('!MG\r')
         estopCount = False
         #print('switch back on')
+        RCmode = 4
     else:
         if (switchValue > 1500):  #switch in RC mode
             #do RC commands
             #print ('RC things')
-            things = 'RC'
+            RCmode = 1
         else:                     
             #print('sending command')
             #print('comp things')
@@ -165,7 +171,8 @@ def moveCallback(data):
                 ser.write(cmd)
                 #getdata()
                 #print(cmd)
-   
+                RCmode = 0
+       
 
 
 #def valsToOdom(encVals):
@@ -196,6 +203,7 @@ if __name__ == '__main__':
                 
                 encodermsg.x = enclist[0]
                 encodermsg.y = enclist[1]
+                encodermsg.z = RCmode
                 pub.publish(encodermsg)
                 #print(odom_msg)            
                 #print (encoders)
@@ -206,7 +214,6 @@ if __name__ == '__main__':
 
 
     except KeyboardInterrupt:
-        outFile.close() 
         ser.close()
         raise
 
