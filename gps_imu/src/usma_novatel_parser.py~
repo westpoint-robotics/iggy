@@ -120,13 +120,9 @@ def parse_novatelINSPVA(insString):
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
-<<<<<<< HEAD
-    fix_msg.position_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,99999.0]
 
-=======
     fix_msg.position_covariance = [0.01,0.0,0.0,0.0,0.01,0.0,0.0,0.0,999.0]
     fix_msg.position_covariance_type = 1
->>>>>>> c7205a3ef8575bf94933c945e2ec058aa050856e
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
     global curRoll

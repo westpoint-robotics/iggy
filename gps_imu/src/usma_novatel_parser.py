@@ -105,12 +105,12 @@ def parse_novatelINSPVA(insString):
     latitude = insString[2] # Latitude (WGS84)
     longitude = insString[3] # Longitude (WGS84)
     heightMSL = insString[4] # Ellipsoidal Height (WGS84) [m]
-    velcnsZ = insString[5] # Velocity in northerly direction [m/s] (negative for south)
-    velcnsY = insString[6] # Velocity in easterly direction [m/s] (negative for west)
-    velcnsX = insString[7] # Velocity in upward direction [m/s]
-    cnsYaw = float(insString[8])*(3.14159265/180) # yaw/azimuth - Right-handed rotation from local level around Z-axis -- changed from degress to radians (pi/180 deg)
-    cnsRoll = float(insString[9])*(3.14159265/180)  # roll - (neg) Right-handed rotation from local level around y-axis  -- changed from degress to radians (pi/180 deg)
-    cnsPitch = float(insString[10])*(3.14159265/180)  # pitch -Right-handed rotation from local level around x-axis  -- changed from degress to radians (pi/180 deg)
+    velcnsY = insString[5] # Velocity in northerly direction [m/s] (negative for south)
+    velcnsX = insString[6] # Velocity in easterly direction [m/s] (negative for west)
+    velcnsZ = insString[7] # Velocity in upward direction [m/s]
+    cnsRoll = float(insString[8])*(3.14159265/180) # yaw/azimuth - Right-handed rotation from local level around Z-axis -- changed from degress to radians (pi/180 deg)
+    cnsPitch = float(insString[9])*(3.14159265/180)  # roll - (neg) Right-handed rotation from local level around y-axis  -- changed from degress to radians (pi/180 deg)
+    cnsYaw = float(insString[10])*(3.14159265/180)  # pitch -Right-handed rotation from local level around x-axis  -- changed from degress to radians (pi/180 deg)
     inertialStatus = insString[11].split('*')[0] # Inertial status
    
     #print "inertialStatus",inertialStatus
@@ -136,7 +136,7 @@ def parse_novatelINSPVA(insString):
     #imuY comes in as negative of value --> cancels out negative conversion
     imuRoll = cnsPitch
     imuPitch = cnsRoll
-    imuYaw = cnsYaw   
+    imuYaw = -1*cnsYaw   
     
     lastYaw = curYaw
     curYaw = imuYaw
@@ -152,9 +152,9 @@ def parse_novatelINSPVA(insString):
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
     imu_msg.header.frame_id = 'imu_frame'
-    imu_msg.linear_acceleration.x = float(velcnsZ)#*.05/pow(2,15)
-    imu_msg.linear_acceleration.y = float(velcnsY)#*.05/pow(2,15)
-    imu_msg.linear_acceleration.z = float(velcnsX)#*.05/pow(2,15)
+    imu_msg.linear_acceleration.x = float(velcnsY)#*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = float(velcnsX)*-1#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = float(velcnsZ)#*.05/pow(2,15)
     imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #imu_msg.orientation_covariance.x = float(angcnsY)
     euler = Vector3(curRoll, curPitch, curYaw)
