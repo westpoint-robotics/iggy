@@ -18,9 +18,6 @@
     args=" -clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
 
 -->
-
-
-
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
         args="0.1 0.1 1.14 0 0 0 base_link velodyne 100" />
@@ -46,12 +43,22 @@
   <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
         args="0 0 -0.44 0 0 0 base_footprint base_link 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
-        args="-319600 -4726900 0 0 0 0 odom utm 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
         args="0 0 0 0 0 0 map odom 100" />
-<!--
+
+
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
+        args="-1.2 -1.2 0 0 0 0 odom utm 100" />
+<!--  
+
+
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
+            args="-320185 -4727393 0 0 0 0 odom utm 100" />
+<node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
+        args="-319600 -4726900 0 0 0 0 odom utm 100" />
+
       x: 320156.994786 = 319600
       y: 4727417.997   = 4726900
 -->
@@ -88,12 +95,12 @@
   </node>
 -->
 
-<node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
-  <remap from="odom" to="vo"/>
-  <remap from="fix" to="/gps/fix" />
-  <param name="rot_covariance" value="99999" />
-  <param name="frame_id" value="base_footprint" />
-</node>
+    <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+      <remap from="odom" to="vo"/>
+      <remap from="fix" to="/gps/fix" />
+      <param name="rot_covariance" value="99999" />
+      <param name="frame_id" value="base_footprint" />
+    </node>
 
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="utm"/>
@@ -109,23 +116,15 @@
     remap from="robot_pose_ekf/odom_combined" to="odometry/filtered"/-->
   </node>
  
-
   <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
-    </include>
+  </include>
 
-  <include file="$(find velodyne_bringup)/launch/move_base.launch">
-    </include>
+  <include file="$(find igvc_run)/launch/move_base.launch">
+  </include>
 
-<node name="odom_ekf" pkg="igvc_run" type="odom_ekf.py" output="screen"/>
+    <node name="odom_ekf" pkg="igvc_run" type="odom_ekf.py" output="screen"/>
 
-<node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
-
-
-
-
-
-
-
-
+    <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
+     
 </launch>
 
