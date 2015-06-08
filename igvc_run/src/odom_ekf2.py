@@ -26,11 +26,21 @@
 import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistWithCovariance
+
+#globals
+
+
 
 class OdomEKF():
+
+
     def __init__(self):
         # Give the node a name
         rospy.init_node('odom_ekf', anonymous=False)
+        self.timeNow = rospy.get_rostime()
+        self.data2 = TwistWithCovariance()
 
         # Publisher of type nav_msgs/Odometry
         self.ekf_pub = rospy.Publisher('odometry_final', Odometry, queue_size=1)
@@ -39,8 +49,10 @@ class OdomEKF():
         rospy.wait_for_message('robot_pose_ekf/odom_combined', PoseWithCovarianceStamped)
         
         # Subscribe to the /robot_pose_ekf/odom_combined topic
+        rospy.Subscriber('imu/data', PoseWithCovarianceStamped, self.callback)
         rospy.Subscriber('robot_pose_ekf/odom_combined', PoseWithCovarianceStamped, self.pub_ekf_odom)
         
+
         #rospy.loginfo("Publishing combined odometry on /odom_ekf")
         
     def pub_ekf_odom(self, msg):
@@ -48,14 +60,29 @@ class OdomEKF():
         odom.header = msg.header
         odom.child_frame_id = 'utm'
         odom.pose = msg.pose
+        odom.twist = self.data2
+        odom.twist.covariance = [0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01]
         
         self.ekf_pub.publish(odom)
         
+    def callback(self, data):
+        lastTime = self.timeNow
+        self.timeNow = rospy.get_rostime()
+        deltaTime = Duration(self.timeNow - lastTime)
+        self.data2.linear.x = data.linear_acceleration.x*deltaTime
+        self.data2.linear.y = data.linear_acceleration.y*deltaTime
+        self.data2.linear.z = data.linear_acceleration.z*deltaTime
+        self.data2.angular = data.angular_velocity
+
+
+
+
 if __name__ == '__main__':
-    try:
+    #try:
         OdomEKF()
         rospy.spin()
-    except:
-        pass
+    #except:
+    #    print('error')
+    #    pass
         
 

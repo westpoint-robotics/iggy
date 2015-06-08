@@ -124,7 +124,7 @@ include_directories(include
  add_executable(triclops_pointcloud_node src/bb2_image_pointCloud.cpp)
  add_executable(triclops_stereo_node src/triclops_stereo_node.cpp)
  add_executable(line_detector_node src/line_detector.cpp)
-
+ #add_executable(bb2_image_pointCloud_node src/bb2_image_pointCloud.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(triclops_vision_node triclops_vision_generate_messages_cpp)
