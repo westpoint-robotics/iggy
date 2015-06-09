@@ -122,7 +122,7 @@ include_directories(include
 
 ## Declare a cpp executable
 #add_executable(triclops_stereoto3d src/stereoto3dpoints.cpp)
- add_executable(triclops_pointcloud_node src/bb2_image_pointCloud.cpp)
+ add_executable(triclops_pointcloud_node src/bb2_image_pointCloud.cpp src/LineFilter.cpp)
  add_executable(triclops_stereo_node src/triclops_stereo_node.cpp)
  add_executable(line_detector_node src/line_detector.cpp)
 

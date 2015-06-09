@@ -51,6 +51,7 @@
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "triclops_vision/LineFilter.h"
 //
 // Macro to check, report on, and handle Triclops API error codes.
 //
@@ -84,6 +85,8 @@ enum IMAGE_SIDE
 {
     RIGHT = 0, LEFT
 };
+
+LineFilter lf;
 
 // configue camera to capture image
 int configureCamera( FC2::Camera &camera );
@@ -124,7 +127,8 @@ int get3dPoints(  PointCloud       & returnPoints,
                   FC2::Image      const & grabbedImage,
                   TriclopsContext const & triclops,
                   TriclopsImage16 const & disparityImage16,
-                  TriclopsInput   const & colorData );
+                  TriclopsInput   const & colorData,
+                    cv::vector<cv::Vec4i> &lines );
 
 int main(int  argc, char **argv)
 {
@@ -200,6 +204,20 @@ int main(int  argc, char **argv)
             cv::waitKey(3);
          }
 
+
+// pass opencv into white line filter
+    cv::Mat filtered_image;
+    cv::vector<cv::Vec4i> lines;
+    // Orig image size is 1024 768
+    lf.findLines(leftImage, filtered_image, lines);
+    lf.displayCanny();
+    lf.displayBlue();
+    lf.displayHough();
+// get list of lines by pixel
+
+// pass list into pointcloud2d
+// pc2 returns xyz of obstacles
+
         sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
         image_pub_left.publish(msg);
         msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
@@ -223,8 +241,9 @@ int main(int  argc, char **argv)
         //cv::imshow("window", map);
 
         PointCloud points;
+        //cv::vector<cv::Vec4i> lines;
         // publish the point cloud containing 3d points
-        if ( get3dPoints(points, grabbedImage, triclops, disparityImage16, triclopsColorInput ) )
+        if ( get3dPoints(points, grabbedImage, triclops, disparityImage16, triclopsColorInput, lines ) )
         {
             return EXIT_FAILURE;
         }
@@ -396,6 +415,7 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                 return 1;
             }
         }
+        // OPENCV CONVERSION ==============================================
         // convert Left image to OpenCV Mat TODO Find a better way to do this.
         unsigned int rowBytes = (double)bgrImage[LEFT].GetReceivedDataSize()/(double)bgrImage[LEFT].GetRows();
         leftImageBGR = cv::Mat(bgrImage[LEFT].GetRows(), bgrImage[LEFT].GetCols(), CV_8UC3, bgrImage[LEFT].GetData(),rowBytes);
@@ -519,7 +539,8 @@ int get3dPoints( PointCloud      & returnedPoints,
                      FC2::Image      const & grabbedImage,
                      TriclopsContext const & triclops,
                      TriclopsImage16 const & disparityImage16,
-                     TriclopsInput   const & colorData )
+                     TriclopsInput   const & colorData,
+                    cv::vector<cv::Vec4i> &lines)
 {
     TriclopsImage monoImage = {0};
     TriclopsColorImage colorImage = {0};
@@ -552,28 +573,26 @@ int get3dPoints( PointCloud      & returnedPoints,
         _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
     }
 
-    cv::Mat R(colorImage.nrows, colorImage.ncols, CV_8UC1, colorImage.red, colorImage.rowinc);
-    cv::Mat G(colorImage.nrows, colorImage.ncols, CV_8UC1, colorImage.green, colorImage.rowinc);
-    cv::Mat B(colorImage.nrows, colorImage.ncols, CV_8UC1, colorImage.blue, colorImage.rowinc);
-
-    std::vector<cv::Mat> array_to_merge;
-
-    array_to_merge.push_back(B);
-    array_to_merge.push_back(G);
-    array_to_merge.push_back(R);
-
     cv::Mat colour;
-
-    cv::merge(array_to_merge, colour);
+    // convert Left image to OpenCV Mat TODO Find a better way to do this.
+    unsigned int rowBytes = (double)colorImage.GetReceivedDataSize()/(double)colorImage.GetRows();
+    colour = cv::Mat(colorImage.GetRows(), colorImage.GetCols(), CV_8UC3, colorImage.GetData(),rowBytes);
+    // Draw the Hough lines on the image
+    for( size_t i =0; i< lines.size(); i++)
+    {
+        //line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
+        line(colour, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,0,0),5,8);
+    }
+    // TODO HI PRI opencv back to triclops fix this first
 
     cv::imshow("colorimage", colour);
     cv::waitKey(3);
-
-
     // The format for the output file is:
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
     // ...
+
+
 
     // Determine the number of pixels spacing per row
     pixelinc = disparityImage16.rowinc/2;
@@ -598,7 +617,10 @@ int get3dPoints( PointCloud      & returnedPoints,
                     {
                         r = (int)colorImage.red[k];
                         g = (int)colorImage.green[k];
-                        b = (int)colorImage.blue[k];
+                 // convert Left image to OpenCV Mat TODO Find a better way to do this.
+        unsigned int rowBytes = (double)bgrImage[LEFT].GetReceivedDataSize()/(double)bgrImage[LEFT].GetRows();
+        leftImageBGR = cv::Mat(bgrImage[LEFT].GetRows(), bgrImage[LEFT].GetCols(), CV_8UC3, bgrImage[LEFT].GetData(),rowBytes);
+               b = (int)colorImage.blue[k];
                     }
                     else
                     {

@@ -1,7 +1,28 @@
 <!--igvc_run.launch-->
 <launch>
     <master auto="start"/>
-  <node pkg="triclops_vision" type="triclops_stereo_node" name="triclops_stereo_node">
+
+
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
+        args="0 0 0 0 0 0 1 map bumblebee2 100" />
+
+  <node pkg="triclops_vision" type="triclops_pointcloud_node" name="triclops_stereo_node">
+    
   </node> 
+
+
+
+
+<!--
+ <remap from="/camera/left/color" to="/camera/left/rgb"/>
+  <node pkg="image_view" type="image_view" name="image_view_left">
+  <remap from="image" to="/camera/left/color"/>
+  </node> 
+  <node pkg="image_view" type="image_view" name="image_view_right">
+  <remap from="image" to="/camera/right/color"/>
+  </node> 
+
+-->
+
 </launch>
 

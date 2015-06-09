@@ -16,7 +16,7 @@ class LineFilter
     public:
         LineFilter();
         virtual ~LineFilter();
-        void findLines(cv::Mat &src_image, cv::Mat &rtrn_image);
+        void findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines);
         void displayOriginal();
         void displayGrayScale();
         void displayBlurred();

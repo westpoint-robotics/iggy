@@ -29,7 +29,7 @@ LineFilter::~LineFilter()
     cvDestroyAllWindows();
 }
 
-void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image)
+void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines)
 {
     original_image = src_image;
     // Convert the BGR image to Gray scale
@@ -64,7 +64,7 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image)
     }
 
     // Find the Hough lines
-    cv::vector<cv::Vec4i> lines;
+    //cv::vector<cv::Vec4i> lines;
 
     cv::HoughLinesP(canny_image, lines, h_rho, (CV_PI/h_theta), h_thresh, h_minLineLen, h_maxLineGap);
     hough_image = cv::Mat::zeros(canny_image.size(), canny_image.type());
@@ -75,11 +75,15 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image)
     {
         line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
         line(blue_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,0,0),5,8);
+        
     }
     // Return the final image with just the white lines in it
     rtrn_image = hough_image;
-
 }
+
+
+
+
 
 // Use OpenCV imShow to display the Original image in a window
 // This function reduces the size of the picture to 400x300
