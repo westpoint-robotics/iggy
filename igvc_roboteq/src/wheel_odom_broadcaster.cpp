@@ -1,28 +1,25 @@
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
-#include <turtlesim/Pose.h>
+#include <sensor_msgs/NavSatFix.h>
 
 std::string base_link;
 
 
 
-void poseCallback(const turtlesim::PoseConstPtr& msg){
+void poseCallback(const sensor_msgs::NavSatFix::ConstPtr& msg){
   static tf::TransformBroadcaster br;
   tf::Transform transform;
-  transform.setOrigin( tf::Vector3(msg->x, msg->y, 0.0) );
+  transform.setOrigin( tf::Vector3(-1.2, -1.2, -msg->altitude) );
   tf::Quaternion q;
-  q.setRPY(0, 0, msg->theta);
+  q.setRPY(0, 0, 0);
   transform.setRotation(q);
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", turtle_name));
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "odom", "utm"));
 }
 
 int main(int argc, char** argv){
   ros::init(argc, argv, "odom_tf_broadcaster");
-  if (argc != 2){ROS_ERROR("need turtle name as argument"); return -1;};
-  turtle_name = argv[1];
-
   ros::NodeHandle node;
-  ros::Subscriber sub = node.subscribe(turtle_name+"/pose", 10, &poseCallback);
+  ros::Subscriber sub = node.subscribe("gps/fix", 1, poseCallback);
 
   ros::spin();
   return 0;

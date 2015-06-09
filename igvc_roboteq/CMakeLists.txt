@@ -58,7 +58,7 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(igvc_roboteq_odom_node src/oop_igvc_odometry.cpp)
-
+add_executable(wheel_odom_broadcaster src/wheel_odom_broadcaster.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -66,6 +66,10 @@ add_executable(igvc_roboteq_odom_node src/oop_igvc_odometry.cpp)
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(igvc_roboteq_odom_node
+   ${catkin_LIBRARIES}
+ )
+
+ target_link_libraries(wheel_odom_broadcaster
    ${catkin_LIBRARIES}
  )
 

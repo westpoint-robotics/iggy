@@ -1,15 +1,32 @@
 <!--igvc_run.launch-->
 <launch>
     <master auto="start"/>
+<!-- =============   bagfiles  ======================= 
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />
+ <arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt/" />
+
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt/" />
+
+<arg name="enc_raw" default="$(arg path)enc_raw.bag" />
+<arg name="gps" default="$(arg path)gps_fix.bag" />
+<arg name="imu" default="$(arg path)imudata.bag" />
+<arg name="rCamera" default="$(arg path)right_camera.bag" />
+<arg name="lCamera" default="$(arg path)left_camera.bag" />
+
+
+<node pkg="rosbag" type="play" name="player" output="screen" 
+    args=" -clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
+
+-->
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="0.1 0.1 1.14 0 0 0 base_link velodyne 100" />
+        args="0.1 0.1 1.14 0 0 0 1 base_link velodyne 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-        args="-0.52 0.4 0.92 0 0 0 base_link gps_frame 100" />
+        args="-0.52 0.4 0.92 0 0 0 1 base_link gps_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
-        args="0 0 0 0 0 0 base_link imu_frame 100" />
+        args="0 0 0 0 0 0 1 base_link imu_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_camera_frame"
         args="0.27 0.06 1.08 0 0.75 0 base_link left_camera_frame 100" />
@@ -18,28 +35,44 @@
         args="0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
-        args="0.27 0.28 -0.47 0 0 0 base_link left_wheel_frame 100" />
+        args="0.27 0.28 -0.47 0 0 0 1 base_link left_wheel_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
-        args="0.27 -0.28 -0.47 0 0 0 base_link right_wheel_frame 100" />
+        args="0.27 -0.28 -0.47 0 0 0 1 base_link right_wheel_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
-        args="0 0 -0.44 0 0 0 base_footprint base_link 100" />
+        args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
+
 
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
-        args="0 0 0 0 0 0 map odom 100" />
+        args="0 0 0 0 0 0 1 map odom 100" />
 
+  <node pkg="igvc_roboteq" type="wheel_odom_broadcaster" name="costmap_adjust">
+  </node>
+
+<!--  
   <node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
+        args="-1.2 -1.2 -246.5 0 0 0 1 odom utm 100" />
+
+
+
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
+            args="-320185 -4727393 0 0 0 0 odom utm 100" />
+<node pkg="tf" type="static_transform_publisher" name="odom_to_utm"
         args="-319600 -4726900 0 0 0 0 odom utm 100" />
-<!--
-      x: 320156.994786 --- 319600
-      y: 4727417.997   --- 4726900
+
+      x: 320156.994786 = 319600
+      y: 4727417.997   = 4726900
 -->
 <!-- =============   Nodes  ======================= 
 
     <include file="$(find igvc_run)/launch/navsat_transform.launch">
     </include>
--->
+
+
+  <include file="$(find velodyne_bringup)/launch/move_base.launch">
+    </include>
+
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
   <remap from="fix" to="/gps/fix" />
@@ -47,8 +80,42 @@
   <param name="frame_id" value="base_footprint" />
 </node>
 
+  <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
+  </node>
+
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom"/>
+    <param name="freq" value="30.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="true"/>
+    <param name="vo_used" value="true"/>
+    <param name="debug" value="false"/>
+    <param name="self_diagnose" value="false"/>
+
+    <remap from="odom" to="wheels/odom"/>
+  </node>
+-->
+
+ 
+  <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
+  </include>
+
+
+
+    <node name="odom_ekf" pkg="igvc_run" type="odom_ekf.py" output="screen"/>
+
+
+
+    <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+      <remap from="odom" to="vo"/>
+      <remap from="fix" to="/gps/fix" />
+      <param name="rot_covariance" value="99999" />
+      <param name="frame_id" value="base_footprint" />
+    </node>
+
+  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="utm"/>
     <param name="freq" value="30.0"/>
     <param name="sensor_timeout" value="1.0"/>
     <param name="odom_used" value="false"/>
@@ -56,21 +123,17 @@
     <param name="vo_used" value="true"/>
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
-
-    <remap from="odom" to="wheels/odom"/>
-    <!--remap from="robot_pose_ekf/odom_combined" to="odometry/filtered"/-->
   </node>
- 
 
-  <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
+
+  <include file="$(find igvc_run)/launch/move_base.launch">
+  </include>
+
+  <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
     </include>
 
-  <include file="$(find velodyne_bringup)/launch/move_base.launch">
-    </include>
 
-<node name="odom_ekf" pkg="igvc_run" type="odom_ekf.py" output="screen"/>
-
-<node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
+  <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
 
 </launch>
 

@@ -33,7 +33,7 @@
     <!--remap from="scan" to="laser_scan"/-->
     <param name="output_frame_id" value="/velodyne"/>    
     <param name="min_height" value="-1"/>
-    <param name="max_height" value="10.0"/>
+    <param name="max_height" value="3"/>
     <param name="angle_min" value="-3.14159"/>
     <param name="angle_max" value="3.14159"/>
     <param name="scan_time" value="1/1000.0"/>

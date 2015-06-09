@@ -11,10 +11,10 @@
 
   <node pkg="igvc_roboteq" type="igvc_roboteq_driver.py" name="roboteq_driver">
   </node> 
-
+<!--
   <node pkg="igvc_roboteq" type="igvc_arduino_LED_driver.py" name="arduino_driver">
   </node> 
- <!--
+ 
   <node pkg="igvc_roboteq" type="igvc_roboteq_odom_node" name="roboteq_odom">
   remap from="wheels/odom" to="odom"/
   </node> 

@@ -23,16 +23,16 @@ try:
     )
 except:
     raise
-#    try:
-#        ser = serial.Serial(
-#            port='/dev/ttyACM1',
-#            baudrate=115200, #8N1
-#            parity=serial.PARITY_NONE,
-#            stopbits=serial.STOPBITS_ONE,
-#            bytesize=serial.EIGHTBITS
-#        )
-#    except:
-#        raise
+    try:
+        ser = serial.Serial(
+            port='/dev/ttyACM1',
+            baudrate=115200, #8N1
+            parity=serial.PARITY_NONE,
+            stopbits=serial.STOPBITS_ONE,
+            bytesize=serial.EIGHTBITS
+        )
+    except:
+        raise
 
 if (ser.isOpen()):
     ser.close()

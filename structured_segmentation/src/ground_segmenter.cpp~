@@ -50,7 +50,7 @@ GroundSegmenter::segment(const PointCloudPtr &input)
 
  for(size_t i=0; i < input->width; i++){ // CDT Jorge Figueroa-Cecco uses this function to segment the input pointcloud into a ground and not_ground pointclouds. 4 MAR 2015
    PointT point = input->at(i);
-   if (point.z < 0.0) {
+   if (point.z < -1.3) {
      //point.z = 0.0;
      ground.push_back(point);
    }

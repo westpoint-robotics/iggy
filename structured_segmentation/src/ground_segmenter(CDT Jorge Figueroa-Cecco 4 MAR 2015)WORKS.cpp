@@ -312,7 +312,7 @@ GroundSegmenter::calculateGround(const boost::shared_ptr<cv::Mat> &gradient_matr
     // Check to make sure that it's under max gradient
     if(grad <= maxgrad_)
     {
-      if(input_cloud_ptr_->at(index, 0).z < -0.8)
+      if(input_cloud_ptr_->at(index, 0).z < -1.3)
         ground_matrix->at<uint8_t>(0, index) = 255;
     }
   }
