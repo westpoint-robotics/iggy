@@ -1,276 +1,12 @@
-//=============================================================================
-// Copyright © 2004 Point Grey Research, Inc. All Rights Reserved.
-//
-// This software is the confidential and proprietary information of Point
-// Grey Research, Inc. ("Confidential Information").  You shall not
-// disclose such Confidential Information and shall use it only in
-// accordance with the terms of the license agreement you entered into
-// with Point Grey Research, Inc. (PGR).
-//
-// PGR MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
-// SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE, OR NON-INFRINGEMENT. PGR SHALL NOT BE LIABLE FOR ANY DAMAGES
-// SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
-// THIS SOFTWARE OR ITS DERIVATIVES.
-//=============================================================================
-//=============================================================================
-// stereoto3dpoints
-//
-// Takes input from a Bumblebee and performs subpixel
-// interpolation to create a 16-bit disparity image, which is saved.
-// The disparity data is then converted to 3-dimensional X/Y/Z
-// coordinates which is written to a file.
-//
-// This point file can be viewed with PGRView under windows.
-//
-//=============================================================================
-/*
-    Modified to add ros by DML on 7MAY2015
-
-    Tested on 08MAY2015 at full speed and averaged publishing 33.5 clouds/sec then
-    throttled back to 20 clouds/sec.
-
-    TODO This code is a mess. Use as a prototype and design a clean solution implementing OOP.
-*/
-#include "triclops.h"
-
-#include "fc2triclops.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ros/ros.h"
-//#include "std_msgs/String.h"
-#include <sensor_msgs/PointCloud2.h>
+#include <triclops/triclops.h>
+#include <triclops/fc2triclops.h>
 #include <pcl_ros/point_cloud.h>
+
 #include "triclops_vision/typedefs.h"
-#include <image_transport/image_transport.h>
-
-#include <cv_bridge/cv_bridge.h>
-#include <sensor_msgs/image_encodings.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include "triclops_vision/LineFilter.h"
-//
-// Macro to check, report on, and handle Triclops API error codes.
-//
-#define _HANDLE_TRICLOPS_ERROR( function, error ) \
-{ \
-   if( error != TriclopsErrorOk ) \
-   { \
-      printf( \
-     "ERROR: %s reported %s.\n", \
-     function, \
-     triclopsErrorToString( error ) ); \
-      exit( 1 ); \
-   } \
-} \
-
-bool SHOW_OPENCV_VIDEO = false;
-
-// aliases namespaces
-namespace FC2 = FlyCapture2;
-namespace FC2T = Fc2Triclops;
-
-struct ImageContainer
-{
-    FC2::Image unprocessed[2];
-    FC2::Image bgru[2];
-    FC2::Image mono[2];
-    FC2::Image packed;
-};
-
-enum IMAGE_SIDE
-{
-    RIGHT = 0, LEFT
-};
-
-LineFilter lf;
-
-// configue camera to capture image
-int configureCamera( FC2::Camera &camera );
-
-// generate Triclops context from connected camera
-int generateTriclopsContext( FC2::Camera     & camera,
-                             TriclopsContext & triclops );
-
-// capture image from connected camera
-int grabImage ( FC2::Camera & camera, FC2::Image & grabbedImage );
-
-// convert image to BRGU
-int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage );
-
-// convert image to BRG
-int convertToBGR( FC2::Image & image, FC2::Image & convertedImage );
-
-// generate triclops input necessary to carry out stereo processing
-int generateTriclopsInput( FC2::Image const & grabbedImage,
-                           ImageContainer   & imageContainer,
-                           TriclopsInput    & colorData,
-                           TriclopsInput    & stereoData,
-                           cv::Mat          & leftImageBGR,
-                           cv::Mat          & rightImageBGR);
-
-// carry out stereo processing pipeline
-int doStereo( TriclopsContext const & triclops,
-               TriclopsInput  const & stereoData,
-               TriclopsImage16      & depthImage );
-
-// save 3d points generated from stereo processing
-int save3dPoints( FC2::Image      const & grabbedImage,
-                  TriclopsContext const & triclops,
-                  TriclopsImage16 const & disparityImage16,
-                  TriclopsInput   const & colorData );
-// save 3d points generated from stereo processing
-int get3dPoints(  PointCloud       & returnPoints,
-                  FC2::Image      const & grabbedImage,
-                  TriclopsContext const & triclops,
-                  TriclopsImage16 const & disparityImage16,
-                  TriclopsInput   const & colorData,
-                    cv::vector<cv::Vec4i> &lines );
-
-int main(int  argc, char **argv)
-{
-    ros::init(argc, argv, "talker");
-    ros::NodeHandle nh;
-    ros::Publisher pc2_pub = nh.advertise<sensor_msgs::PointCloud2>("points", 0);
-    image_transport::ImageTransport it(nh);
-    image_transport::Publisher image_pub_left= it.advertise("camera/left/color", 1);
-    image_transport::Publisher image_pub_right= it.advertise("camera/right/color", 1);
-    ros::Rate loop_rate(10);
-
-    TriclopsInput triclopsColorInput, triclopsMonoInput;
-    TriclopsContext triclops;
-
-    FC2::Camera camera;
-    FC2::Image grabbedImage;
-
-    camera.Connect();
-    // configure camera
-    if ( configureCamera( camera ) )
-    {
-        return EXIT_FAILURE;
-    }
-    // generate the Triclops context
-    if ( generateTriclopsContext( camera, triclops ) )
-    {
-        return EXIT_FAILURE;
-    }
-
-    FC2::Error fc2Error = camera.StartCapture();
-    if (fc2Error != FC2::PGRERROR_OK)
-    {
-        return FC2T::handleFc2Error(fc2Error);
-    }
-
-    // Get the camera info and print it out
-    FC2::CameraInfo camInfo;
-    fc2Error = camera.GetCameraInfo( &camInfo );
-    if ( fc2Error != FC2::PGRERROR_OK )
-    {
-        std::cout << "Failed to get camera info from camera" << std::endl;
-        return false;
-    }
-    else
-    {
-        ROS_INFO("CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
-    }
-
-    while (ros::ok())
-    {
-        //ROS_INFO("Top of the while loop ---------------");
-        // grab image from camera.
-        // this image contains both right and left images
-        fc2Error = camera.RetrieveBuffer(&grabbedImage);
-        if (fc2Error != FC2::PGRERROR_OK)
-        {
-            return FC2T::handleFc2Error(fc2Error);
-        }
-
-        // Container of Images used for processing
-        ImageContainer imageContainer;
-        cv::Mat      leftImage;
-        cv::Mat      rightImage;
-        // generate triclops inputs from grabbed image
-        if (generateTriclopsInput(grabbedImage, imageContainer, triclopsColorInput, triclopsMonoInput, leftImage, rightImage))
-        {
-            return EXIT_FAILURE;
-        }
-        if (SHOW_OPENCV_VIDEO)
-        {
-            cv::imshow("Image Right", rightImage);
-            cv::imshow("Image Left", leftImage);
-            cv::waitKey(3);
-         }
-
-
-// pass opencv into white line filter
-    cv::Mat filtered_image;
-    cv::vector<cv::Vec4i> lines;
-    // Orig image size is 1024 768
-    lf.findLines(leftImage, filtered_image, lines);
-    lf.displayCanny();
-    lf.displayBlue();
-    lf.displayHough();
-// get list of lines by pixel
-
-// pass list into pointcloud2d
-// pc2 returns xyz of obstacles
-
-        sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
-        image_pub_left.publish(msg);
-        msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
-        image_pub_right.publish(msg);
-
-
-        // output image disparity image with subpixel interpolation
-        TriclopsImage16 disparityImage16;
-        // carry out the stereo pipeline
-        if ( doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
-        {
-            return EXIT_FAILURE;
-        }
-
-        //opencv display disparity image:
-        //unsigned int rowBytes = (double)disparityImage16.GetReceivedDataSize()/(double)disparityImage16.GetRows();
-        //cv::Mat cvDisparityImage = cv::Mat(disparityImage16.GetRows(), disparityImage16.GetCols(), CV_8UC3, disparityImage16.GetData(),rowBytes);
-        //cv::imshow("Image Disparity", cvDisparityImage);
-
-        //cv::Mat map = cv::imread(disparityImage16, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
-        //cv::imshow("window", map);
-
-        PointCloud points;
-        //cv::vector<cv::Vec4i> lines;
-        // publish the point cloud containing 3d points
-        if ( get3dPoints(points, grabbedImage, triclops, disparityImage16, triclopsColorInput, lines ) )
-        {
-            return EXIT_FAILURE;
-        }
-        else
-        {
-            points.header.frame_id="bumblebee2";
-            // Problem with time format in PCL see: http://answers.ros.org/question/172241/pcl-and-rostime/
-            //ros::Time time_st = ros::Time::now ();
-            //points.header.stamp = time_st.toNSec()/1e3;
-            //pcl_conversion::toPCL(ros::Time::now(), point_cloud_msg->header.stamp);
-            pc2_pub.publish(points);
-        }
-        ros::spinOnce();
-        loop_rate.sleep();
-    }
-    // Close the camera and disconnect
-    camera.StopCapture();
-    camera.Disconnect();
-
-    // Destroy the Triclops context
-    TriclopsError te;
-    te = triclopsDestroyContext( triclops ) ;
-    _HANDLE_TRICLOPS_ERROR( "triclopsDestroyContext()", te );
-
-    return 0;
-}
-
+#include "triclops_vision/triclops_camera.h"
 
 int configureCamera( FC2::Camera & camera )
 {
@@ -364,9 +100,7 @@ int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
 int generateTriclopsInput( FC2::Image const & grabbedImage,
                             ImageContainer  & imageContainer,
                             TriclopsInput   & triclopsColorInput,
-                            TriclopsInput   & triclopsMonoInput,
-                            cv::Mat         & leftImageBGR, // TODO Fix this is a work around to get openCV images available to the big while loop
-                            cv::Mat         & rightImageBGR)
+                            TriclopsInput   & triclopsMonoInput)
 {
     FC2::Error fc2Error;
     FC2T::ErrorType fc2TriclopsError;
@@ -407,7 +141,6 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
             }
         }
 
-        //DML get left and right image into opencv Mat
         for ( int i = 0; i < 2; ++i )
         {
             if ( convertToBGR(unprocessedImage[i], bgrImage[i]) )
@@ -415,14 +148,6 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                 return 1;
             }
         }
-        // OPENCV CONVERSION ==============================================
-        // convert Left image to OpenCV Mat TODO Find a better way to do this.
-        unsigned int rowBytes = (double)bgrImage[LEFT].GetReceivedDataSize()/(double)bgrImage[LEFT].GetRows();
-        leftImageBGR = cv::Mat(bgrImage[LEFT].GetRows(), bgrImage[LEFT].GetCols(), CV_8UC3, bgrImage[LEFT].GetData(),rowBytes);
-
-        // convert Right image to OpenCV Mat TODO Find a better way to do this.
-        rowBytes = (double)bgrImage[RIGHT].GetReceivedDataSize()/(double)bgrImage[RIGHT].GetRows();
-        rightImageBGR = cv::Mat(bgrImage[RIGHT].GetRows(), bgrImage[RIGHT].GetCols(), CV_8UC3, bgrImage[RIGHT].GetData(),rowBytes);
 
         FC2::PNGOption pngOpt;
         pngOpt.interlaced = false;
@@ -539,9 +264,7 @@ int get3dPoints( PointCloud      & returnedPoints,
                      FC2::Image      const & grabbedImage,
                      TriclopsContext const & triclops,
                      TriclopsImage16 const & disparityImage16,
-                     TriclopsInput   const & colorData,
-                    cv::vector<cv::Vec4i> &lines)
-{
+                     TriclopsInput   const & colorData){
     TriclopsImage monoImage = {0};
     TriclopsColorImage colorImage = {0};
     TriclopsError te;
@@ -573,27 +296,10 @@ int get3dPoints( PointCloud      & returnedPoints,
         _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
     }
 
- //   cv::Mat colour;
-    // convert Left image to OpenCV Mat TODO Find a better way to do this.
-//    unsigned int rowBytes = (double)colorImage.GetReceivedDataSize()/(double)colorImage.GetRows();
-//    colour = cv::Mat(colorImage.GetRows(), colorImage.GetCols(), CV_8UC3, colorImage.GetData(),rowBytes);
-    // Draw the Hough lines on the image
-//    for( size_t i =0; i< lines.size(); i++)
-//    {
-//        //line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
-//        line(colour, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,0,0),5,8);
-//    }
-    // TODO HI PRI opencv back to triclops fix this first
-
-//    cv::imshow("colorimage", colour);
-//    cv::waitKey(3);
     // The format for the output file is:
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
     // ...
-
-
-
     // Determine the number of pixels spacing per row
     pixelinc = disparityImage16.rowinc/2;
     for ( i = 0, k = 0; i < disparityImage16.nrows; i++ )
@@ -617,9 +323,6 @@ int get3dPoints( PointCloud      & returnedPoints,
                     {
                         r = (int)colorImage.red[k];
                         g = (int)colorImage.green[k];
-                 // convert Left image to OpenCV Mat TODO Find a better way to do this.
-//        unsigned int rowBytes = (double)bgrImage[LEFT].GetReceivedDataSize()/(double)bgrImage[LEFT].GetRows();
-//        leftImageBGR = cv::Mat(bgrImage[LEFT].GetRows(), bgrImage[LEFT].GetCols(), CV_8UC3, bgrImage[LEFT].GetData(),rowBytes);
                b = (int)colorImage.blue[k];
                     }
                     else
