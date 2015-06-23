@@ -3,6 +3,8 @@
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include "triclops_vision/LineFilter.h"
+#include "triclops_vision/triclops_camera.h"
+#include "triclops_vision/triclops_opencv.h"
 
 LineFilter lf;
 
@@ -17,8 +19,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
     lf.findLines(orig_image, filtered_image, lines);
     lf.displayOriginal();
     lf.displayCanny();
-    lf.displayBlue();
+    lf.displayCyan();
     lf.displayHough();
+
   }
 
   catch (cv_bridge::Exception& e)
@@ -36,3 +39,4 @@ int main(int argc, char **argv)
   image_transport::Subscriber sub = it.subscribe("/camera/left/color", 1, imageCallback);
   ros::spin();
 }
+

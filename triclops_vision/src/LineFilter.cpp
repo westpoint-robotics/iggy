@@ -68,13 +68,13 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<c
 
     cv::HoughLinesP(canny_image, lines, h_rho, (CV_PI/h_theta), h_thresh, h_minLineLen, h_maxLineGap);
     hough_image = cv::Mat::zeros(canny_image.size(), canny_image.type());
-    blue_image = src_image.clone();
+    cyan_image = src_image.clone();
 
     // Draw the Hough lines on the image
     for( size_t i =0; i< lines.size(); i++)
     {
         line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
-        line(blue_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,0,0),5,8);
+        line(cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
         
     }
     // Return the final image with just the white lines in it
@@ -218,12 +218,12 @@ void LineFilter::displayHough()
 
 // Use OpenCV imShow to display the Hough Lines image in a window
 // This function reduces the size of the picture to 400x300
-void LineFilter::displayBlue()
+void LineFilter::displayCyan()
 {
   try
   {
     cv::Mat disImage;
-    cv::resize(blue_image, disImage, cv::Size(400,300));
+    cv::resize(cyan_image, disImage, cv::Size(400,300));
     cv::imshow("Blue Lines Image", disImage);
     cv::waitKey(3);
   }

@@ -15,7 +15,7 @@ int convertTriclops2Opencv(FC2::Image & bgrImage,
                            cv::Mat & cvImage);
 
 // convert an Opencv into a triclops color image
-//int convertOpencv2Triclops( FC2::Camera     & camera,
- //                            TriclopsContext & triclops );
+int convertOpencv2Triclops( cv::Mat & cvImage,
+                             FC2::Image & bgrImage);
 
 #endif // TRICLOPS_OPENCV_H

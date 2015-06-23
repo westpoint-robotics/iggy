@@ -261,40 +261,41 @@ int doStereo( TriclopsContext const & triclops,
 }
 
 int get3dPoints( PointCloud      & returnedPoints,
-                     FC2::Image      const & grabbedImage,
-                     TriclopsContext const & triclops,
-                     TriclopsImage16 const & disparityImage16,
-                     TriclopsInput   const & colorData){
-    TriclopsImage monoImage = {0};
-    TriclopsColorImage colorImage = {0};
-    TriclopsError te;
+                 FC2::Image      const & grabbedImage,
+                 TriclopsContext const & triclops,
+                 TriclopsImage16 const & disparityImage16,
+                 TriclopsInput   const & colorData )
+{
+   TriclopsImage monoImage = {0};
+   TriclopsColorImage colorImage = {0};
+   TriclopsError te;
 
-    float            x, y, z;
-    int	            r, g, b;
-    int	             pixelinc;
-    int	             i, j, k;
-    unsigned short * row;
-    unsigned short   disparity;
+   float            x, y, z;
+   int	            r, g, b;
+   int	             pixelinc ;
+   int	             i, j, k;
+   unsigned short * row;
+   unsigned short   disparity;
 
-    // Rectify the color image if applicable
-    bool isColor = false;
-    if ( grabbedImage.GetPixelFormat() == FC2::PIXEL_FORMAT_RAW16 )
-    {
-        isColor = true;
-        te = triclopsRectifyColorImage( triclops,
-                                        TriCam_REFERENCE,
-                                        const_cast<TriclopsInput *>(&colorData),
-                                        &colorImage );
-        _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
-    }
-    else
-    {
-        te = triclopsGetImage( triclops,
-                                TriImg_RECTIFIED,
-                                TriCam_REFERENCE,
-                                &monoImage );
-        _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
-    }
+   // Rectify the color image if applicable
+   bool isColor = false;
+   if ( grabbedImage.GetPixelFormat() == FC2::PIXEL_FORMAT_RAW16 )
+   {
+       isColor = true;
+       te = triclopsRectifyColorImage( triclops,
+                                       TriCam_REFERENCE,
+                                           const_cast<TriclopsInput *>(&colorData),
+                                           &colorImage );
+       _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
+   }
+   else
+   {
+       te = triclopsGetImage( triclops,
+                                   TriImg_RECTIFIED,
+                                   TriCam_REFERENCE,
+                                   &monoImage );
+       _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
+   }
 
     // The format for the output file is:
     // <x> <y> <z> <red> <grn> <blu> <row> <col>

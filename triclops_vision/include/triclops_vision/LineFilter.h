@@ -24,7 +24,7 @@ class LineFilter
         void displayEroded();
         void displayCanny();
         void displayHough();
-        void displayBlue();
+        void displayCyan();
 
 
     protected:
@@ -36,7 +36,7 @@ class LineFilter
         cv::Mat eroded_image;
         cv::Mat canny_image;
         cv::Mat hough_image;
-        cv::Mat blue_image;
+        cv::Mat cyan_image;
 
         int thresh_val;
         int erosion_size;

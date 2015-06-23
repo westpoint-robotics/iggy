@@ -33,8 +33,7 @@ find_library(FLYCAPTURE2BRIDGE_LIB flycapture2bridge)
 find_path(TRICLOPS_INCLUDE_DIR triclops.h HINT "/usr/include/triclops")
 find_path(FLYCAPTURE_INCLUDE_DIR FlyCapture2.h HINT "/usr/include/flycapture")
 
-#set(TRICLOPS_INCLUDE_DIR "/usr/include/triclops")
-#MESSAGE("QWQ QWQ QWQ QWQ TRICLOPS PACKAGE ${FLYCAPTURE2BRIDGE_LIB}")
+
 
 #MESSAGE("=-=-=- cmake ====: ${TRICLOPS_LIB}")
 ## Specify additional locations of header files
