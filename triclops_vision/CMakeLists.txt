@@ -57,7 +57,7 @@ include_directories(include
 # add_executable(line_detector_node src/line_detector.cpp)
 
 add_executable(usma_line_detector_node src/trans_image.cpp src/LineFilter.cpp)
-add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/triclops_camera.cpp src/triclops_opencv.cpp)
+add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/sto3dpoints.cpp src/triclops_opencv.cpp src/LineFilter.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

@@ -97,6 +97,74 @@ int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
     return 0;
 }
 
+// generare triclops input
+int generateTriclopsInput( FC2::Image const & grabbedImage,
+                           ImageContainer   & imageCont,
+                           TriclopsInput    & triclopsInput )
+{
+
+    FC2::Error      fc2Error;
+    FC2T::ErrorType fc2TriclopsError;
+    TriclopsError   te;
+
+    FC2::Image * tmpImage = imageCont.bgru;
+    FC2::Image * unprocessedImage = imageCont.unprocessed;
+
+    // Convert the pixel interleaved raw data to de-interleaved and color processed data
+    fc2TriclopsError = FC2T::unpackUnprocessedRawOrMono16Image(
+                                   grabbedImage,
+                                                                   true /*assume little endian*/,
+                                   tmpImage[RIGHT],
+                                   tmpImage[LEFT] );
+
+    if (fc2TriclopsError != FC2T::ERRORTYPE_OK)
+    {
+            return FC2T::handleFc2TriclopsError(fc2TriclopsError,
+                                                   "unprocessedRawOrMono16Image()");
+    }
+
+    // check if the unprocessed image is color
+    if ( tmpImage[0].GetBayerTileFormat() != FC2::NONE )
+    {
+            for ( int i = 0; i < 2; ++i )
+            {
+                    if ( convertColorToMonoImage(tmpImage[i], unprocessedImage[i]) )
+                    {
+                            return 1;
+                    }
+            }
+    }
+    else
+    {
+        unprocessedImage[RIGHT] = tmpImage[RIGHT];
+        unprocessedImage[LEFT]  = tmpImage[LEFT];
+    }
+
+    // pack image data into a TriclopsInput structure
+    te = triclopsBuildRGBTriclopsInput(
+               grabbedImage.GetCols(),
+               grabbedImage.GetRows(),
+               grabbedImage.GetCols(),
+               (unsigned long)grabbedImage.GetTimeStamp().seconds,
+               (unsigned long)grabbedImage.GetTimeStamp().microSeconds,
+               unprocessedImage[RIGHT].GetData(),
+               unprocessedImage[LEFT].GetData(),
+               unprocessedImage[LEFT].GetData(),
+               &triclopsInput);
+
+    _HANDLE_TRICLOPS_ERROR( "triclopsBuildRGBTriclopsInput()", te );
+
+    // save monochrome generated right and left image
+    FC2::PGMOption pgmOpt;
+    pgmOpt.binaryFile = true;
+    unprocessedImage[RIGHT].Save("rightGreyImage.pgm", &pgmOpt);
+    unprocessedImage[LEFT].Save("leftGreyImage.pgm", &pgmOpt);
+
+    return 0;
+}
+
+
+
 int generateTriclopsInput( FC2::Image const & grabbedImage,
                             ImageContainer  & imageContainer,
                             TriclopsInput   & triclopsColorInput,
@@ -348,5 +416,25 @@ int get3dPoints( PointCloud      & returnedPoints,
             }
         }
     }
+    return 0;
+}
+
+
+int convertColorToMonoImage( FC2::Image & colorImage, FC2::Image & monoImage )
+{
+    FC2::Error fc2Error;
+    fc2Error = colorImage.SetColorProcessing(FC2::HQ_LINEAR);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    fc2Error = colorImage.Convert(FC2::PIXEL_FORMAT_MONO8,
+                                                 &monoImage);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
     return 0;
 }

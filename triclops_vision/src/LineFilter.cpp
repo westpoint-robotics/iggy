@@ -9,7 +9,7 @@ LineFilter::LineFilter():
     erosion_size(5), // 2
     h_rho(1), // 1
     h_theta(180), // 180
-    h_thresh(50), // 40
+    h_thresh(30), // 40
     h_minLineLen(20), // 20
     h_maxLineGap(7) // 30
 {
@@ -71,17 +71,18 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<c
     cyan_image = src_image.clone();
 
     // Draw the Hough lines on the image
-    for( size_t i =0; i< lines.size(); i++)
+    for( int i =0; i< lines.size(); i++)
     {
         line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
         line(cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
-        
+        char numstr[40];
+        sprintf(numstr, "Line %d start: %d,%d end: %d,%d", i, int(lines[i][0]),int(lines[i][1]),int(lines[i][2]),int(lines[i][3]));
+        putText(cyan_image, numstr, cv::Point(10,40*i+30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(100,100,250), 2, false);
     }
+
     // Return the final image with just the white lines in it
     rtrn_image = hough_image;
 }
-
-
 
 
 

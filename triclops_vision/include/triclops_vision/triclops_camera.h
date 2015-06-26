@@ -67,6 +67,11 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                            TriclopsInput    & colorData,
                            TriclopsInput    & stereoData);
 
+// generare triclops input
+int generateTriclopsInput( FC2::Image const & grabbedImage,
+                           ImageContainer   & imageCont,
+                           TriclopsInput    & triclopsInput );
+
 // carry out stereo processing pipeline
 int doStereo( TriclopsContext const & triclops,
                TriclopsInput  const & stereoData,
@@ -84,5 +89,8 @@ int get3dPoints(  PointCloud       & returnPoints,
                   TriclopsImage16 const & disparityImage16,
                   TriclopsInput   const & colorData);
 
+// color process the image and convert to monochrome
+int convertColorToMonoImage( FC2::Image & colorImage,
+                             FC2::Image & monoImage );
 
 #endif // TRICLOPS_CAMERA_H

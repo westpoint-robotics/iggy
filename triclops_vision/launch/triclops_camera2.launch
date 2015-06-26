@@ -3,6 +3,8 @@
     <master auto="start"/>
 
 
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
+        args="0 0 0.39 0 0.55 0 map bumblebee2 100" />
 
   <node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
     
@@ -13,8 +15,6 @@
 <!--
 
 
-  <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
-        args="0 0 0 0 0.52 0 odom bumblebee2 100" />
 add_executable(usma_line_detector_node src/trans_image.cpp src/LineFilter.cpp)
 add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/triclops_camera.cpp src/triclops_opencv.cpp)
 

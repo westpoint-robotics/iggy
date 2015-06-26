@@ -1,19 +1,4 @@
-//=============================================================================
-// Copyright © 2004 Point Grey Research, Inc. All Rights Reserved.
-// 
-// This software is the confidential and proprietary information of Point
-// Grey Research, Inc. ("Confidential Information").  You shall not
-// disclose such Confidential Information and shall use it only in
-// accordance with the terms of the license agreement you entered into
-// with Point Grey Research, Inc. (PGR).
-// 
-// PGR MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
-// SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE, OR NON-INFRINGEMENT. PGR SHALL NOT BE LIABLE FOR ANY DAMAGES
-// SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
-// THIS SOFTWARE OR ITS DERIVATIVES.
-//=============================================================================
+
 //=============================================================================
 // stereoto3dpoints
 //
@@ -29,145 +14,15 @@
 #include "triclops.h"
 
 #include "fc2triclops.h"
+#include "triclops_vision/typedefs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-
-
-//
-// Macro to check, report on, and handle Triclops API error codes.
-//
-#define _HANDLE_TRICLOPS_ERROR( function, error ) \
-{ \
-   if( error != TriclopsErrorOk ) \
-   { \
-      printf( \
-	 "ERROR: %s reported %s.\n", \
-	 function, \
-	 triclopsErrorToString( error ) ); \
-      exit( 1 ); \
-   } \
-} \
-
-// aliases namespaces
-namespace FC2 = FlyCapture2;
-namespace FC2T = Fc2Triclops;
-
-struct ImageContainer
-{
-    FC2::Image unprocessed[2];	
-    FC2::Image bgru[2];
-    FC2::Image mono[2];
-    FC2::Image packed;
-};
-
-enum IMAGE_SIDE
-{
-	RIGHT = 0, LEFT
-};
-
-// configue camera to capture image
-int configureCamera( FC2::Camera &camera );
-
-// generate Triclops context from connected camera
-int generateTriclopsContext( FC2::Camera     & camera, 
-                             TriclopsContext & triclops );
-
-// capture image from connected camera
-int grabImage ( FC2::Camera & camera, FC2::Image & grabbedImage );
-
-// convert image to BRGU
-int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage );
-
-// generate triclops input necessary to carry out stereo processing
-int generateTriclopsInput( FC2::Image const & grabbedImage, 
-                           ImageContainer   & imageContainer,
-                           TriclopsInput    & colorData,
-                           TriclopsInput    & stereoData );
-
-// carry out stereo processing pipeline
-int doStereo( TriclopsContext const & triclops, 
-               TriclopsInput  const & stereoData,
-               TriclopsImage16      & depthImage );
-
-// save 3d points generated from stereo processing
-int save3dPoints( FC2::Image      const & grabbedImage, 
-                  TriclopsContext const & triclops, 
-                  TriclopsImage16 const & disparityImage16, 
-                  TriclopsInput   const & colorData );
-
-
-
-int
-main( int /* argc */, char** /* argv */ )
-{
-    TriclopsInput triclopsColorInput, triclopsMonoInput;
-    TriclopsContext triclops;
-
-    FC2::Camera camera;
-    FC2::Image grabbedImage;
-
-    camera.Connect();
-
-    // configure camera
-    if ( configureCamera( camera ) )
-    {
-		return EXIT_FAILURE;
-    }
-
-    // generate the Triclops context 
-    if ( generateTriclopsContext( camera, triclops ) )
-    {
-		return EXIT_FAILURE;
-    }
-
-    // grab image from camera.
-    // this image contains both right and left images
-    if ( grabImage( camera, grabbedImage ) )
-    {
-		return EXIT_FAILURE;
-    }
-
-    // Container of Images used for processing
-    ImageContainer imageContainer;
-
-    // generate triclops inputs from grabbed image
-    if ( generateTriclopsInput( grabbedImage, 
-                                imageContainer,
-                                triclopsColorInput, 
-                                triclopsMonoInput ) 
-       )
-    {
-		return EXIT_FAILURE;
-    }
-
-    // output image disparity image with subpixel interpolation
-    TriclopsImage16 disparityImage16;
-
-    // carry out the stereo pipeline 
-    if ( doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
-    {
-		return EXIT_FAILURE;
-    }
-
-    // save text file containing 3d points
-    if ( save3dPoints( grabbedImage, triclops, disparityImage16, triclopsColorInput ) )
-    {
-		return EXIT_FAILURE;
-    }
-
-    // Close the camera and disconnect
-    camera.StopCapture();
-    camera.Disconnect();
-   
-    // Destroy the Triclops context
-    TriclopsError te;
-    te = triclopsDestroyContext( triclops ) ;
-    _HANDLE_TRICLOPS_ERROR( "triclopsDestroyContext()", te );
-         
-    return 0;   
-}
-
+#include "triclops_vision/sto3dpoints.h"
+#include "triclops_vision/triclops_opencv.h"
+#include <cv_bridge/cv_bridge.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 int configureCamera( FC2::Camera & camera )
 {
@@ -181,7 +36,6 @@ int configureCamera( FC2::Camera & camera )
 
     return 0;
 }
-
 
 int grabImage ( FC2::Camera & camera, FC2::Image& grabbedImage )
 {
@@ -263,10 +117,10 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                                      "unpackUnprocessedRawOrMono16Image");
     }
 
-    FC2::PGMOption pgmOpt;
-    pgmOpt.binaryFile = true;
-    unprocessedImage[RIGHT].Save("rawRightImage.pgm", &pgmOpt);
-    unprocessedImage[LEFT].Save("rawLeftImage.pgm", &pgmOpt);
+//    FC2::PGMOption pgmOpt;
+//    pgmOpt.binaryFile = true;
+//    unprocessedImage[RIGHT].Save("rawRightImage.pgm", &pgmOpt);
+//    unprocessedImage[LEFT].Save("rawLeftImage.pgm", &pgmOpt);
 
     FC2::Image * monoImage = imageContainer.mono;
 
@@ -286,8 +140,8 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
         FC2::PNGOption pngOpt;
         pngOpt.interlaced = false;
         pngOpt.compressionLevel = 9;
-        bgruImage[RIGHT].Save("colorImageRight.png", &pngOpt);
-        bgruImage[LEFT].Save("colorImageLeft.png", &pngOpt);
+//        bgruImage[RIGHT].Save("colorImageRight.png", &pngOpt);
+//        bgruImage[LEFT].Save("colorImageLeft.png", &pngOpt);
 
         FC2::Image & packedColorImage = imageContainer.packed;
 
@@ -323,7 +177,7 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                                         packedColorImage.GetPixelFormat(),
                                         FC2::NONE);
 
-        packedColorImage.Save("packedColorImage.png",&pngOpt );
+//        packedColorImage.Save("packedColorImage.png",&pngOpt );
 
         for ( int i = 0; i < 2; ++i )
         {
@@ -334,8 +188,8 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
             }
         }
 
-        monoImage[RIGHT].Save("monoImageRight.pgm", &pgmOpt);
-        monoImage[LEFT].Save("monoImageLeft.pgm", &pgmOpt);
+//        monoImage[RIGHT].Save("monoImageRight.pgm", &pgmOpt);
+//        monoImage[LEFT].Save("monoImageLeft.pgm", &pgmOpt);
     }
     else
     {
@@ -386,12 +240,118 @@ int doStereo( TriclopsContext const & triclops,
                             &depthImage );
     _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
 
-    // Save the interpolated depth image
-    char const * pDispFilename = "disparity16.pgm";
-    te = triclopsSaveImage16( &depthImage, const_cast<char *>(pDispFilename) );
-    _HANDLE_TRICLOPS_ERROR( "triclopsSaveImage()", te );
-
+//    // Save the interpolated depth image
+//    char const * pDispFilename = "disparity16.pgm";
+//    te = triclopsSaveImage16( &depthImage, const_cast<char *>(pDispFilename) );
+//    _HANDLE_TRICLOPS_ERROR( "triclopsSaveImage()", te );
     return 0;
+}
+
+int gets3dPoints( FC2::Image      const & grabbedImage,
+                  TriclopsContext const & triclops,
+                  TriclopsImage16 const & disparityImage16,
+                  TriclopsInput   const & colorData,
+                  std::vector<point_t> oPixels,
+                  PointCloud      & returnedPoints)
+{
+    TriclopsImage monoImage = {0};
+    TriclopsColorImage colorImage = {0};
+    TriclopsError te;
+
+    float            x, y, z;
+    int	            r, g, b;
+    int	             pixelinc ;
+    int	             i, j, k;
+    unsigned short * row;
+    unsigned short   disparity;
+
+    // Rectify the color image if applicable
+    bool isColor = false;
+    cv::Mat cImage;
+    if ( grabbedImage.GetPixelFormat() == FC2::PIXEL_FORMAT_RAW16 )
+    {
+        isColor = true;
+        te = triclopsRectifyColorImage( triclops,
+                                        TriCam_REFERENCE,
+                                            const_cast<TriclopsInput *>(&colorData),
+                                            &colorImage );
+        _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
+       convertTriclops2Opencv(colorImage, cImage);
+       ROS_INFO("cImage h,w %d %d",cImage.rows, cImage.cols);
+       cv::imshow("Image color", cImage);
+       cv::waitKey(3);
+    }
+    else
+    {
+        te = triclopsGetImage( triclops,
+                                    TriImg_RECTIFIED,
+                                    TriCam_REFERENCE,
+                                    &monoImage );
+        _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
+    }
+
+    // The format for the output file is:
+    // <x> <y> <z> <red> <grn> <blu> <row> <col>
+    // <x> <y> <z> <red> <grn> <blu> <row> <col>
+    // ...
+    // Determine the number of pixels spacing per row
+    pixelinc = disparityImage16.rowinc/2;
+    for ( i = 0, k = 0; i < disparityImage16.nrows; i++ )
+    {
+        row = disparityImage16.data + i * pixelinc;
+        for ( j = 0; j < disparityImage16.ncols; j++, k++ )
+        {
+            disparity = row[j];
+
+            // do not save invalid points
+            if ( disparity < 0xFF00 )
+            {
+                // convert the 16 bit disparity value to floating point x,y,z
+                triclopsRCD16ToXYZ( triclops, i, j, disparity, &x, &y, &z );
+
+                // look at points within a range
+                if ( z < 5.0 )
+                {
+                    if ( isColor )
+                    {
+                        r = (int)colorImage.red[k];
+                        g = (int)colorImage.green[k];
+                        b = (int)colorImage.blue[k];
+                    }
+                    else
+                    {
+                        // For mono cameras, we just assign the same value to RGB
+                        r = (int)monoImage.data[k];
+                        g = (int)monoImage.data[k];
+                        b = (int)monoImage.data[k];
+                    }
+                    for(std::vector<point_t>::size_type m = 0; m != oPixels.size(); m++) {
+                          if (oPixels[m].x/2 == i && oPixels[m].y/2 == j)
+                            {
+                              ROS_INFO("x,y; %d, %d at xyz: %.2f %.2f %.2f",oPixels[m].x, oPixels[m].y, z, -x, -y);
+                              r = 0;
+                              g = 0;
+                              b = 255;
+                            }
+                      }
+
+                    PointT point;
+                    point.x = z;
+                    point.y = -x;
+                    point.z = -y;
+                    point.r = r;
+                    point.g = g;
+                    point.b = b;
+                    //TODO currently throwing out row and column. Investigate if they are needed.
+                    //point.i = i;
+                    //point.j = j;
+                    returnedPoints.push_back(point);
+                }
+            }
+        }
+    }
+    return 0;
+
 }
 
 int save3dPoints( FC2::Image      const & grabbedImage, 
