@@ -1,0 +1,14 @@
+------------------------------------------
+DML 28JUN2015 - Recommendations
+------------------------------------------
+Recommendation for Integrated Developement Environment (IDE): This is not required, many programmers do not use IDEs. For those who wish to use one for ROS and CPP development I recommend QtCreator. Strengths: It integrates nicely with ROS and Git repos, and it is light weight. Weakness: Limited python support.
+
+Recommendation for OS and ROS version: Switch the next LTS of UBUBUNT and ROS in the summer 2017. We should follow the ROS long term service release schedule with a one year delay. ROS follows the release cycle fof UBUNTU with about a one month delay. The next long term release for Ubuntu and ROS is due out in the summer fo 2016, USMA should wait until the summer of 2017 for those versions to stabalize before adopting them. The current UBUNTU Trusty TAR LTS and ROS Indigo Igloo reach their end of life in 2019. 
+
+
+
+========================================
+Abreviations used:
+========================================
+DML => Initials for MAJ Dominic M. Larkin
+ROS => Robot Operating System - http://wiki.ros.org

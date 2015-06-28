@@ -79,6 +79,7 @@ int convertTriclops2Opencv(TriclopsColorImage & bgrImage,
      putText(cvImage, numstr, cv::Point(10,cvImage.rows-30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(100,100,250), 1, false);
 }
 
+// TODO This converter is broken DO NOT USE
 int convertOpencv2Triclops( cv::Mat & cvImage,
                              TriclopsColorImage & bgrImage)
 {\
@@ -113,49 +114,3 @@ int convertOpencv2Triclops( cv::Mat & cvImage,
   bgrImage.SetDimensions(cvImage.rows,cvImage.cols, imgStride,FC2::PIXEL_FORMAT_BGR, FC2::NONE);
   bgrImage.SetData(cvImage.data,sizeImg);
 }
-
-/*
-  FC2::PNGOption pngOpt;
-          pngOpt.interlaced = false;
-          pngOpt.compressionLevel = 9;
-
-  FC2::Error fc2Error = bgrImage.Save("rightconverted.png", &pngOpt);
-  if (fc2Error != FC2::PGRERROR_OK)
-  {
-      ROS_INFO("FC2 ERROR HERE error here");
-      return FC2T::handleFc2Error(fc2Error);
-  }
-  else
-    {
-    ROS_INFO("No fc2 error here");
-  }
-*/
-
-
-
-  //    cv::Mat R(rectifiedImage.nrows,rectifiedImage.ncols,CV_8UC1,rectifiedImage.red,rectifiedImage.rowinc);
-  //    cv::Mat B(rectifiedImage.nrows,rectifiedImage.ncols,CV_8UC1,rectifiedImage.blue,rectifiedImage.rowinc);
-  //    cv::Mat G(rectifiedImage.nrows,rectifiedImage.ncols,CV_8UC1,rectifiedImage.green,rectifiedImage.rowinc);
-  //    std::vector<cv::Mat> array_to_merge;
-  //    array_to_merge.push_back(B);
-  //    array_to_merge.push_back(G);
-  //    array_to_merge.push_back(R);
-  //    cv::Mat rectImage;
-  //    cv::merge(array_to_merge,rectImage);
-
-
-/*
-        virtual Error SetData(
-            const unsigned char* pData,
-            unsigned int         dataSize );
-
-Image(
-    unsigned int    rows,
-    unsigned int    cols,
-    unsigned int    stride,
-    unsigned char*  pData,
-    unsigned int    dataSize,
-    unsigned int    receivedDataSize,
-    PixelFormat     format,
-    BayerTileFormat bayerFormat = NONE );
-    */
