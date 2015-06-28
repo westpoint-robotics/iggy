@@ -2,7 +2,7 @@
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
-#include "triclops_vision/LineFilter.h"
+#include "triclops_vision/line_filter.h"
 #include "triclops_vision/triclops_camera.h"
 #include "triclops_vision/triclops_opencv.h"
 

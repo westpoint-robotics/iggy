@@ -33,8 +33,6 @@ find_library(FLYCAPTURE2BRIDGE_LIB flycapture2bridge)
 find_path(TRICLOPS_INCLUDE_DIR triclops.h HINT "/usr/include/triclops")
 find_path(FLYCAPTURE_INCLUDE_DIR FlyCapture2.h HINT "/usr/include/flycapture")
 
-
-
 #MESSAGE("=-=-=- cmake ====: ${TRICLOPS_LIB}")
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
@@ -51,28 +49,12 @@ include_directories(include
 # )
 
 ## Declare a cpp executable
-#add_executable(triclops_stereoto3d src/stereoto3dpoints.cpp)
-# add_executable(triclops_pointcloud_node src/bb2_image_pointCloud.cpp src/LineFilter.cpp)
-# add_executable(triclops_stereo_node src/triclops_stereo_node.cpp)
-# add_executable(line_detector_node src/line_detector.cpp)
-
-add_executable(usma_line_detector_node src/trans_image.cpp src/LineFilter.cpp)
-add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/sto3dpoints.cpp src/triclops_opencv.cpp src/LineFilter.cpp)
-add_executable(test_opencvtriclops src/test_opencv2Triclops.cpp src/sto3dpoints.cpp src/triclops_opencv.cpp src/LineFilter.cpp)
+add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(triclops_vision_node triclops_vision_generate_messages_cpp)
 ## Specify libraries to link a library or executable target against
-
-
-# target_link_libraries(triclops_pointcloud_node
-#   ${catkin_LIBRARIES}
-#   ${TRICLOPS_LIB}
-#   ${FLYCAPTURE_LIB}
-#   ${FLYCAPTURE2BRIDGE_LIB}
-#   ${PNMUTILS_LIB}
-# )
 
 target_link_libraries(triclops_camera_driver
    ${catkin_LIBRARIES}
@@ -81,19 +63,4 @@ target_link_libraries(triclops_camera_driver
    ${FLYCAPTURE_LIB}
    ${FLYCAPTURE2BRIDGE_LIB}
    ${PNMUTILS_LIB}
- )
-
-
-target_link_libraries(test_opencvtriclops
-   ${catkin_LIBRARIES}
-   ${OpenCV_LIBS}
-   ${TRICLOPS_LIB}
-   ${FLYCAPTURE_LIB}
-   ${FLYCAPTURE2BRIDGE_LIB}
-   ${PNMUTILS_LIB}
- )
-
- target_link_libraries(usma_line_detector_node
-   ${catkin_LIBRARIES}
-   ${OpenCV_LIBS}
  )

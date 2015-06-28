@@ -2,7 +2,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "triclops_vision/LineFilter.h"
+#include "triclops_vision/line_filter.h"
 
 LineFilter::LineFilter():
     thresh_val(222), // 225
@@ -64,8 +64,6 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<c
     }
 
     // Find the Hough lines
-    //cv::vector<cv::Vec4i> lines;
-
     cv::HoughLinesP(canny_image, lines, h_rho, (CV_PI/h_theta), h_thresh, h_minLineLen, h_maxLineGap);
     hough_image = cv::Mat::zeros(canny_image.size(), canny_image.type());
     cyan_image = src_image.clone();
@@ -75,16 +73,11 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<c
     {
         line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
         line(cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
-//        char numstr[40];
-//        sprintf(numstr, "Line%d s: %d,%d e: %d,%d", i, int(lines[i][0]),int(lines[i][1]),int(lines[i][2]),int(lines[i][3]));
-//        putText(cyan_image, numstr, cv::Point(10,40*i+30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(100,100,250), 1, false);
     }
 
-    // Return the final image with just the white lines in it
+    // Return the original image with detected white lines drawn in cyan
     rtrn_image = cyan_image;
 }
-
-
 
 // Use OpenCV imShow to display the Original image in a window
 // This function reduces the size of the picture to 400x300

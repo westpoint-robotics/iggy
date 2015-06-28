@@ -1,5 +1,5 @@
-#ifndef LINEFILTER_H
-#define LINEFILTER_H
+#ifndef LINE_FILTER_H
+#define LINE_FILTER_H
 /* Using this algorithm:
 (source: http://stackoverflow.com/questions/16665742/a-good-approach-for-detecting-lines-in-an-image)
     1. Grab image from webcam
@@ -50,4 +50,4 @@ class LineFilter
 
 };
 
-#endif // LINEFILTER_H
+#endif // LINE_FILTER_H

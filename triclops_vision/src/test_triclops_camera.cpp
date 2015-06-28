@@ -9,9 +9,9 @@
 #include <ros/ros.h>
 #include <sensor_msgs/image_encodings.h>
 #include "triclops_vision/typedefs.h"
-#include "triclops_vision/sto3dpoints.h"
+#include "triclops_vision/vision_3d.h"
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/LineFilter.h"
+#include "triclops_vision/line_filter.h"
 
 /* This is a program that tests the triclops camera driver and the triclops opencv code.
  * This test displays both the right and left camera images in the opencv highgui after

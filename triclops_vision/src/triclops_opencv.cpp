@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <triclops/triclops.h>
 #include <triclops/fc2triclops.h>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -8,11 +7,12 @@
 
 #include "triclops_vision/typedefs.h"
 
-//TODO converting to grabstereo instead of 3d points.h
 // aliases namespaces
 namespace FC2 = FlyCapture2;
 namespace FC2T = Fc2Triclops;
 
+/* ConvertTriclops2Opencv converts images from multiple Point Grey API image formats to an OpenCv Mat. This function is overloaded to handle both fly capture2 and triclops image formats.
+*/
 // convert a triclops color image to opencv mat
 int convertTriclops2Opencv(FC2::Image & bgrImage,
                            cv::Mat & cvImage){
@@ -39,7 +39,6 @@ int convertTriclops2Opencv(TriclopsInput & bgrImage,
       char numstr[50];
       sprintf(numstr, "rows: %d cols: %d RowInc: %d", cvImage.rows,cvImage.cols, bgrImage.rowinc);
       putText(cvImage, numstr, cv::Point(10,cvImage.rows-30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(100,100,250), 1, false);
-    //cvImage = cv::Mat(bgrImage.nrows, bgrImage.ncols, CV_8UC3, bgrImage.u.rgb,bgrImage.rowinc);
 }
 
 // convert a triclops color image to opencv mat
@@ -79,6 +78,16 @@ int convertTriclops2Opencv(TriclopsColorImage & bgrImage,
      putText(cvImage, numstr, cv::Point(10,cvImage.rows-30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(100,100,250), 1, false);
 }
 
+// convert an Opencv into a fly capture2 image
+int convertOpencv2Triclops( cv::Mat & cvImage,
+                             FC2::Image & bgrImage)
+{\
+  unsigned int imgStride = cvImage.step;
+  int sizeImg = cvImage.rows*cvImage.cols*int(cvImage.elemSize());
+  bgrImage.SetDimensions(cvImage.rows,cvImage.cols, imgStride,FC2::PIXEL_FORMAT_BGR, FC2::NONE);
+  bgrImage.SetData(cvImage.data,sizeImg);
+}
+
 // TODO This converter is broken DO NOT USE
 int convertOpencv2Triclops( cv::Mat & cvImage,
                              TriclopsColorImage & bgrImage)
@@ -105,12 +114,3 @@ int convertOpencv2Triclops( cv::Mat & cvImage,
   ROS_INFO("c %d r %d stp: %d %zu sffride: %d",cvImage.cols,cvImage.rows,r.size().width,sizeof(b.data),imgStride);
 }
 
-// convert an Opencv into a triclops color image
-int convertOpencv2Triclops( cv::Mat & cvImage,
-                             FC2::Image & bgrImage)
-{\
-  unsigned int imgStride = cvImage.step;
-  int sizeImg = cvImage.rows*cvImage.cols*int(cvImage.elemSize());
-  bgrImage.SetDimensions(cvImage.rows,cvImage.cols, imgStride,FC2::PIXEL_FORMAT_BGR, FC2::NONE);
-  bgrImage.SetData(cvImage.data,sizeImg);
-}

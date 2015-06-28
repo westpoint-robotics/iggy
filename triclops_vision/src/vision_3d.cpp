@@ -11,21 +11,17 @@
 //
 //=============================================================================
 
-#include "triclops.h"
-
-#include "fc2triclops.h"
-#include "triclops_vision/typedefs.h"
-
+#include <fc2triclops.h>
+#include <triclops.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "triclops_vision/sto3dpoints.h"
-#include "triclops_vision/triclops_opencv.h"
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "triclops_vision/typedefs.h"
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/LineFilter.h"
-
+#include "triclops_vision/line_filter.h"
+#include "triclops_vision/vision_3d.h"
 
 LineFilter lf;
 
@@ -122,11 +118,6 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                                      "unpackUnprocessedRawOrMono16Image");
     }
 
-//    FC2::PGMOption pgmOpt;
-//    pgmOpt.binaryFile = true;
-//    unprocessedImage[RIGHT].Save("rawRightImage.pgm", &pgmOpt);
-//    unprocessedImage[LEFT].Save("rawLeftImage.pgm", &pgmOpt);
-
     FC2::Image * monoImage = imageContainer.mono;
 
     // check if the unprocessed image is color
@@ -145,8 +136,6 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
         FC2::PNGOption pngOpt;
         pngOpt.interlaced = false;
         pngOpt.compressionLevel = 9;
-//        bgruImage[RIGHT].Save("colorImageRight.png", &pngOpt);
-//        bgruImage[LEFT].Save("colorImageLeft.png", &pngOpt);
 
         FC2::Image & packedColorImage = imageContainer.packed;
 
@@ -192,9 +181,6 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
                 return Fc2Triclops::handleFc2Error(fc2Error);
             }
         }
-
-//        monoImage[RIGHT].Save("monoImageRight.pgm", &pgmOpt);
-//        monoImage[LEFT].Save("monoImageLeft.pgm", &pgmOpt);
     }
     else
     {
@@ -244,11 +230,6 @@ int doStereo( TriclopsContext const & triclops,
                             TriCam_REFERENCE, 
                             &depthImage );
     _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
-
-//    // Save the interpolated depth image
-//    char const * pDispFilename = "disparity16.pgm";
-//    te = triclopsSaveImage16( &depthImage, const_cast<char *>(pDispFilename) );
-//    _HANDLE_TRICLOPS_ERROR( "triclopsSaveImage()", te );
     return 0;
 }
 
@@ -270,47 +251,31 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
     unsigned short * row;
     unsigned short   disparity;
 
-    // Rectify the color image if applicable
-    bool isColor = false;
-    cv::Mat cImage;
-    cv::Mat filtered_image;
+    cv::Mat cImage; // An OpenCV version of the rectified stereo image from the camera
+    cv::Mat filtered_image; // The image with detected white lines painted cyan
+    cv::vector<cv::Vec4i> lines; // The detected white lines
 
-    if ( grabbedImage.GetPixelFormat() == FC2::PIXEL_FORMAT_RAW16 )
-    {
-        isColor = true;
-        te = triclopsRectifyColorImage( triclops,
-                                        TriCam_REFERENCE,
-                                            const_cast<TriclopsInput *>(&colorData),
-                                            &colorImage );
-        _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
-       convertTriclops2Opencv(colorImage, cImage);
-//       ROS_INFO("cImage h,w %d %d",cImage.rows, cImage.cols);
-       cv::vector<cv::Vec4i> lines;
-       lf.findLines(cImage, filtered_image, lines);
-//       lf.returnCyan(filtered_image);
-       lf.displayCanny();
-//       lf.displayCyan();
-//       convertOpencv2Triclops(filtered_image,filterImage);
-//       cv::imwrite("filterdImgcv.png", filtered_image);
-       cv::imshow("Image color", filtered_image);
-       cv::waitKey(3);
-//       // Save the interpolated depth image
-//       char const * pDispFilename = "filteredImage.pgm";
-//       te = triclopsSaveColorImage( &colorImage, const_cast<char *>(pDispFilename) );
-//       _HANDLE_TRICLOPS_ERROR( "triclopsFilteredSaveImage()", te );
-//       // Save the interpolated depth image
-//       char const * pDispFilename2 = "filteredImage2.pgm";
-//       te = triclopsSaveColorImage( &filterImage, const_cast<char *>(pDispFilename2) );
-//       _HANDLE_TRICLOPS_ERROR( "triclopsFilteredSaveImage()", te );
-    }
-    else
-    {
-        te = triclopsGetImage( triclops,
-                                    TriImg_RECTIFIED,
+    // Rectify the color image
+    te = triclopsRectifyColorImage( triclops,
                                     TriCam_REFERENCE,
-                                    &monoImage );
-        _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
-    }
+                                        const_cast<TriclopsInput *>(&colorData),
+                                        &colorImage );
+    _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
+
+    // Convert the image to OpenCv and detect white lines
+    convertTriclops2Opencv(colorImage, cImage);
+    lf.findLines(cImage, filtered_image, lines);
+    lf.displayCanny();
+    lf.displayCyan();
+
+    for(cv::vector<cv::Vec4i>::size_type i = 0; i != lines.size(); i++){
+        //draw a line to collect the points on the line
+        //find the location of the point in the real world.
+      }
+
+
+
+
 
     // The format for the output file is:
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
@@ -336,9 +301,6 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                 {
                     if ( isColor )
                     {
-//                        r = (int)filterImage.red[k];
-//                        g = (int)filterImage.green[k];
-//                        b = (int)filterImage.blue[k];
                         b = filtered_image.at<cv::Vec3b>(i,j)[0];
                         g = filtered_image.at<cv::Vec3b>(i,j)[1];
                         r = filtered_image.at<cv::Vec3b>(i,j)[2];
@@ -466,18 +428,15 @@ int save3dPoints( FC2::Image      const & grabbedImage,
                         g = (int)monoImage.data[k];
                         b = (int)monoImage.data[k];
                     }
-
                     fprintf( pPointFile, "%f %f %f %d %d %d %d %d\n", x, y, z, r, g, b, i, j );
                     nPoints++;
                 }
             }
         }
     }
-
     fclose( pPointFile );
     printf( "Points in file: %d\n", nPoints );
 
     return 0;
-
 }
 
