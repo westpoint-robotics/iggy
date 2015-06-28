@@ -11,10 +11,7 @@
 #include "triclops_vision/typedefs.h"
 
 #include <cv_bridge/cv_bridge.h>
-
-// aliases namespaces
-namespace FC2 = FlyCapture2;
-namespace FC2T = Fc2Triclops;
+#include "triclops_vision/common.h"
 
 // convert a triclops color image to opencv mat
 int convertTriclops2Opencv(FC2::Image & bgrImage,

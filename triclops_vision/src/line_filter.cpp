@@ -3,6 +3,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "triclops_vision/line_filter.h"
+#include "triclops_vision/vision_3d.h"
 
 LineFilter::LineFilter():
     thresh_val(222), // 225
@@ -29,7 +30,7 @@ LineFilter::~LineFilter()
     cvDestroyAllWindows();
 }
 
-void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines)
+void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines)
 {
     original_image = src_image;
     // Convert the BGR image to Gray scale
@@ -78,6 +79,26 @@ void LineFilter::findLines(cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<c
     // Return the original image with detected white lines drawn in cyan
     rtrn_image = cyan_image;
 }
+
+void LineFilter::findPointsOnLines(const cv::Mat &cImage, const cv::vector<cv::Vec4i> &lines, std::vector<cv::Point2i> &pixels)
+{
+  cv::Point pt1;
+  cv::Point pt2;
+  for ( int i = 0; i < lines.size(); i++)
+    {
+      pt1.x = lines[i][0];
+      pt1.y = lines[i][1];
+      pt2.x = lines[i][2];
+      pt2.y = lines[i][3];
+      cv::LineIterator it(cImage, pt1, pt2, 8);
+      for(int j = 0; j < it.count; j++, ++it){
+          pixels.push_back(cv::Point2i(it.pos().x,it.pos().y));
+      }
+    }
+}
+
+
+
 
 // Use OpenCV imShow to display the Original image in a window
 // This function reduces the size of the picture to 400x300

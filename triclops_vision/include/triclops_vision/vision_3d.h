@@ -20,47 +20,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-//
-// Macro to check, report on, and handle Triclops API error codes.
-//
-#define _HANDLE_TRICLOPS_ERROR( function, error ) \
-{ \
-   if( error != TriclopsErrorOk ) \
-   { \
-      printf( \
-	 "ERROR: %s reported %s.\n", \
-	 function, \
-	 triclopsErrorToString( error ) ); \
-      exit( 1 ); \
-   } \
-} \
-
-// aliases namespaces
-namespace FC2 = FlyCapture2;
-namespace FC2T = Fc2Triclops;
-
-struct ImageContainer
-{
-    FC2::Image unprocessed[2];	
-    FC2::Image bgru[2];
-    FC2::Image mono[2];
-    FC2::Image packed;
-};
-
-enum IMAGE_SIDE
-{
-	RIGHT = 0, LEFT
-};
-
-struct point_t {
-  int x;
-  int y;
-
-point_t(int paramx, int paramy) : x(paramx), y(paramy) {}
-
-  // and so on
-};
+#include "triclops_vision/common.h"
+#include "triclops_vision/common.h"
 
 // configue camera to capture image
 int configureCamera( FC2::Camera &camera );

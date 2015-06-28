@@ -7,8 +7,8 @@ recommendations are those of the authors and are not necessarily endorsed by the
 United States Government.
 */
 
-#ifndef POINTCLOUD_REGISTRATION__TYPEDEFS_H
-#define POINTCLOUD_REGISTRATION__TYPEDEFS_H
+#ifndef TYPEDEFS_H
+#define TYPEDEFS_H
 
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
@@ -42,5 +42,8 @@ typedef pcl::VFHSignature308 GlobalDescriptorT;
 typedef pcl::PointCloud<GlobalDescriptorT> GlobalDescriptors;
 typedef pcl::PointCloud<GlobalDescriptorT>::Ptr GlobalDescriptorsPtr;
 typedef pcl::PointCloud<GlobalDescriptorT>::ConstPtr GlobalDescriptorsConstPtr;
+
+
+
 
 #endif

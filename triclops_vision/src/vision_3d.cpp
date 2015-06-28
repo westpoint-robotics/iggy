@@ -268,15 +268,23 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
     lf.displayCanny();
     lf.displayCyan();
 
-    for(cv::vector<cv::Vec4i>::size_type i = 0; i != lines.size(); i++){
-        //draw a line to collect the points on the line
-        //find the location of the point in the real world.
+    //Find all pixels in the image that should be marked as obstacles.
+    cv::vector<cv::Point2i> obstaclePixels;
+    cv::vector<cv::Point3i> obstacleCoords;
+    cv::Point3i obstacleCoord;
+    lf.findPointsOnLines(cImage, lines, obstaclePixels);
+
+    for (int i = 0; i != obstaclePixels.size();i++)
+      {
+        cv::Point2i cPix = obstaclePixels[i];
+        int pixX = cPix.x;
+        int pixY = cPix.y;
+        triclopsRCD16ToXYZ( triclops, pixX, pixY, disparity, &x, &y, &z );
+        obstacleCoord.x = x;
+        obstacleCoord.y = y;
+        obstacleCoord.z = z;
+        obstacleCoords.push_back(obstacleCoord);
       }
-
-
-
-
-
     // The format for the output file is:
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
     // <x> <y> <z> <red> <grn> <blu> <row> <col>
@@ -299,29 +307,10 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                 // look at points within a range
                 if ( z < 5.0 )
                 {
-                    if ( isColor )
-                    {
                         b = filtered_image.at<cv::Vec3b>(i,j)[0];
                         g = filtered_image.at<cv::Vec3b>(i,j)[1];
                         r = filtered_image.at<cv::Vec3b>(i,j)[2];
-                    }
-                    else
-                    {
-                        // For mono cameras, we just assign the same value to RGB
-                        r = (int)monoImage.data[k];
-                        g = (int)monoImage.data[k];
-                        b = (int)monoImage.data[k];
-                    }
-//                    for(std::vector<point_t>::size_type m = 0; m != oPixels.size(); m++) {
-//                          if (oPixels[m].x/2 == j && oPixels[m].y/2 == i)
-//                            {
-////                              ROS_INFO("x,y; %d, %d at xyz: %.2f %.2f %.2f",oPixels[m].x, oPixels[m].y, z, -x, -y);
-//                              r = 254;
-//                              g = 254;
-//                              b = 254;
-//                            }
-//                      }
-
+                 }
                     PointT point;
                     point.x = z;
                     point.y = -x;
@@ -336,7 +325,6 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                 }
             }
         }
-    }
     return 0;
 }
 

@@ -9,41 +9,9 @@
 #include <pcl_ros/point_cloud.h>
 
 #include "triclops_vision/typedefs.h"
+#include "triclops_vision/common.h"
 
 //TODO make this object oriented program
-
-//
-// Macro to check, report on, and handle Triclops API error codes.
-//
-// TODO get rid of this macro and make it a function
-#define _HANDLE_TRICLOPS_ERROR( function, error ) \
-{ \
-   if( error != TriclopsErrorOk ) \
-   { \
-      printf( \
-     "ERROR: %s reported %s.\n", \
-     function, \
-     triclopsErrorToString( error ) ); \
-      exit( 1 ); \
-   } \
-} \
-
-// aliases namespaces
-namespace FC2 = FlyCapture2;
-namespace FC2T = Fc2Triclops;
-
-struct ImageContainer
-{
-    FC2::Image unprocessed[2];
-    FC2::Image bgru[2];
-    FC2::Image mono[2];
-    FC2::Image packed;
-};
-
-enum IMAGE_SIDE
-{
-    RIGHT = 0, LEFT
-};
 
 // configue camera to capture image
 int configureCamera( FC2::Camera &camera );

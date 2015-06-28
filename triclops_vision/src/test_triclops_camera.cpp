@@ -116,7 +116,7 @@ int main(int  argc, char **argv)
 //    lf.displayCanny();
 //    lf.displayCyan();
 
-//    std::vector<point_t> oPixel;
+//    std::vector<cv::Point2i> oPixel;
 //    cv::Point pt1;
 //    cv::Point pt2;
 //    for ( int i = 0; i < lines.size(); i++)
@@ -127,7 +127,7 @@ int main(int  argc, char **argv)
 //        pt2.y = lines[i][3];
 //        cv::LineIterator it(rightImage, pt1, pt2, 8);
 //        for(int j = 0; j < it.count; j++, ++it){
-//            oPixel.push_back(point_t(it.pos().x,it.pos().y));
+//            oPixel.push_back(cv::Point2i(it.pos().x,it.pos().y));
 ////            ROS_INFO("posx %d posY %d",int(it.pos().x),int(it.pos().y));
 
 //        }
