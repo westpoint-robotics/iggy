@@ -25,6 +25,8 @@ class LineFilter
         void displayCanny();
         void displayHough();
         void displayCyan();
+        void returnCyan(cv::Mat cyanImage)
+        { cyanImage = cyan_image;}
 
 
     protected:

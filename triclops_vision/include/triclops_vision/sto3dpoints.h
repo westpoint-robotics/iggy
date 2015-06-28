@@ -90,7 +90,6 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                   TriclopsContext const & triclops,
                   TriclopsImage16 const & disparityImage16,
                   TriclopsInput   const & colorData,
-                  std::vector<point_t> oPixel,
                   PointCloud      & returnedPoints);
 
 // save 3d points generated from stereo processing

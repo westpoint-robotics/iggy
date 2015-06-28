@@ -25,6 +25,8 @@ int convertTriclops2Opencv( TriclopsColorImage & bgrImage,
 int convertTriclops2Opencv( TriclopsImage16 & bgrImage,
                            cv::Mat & cvImage);
 
+int convertOpencv2Triclops( cv::Mat & cvImage,
+                             TriclopsColorImage & bgrImage);
 
 // convert an Opencv into a triclops color image
 int convertOpencv2Triclops( cv::Mat & cvImage,

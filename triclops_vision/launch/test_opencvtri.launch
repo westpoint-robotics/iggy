@@ -1,0 +1,32 @@
+<!--igvc_run.launch-->
+<launch>
+    <master auto="start"/>
+
+
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
+        args="0 0 0.39 0 0.55 0 map bumblebee2 100" />
+
+  <node pkg="triclops_vision" type="test_opencvtriclops" name="triclops_camera_driver" output="screen">
+    
+  </node> 
+
+
+
+<!--
+
+
+add_executable(usma_line_detector_node src/trans_image.cpp src/LineFilter.cpp)
+add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/triclops_camera.cpp src/triclops_opencv.cpp)
+
+ <remap from="/camera/left/color" to="/camera/left/rgb"/>
+  <node pkg="image_view" type="image_view" name="image_view_left">
+  <remap from="image" to="/camera/left/color"/>
+  </node> 
+  <node pkg="image_view" type="image_view" name="image_view_right">
+  <remap from="image" to="/camera/right/color"/>
+  </node> 
+
+-->
+
+</launch>
+

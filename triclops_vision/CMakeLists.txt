@@ -58,6 +58,7 @@ include_directories(include
 
 add_executable(usma_line_detector_node src/trans_image.cpp src/LineFilter.cpp)
 add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/sto3dpoints.cpp src/triclops_opencv.cpp src/LineFilter.cpp)
+add_executable(test_opencvtriclops src/test_opencv2Triclops.cpp src/sto3dpoints.cpp src/triclops_opencv.cpp src/LineFilter.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -82,6 +83,15 @@ target_link_libraries(triclops_camera_driver
    ${PNMUTILS_LIB}
  )
 
+
+target_link_libraries(test_opencvtriclops
+   ${catkin_LIBRARIES}
+   ${OpenCV_LIBS}
+   ${TRICLOPS_LIB}
+   ${FLYCAPTURE_LIB}
+   ${FLYCAPTURE2BRIDGE_LIB}
+   ${PNMUTILS_LIB}
+ )
 
  target_link_libraries(usma_line_detector_node
    ${catkin_LIBRARIES}

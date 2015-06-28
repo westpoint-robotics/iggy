@@ -23,6 +23,11 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "triclops_vision/triclops_opencv.h"
+#include "triclops_vision/LineFilter.h"
+
+
+LineFilter lf;
 
 int configureCamera( FC2::Camera & camera )
 {
@@ -251,11 +256,11 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                   TriclopsContext const & triclops,
                   TriclopsImage16 const & disparityImage16,
                   TriclopsInput   const & colorData,
-                  std::vector<point_t> oPixels,
                   PointCloud      & returnedPoints)
 {
     TriclopsImage monoImage = {0};
     TriclopsColorImage colorImage = {0};
+    TriclopsColorImage filterImage = {0};
     TriclopsError te;
 
     float            x, y, z;
@@ -268,6 +273,8 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
     // Rectify the color image if applicable
     bool isColor = false;
     cv::Mat cImage;
+    cv::Mat filtered_image;
+
     if ( grabbedImage.GetPixelFormat() == FC2::PIXEL_FORMAT_RAW16 )
     {
         isColor = true;
@@ -277,9 +284,24 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                                             &colorImage );
         _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
        convertTriclops2Opencv(colorImage, cImage);
-       ROS_INFO("cImage h,w %d %d",cImage.rows, cImage.cols);
-       cv::imshow("Image color", cImage);
+//       ROS_INFO("cImage h,w %d %d",cImage.rows, cImage.cols);
+       cv::vector<cv::Vec4i> lines;
+       lf.findLines(cImage, filtered_image, lines);
+//       lf.returnCyan(filtered_image);
+       lf.displayCanny();
+//       lf.displayCyan();
+//       convertOpencv2Triclops(filtered_image,filterImage);
+//       cv::imwrite("filterdImgcv.png", filtered_image);
+       cv::imshow("Image color", filtered_image);
        cv::waitKey(3);
+//       // Save the interpolated depth image
+//       char const * pDispFilename = "filteredImage.pgm";
+//       te = triclopsSaveColorImage( &colorImage, const_cast<char *>(pDispFilename) );
+//       _HANDLE_TRICLOPS_ERROR( "triclopsFilteredSaveImage()", te );
+//       // Save the interpolated depth image
+//       char const * pDispFilename2 = "filteredImage2.pgm";
+//       te = triclopsSaveColorImage( &filterImage, const_cast<char *>(pDispFilename2) );
+//       _HANDLE_TRICLOPS_ERROR( "triclopsFilteredSaveImage()", te );
     }
     else
     {
@@ -314,9 +336,12 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                 {
                     if ( isColor )
                     {
-                        r = (int)colorImage.red[k];
-                        g = (int)colorImage.green[k];
-                        b = (int)colorImage.blue[k];
+//                        r = (int)filterImage.red[k];
+//                        g = (int)filterImage.green[k];
+//                        b = (int)filterImage.blue[k];
+                        b = filtered_image.at<cv::Vec3b>(i,j)[0];
+                        g = filtered_image.at<cv::Vec3b>(i,j)[1];
+                        r = filtered_image.at<cv::Vec3b>(i,j)[2];
                     }
                     else
                     {
@@ -325,15 +350,15 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                         g = (int)monoImage.data[k];
                         b = (int)monoImage.data[k];
                     }
-                    for(std::vector<point_t>::size_type m = 0; m != oPixels.size(); m++) {
-                          if (oPixels[m].x/2 == i && oPixels[m].y/2 == j)
-                            {
-                              ROS_INFO("x,y; %d, %d at xyz: %.2f %.2f %.2f",oPixels[m].x, oPixels[m].y, z, -x, -y);
-                              r = 0;
-                              g = 0;
-                              b = 255;
-                            }
-                      }
+//                    for(std::vector<point_t>::size_type m = 0; m != oPixels.size(); m++) {
+//                          if (oPixels[m].x/2 == j && oPixels[m].y/2 == i)
+//                            {
+////                              ROS_INFO("x,y; %d, %d at xyz: %.2f %.2f %.2f",oPixels[m].x, oPixels[m].y, z, -x, -y);
+//                              r = 254;
+//                              g = 254;
+//                              b = 254;
+//                            }
+//                      }
 
                     PointT point;
                     point.x = z;
@@ -351,7 +376,6 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
         }
     }
     return 0;
-
 }
 
 int save3dPoints( FC2::Image      const & grabbedImage, 

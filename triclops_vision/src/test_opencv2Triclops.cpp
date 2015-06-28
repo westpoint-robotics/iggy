@@ -24,7 +24,6 @@ bool SHOW_OPENCV = true;
 
 int main(int  argc, char **argv)
 {
-  LineFilter lf;
   TriclopsInput triclopsColorInput, triclopsMonoInput;
   TriclopsContext triclops;
 
@@ -63,17 +62,9 @@ int main(int  argc, char **argv)
   {
       ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d \n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
   }
-
-  ros::init(argc, argv, "talker");
-  ros::NodeHandle nh;
-  ros::Rate loop_rate(10);
-  ros::Publisher pc2_pub = nh.advertise<sensor_msgs::PointCloud2>("points", 0);
-
   // Container of Images used for processing
   ImageContainer imageContainer;
 
-  while (ros::ok())
-  {
     // Part 2 of 2 for grabImage method
     // this image contains both right and left images
     fc2Error = camera.RetrieveBuffer(&grabbedImage);
@@ -96,45 +87,6 @@ int main(int  argc, char **argv)
     {
                 return EXIT_FAILURE;
     }
-
-//    cv::Mat      dispImage;
-//    cv::Mat      leftImage;
-//    cv::Mat      rightImage;
-//    convertTriclops2Opencv(imageContainer.bgru[0], rightImage);
-//    convertTriclops2Opencv(imageContainer.bgru[1], leftImage);
-//    convertTriclops2Opencv(disparityImage16, dispImage);
-//    bool SHOW_OPENCV = true;
-//    if (SHOW_OPENCV){
-//        cv::imshow("Image Disp", dispImage);
-////        cv::imshow("Image Left", leftImage);
-//        cv::waitKey(3);
-//      }
-
-//    cv::Mat filtered_image;
-//    cv::vector<cv::Vec4i> lines;
-//    lf.findLines(leftImage, filtered_image, lines);
-//    lf.displayCanny();
-//    lf.displayCyan();
-
-//    std::vector<point_t> oPixel;
-//    cv::Point pt1;
-//    cv::Point pt2;
-//    for ( int i = 0; i < lines.size(); i++)
-//      {
-//        pt1.x = lines[i][0];
-//        pt1.y = lines[i][1];
-//        pt2.x = lines[i][2];
-//        pt2.y = lines[i][3];
-//        cv::LineIterator it(rightImage, pt1, pt2, 8);
-//        for(int j = 0; j < it.count; j++, ++it){
-//            oPixel.push_back(point_t(it.pos().x,it.pos().y));
-////            ROS_INFO("posx %d posY %d",int(it.pos().x),int(it.pos().y));
-
-//        }
-////        ROS_INFO("siz OF oPixel %d",int(oPixel.size()));
-//      }
-
-
     PointCloud points;
     //cv::vector<cv::Vec4i> lines;
     // publish the point cloud containing 3d points
@@ -144,16 +96,8 @@ int main(int  argc, char **argv)
     }
     else
     {
-        points.header.frame_id="bumblebee2";
-        // Problem with time format in PCL see: http://answers.ros.org/question/172241/pcl-and-rostime/
-        //ros::Time time_st = ros::Time::now ();
-        //points.header.stamp = time_st.toNSec()/1e3;
-        //pcl_conversion::toPCL(ros::Time::now(), point_cloud_msg->header.stamp);
-        pc2_pub.publish(points);
-
+      ROS_INFO("Succesful getting 3dpoints");
     }
-    ros::spinOnce();
-    loop_rate.sleep();
-  }
+
 
 }
