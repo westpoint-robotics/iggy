@@ -20,7 +20,7 @@ catkin_package(
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
-
+ FILE(GLOB_RECURSE INC_ALL "include/triclops_vision/*.h")
 ###########
 ## Build ##
 ###########
@@ -49,7 +49,7 @@ include_directories(include
 # )
 
 ## Declare a cpp executable
-add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp)
+add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp ${INC_ALL})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
