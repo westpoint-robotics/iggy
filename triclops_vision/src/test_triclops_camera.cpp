@@ -18,6 +18,7 @@
  * converting the camera triclops images into a opencv image.
  */
 
+
 TriclopsError     te;
 
 bool SHOW_OPENCV = true;

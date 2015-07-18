@@ -5,6 +5,11 @@
 #include "triclops_vision/line_filter.h"
 #include "triclops_vision/vision_3d.h"
 
+
+/**
+ * @brief LineFilter::LineFilter Used to find white lines in OpenCv Images.
+ *
+ */
 LineFilter::LineFilter():
     thresh_val(222), // 225
     erosion_size(5), // 2
@@ -29,7 +34,20 @@ LineFilter::~LineFilter()
 {
     cvDestroyAllWindows();
 }
-
+/**
+ * @brief LineFilter::findLines This function finds the white lines in the src_image
+ * @param src_image the original image to find white lines in
+ * @param rtrn_image the original image with cyan lines drawn where the white lines were detected
+ * @param lines a vector of start and end points for each line found
+ *
+ *  It Uses the following algorithm to find white lines:
+ *     1. turn image into grayscale
+ *     2. blur the image
+ *     3. run it through a threshold filter using THRESH_TO_ZERO mode
+ *     4. run it through an erosion filter
+ *     5. run it through a Canny edge detector
+ *     6. finally, take this processed image and find the lines using Probabilistic Hough Transform HoughLinesP
+ */
 void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines)
 {
     original_image = src_image;
@@ -80,6 +98,12 @@ void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::ve
     rtrn_image = cyan_image;
 }
 
+/**
+ * @brief LineFilter::findPointsOnLines. Finds the x,y coordinates of each point on line defined by an start and end point.
+ * @param cImage The image that lines exist in
+ * @param lines A list of lines defined by start and end points
+ * @param pixels A list of pixels that are on the lines.
+ */
 void LineFilter::findPointsOnLines(const cv::Mat &cImage, const cv::vector<cv::Vec4i> &lines, std::vector<cv::Point2i> &pixels)
 {
   cv::Point pt1;
@@ -97,11 +121,11 @@ void LineFilter::findPointsOnLines(const cv::Mat &cImage, const cv::vector<cv::V
     }
 }
 
-
-
-
-// Use OpenCV imShow to display the Original image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Original image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayOriginal()
 {
   try
@@ -119,8 +143,11 @@ void LineFilter::displayOriginal()
   }
 }
 
-// Use OpenCV imShow to display the Grayscale image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Grayscale image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayGrayScale()
 {
   try
@@ -138,8 +165,11 @@ void LineFilter::displayGrayScale()
   }
 }
 
-// Use OpenCV imShow to display the Blurred image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Blurred image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayBlurred()
 {
   try
@@ -156,8 +186,11 @@ void LineFilter::displayBlurred()
   }
 }
 
-// Use OpenCV imShow to display the Threshold image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Threshold image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayThreshold()
 {
   try
@@ -175,8 +208,11 @@ void LineFilter::displayThreshold()
   }
 }
 
-// Use OpenCV imShow to display the Eroded image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Eroded image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayEroded()
 {
   try
@@ -194,8 +230,11 @@ void LineFilter::displayEroded()
   }
 }
 
-// Use OpenCV imShow to display the Canny Edge image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Canny Edge image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayCanny()
 {
   try
@@ -213,8 +252,11 @@ void LineFilter::displayCanny()
   }
 }
 
-// Use OpenCV imShow to display the Hough Lines image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Hough Lines image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayHough()
 {
   try
@@ -231,8 +273,11 @@ void LineFilter::displayHough()
   }
 }
 
-// Use OpenCV imShow to display the Hough Lines image in a window
-// This function reduces the size of the picture to 400x300
+/**
+ * @brief LineFilter::displayOriginal Use OpenCV imShow to display the Cyan Lined image in a window
+ *
+ * This function reduces the size of the picture to 400x300
+ */
 void LineFilter::displayCyan()
 {
   try

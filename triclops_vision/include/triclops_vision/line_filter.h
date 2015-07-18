@@ -7,24 +7,19 @@
 #include "triclops_vision/vision_3d.h"
 #include "triclops_vision/common.h"
 
-/* Using this algorithm:
-(source: http://stackoverflow.com/questions/16665742/a-good-approach-for-detecting-lines-in-an-image)
-    1. Grab image from webcam
-    2. turn into grayscale
-    3. blur the image
-    4. Run it through a threshold filter using THRESH_TO_ZERO mode
-    5. run it through an erosion filter
-    6. run it through a Canny edge detector
-    7. finally, take this processed image and find the lines using Probabilistic Hough Transform HoughLinesP
-*/
-
+/**
+ * @brief The LineFilter class. This class identifies white lines in a OpenCv image
+ *
+ */
 class LineFilter
 {
     public:
         LineFilter();
         virtual ~LineFilter();
+
         void findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines);
         void findPointsOnLines(const cv::Mat &cImage, const cv::vector<cv::Vec4i> &lines, std::vector<cv::Point2i> &pixels);
+
         void displayOriginal();
         void displayGrayScale();
         void displayBlurred();
@@ -33,28 +28,29 @@ class LineFilter
         void displayCanny();
         void displayHough();
         void displayCyan();
+
         void returnCyan(cv::Mat cyanImage)
         { cyanImage = cyan_image;}
 
 
     protected:
     private:
-        cv::Mat original_image;
-        cv::Mat gray_image;
-        cv::Mat blur_image;
-        cv::Mat thresh_image;
-        cv::Mat eroded_image;
-        cv::Mat canny_image;
-        cv::Mat hough_image;
-        cv::Mat cyan_image;
+        cv::Mat original_image;   // The original source image
+        cv::Mat gray_image;       // The image after it is converted to grayscale
+        cv::Mat blur_image;       // The image after it a blur effect is applied
+        cv::Mat thresh_image;     // The image after the colors are categorized by defined threshold values
+        cv::Mat eroded_image;     // The image after an erosion filter is applied
+        cv::Mat canny_image;      // The image after canny edge detection is complete
+        cv::Mat hough_image;      // The image with the hugh line transform is applied
+        cv::Mat cyan_image;       // The image after all detected white lines are drawn in cyan color
 
-        int thresh_val;
-        int erosion_size;
-        int h_rho;
-        int h_theta;
-        int h_thresh;
-        int h_minLineLen;
-        int h_maxLineGap;
+        int thresh_val;           // The threshold value used to identify white in the image
+        int erosion_size;         // The  size of our kernel to erode the image with
+        int h_rho;                // Distance resolution of the accumulator in pixels (hough transform)
+        int h_theta;              // Angle resolution of the accumulator in radians (hough transform)
+        int h_thresh;             // Accumulator threshold parameter. Only those lines are returned that get enough votes (hough transform)
+        int h_minLineLen;         // Line segments shorter than that are rejected (hough transform)
+        int h_maxLineGap;         // Maximum allowed gap between points on the same line to link them (hough transform)
 
 };
 
