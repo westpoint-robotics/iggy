@@ -1,8 +1,0 @@
-\subsubsection parameters ROS parameters
-
-Reads and maintains the following parameters on the ROS server
-
-- \b "~mingraddist" : \b [double] Minimum distance for gradient calculation min: 0.0, default: 0.3, max: 1.0
-- \b "~maxgrad" : \b [double] Maximum allowable gradient min: 0.0, default: 0.5, max: 1.0
-- \b "~maxdh" : \b [double] Maximum difference in z height allowed min: 0.0, default: 0.05, max: 1.0
-

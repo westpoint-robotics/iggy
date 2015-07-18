@@ -8,3 +8,4 @@ srv_gen/
 *.*~
 __init__.py
 __init__.pyc
+*.user*
