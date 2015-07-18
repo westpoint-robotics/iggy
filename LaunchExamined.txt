@@ -1,0 +1,21 @@
+igvc_run.launch
+# Starts the robot with all its nodes
+    - publish static transfoms
+        * base_link_to_velodyne
+        * base_link_to_gps_frame
+        * base_link_to_imu_frame
+        * base_link_to_left_camera_frame
+        * base_link_to_right_camera_frame
+        * base_link_to_left_wheel_frame
+        * base_link_to_right_wheel_frame
+        * odom_to_base_link
+        * base_link_to_velodyne
+    - usma_novatel_driver.py
+    - igvc_velodyne.launch
+        * nodelet_manager.launch
+        * cloud_nodelet.launch
+        * segmenter_nodelet
+        * pointcloud_to_laserscan_node
+    - move_base.launch
+        * move_base
+        * map_server
