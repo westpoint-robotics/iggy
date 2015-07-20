@@ -4,10 +4,13 @@
 <!-- =============   bagfiles  ======================= 
 
 <arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />
+   rosparam set use_sim_time true
+
 -->
+<param name="use_sim_time" value="true"/>
 
 <!--This line sets the path to the ROS bagfiles to run -->
-<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt/" />
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/weMadeIt2/" />
 
 <!--These are the bag files to run -->
 <arg name="enc_raw" default="$(arg path)enc_raw.bag" />
@@ -15,10 +18,11 @@
 <arg name="imu" default="$(arg path)imudata.bag" />
 <arg name="rCamera" default="$(arg path)right_camera.bag" />
 <arg name="lCamera" default="$(arg path)left_camera.bag" />
+<arg name="laser3D" default="$(arg path)pointcloud.bag" />
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -l --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
+    args=" -r 0.1 --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
 
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
@@ -45,10 +49,15 @@
   <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
         args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
+<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
         args="0 0 0 0 0 0 1 map odom 100" />
+<!--
+<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+        args="320153.5 4727416.4 247.1 0 0 0 1 odom base_footprint 100" />
+  
+        args="-320153.5 -4727416.4 -247.1 0 0 0 1 map odom 100" />
 
-<!--rostopic list
+rostopic list
         /camera/left/color  (nul frame)
         /camera/right/color  (nul frame)
         /clock
@@ -65,37 +74,32 @@ TODO get tf for odom to base_footprint
         /enc_raw
         /gps/fix
         /imu_data
-        /robot_pose_ekf/odom_combined
+        /robot_pose_ekf/odom_combined (odom)
         /rosout
         /rosout_agg
         /tf
         /tf_static
-        /vo
-
-
+        /vo (base_footprint) child ('')
 -->
-<!--TODO figure out if this is needed:
-    <node name="odom_ekf" pkg="igvc_run" type="odom_ekf.py" output="screen"/>
+<!--TODO use robot_localization to:
+    1. navsat_transrom_node
+    2. ekf_localization_node
 -->
 
-    <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
-      <remap from="odom" to="vo"/>
-      <remap from="fix" to="/gps/fix" />
-      <param name="rot_covariance" value="99999" />
-      <param name="frame_id" value="base_footprint" />
-    </node>
+<node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+  <remap from="odom" to="vo"/>
+  <remap from="fix" to="/gps/fix" />
+  <param name="rot_covariance" value="99999" />
+  <param name="frame_id" value="base_footprint" />
+</node>
 
-  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-    <param name="output_frame" value="utm"/>
-    <param name="freq" value="30.0"/>
-    <param name="sensor_timeout" value="1.0"/>
-    <param name="odom_used" value="false"/>
-    <param name="imu_used" value="true"/>
-    <param name="vo_used" value="true"/>
-    <param name="debug" value="false"/>
-    <param name="self_diagnose" value="false"/>
-  </node>
+  <include file="$(find igvc_run)/launch/ekf_template.launch">
+  </include>
 
 
+  <include file="$(find igvc_run)/launch/move_base.launch">
+  </include>
+<!--
+-->
 </launch>
 

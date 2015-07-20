@@ -13,5 +13,5 @@
   </node>
 
   <node pkg="map_server" type="map_server" name="map_server" output="screen"
-    args="/home/igvc/catkin_ws/src/igvc_2dnav/my_map.yaml" />
+    args="$(find igvc_2dnav)/my_map.yaml" />
 </launch>

@@ -1,19 +1,15 @@
 digraph G {
-"base_link" -> "left_camera_frame"[label="Broadcaster: /base_link_to_left_camera_frame\nAverage rate: 10.189 Hz\nMost recent transform: 1437237207.767 ( -0.022 sec old)\nBuffer length: 4.907 sec\n"];
-"base_footprint" -> "base_link"[label="Broadcaster: /base_footprint_to_base_link\nAverage rate: 10.194 Hz\nMost recent transform: 1437237207.757 ( -0.012 sec old)\nBuffer length: 4.807 sec\n"];
-"base_link" -> "gps_frame"[label="Broadcaster: /base_link_to_gps_frame\nAverage rate: 10.187 Hz\nMost recent transform: 1437237207.773 ( -0.029 sec old)\nBuffer length: 4.908 sec\n"];
-"map" -> "odom"[label="Broadcaster: /map_to_odom\nAverage rate: 10.188 Hz\nMost recent transform: 1437237207.807 ( -0.062 sec old)\nBuffer length: 4.908 sec\n"];
-"base_link" -> "right_wheel_frame"[label="Broadcaster: /base_link_to_right_wheel_frame\nAverage rate: 10.188 Hz\nMost recent transform: 1437237207.810 ( -0.066 sec old)\nBuffer length: 4.908 sec\n"];
-"base_link" -> "right_camera_frame"[label="Broadcaster: /base_link_to_right_camera_frame\nAverage rate: 10.187 Hz\nMost recent transform: 1437237207.815 ( -0.070 sec old)\nBuffer length: 4.908 sec\n"];
-"base_link" -> "imu_frame"[label="Broadcaster: /base_link_to_imu_frame\nAverage rate: 10.187 Hz\nMost recent transform: 1437237207.819 ( -0.074 sec old)\nBuffer length: 4.908 sec\n"];
-"base_link" -> "velodyne"[label="Broadcaster: /base_link_to_velodyne\nAverage rate: 10.186 Hz\nMost recent transform: 1437237207.825 ( -0.080 sec old)\nBuffer length: 4.909 sec\n"];
-"base_link" -> "left_wheel_frame"[label="Broadcaster: /base_link_to_left_wheel_frame\nAverage rate: 10.192 Hz\nMost recent transform: 1437237207.762 ( -0.017 sec old)\nBuffer length: 4.807 sec\n"];
+"base_link" -> "right_wheel_frame"[label="Broadcaster: /base_link_to_right_wheel_frame\nAverage rate: 10.187 Hz\nMost recent transform: 1437242573.206 ( -0.098 sec old)\nBuffer length: 4.908 sec\n"];
+"base_footprint" -> "base_link"[label="Broadcaster: /base_footprint_to_base_link\nAverage rate: 10.192 Hz\nMost recent transform: 1437242573.153 ( -0.046 sec old)\nBuffer length: 4.808 sec\n"];
+"base_link" -> "right_camera_frame"[label="Broadcaster: /base_link_to_right_camera_frame\nAverage rate: 10.193 Hz\nMost recent transform: 1437242573.108 ( -0.000 sec old)\nBuffer length: 4.807 sec\n"];
+"base_link" -> "imu_frame"[label="Broadcaster: /base_link_to_imu_frame\nAverage rate: 10.192 Hz\nMost recent transform: 1437242573.115 ( -0.007 sec old)\nBuffer length: 4.808 sec\n"];
+"utm" -> "base_footprint"[label="Broadcaster: /robot_pose_ekf\nAverage rate: 2.223 Hz\nMost recent transform: 1433527497.242 ( 3715075.866 sec old)\nBuffer length: 4.498 sec\n"];
+"base_link" -> "velodyne"[label="Broadcaster: /base_link_to_velodyne\nAverage rate: 10.193 Hz\nMost recent transform: 1437242573.121 ( -0.013 sec old)\nBuffer length: 4.807 sec\n"];
+"base_link" -> "left_wheel_frame"[label="Broadcaster: /base_link_to_left_wheel_frame\nAverage rate: 10.192 Hz\nMost recent transform: 1437242573.157 ( -0.050 sec old)\nBuffer length: 4.807 sec\n"];
+"base_link" -> "left_camera_frame"[label="Broadcaster: /base_link_to_left_camera_frame\nAverage rate: 10.195 Hz\nMost recent transform: 1437242573.160 ( -0.053 sec old)\nBuffer length: 4.806 sec\n"];
+"base_link" -> "gps_frame"[label="Broadcaster: /base_link_to_gps_frame\nAverage rate: 10.195 Hz\nMost recent transform: 1437242573.167 ( -0.059 sec old)\nBuffer length: 4.806 sec\n"];
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1437237207.745"[ shape=plaintext ] ;
- }->"map";
-edge [style=invis];
- subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1437237207.745"[ shape=plaintext ] ;
- }->"base_footprint";
+"Recorded at time: 1437242573.108"[ shape=plaintext ] ;
+ }->"utm";
 }
