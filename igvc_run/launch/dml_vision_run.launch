@@ -22,7 +22,7 @@
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.1 --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
+    args=" -r 0.5 --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
 
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
@@ -93,7 +93,7 @@ TODO get tf for odom to base_footprint
   <param name="frame_id" value="base_footprint" />
 </node>
 
-  <include file="$(find igvc_run)/launch/ekf_template.launch">
+  <include file="$(find igvc_run)/launch/dml_ekf.launch">
   </include>
 
 
