@@ -7,8 +7,7 @@
       <param name="map_frame" value="map"/>
       <param name="odom_frame" value="odom"/>
       <param name="base_link_frame" value="base_footprint"/>
-      <param name="world_frame" value="odom"/>
-      <param name="two_d_mode" value="true"/>
+      <param name="world_frame" value="map"/>
 
       <!-- The filter accepts an arbitrary number of inputs from each input message type (Odometry, PoseStamped,
            TwistStamped, Imu). To add a new one, simply append the next number in the sequence to its base name,
@@ -41,7 +40,7 @@
       <param name="imu0_differential" value="false"/>
 
       <param name="odom0_relative" value="true"/>
-      <param name="imu0_relative" value="false"/>
+      <param name="imu0_relative" value="true"/>
 
  <!--  Placeholder for output topic remapping
       <remap from="odometry/filtered" to=""/>

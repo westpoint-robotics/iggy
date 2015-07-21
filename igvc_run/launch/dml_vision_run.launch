@@ -5,7 +5,7 @@
 
 <arg name="path" default="$(env HOME)/catkin_ws/rosbags/field1/" />
    rosparam set use_sim_time true
-
+imudataRPY
 -->
 <param name="use_sim_time" value="true"/>
 
@@ -15,14 +15,15 @@
 <!--These are the bag files to run -->
 <arg name="enc_raw" default="$(arg path)enc_raw.bag" />
 <arg name="gps" default="$(arg path)gps_fix.bag" />
-<arg name="imu" default="$(arg path)imudata.bag" />
+<arg name="imu" default="$(arg path)imudataCOVQuat.bag" />
+<arg name="imu2" default="$(arg path)imudataCOV.bag" />
 <arg name="rCamera" default="$(arg path)right_camera.bag" />
 <arg name="lCamera" default="$(arg path)left_camera.bag" />
 <arg name="laser3D" default="$(arg path)pointcloud.bag" />
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.5 --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
+    args=" -r 0.1 --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
 
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
@@ -81,25 +82,21 @@ TODO get tf for odom to base_footprint
         /tf_static
         /vo (base_footprint) child ('')
 -->
-<!--TODO use robot_localization to:
-    1. navsat_transrom_node
-    2. ekf_localization_node
--->
 
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
   <remap from="fix" to="/gps/fix" />
-  <param name="rot_covariance" value="99999" />
   <param name="frame_id" value="base_footprint" />
 </node>
+
 
   <include file="$(find igvc_run)/launch/dml_ekf.launch">
   </include>
 
-
+<!--
   <include file="$(find igvc_run)/launch/move_base.launch">
   </include>
-<!--
+
 -->
 </launch>
 
