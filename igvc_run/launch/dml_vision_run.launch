@@ -16,14 +16,14 @@ imudataRPY
 <arg name="enc_raw" default="$(arg path)enc_raw.bag" />
 <arg name="gps" default="$(arg path)gps_fix.bag" />
 <arg name="imu" default="$(arg path)imudataCOVQuat.bag" />
-<arg name="imu2" default="$(arg path)imudataCOV.bag" />
+<arg name="imu2" default="$(arg path)imu_cov_corrected.bag" />
 <arg name="rCamera" default="$(arg path)right_camera.bag" />
 <arg name="lCamera" default="$(arg path)left_camera.bag" />
 <arg name="laser3D" default="$(arg path)pointcloud.bag" />
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.1 --clock $(arg enc_raw) $(arg gps) $(arg imu) $(arg rCamera) $(arg lCamera)"/>
+    args=" -r 0.9 --clock $(arg enc_raw) $(arg gps) $(arg imu2) $(arg rCamera) $(arg lCamera)"/>
 
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
@@ -83,6 +83,10 @@ TODO get tf for odom to base_footprint
         /vo (base_footprint) child ('')
 -->
 
+
+    <node name="imu_tfpy" pkg="igvc_run" type="imu_gps_Node_tf.py" output="screen"/>
+
+<!--
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
   <remap from="fix" to="/gps/fix" />
@@ -93,7 +97,8 @@ TODO get tf for odom to base_footprint
   <include file="$(find igvc_run)/launch/dml_ekf.launch">
   </include>
 
-<!--
+    <node name="imu_tfpy" pkg="igvc_run" type="imu_tf.py" output="screen"/>
+
   <include file="$(find igvc_run)/launch/move_base.launch">
   </include>
 
