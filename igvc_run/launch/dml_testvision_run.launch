@@ -24,7 +24,7 @@ imudataRPY
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.5 --clock $(arg enc_raw) $(arg gps) $(arg imu2) $(arg rCamera) $(arg lCamera) $(arg combinedCamera)"/>
+    args=" -r 0.1 --clock $(arg rCamera) $(arg lCamera) $(arg combinedCamera)"/>
 
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
@@ -84,7 +84,7 @@ TODO get tf for odom to base_footprint
         /vo (base_footprint) child ('')
 
     <node name="imu_tfpy" pkg="igvc_run" type="imu_gps_Node_tf.py" output="screen"/>
--->
+
 
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
@@ -98,7 +98,7 @@ TODO get tf for odom to base_footprint
   <include file="$(find igvc_run)/launch/dml_move_base.launch">
   </include>
 
-
+-->
 <!-- TODO rewrite image processing to start with the input of two images.
 
 <node name="imu_tfpy" pkg="igvc_run" type="imu_tf.py" output="screen"/>

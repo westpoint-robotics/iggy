@@ -14,13 +14,25 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
 )
 
+# Specify package build info export
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS include # This indicates that the folder "include" within the package folder is where exported headers go.
 #  LIBRARIES triclops_vision
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy
 #  DEPENDS system_lib
 )
- FILE(GLOB_RECURSE INC_ALL "include/triclops_vision/*.h")
+
+
+# set(HEADER_FILES   "include/triclops_vision/triclops_camera.h"
+#                    "include/triclops_vision/triclops_opencv.h"
+#                    "include/triclops_vision/typedefs.h"
+#                    "include/triclops_vision/common.h"
+#                    "include/triclops_vision/vision_3d.h"
+#                    "include/triclops_vision/line_filter.h"
+#                    "include/triclops_vision/images_into_triclops.h")
+
+FILE(GLOB_RECURSE HEADER_FILES "include/triclops_vision/*.h")
+#message("DDDDDDDDDDDDDDDDDDDDHeaders: " ${HEADER_FILES})
 ###########
 ## Build ##
 ###########
@@ -36,12 +48,17 @@ find_path(FLYCAPTURE_INCLUDE_DIR FlyCapture2.h HINT "/usr/include/flycapture")
 #MESSAGE("=-=-=- cmake ====: ${TRICLOPS_LIB}")
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include
+# The first argument "include" indicates that the include/ directory within the package is also part of the path.
+set(PROJECT_HEADER_DIR ${PWD}"/include")
+include_directories(include 
   ${catkin_INCLUDE_DIRS}
   ${TRICLOPS_INCLUDE_DIR}
   ${FLYCAPTURE_INCLUDE_DIR}
   ${OpenCV_INCLUDE_DIRS}
 )
+
+#message(">>>>>>>>> Inlcude directories:  " ${catkin_INCLUDE_DIRS})
+#>>>>>>>>> Inlcude directories:  /opt/ros/indigo/include/usr/include/usr/include/eigen3/usr/include/pcl-1.7/usr/include/ni/usr/include/vtk-5.8/usr/include/opencv
 
 ## Declare a cpp library
 # add_library(triclops_vision
@@ -49,7 +66,9 @@ include_directories(include
 # )
 
 ## Declare a cpp executable
-add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp ${INC_ALL})
+add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp ${HEADER_FILES})
+
+add_executable(triclops_image_process src/images_into_triclops.cpp ${HEADER_FILESs})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -57,6 +76,15 @@ add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d
 ## Specify libraries to link a library or executable target against
 
 target_link_libraries(triclops_camera_driver
+   ${catkin_LIBRARIES}
+   ${OpenCV_LIBS}
+   ${TRICLOPS_LIB}
+   ${FLYCAPTURE_LIB}
+   ${FLYCAPTURE2BRIDGE_LIB}
+   ${PNMUTILS_LIB}
+ )
+
+target_link_libraries(triclops_image_process
    ${catkin_LIBRARIES}
    ${OpenCV_LIBS}
    ${TRICLOPS_LIB}

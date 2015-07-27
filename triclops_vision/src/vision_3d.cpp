@@ -21,7 +21,9 @@
 #include "triclops_vision/typedefs.h"
 #include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/line_filter.h"
-#include "triclops_vision/vision_3d.h"
+
+
+
 
 LineFilter lf;
 

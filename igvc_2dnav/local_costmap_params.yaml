@@ -1,12 +1,22 @@
 local_costmap:
   global_frame: /odom
   robot_base_frame: /base_footprint
-  update_frequency: 20.0
-  publish_frequency: 20.0
-  publish_voxel_map: true
+  update_frequency: 5.0
+  publish_frequency: 5.0
   static_map: false
   rolling_window: true
-  width: 6.0
-  height: 6.0
+  width: 10.0
+  height: 10.0
   resolution: 0.025
   origin: [-45.0, -45.0, 0.0]
+  publish_voxel_map: true
+  plugins:
+   -
+     name: footprint
+     type: "costmap_2d::FootprintLayer"
+   - 
+     name: obstacles
+     type: "costmap_2d::ObstacleLayer"
+   - 
+     name: inflater
+     type: "costmap_2d::InflationLayer"
