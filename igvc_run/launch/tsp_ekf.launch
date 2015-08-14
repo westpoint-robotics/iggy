@@ -1,0 +1,93 @@
+<!-- Launch file for ekf_localization_node -->
+
+<launch>
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" clear_params="true">
+
+<!--old params
+     <param name="map_frame" value="map"/>
+      <param name="odom_frame" value="odom"/>
+      <param name="base_link_frame" value="base_footprint"/>
+      <param name="world_frame" value="odom"/>
+      <param name="two_d_mode" value="true"/>
+
+http://wiki.ros.org/robot_localization
+If you are fusing global absolute position data that is subject to discrete jumps (e.g., GPS or position updates from landmark observations) then:
+    Set your world_frame to your map_frame value
+    MAKE SURE something else is generating the odom->base_link transform. Note that this can even be another instance of a robot_localization state estimation node. However, that instance should not fuse the global data. 
+-->
+      <param name="two_d_mode" value="true"/>
+
+      <param name="world_frame" value="map"/>
+      <param name="map_frame" value="map"/>  <!--default value-->
+      <param name="odom_frame" value="odom"/> <!--default value-->
+      <param name="base_link_frame" value="base_footprint"/>
+      
+      <!-- this ekf publishes a transform from map to odom, need another transform to publish from odom to base_footprint-->
+
+      <!-- The filter accepts an arbitrary number of inputs from each input message type (Odometry, PoseStamped,
+           TwistStamped, Imu). To add a new one, simply append the next number in the sequence to its base name,
+           e.g., odom0, odom1, twist0, twist1, imu0, imu1, imu2, etc. The value should be the topic name. These
+           parameters obviously have no default values, and must be specified. -->
+      <param name="odom0" value="/vo"/>
+      <param name="imu0" value="/imu_data"/>
+<!--
+       Each sensor reading updates some or all of the filter's state. These options give you greater control over
+           which values from each measurement are fed to the filter. For example, if you have an odometry message as input,
+           but only want to use its Z position value, then set the entire vector to false, except for the third entry.
+           The order of the values is x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az. Note that not some
+           message types lack certain variables. For example, a TwistWithCovarianceStamped message has no pose information, so
+           the first six values would be meaningless in that case. Each vector defaults to all false if unspecified, effectively
+           making this parameter required for each sensor. -->
+ <!-- old params used
+      <rosparam param="odom0_config">[true,  true,  false,
+                                      false, false, false,
+                                      false, false, false,
+                                      false, false, false,
+                                      false, false, false]</rosparam>
+
+      <rosparam param="imu0_config">[false, false, false,
+                                     true, true, true,
+                                     false, false, false,
+                                     false, false, false,
+                                     false, false, false]</rosparam>
+
+changed params due to the explination below from this tutorial:http://wiki.ros.org/robot_localization/Tutorials/Sensor%20Configuration
+
+For odom0, we are including X and Y position (reported in a world coordinate frame), yaw, X velocity (reported in the body frame), and yaw velocity. However, unless your robot is internally using an IMU, it is most likely simply using wheel encoder data to generate the values in its measurements. Therefore, its velocity, heading, and position data are all generated from the same source. In that instance, we don't want to use all the values, as you're feeding duplicate information into the filter. Instead, it's best to just use the velocities: 
+Next, we note that we are not fusing Y velocity. At first glance, this is the right choice, as our robot cannot move instantaneously sideways. However, if the nav_msgs/Odometry message reports a 0 value for Y velocity (and the Y velocity covariance is NOT inflated to a massive value), it's best to feed that value to the filter. As a 0 measurement in this case indicates that the robot cannot ever move in that direction, it serves as a perfectly valid measurement: 
+-->
+
+<rosparam param="odom0_config">[false, false, false, 
+                                false, false, false, 
+                                true, true, false, 
+                                false, false, true,
+                                false, false, false]</rosparam>
+
+<rosparam param="imu0_config">[false, false, false, 
+                               false, false, true, 
+                               false, false, false, 
+                               false, false, true,
+                               true, false, false]</rosparam>
+<!-- old params used
+
+      <param name="odom0_differential" value="true"/> 
+      <param name="imu0_differential" value="false"/>
+
+      <param name="odom0_relative" value="false"/>
+      <param name="imu0_relative" value="true"/>
+changed because of this info from the same tutorial listed above:
+The general rule of thumb for the _differential parameter is that if a give robot has only one source of orientation data, then the differential parameter should be set to false. If there are N sources, users can set the _differential parameter to true for N-1 of them, or simply ensure that the covariance values are large enough to eliminate oscillations. 
+
+**note** when encoders are added, set encoder input to differential=true and leave these false
+-->
+      <param name="odom0_differential" value="false"/> 
+      <param name="imu0_differential" value="false"/>
+<!--
+      Placeholder for output topic remapping
+      <remap from="odometry/filtered" to=""/>
+      -->
+
+    </node>
+
+</launch>

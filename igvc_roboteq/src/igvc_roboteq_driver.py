@@ -191,20 +191,20 @@ if __name__ == '__main__':
     try:
         #print('try.. try again')
         rate = rospy.Rate(3)
-        encodermsg = Vector3()
+        #encodermsg = Vector3()
         while not rospy.is_shutdown():
             #print('here234')
-            enclist = getEncoders()
-            if (enclist[0] == 10000000 or enclist[1] == 10000000 or enclist[0] == None or enclist[1] == None):
+            #enclist = getEncoders()
+            #if (enclist[0] == 10000000 or enclist[1] == 10000000 or enclist[0] == None or enclist[1] == None):
                 #print ('error happened')
-                pass
-            else:
+            #    pass
+           # else:
                 #odom_msg = valsToOdom(encoders)
                 
-                encodermsg.x = enclist[0]
-                encodermsg.y = enclist[1]
-                encodermsg.z = RCmode
-                pub.publish(encodermsg)
+                #encodermsg.x = enclist[0]
+                #encodermsg.y = enclist[1]
+                #encodermsg.z = RCmode
+                #pub.publish(encodermsg)
                 #print(odom_msg)            
                 #print (encoders)
                 #moveCallback()

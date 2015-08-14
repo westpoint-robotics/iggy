@@ -148,12 +148,14 @@ def parse_novatelINSPVA(insString):
     lastTime = curTime    
     curTime = rospy.Time.now()
     deltime = (curTime-lastTime).to_sec()
+    if (deltime == 0):
+        deltime = 0.00000001
 
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
     imu_msg.header.frame_id = 'imu_frame'
     imu_msg.linear_acceleration.x = float(velcnsY)#*.05/pow(2,15)
-    imu_msg.linear_acceleration.y = float(velcnsX)*-1#*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = float(velcnsX)#*-1#*.05/pow(2,15)
     imu_msg.linear_acceleration.z = float(velcnsZ)#*.05/pow(2,15)
     imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #imu_msg.orientation_covariance.x = float(angcnsY)

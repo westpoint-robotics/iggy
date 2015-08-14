@@ -8,6 +8,7 @@ from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 from usma_novatel_parser import *
 from os.path import expanduser
+from std_msgs.msg import String
 
 # configure the serial connections 
 ser = serial.Serial(
@@ -39,7 +40,7 @@ ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
 imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
-#novaPub = rospy.Publisher(???,???, queue_size=1)
+novaPub = rospy.Publisher('raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(10) # 10hz
 try:
@@ -48,6 +49,7 @@ try:
             velodyne_output = ser.readline() # Read data a line of data from buffer
             outFile.write(velodyne_output) # Option to log data to file
             #print(velodyne_output)
+            #novaPub = velodyne_output
             #TODO print once when gets into different mode like initializing, finesteering, etc
                 
             if (velodyne_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message
@@ -69,7 +71,8 @@ try:
                 nova_Data = nova_Data.split(',') # split the message body into fields
                 inspva_out = parse_novatelINSPVA(nova_Data) 
                 gpsPub.publish(inspva_out[1])
-                imuPub.publish(inspva_out[0])            
+                imuPub.publish(inspva_out[0])
+                novaPub.publish(velodyne_output)            
                  
 except KeyboardInterrupt:
     ser.write('unlogall\r\n') # Send a message to CNS-5000 to stop sending logs
