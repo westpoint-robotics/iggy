@@ -1,0 +1,10 @@
+<!--roboteq launch troubleshoot-->
+<launch>
+<!--
+ <node name="simple_nav_goals" pkg="simple_navigation_goals" type="simple_navigation_goals.cpp" output="screen"/>
+-->
+ <node name="simple_nav_goals" pkg="igvc_run" type="simple_nav_goals.cpp" output="screen"/>
+
+
+</launch>
+

@@ -32,3 +32,5 @@ include_directories(
 add_executable(wheel_odom_tf_broadcaster src/wheel_odom_tf_broadcaster.cpp)
 target_link_libraries(wheel_odom_tf_broadcaster ${catkin_LIBRARIES})
 
+add_executable(simple_nav_goals src/simple_nav_goals.cpp)
+target_link_libraries(simple_nav_goals ${catkin_LIBRARIES})

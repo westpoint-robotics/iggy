@@ -1,6 +1,26 @@
 <!--igvc_run.launch-->
 <launch>
 
+ <!-- =============   bagfiles  =======================-->
+<param name="use_sim_time" value="true"/>
+
+<!--This line sets the path to the ROS bagfiles to run -->
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/goForward10ft/" />
+
+<!--These are the bag files to run 
+<arg name="enc_raw" default="$(arg path)enc_raw.bag" />   -->
+<arg name="gps" default="$(arg path)gps_fix.bag" />
+<arg name="imu" default="$(arg path)imudata.bag" />
+<!--
+<arg name="rCamera" default="$(arg path)right_camera.bag" />
+<arg name="lCamera" default="$(arg path)left_camera.bag" />
+<arg name="combinedCamera" default="$(arg path)camera_combined.bag" />
+<arg name="laser3D" default="$(arg path)pointcloud.bag" />
+  -->
+<!-- This line runs all the bag files specified above -->
+<node pkg="rosbag" type="play" name="player" output="screen" 
+    args=" -r 0.5 --clock $(arg gps) $(arg imu)"/>
+
 <!-- =============   TRANSFORMS  ======================= -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
         args="0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
@@ -47,7 +67,7 @@
   <include file="$(find igvc_run)/launch/dml_move_base.launch">
   </include>
 <!---->
-  <include file="$(find roboteq)/launch/roboteq_driver.launch">
+  <include file="$(find igvc_roboteq)/launch/roboteq_driver.launch">
   </include> 
 
 <!--creates bag files that get overwritten each time this runs-->
