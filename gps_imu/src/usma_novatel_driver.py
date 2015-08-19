@@ -34,9 +34,9 @@ ser.write('unlogall\r\n')
 ##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
 
 ##TODO write code that checks is INS allignment is good or complete, if not run these 3 lines of code
-#align = input("What directions  in degrees is the robot facing:")
-#command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
-#ser.write(command)
+align = input("What directions  in degrees is the robot facing:")
+command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
+ser.write(command)
 
 ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 

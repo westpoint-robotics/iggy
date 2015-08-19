@@ -160,12 +160,21 @@ def moveCallback(data):
             #print(switchValue)
             if (abs(data.linear.x) > 0.001 or abs(data.angular.z) > 0.001):
                 #rospy.loginfo("I heard %f %f",data.linear.x,data.angular.z)
-                speed = data.linear.x *500 #linear.x is value between -0.5 and 0.5 and input to wheels is between -1000 and 1000
+                speed = data.linear.x *2000 #linear.x is value between -0.5 and 0.5 and input to wheels is between -1000 and 1000
                                             #2000 would give full speed range, but setting to lower value to better control robot
-                turn = (data.angular.z + 0.009)*50 #angular.z value is between -1 and 1 and input to wheels is between -1000 and 1000
+                turn = (data.angular.z + 0.009)*1000  #50 seems to be a nice number
+                                                     #angular.z value is between -1 and 1 and input to wheels is between -1000 and 1000
                                                      #through testing found 0.009 to be the approximate offset in the wheels
                                                      #the wheels are balanced improperly and so a true number is hard to find
                                                      #since based on the incline the robot is facing, the value changes dramatically
+                if (turn > 100):
+                    turn = 100
+                elif (turn < -100):
+                    turn = -100
+                if (speed > 500):
+                    speed = 500
+                elif (speed < -500):
+                    speed = -500
                 #print(speed,turn)
                 cmd = '!G 1 ' + str(speed) + '\r'
                 ser.write(cmd)
