@@ -4,18 +4,26 @@
 #include <math.h>
 #include <utility>
 #include <iostream>
+#include <sensor_msgs/NavSatFix.h>
+
 //#include <tuple> // C++11, for std::tie
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
-
 
 // below comment code not neccisary, use this instead: ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED
 //subscribe to move_base/result
     //if status.text = "Goal reached."
     //send next command
 
-double xloc, yloc;
-double R = 6371000; //rad of earth
+//double R = 6371000; //rad of earth
+
+struct utm {
+    double northing;
+    double easting;
+} currentUTM, goalUTM; 
+
+
+
 
 //std::pair<double, double> gps2xyz (latin, lonin)
 //{
@@ -25,40 +33,31 @@ double R = 6371000; //rad of earth
 //    return std::make_pair(x, y);
 //}
 
-double gps2x (latin4x, lonin4x)
+utm gps2UTM(double latin, double lonin)
 {
     //these equations assume spherical  
-    x = R * cos(latin) * cos(lonin);
-    return xloc;
+    utm robotUTM;
+    robotUTM.northing = 6371000 * cos(latin) * cos(lonin); 
+    robotUTM.easting = 6371000 * cos(latin) * sin(lonin);
+    return robotUTM;
 }
-double gps2y (latin4y, lonin4y)
-{
-    //these equations assume spherical  
-    y = R * cos(latin) * sin(lonin);
-    return yloc;
-}
-
 
 //subscribe to topic that converts gps location to xyz or subcribe to gps location and convert here
 void callback(const sensor_msgs::NavSatFix& gpsloc)
 {
     double lat = gpsloc.latitude;
     double lon = gpsloc.longitude;
-    double xloc = gps2x(lat, lon);
-    double yloc = gps2y(lat, lon);
-    return xloc, yloc;
+    currentUTM = gps2UTM(lat, lon);
+    
 }
-
-
-
-
-
 
 int main(int argc, char** argv){
   ros::init(argc, argv, "simple_navigation_goals");
 
   //tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
+
+  ros::NodeHandle nh;
 
   ros::Subscriber sub = nh.subscribe("gps/fix", 1, callback);
     //returns xloc, yloc
@@ -75,9 +74,12 @@ int main(int argc, char** argv){
   //we'll send a goal to the robot to move 2 meter forward
   goal1.target_pose.header.frame_id = "base_link";
   goal1.target_pose.header.stamp = ros::Time::now();
-
-  goal1.target_pose.pose.position.x = 0.0;   // positive is forward
-  //goal1.target_pose.pose.position.y = 10.0;  //postive is to the left
+  //TODO get goal from user
+  double goallat = 41.390932;
+  double goallon = -73.952948;
+  currentUTM = gps2UTM(goallat, goallon);
+  goal1.target_pose.pose.position.x = goalUTM.northing - currentUTM.northing; // positive is forward
+  goal1.target_pose.pose.position.y = goalUTM.easting - currentUTM.easting;  //postive is to the left since we are at neg lon
   goal1.target_pose.pose.orientation.w = 1.0;
 
   ROS_INFO("Sending goal 1");
@@ -87,26 +89,6 @@ int main(int argc, char** argv){
 
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
       ROS_INFO("Completed goal 1");
-      move_base_msgs::MoveBaseGoal goal2;
-      //we'll send a goal to the robot to move 2 meter forward
-      goal2.target_pose.header.frame_id = "base_link";
-      goal2.target_pose.header.stamp = ros::Time::now();
-
-      goal2.target_pose.pose.position.x = 0.0;   // positive is forward
-      //goal2.target_pose.pose.position.y = 10.0;  //postive is to the left
-      goal2.target_pose.pose.orientation.w = 1.0;
-
-      ROS_INFO("Sending goal 2");
-      ac.sendGoal(goal2);
-
-      ac.waitForResult();
-
-      if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-        ROS_INFO("goal 2 complete");
-    
-
-      else
-        ROS_INFO("The base failed goal 2");
 
   else
     ROS_INFO("The base failed goal 1");
