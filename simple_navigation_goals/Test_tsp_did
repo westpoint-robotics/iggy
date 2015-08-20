@@ -25,14 +25,16 @@ start loc:41.39052876509,-73.95317301745
 41.39054821312,-73.95306826378
 
 goal i gave:41.39057933683,-73.95302374789
+            Easting:587531.09 Northing:4582645.36 
 start loc:  41.39052876509,-73.95317301745
+            Easting:587518.68 Northing:4582639.59 
 end loc:    41.39054753017,-73.95306839184
-
-goal it told move_base:
+            shoulda been: x: 12.59, y: 5.77
+but goal it told move_base:
         x: 8.26070938595
         y: 0.643918604376
 
 
-
+difference is due to equations that are not very accurate
 
 

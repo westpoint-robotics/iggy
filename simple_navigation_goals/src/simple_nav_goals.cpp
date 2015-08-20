@@ -4,46 +4,32 @@
 #include <math.h>
 #include <utility>
 #include <iostream>
+#include <nav_msgs/Odometry.h>
 #include <sensor_msgs/NavSatFix.h>
 
-//#include <tuple> // C++11, for std::tie
-
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
-
-// below comment code not neccisary, use this instead: ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED
-//subscribe to move_base/result
-    //if status.text = "Goal reached."
-    //send next command
-
-//double R = 6371000; //rad of earth
 
 struct utm {
     double northing;
     double easting;
-} currentUTM, goalUTM; 
+} locUTM, goalUTM; 
+
+using namespace std;
 
 
-
-
-//std::pair<double, double> gps2xyz (latin, lonin)
-//{
-//    //these equations assume spherical  
-//    x = R * cos(latin) * cos(lonin);
-//    y = R * cos(latin) * sin(lonin);
-//    return std::make_pair(x, y);
-//}
-
+/*  old method of doing conversion here
 utm gps2UTM(double latin, double lonin)
 {
-    //these equations assume spherical  
+    //these equations assume spherical and are not accurate..
+    //TODO make equations more accurate --> latLong-UTMConversion.cpp file gives 3 ways to make it more accurate
     utm robotUTM;
     robotUTM.northing = 6371000 * cos(latin) * cos(lonin); 
     robotUTM.easting = 6371000 * cos(latin) * sin(lonin);
     return robotUTM;
-}
-
+}*/
 
 //subscribe to topic that converts gps location to xyz or subcribe to gps location and convert here
+/*  old method of doing conversion here
 void callback(const sensor_msgs::NavSatFix& gpsloc)
 {
     double lat = gpsloc.latitude;
@@ -51,14 +37,36 @@ void callback(const sensor_msgs::NavSatFix& gpsloc)
     currentUTM = gps2UTM(lat, lon);
     ROS_INFO("callback good");
 
+}*/
+
+void curLocCallback(const nav_msgs::Odometry& utmloc)
+{
+    locUTM.northing = utmloc.pose.pose.position.x;
+    locUTM.easting = utmloc.pose.pose.position.y;
+    ROS_INFO("cur callback good");
+
+}
+void goalLocCallback(const nav_msgs::Odometry& utmgoal)
+{
+    goalUTM.northing = utmgoal.pose.pose.position.x;
+    goalUTM.easting = utmgoal.pose.pose.position.y;
+    ROS_INFO("goal callback good");
+
 }
 
 
-
 int main(int argc, char** argv){
-  ros::init(argc, argv, "simple_navigation_goals");
+//TODO FIXME this doesnt work.. need two subcribers in one topic
+  //ros::MultiThreadedSpinner spinner(2); // Use 2 threads
+  //spinner.spin(); // spin() will not return until the node has been shutdown
+
+  //ros::init(argc, argv, "simple_navigation_goals");
   ros::NodeHandle nh;
-  ros::Subscriber sub = nh.subscribe("gps/fix", 1, callback);
+  //ros::NodeHandle nh2;
+  ros::Subscriber sub = nh.subscribe("vo", 1, curLocCallback);
+  ros::Subscriber sub2 = nh.subscribe("goal_utm", 1, goalLocCallback);
+  ros::Publisher pub = nh.advertise<sensor_msgs::NavSatFix>("goal_gps", 5);
+
 
 
   //tell the action client that we want to spin a thread by default
@@ -73,46 +81,48 @@ int main(int argc, char** argv){
     ROS_INFO("Waiting for the move_base action server to come up");
   }
 
+
+  //ask for gps location of goal and publish to be converted
+  sensor_msgs::NavSatFix gpsgoal;
+  gpsgoal.header.stamp = ros::Time::now();
+  cout << "What latitude would you like to go to? (ex: 40.123):";
+  cin >> gpsgoal.latitude;
+  cout << "What longitude would you like to go to? (ex: -71.123):";
+  cin >> gpsgoal.longitude;
+  gpsgoal.altitude = -26.7866;
+  
+
+  //pub.publish(gpsgoal);
+
+ros::Rate loop_rate(10);
+
   while(ros::ok()){
   ROS_INFO("top");
 
-    //returns xloc, yloc
+  pub.publish(gpsgoal);
 
-  if (currentUTM.northing == 0.0) {
+  if (currentUTM.northing == 0.0 or goalUTM.northing == 0.0) {
     //try agin.. wait til we get a signal
     ROS_INFO("cur x: %f ", currentUTM.northing);
-    ROS_INFO("cur y: %f ", currentUTM.easting);
-    }
+    //ROS_INFO("cur y: %f ", currentUTM.easting);
+    ROS_INFO("goal x: %f ", goalUTM.northing);
+    //ROS_INFO("cur y: %f ", goalUTM.easting);
+    }//end if
   else {
-    //make this goal creation, sending and status checking a function to call in main
-//  while(currentUTM.northing == 0.0){
- //   ros::Subscriber sub = nh.subscribe("gps/fix", 1, callback);
-    //waiting for signal from gps
- // }
+    //TODO make sending of a goal a function that can be called multiple times
     move_base_msgs::MoveBaseGoal goal1;
-
-    //we'll send a goal to the robot to move 2 meter forward
+    
     goal1.target_pose.header.frame_id = "base_link";
     goal1.target_pose.header.stamp = ros::Time::now();
-    //TODO get goal from user
-            //in front of trialler
-    //double goallat = 41.39051405854;
-    //double goallon = -73.95317627738;
-
-            //farther away
-
-    double goallat = 41.39057933683;
-    double goallon = -73.95302374789;
-    goalUTM = gps2UTM(goallat, goallon);
     ROS_INFO("cur x: %f ", currentUTM.northing);
     ROS_INFO("cur y: %f ", currentUTM.easting);
     ROS_INFO("goal x: %f ", goalUTM.northing);
     ROS_INFO("goal y: %f ", goalUTM.easting);
-    double goalx = (goalUTM.northing - currentUTM.northing)/100;
-    double goaly = (goalUTM.easting - currentUTM.easting)/100;
+    double goalx = (goalUTM.northing - currentUTM.northing);
+    double goaly = (goalUTM.easting - currentUTM.easting);
     ROS_INFO("dif x: %f ", goalx);
     ROS_INFO("dif y: %f ", goaly);
-    goal1.target_pose.pose.position.x = goalx; // positive is forward
+    goal1.target_pose.pose.position.x = goalx;  // positive is forward
     goal1.target_pose.pose.position.y = goaly;  //postive is to the left since we are at neg lon
     goal1.target_pose.pose.orientation.w = 1.0;
 
@@ -123,6 +133,7 @@ int main(int argc, char** argv){
             
     if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
       ROS_INFO("Completed goal 1");
+        //go back to top? accept new goal?
       }
     else{
       ROS_INFO("The base failed goal 1");
@@ -130,17 +141,11 @@ int main(int argc, char** argv){
 
   }  //end else
  // ROS_INFO("0");
-    if (currentUTM.northing==0.0){
-    ROS_INFO("vals = 0");
-    ros::spinOnce();
-    }
-  else {
 
-    ROS_INFO("vals good");
-    }
- //ros::spinOnce();
+  ros::spinOnce(); 
+  loop_rate.sleep();
   ROS_INFO("1");
-  //TODO add a pause here
+  //TODO add a pause here or way to make is so current utm info isnt pulled as fast as it is currently
  }  //end while
   ROS_INFO("2");
 

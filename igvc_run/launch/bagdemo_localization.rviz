@@ -27,7 +27,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Image
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -84,22 +84,7 @@ Visualization Manager:
       Tree:
         map:
           odom:
-            base_footprint:
-              base_link:
-                gps_frame:
-                  {}
-                imu_frame:
-                  {}
-                left_camera_frame:
-                  {}
-                left_wheel_frame:
-                  {}
-                right_camera_frame:
-                  {}
-                right_wheel_frame:
-                  {}
-                velodyne:
-                  {}
+            {}
       Update Interval: 0
       Value: true
     - Angle Tolerance: 0.1
@@ -171,22 +156,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 26.9769
+      Distance: 13.2406
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 7.73033
-        Y: 8.02942
-        Z: 6.2346e-06
+        X: -2.60312
+        Y: 0.372498
+        Z: 3.47739e-06
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.0397976
+      Pitch: 1.1198
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.27721
+      Yaw: 3.18721
     Saved: ~
 Window Geometry:
   Displays:

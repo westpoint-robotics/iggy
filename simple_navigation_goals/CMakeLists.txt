@@ -57,3 +57,7 @@ include_directories(
 add_executable(simple_navigation_goal src/simple_nav_goals.cpp)
 target_link_libraries(simple_navigation_goal ${catkin_LIBRARIES})
 
+add_executable(4Testing_direct_input_goal src/4Testing_direct_input_goal.cpp)
+target_link_libraries(4Testing_direct_input_goal ${catkin_LIBRARIES})
+
+
