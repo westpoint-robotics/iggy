@@ -12,7 +12,7 @@ typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseCl
 struct utm {
     double northing;
     double easting;
-} locUTM, goalUTM; 
+} currentUTM, goalUTM; 
 
 using namespace std;
 
@@ -41,8 +41,8 @@ void callback(const sensor_msgs::NavSatFix& gpsloc)
 
 void curLocCallback(const nav_msgs::Odometry& utmloc)
 {
-    locUTM.northing = utmloc.pose.pose.position.x;
-    locUTM.easting = utmloc.pose.pose.position.y;
+    currentUTM.northing = utmloc.pose.pose.position.x;
+    currentUTM.easting = utmloc.pose.pose.position.y;
     ROS_INFO("cur callback good");
 
 }

@@ -50,7 +50,7 @@ GroundSegmenter::initialize(void)
 // Function called on initialization of the nodelet
 void GroundSegmenter::onInit(void)
 {
-  printf("THIS IS A TEST1");
+  //printf("THIS IS A TEST1");
   nh_ = getNodeHandle();
   private_nh_ = getPrivateNodeHandle();
 
@@ -70,6 +70,7 @@ void GroundSegmenter::onInit(void)
   // private_nh_.getParam("maxgrad", maxgrad_);
   // private_nh_.getParam("maxdh", maxdh_);
 
+/*   DISPLAY OF GROUND IMAGE. uncomment this section of code to see.. for display purposes only
   if (display_)
   {
     cv::namedWindow("Gradient Image", CV_WINDOW_NORMAL | CV_WINDOW_FREERATIO | CV_GUI_NORMAL);
@@ -78,6 +79,8 @@ void GroundSegmenter::onInit(void)
     cvResizeWindow("Ground Image", 500, 64);
     cvStartWindowThread();
   }
+
+*/
 }
 
 // void
@@ -118,9 +121,12 @@ GroundSegmenter::segment(const PointCloudPtr &input)
  //      not_ground.push_back(input->at(i,j));file:///home/igvc/Desktop/velodyne_w_people.pcap
  //  }
 
- for(size_t i=0; i < input->width; i++){ // CDT Jorge Figueroa-Cecco uses this function to segment the input pointcloud into a ground and not_ground pointclouds. 4 MAR 2015
+//segment the input pointcloud into a ground and not_ground pointclouds.
+//point.z < -1.5 --> not_ground has almost all points, -.5 makes ground have all points
+//TODO calibrate the LiDAR so that it picks up the smallest height of obstacle for competition
+ for(size_t i=0; i < input->width; i++){ 
    PointT point = input->at(i);
-   if (point.z < -1.0) {
+   if (point.z < -1.1) {
      //point.z = 0.0;
      ground.push_back(point);
    }

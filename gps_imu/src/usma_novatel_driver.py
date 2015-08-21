@@ -31,8 +31,12 @@ outFile = open(fName, "wb")
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')
 #ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.5\r\n')
-##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
 
+#FLIPPED front and back of robot, rotated 180 about z axis
+#TODO make this rotation more accurate. the INS not perfectly alligned with robot
+ser.write('VEHICLEBODYROTATION 0 0 180\r\n')
+
+##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
 ##TODO write code that checks is INS allignment is good or complete, if not run these 3 lines of code
 align = input("What directions  in degrees is the robot facing:")
 command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'

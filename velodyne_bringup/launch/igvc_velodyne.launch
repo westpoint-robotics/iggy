@@ -19,6 +19,7 @@
     <!-- start cloud nodelet -->
     <include file="$(find velodyne_pointcloud)/launch/cloud_nodelet.launch">
     <arg name="calibration" value="$(arg calibration)"/>
+      <!-- <param name="view_direction" value="3.14159265"/> -->
     </include>
 
   <!-- Run the pointcloud segmenter to remove the ground -->

@@ -48,7 +48,7 @@ include_directories(
 
 ## Declare a cpp library
 add_library(structured_segmentation
-   src/ground_segmenter.cpp
+   src/ground_segmenter2.cpp
 )
 
 ## Declare a cpp executable
