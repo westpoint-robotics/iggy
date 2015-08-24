@@ -24,9 +24,9 @@ if (ser.isOpen()):
 ser.open()
 
 # Create a log file
-home = expanduser("~")
-fName = home+"/catkin_ws/rosbags/novatelLog.txt"
-outFile = open(fName, "wb")
+#home = expanduser("~")
+#fName = home+"/catkin_ws/rosbags/novatelLog.txt"
+#outFile = open(fName, "wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')
@@ -38,9 +38,9 @@ ser.write('VEHICLEBODYROTATION 0 0 180\r\n')
 
 ##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
 ##TODO write code that checks is INS allignment is good or complete, if not run these 3 lines of code
-#align = input("What directions  in degrees is the robot facing:")
-#command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
-#ser.write(command)
+align = input("What directions  in degrees is the robot facing:")
+command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
+ser.write(command)
 
 ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 

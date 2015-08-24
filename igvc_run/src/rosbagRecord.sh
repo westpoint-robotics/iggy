@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rosbag record -O $HOME/catkin_ws/rosbags/imudata.bag /imu/data &
+rosbag record -O $HOME/catkin_ws/rosbags/imudata.bag /imu_data &
 rosbag record -O $HOME/catkin_ws/rosbags/gps_fix.bag /gps/fix &
 #rosbag record -O $HOME/catkin_ws/rosbags/enc_raw.bag /enc_raw &
 rosbag record -O $HOME/catkin_ws/rosbags/pointcloud.bag /velodyne_points &

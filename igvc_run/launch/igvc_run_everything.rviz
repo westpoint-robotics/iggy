@@ -135,17 +135,17 @@ Visualization Manager:
       Color Scheme: costmap
       Draw Behind: false
       Enabled: true
-      Name: Map
+      Name: Local Map
       Topic: /move_base/local_costmap/costmap
       Value: true
     - Alpha: 0.3
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
-      Name: Map
+      Enabled: false
+      Name: Gloabl Map
       Topic: /move_base/global_costmap/costmap
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -171,9 +171,37 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Flat Squares
-      Topic: /segmenter_nodelet/output_ground
+      Topic: /segmenter_nodelet/output_not_ground
       Use Fixed Frame: true
       Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.03
+      Name: Global Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Topic: /move_base/DWAPlannerROS/global_plan
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.03
+      Name: Local Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Topic: /move_base/DWAPlannerROS/local_plan
       Value: true
   Enabled: true
   Global Options:
@@ -199,22 +227,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 7.412
+      Distance: 15.8347
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 4.33503
-        Y: 2.20621
-        Z: 3.71581e-06
+        X: -3.45607
+        Y: 0.746296
+        Z: -2.69127e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.614797
+      Pitch: 1.1948
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 0.0158407
+      Yaw: 3.43084
     Saved: ~
 Window Geometry:
   Displays:
@@ -234,5 +262,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 60
-  Y: 60
+  X: 248
+  Y: 53

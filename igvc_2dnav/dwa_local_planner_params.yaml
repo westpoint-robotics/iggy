@@ -1,6 +1,6 @@
 DWAPlannerROS:
   max_vel_x: 1.0
-  min_vel_x: -0.5
+  min_vel_x: 0.2
   max_rot_vel: 0.5
   min_vel_theta: 0.2
 
