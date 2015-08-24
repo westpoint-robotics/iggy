@@ -1,6 +1,6 @@
 <!--igvc_run.launch-->
 <launch>
-    <master auto="start"/>
+
 
 
   <node pkg="tf" type="static_transform_publisher" name="map_to_odom"
@@ -11,9 +11,9 @@
   </node> 
 
 
-<!-- Start an rviz node with a custom configuration  -->
+<!-- Start an rviz node with a custom configuration 
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find triclops_vision)/launch/triclops_camera.rviz"/>
-
+ -->
 
 </launch>
 

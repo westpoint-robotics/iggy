@@ -60,6 +60,10 @@
     </include>
   <!--TODO write script that conects to the velodyne ethernet port-->
 
+  <include file="$(find triclops_vision)/launch/triclops_camera2.launch">
+    </include>
+
+
 <!--creates bag files that get overwritten each time this runs-->
 <node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />
 
