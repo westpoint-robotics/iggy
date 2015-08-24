@@ -25,7 +25,6 @@ bool SHOW_OPENCV = true;
 
 int main(int  argc, char **argv)
 {
-  LineFilter lf;
   TriclopsInput triclopsColorInput, triclopsMonoInput;
   TriclopsContext triclops;
 
