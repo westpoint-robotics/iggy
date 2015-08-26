@@ -95,6 +95,8 @@ void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::ve
     }
 
     // Return the original image with detected white lines drawn in cyan
+    //changed to only return hough_image
+    cyan_image = hough_image;
     rtrn_image = cyan_image;
 }
 
@@ -293,3 +295,5 @@ void LineFilter::displayCyan()
       std::cout << "exception caught: " << err_msg << std::endl;
   }
 }
+
+

@@ -6,17 +6,20 @@
         args="-0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-        args="0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" />
+        args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
         args="0 0 0 0 0 0 1 base_link imu_frame 100" />
 
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
+        args="0.27 0 1.08 0 0.75 0 base_link bumblebee2 100" />
+<!--
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_camera_frame"
-        args="-0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
+        args="0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_camera_frame"
-        args="-0.27 0.06 1.08 0 0.75 0 base_link left_camera_frame 100" />
-
+        args="0.27 0.06 1.08 0 0.75 0 base_link left_camera_frame 100" />
+-->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
         args="-0.27 0.28 -0.47 0 0 0 1 base_link left_wheel_frame 100" />
 
@@ -26,14 +29,15 @@
   <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
         args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
 
-<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
         args="0 0 0 0 0 0 1 map odom 100" />
+
 
 <!-- =============   NODES and Launch Files  ======================= -->
 <!--
- run gps_imu node seperately first.. needs to be ran until "INS_SOLUTION_GOOD" is given and then keep on. if you power off the cns than restart the process.-->
+ run gps_imu node seperately first.. needs to be ran until "INS_SOLUTION_GOOD" is given and then keep on. if you power off the cns than restart the process.
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
-
+-->
 <!--utm odom converter node for goal location -->
 <node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="goal_utm"/>
@@ -56,12 +60,14 @@
   <include file="$(find roboteq)/launch/roboteq_driver.launch">
   </include> 
 
+<!--TODO write script that conects to the velodyne ethernet port-->
   <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
     </include>
-  <!--TODO write script that conects to the velodyne ethernet port-->
-
-  <include file="$(find triclops_vision)/launch/triclops_camera2.launch">
-    </include>
+  
+<!--was originally running triclops_camera2.launch but this is the only node currently required for camera
+(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
+  <node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
+  </node> 
 
 
 <!--creates bag files that get overwritten each time this runs-->

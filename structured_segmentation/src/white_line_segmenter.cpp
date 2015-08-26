@@ -41,25 +41,25 @@ typedef struct float_xyz float_xyz;
 namespace structured_segmentation
 {
 void
-GroundSegmenter::initialize(void)
+LineSegmenter::initialize(void)
 {
   // Pull from onInit
 }
 
 
 // Function called on initialization of the nodelet
-void GroundSegmenter::onInit(void)
+void LineSegmenter::onInit(void)
 {
   //printf("THIS IS A TEST1");
   nh_ = getNodeHandle();
   private_nh_ = getPrivateNodeHandle();
 
   // Output topics for ground and non-ground publication
-  output_ground_pub_ = private_nh_.advertise<sensor_msgs::PointCloud2>("output_ground", 0);
-  output_not_ground_pub_ = private_nh_.advertise<sensor_msgs::PointCloud2>("output_not_ground", 0);
+  output_line_pub_ = private_nh_.advertise<sensor_msgs::PointCloud2>("output_white_line", 0);
+  output_not_line_pub_ = private_nh_.advertise<sensor_msgs::PointCloud2>("output_not_white_line", 0);
 
   // Input topic subscription
-  input_ = private_nh_.subscribe("input", 3, &GroundSegmenter::segment, this, ros::TransportHints().tcpNoDelay(true));
+  input_ = private_nh_.subscribe("input", 3, &LineSegmenter::segment, this, ros::TransportHints().tcpNoDelay(true));
 
   // server_ = new dynamic_reconfigure::Server<structured_segmentation::GroundSegmenterConfig>(private_nh_);
   // server_->setCallback(boost::bind(&GroundSegmenter::onConfigure, this, _1, _2));
@@ -93,12 +93,12 @@ void GroundSegmenter::onInit(void)
 // }
 
 void
-GroundSegmenter::segment(const PointCloudPtr &input)
+LineSegmenter::segment(const PointCloudPtr &input)
 {
   input_cloud_ptr_ = input;
   boost::shared_ptr<cv::Mat> gradient_matrix(new cv::Mat(input->height, input->width, CV_32F));
   boost::shared_ptr<cv::Mat> ground_matrix(new cv::Mat(input->height, input->width, CV_8U));
-  *ground_matrix = cv::Mat::zeros(input->height, input->width, CV_8U);
+  *white_line_matrix = cv::Mat::zeros(input->height, input->width, CV_8U);
 
   // // Calculate gradient field
   // calculateGradientField(gradient_matrix);
@@ -110,7 +110,7 @@ GroundSegmenter::segment(const PointCloudPtr &input)
   //   cv::imshow("Ground Image", *ground_matrix);
   // }
 
- PointCloud ground, not_ground;
+ PointCloud white_line, not_white_line;
 
  // for(size_t i=0; i < input->width; i++)
  //  for(size_t j=0; j < input->height; j++)
@@ -123,16 +123,19 @@ GroundSegmenter::segment(const PointCloudPtr &input)
 
 //segment the input pointcloud into a ground and not_ground pointclouds.
 //point.z < -1.5 --> not_ground has almost all points, -.5 makes ground have all points
+
+//FIXME stopped right here
+
 //TODO calibrate the LiDAR so that it picks up the smallest height of obstacle for competition
  for(size_t i=0; i < input->width; i++){ 
    PointT point = input->at(i);
-   if (point.z < -1.1) {
+   if (point.r < 100) {
      //point.z = 0.0;
-     ground.push_back(point);
+     white_line.push_back(point);
    }
    else {
      //point.z = 0.0;
-     not_ground.push_back(point);
+     not_white_line.push_back(point);
    }
  }
 /* This is from the original code. This causes an error complaining that our pointcloud is a 1D PC, instead of a 2D. We can access width, but accessing height creates this error because height is default set to 1 because it is an unordered pointcloud. - CDT Jorge Figueroa-Cecco 4 MAR 2015.
@@ -149,16 +152,16 @@ GroundSegmenter::segment(const PointCloudPtr &input)
     }
   }*/
   
-  ground.header.stamp = input->header.stamp;
-  ground.header.frame_id = input->header.frame_id;
-  output_ground_pub_.publish(ground);
-  not_ground.header.stamp = input->header.stamp;
-  not_ground.header.frame_id = input->header.frame_id;
-  output_not_ground_pub_.publish(not_ground);
+  white_line.header.stamp = input->header.stamp;
+  white_line.header.frame_id = input->header.frame_id;
+  output_white_line_pub_.publish(white_line);
+  not_white_line.header.stamp = input->header.stamp;
+  not_white_line.header.frame_id = input->header.frame_id;
+  output_not_white_line_pub_.publish(not_white_line);
 }
 
 void
-GroundSegmenter::calculateGradientField(boost::shared_ptr<cv::Mat> &gradient_matrix)
+LineSegmenter::calculateGradientField(boost::shared_ptr<cv::Mat> &gradient_matrix)
 {
   #pragma omp parallel for
   for (unsigned int ring = 0; ring < input_cloud_ptr_->height; ++ring)
@@ -172,7 +175,7 @@ GroundSegmenter::calculateGradientField(boost::shared_ptr<cv::Mat> &gradient_mat
 }
 
 void
-GroundSegmenter::getPoint(int ring, int index, PointT& point)
+LineSegmenter::getPoint(int ring, int index, PointT& point)
 {
   // Assumes that ring == height, index == width
   if(ring >= static_cast<int>(input_cloud_ptr_->height))
@@ -200,7 +203,7 @@ GroundSegmenter::getPoint(int ring, int index, PointT& point)
 }
 
 float
-GroundSegmenter::calcGrad(size_t ring, size_t index)
+LineSegmenter::calcGrad(size_t ring, size_t index)
 {
   float gradient_N = 0.0f;
   float gradient_S = 0.0f;
@@ -305,7 +308,7 @@ GroundSegmenter::calcGrad(size_t ring, size_t index)
 }
 
 void
-GroundSegmenter::calculateGround(const boost::shared_ptr<cv::Mat> &gradient_matrix,
+LineSegmenter::calculateGround(const boost::shared_ptr<cv::Mat> &gradient_matrix,
                                 boost::shared_ptr<cv::Mat> &ground_matrix)
 {
 
@@ -385,6 +388,6 @@ GroundSegmenter::calculateGround(const boost::shared_ptr<cv::Mat> &gradient_matr
 
 };  // End of GroundSegmenter class
 
-PLUGINLIB_DECLARE_CLASS(structured_segmentation, ground_segmenter,
-                        structured_segmentation::GroundSegmenter,
+PLUGINLIB_DECLARE_CLASS(structured_segmentation, white_line_segmenter,
+                        structured_segmentation::LineSegmenter,
                         nodelet::Nodelet)

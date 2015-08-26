@@ -53,8 +53,11 @@ novaPub = rospy.Publisher('raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(10) # 10hz
 try:
-    while not rospy.is_shutdown():  
-        while ser.inWaiting() > 0: # While data is in the buffer
+    while not rospy.is_shutdown(): 
+ 
+        #ser.write('LOG COM1 INSPVAA ONCE \r\n')
+        while ser.inWaiting() > 0:
+            # While data is in the buffer
             velodyne_output = ser.readline() # Read data a line of data from buffer
             outFile.write(velodyne_output) # Option to log data to file
             #print(velodyne_output)
@@ -82,7 +85,7 @@ try:
                 gpsPub.publish(inspva_out[1])
                 imuPub.publish(inspva_out[0])
                 novaPub.publish(velodyne_output)            
-                 
+                     
 except KeyboardInterrupt:
     ser.write('unlogall\r\n') # Send a message to CNS-5000 to stop sending logs
     outFile.close() 

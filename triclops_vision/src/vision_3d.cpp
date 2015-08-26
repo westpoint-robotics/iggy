@@ -313,16 +313,34 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
                         g = filtered_image.at<cv::Vec3b>(i,j)[1];
                         r = filtered_image.at<cv::Vec3b>(i,j)[2];
                  }
-                    PointT point;
-                    point.x = z;
-                    point.y = -x;
-                    point.z = -y;
-                    point.r = r;
-                    point.g = g;
-                    point.b = b;
-                    //TODO currently throwing out row and column. Investigate if they are needed.
-                    //point.i = i;
-                    //point.j = j;
+                      PointT point;
+
+
+                    //only fil out for points that are cyan
+                    if (b == 255 & g == 255 & r == 0)
+                    {
+                      point.x = z;
+                      point.y = -x;
+                      point.z = -y;
+                      point.r = r;
+                      point.g = g;
+                      point.b = b;
+                      //TODO currently throwing out row and column. Investigate if they are needed.
+                      //point.i = i;
+                      //point.j = j;
+                    }
+                    else
+                    {
+                      point.x = 0;
+                      point.y = 0;
+                      point.z = 0;
+                      point.r = 0;
+                      point.g = 0;
+                      point.b = 0;
+                      //TODO currently throwing out row and column. Investigate if they are needed.
+                      //point.i = i;
+                      //point.j = j;
+                    } 
                     returnedPoints.push_back(point);
                 }
             }

@@ -125,8 +125,8 @@ GroundSegmenter::segment(const PointCloudPtr &input)
 //point.z < -1.5 --> not_ground has almost all points, -.5 makes ground have all points
 //TODO calibrate the LiDAR so that it picks up the smallest height of obstacle for competition
  for(size_t i=0; i < input->width; i++){ 
-   PointT point = input->at(i);
-   if (point.z < -1.1) {
+   PointXYZRGB point = input->at(i);
+   if (point.g < 100) {
      //point.z = 0.0;
      ground.push_back(point);
    }
