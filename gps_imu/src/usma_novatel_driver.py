@@ -13,7 +13,7 @@ from std_msgs.msg import String
 # configure the serial connections 
 ser = serial.Serial(
     port='/dev/ttyUSB0',
-    baudrate=9600, #8N1
+    baudrate=115200, #8N1
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS

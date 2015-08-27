@@ -29,7 +29,7 @@ int main(int argc, char** argv){
   goal.target_pose.header.frame_id = "base_link";
   goal.target_pose.header.stamp = ros::Time::now();
         //distance to travel in meters
-  goal.target_pose.pose.position.x = 5.0; //positive x is forward
+  goal.target_pose.pose.position.x = 10.0; //positive x is forward
   //goal.target_pose.pose.position.y = 10.0; //positive y is left
   goal.target_pose.pose.orientation.w = 1.0;
 
