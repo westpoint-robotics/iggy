@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#TODO imu string things!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 import rospy
 from sensor_msgs.msg import NavSatFix
 from geometry_msgs.msg import Vector3
@@ -41,9 +42,15 @@ def parse_novatelGPS(gpsString):
     aboveMaskL2Ranges = gpsString[16] # Number of GPS and GLONASS L2 ranges above the RTK mask angle
     # ----- Format the gps data into ros msg -----
     fix_msg = NavSatFix()
+    fix_msg.header.stamp = rospy.get_rostime()
+    fix_msg.header.frame_id = 'gps_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
+    fix_msg.position_covariance = [0.01,0.0,0.0,0.0,0.01,0.0,0.0,0.0,999.0]
+    fix_msg.position_covariance_type = 1
+
+
     #fix_msg.position_covariance_type = 0
     #fix_msg.position_covariance = 0
     #fix_msg.status = 0 # Fix
@@ -80,7 +87,7 @@ uint8 position_covariance_type
 
 '''
 
-
+##TODO fix this imustring so that imu accel we dont care, but orientation is correct and coovarience matrix says to listen to it.
 def parse_novatelIMU(imuString):
     gnssWeek = imuString[0] # GNSS week
     secondsFromWeek = imuString[1] # Seconds from week start
@@ -95,6 +102,54 @@ def parse_novatelIMU(imuString):
     velx = float(deltaAccelX)*.05/pow(2,15)
     vely = float(deltaAccelY)*.05/pow(2,15)
     velz = float(deltaAccelZ)*.05/pow(2,15)
+    global curTime
+    global curRoll
+    global curYaw
+    global curPitch
+    global lastRoll
+    global lastYaw
+    global lastPitch
+
+    #cns to imu coordinate sytem conversion --> cnsX = -imuY, cnsY = imuX, cnsZ = imuZ
+    #imuY comes in as negative of value --> cancels out negative conversion
+    imuRoll = cnsPitch
+    imuPitch = cnsRoll
+    imuYaw = -1*cnsYaw   
+    
+    lastYaw = curYaw
+    curYaw = imuYaw
+    lastPitch = curPitch
+    curPitch = imuPitch
+    lastRoll = curRoll
+    curRoll   = imuRoll
+
+    lastTime = curTime    
+    curTime = rospy.Time.now()
+    deltime = (curTime-lastTime).to_sec()
+    if (deltime == 0):
+        deltime = 0.00000001
+
+    imu_msg = Imu()
+    imu_msg.header.stamp = curTime
+    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.linear_acceleration.x = float(velcnsY)#*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = float(velcnsX)#*-1#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = float(velcnsZ)#*.05/pow(2,15)
+    imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
+    #imu_msg.orientation_covariance.x = float(angcnsY)
+    euler = Vector3(curRoll, curPitch, curYaw)
+    #euler = vector_norm(euler)
+    quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
+    #type(pose) = geometry_msgs.msg.Pose
+    imu_msg.orientation.x = quaternion[0]
+    imu_msg.orientation.y = quaternion[1]
+    imu_msg.orientation.z = quaternion[2]
+    imu_msg.orientation.w = quaternion[3]
+    imu_msg.orientation_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
+    imu_msg.angular_velocity.x = (curPitch-lastPitch)/deltime
+    imu_msg.angular_velocity.y = (curRoll-lastRoll)/deltime
+    imu_msg.angular_velocity.z = (curYaw-lastYaw)/deltime
+    imu_msg.angular_velocity_covariance = [9999,0.0,0.0,0.0,9999,0.0,0.0,0.0,9999]
     imu_msg = Vector3(velx,vely,velz)
     return imu_msg
    

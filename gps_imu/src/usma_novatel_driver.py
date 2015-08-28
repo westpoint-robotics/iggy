@@ -32,8 +32,7 @@ fName = home+"/catkin_ws/rosbags/novatelLog.txt"
 outFile = open(fName, "wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
-#ser.write('LOG COM1 RAWIMUSA ONTIME 0.5\r\n')
-#ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.5\r\n')
+
 
 #FLIPPED front and back of robot, rotated 180 about z axis
 #TODO make this rotation more accurate. the INS not perfectly alligned with robot
@@ -48,14 +47,16 @@ if (setinitaz == 1):
   command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
   ser.write(command)
 
-ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
+#ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
+ser.write('LOG COM1 RAWIMUSA ONTIME 0.2\r\n')
+ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.2\r\n')
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
 imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
 novaPub = rospy.Publisher('raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
-rate = rospy.Rate(10) # 10hz
+rate = rospy.Rate(15) # 10hz
 try:
     while not rospy.is_shutdown(): 
  
