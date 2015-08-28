@@ -10,7 +10,10 @@ from usma_novatel_parser import *
 from os.path import expanduser
 from std_msgs.msg import String
 
-# configure the serial connections 
+# configure the serial connections
+#defualt after an FRESET command is sent is at buadrate 9600.
+#to change baud rate, enter minicom at 9600 and send command "serialconfig com1 115200 n 8 1 n on"
+#then exit minicom, re-enter at 115200 baudrate and send command "saveconfig" so that it will stay at that buadrate after turning off
 ser = serial.Serial(
     port='/dev/ttyUSB0',
     baudrate=115200, #8N1
@@ -36,8 +39,9 @@ ser.write('unlogall\r\n')
 #TODO make this rotation more accurate. the INS not perfectly alligned with robot
 ser.write('VEHICLEBODYROTATION 0 0 180\r\n')
 
-##TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
-##TODO write code that checks is INS allignment is good or complete, if not run these 3 lines of code
+#TODO write code to align the INS using coarse method on page 38 of the CNS 5000 manul.
+#TODO write code that checks is INS allignment is good or complete, if not run these 3 lines of code
+#TODO write code that checks if INS_SOLUTION_GOOD or INS_HIGH_VARIANCE, if high variance maybe pause navigation and wait till solution good (might need a cap on how long you wait since sometimes the wait is over 2 minutes)
 setinitaz = input("type 1 to SETINITAZIMUTH, and 2 to skip it:")
 if (setinitaz == 1):
   align = input("What directions  in degrees is the robot facing:")
