@@ -1,5 +1,4 @@
 #!/usr/bin/python
-#TODO imu string things!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 import rospy
 from sensor_msgs.msg import NavSatFix
 from geometry_msgs.msg import Vector3
@@ -98,6 +97,9 @@ def parse_novatelIMU(imuString):
     deltaGyroZ = imuString[6] # Change in gyro angle count around the Z-axis, right-handed
     deltaGyroY = imuString[7] # - Change in gyro angle count around the Y-axis), right-handed
     deltaGyroX = imuString[8].split("*")[0] # Change in gyro angle count around the X-axis, right-handed
+    degGyroZ = float(deltaGyroZ)*5.72957795 # *0.1 to radians and then * 180/pi for degrees (yaw)
+    degGyroY = float(deltaGyroY)*5.72957795 # *0.1 to radians and then * 180/pi for degrees (pitch)
+    degGyroX = float(deltaGyroX)*5.72957795 # *0.1 to radians and then * 180/pi for degrees (roll)
     #------IMU data formatting--------
     velx = float(deltaAccelX)*.05/pow(2,15)
     vely = float(deltaAccelY)*.05/pow(2,15)
@@ -112,9 +114,9 @@ def parse_novatelIMU(imuString):
 
     #cns to imu coordinate sytem conversion --> cnsX = -imuY, cnsY = imuX, cnsZ = imuZ
     #imuY comes in as negative of value --> cancels out negative conversion
-    imuRoll = cnsPitch
-    imuPitch = cnsRoll
-    imuYaw = -1*cnsYaw   
+    imuRoll = degGyroY
+    imuPitch = degGyroX
+    imuYaw = -1*degGyroZ   
     
     lastYaw = curYaw
     curYaw = imuYaw
@@ -132,12 +134,13 @@ def parse_novatelIMU(imuString):
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
     imu_msg.header.frame_id = 'imu_frame'
-    imu_msg.linear_acceleration.x = float(velcnsY)#*.05/pow(2,15)
-    imu_msg.linear_acceleration.y = float(velcnsX)#*-1#*.05/pow(2,15)
-    imu_msg.linear_acceleration.z = float(velcnsZ)#*.05/pow(2,15)
-    imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
+    #TODO linear acceleration is completely off but is being ignored, fix it for more accuracy
+    imu_msg.linear_acceleration.x = float(deltaAccelY)/1000#*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = float(deltaAccelX)/1000#*-1#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = float(deltaAccelZ)/10000#*.05/pow(2,15)
+    imu_msg.linear_acceleration_covariance = [9999,0.0,0.0,0.0,9999,0.0,0.0,0.0,9999]
     #imu_msg.orientation_covariance.x = float(angcnsY)
-    euler = Vector3(curRoll, curPitch, curYaw)
+    #euler = Vector3(curRoll, curPitch, curYaw)
     #euler = vector_norm(euler)
     quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
@@ -150,7 +153,7 @@ def parse_novatelIMU(imuString):
     imu_msg.angular_velocity.y = (curRoll-lastRoll)/deltime
     imu_msg.angular_velocity.z = (curYaw-lastYaw)/deltime
     imu_msg.angular_velocity_covariance = [9999,0.0,0.0,0.0,9999,0.0,0.0,0.0,9999]
-    imu_msg = Vector3(velx,vely,velz)
+    
     return imu_msg
    
 def parse_novatelINSPVA(insString):

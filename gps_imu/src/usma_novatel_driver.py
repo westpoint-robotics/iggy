@@ -47,9 +47,9 @@ if (setinitaz == 1):
   command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
   ser.write(command)
 
-#ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
-ser.write('LOG COM1 RAWIMUSA ONTIME 0.2\r\n')
-ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.2\r\n')
+ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
+#ser.write('LOG COM1 RAWIMUSA ONTIME 0.2\r\n')
+#ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.2\r\n')
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)

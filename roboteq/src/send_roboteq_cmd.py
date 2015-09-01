@@ -12,7 +12,7 @@ def talker():
     while not rospy.is_shutdown():
         cmd = Twist()
         cmd.linear.x = 1.0
-        cmd.angular.z = 0.0 #0.009   #through testing found this to be the oofset in the wheels
+        cmd.angular.z = 0.009 #0.009   #through testing found this to be the oofset in the wheels
 
 
         pub.publish(cmd)

@@ -6,7 +6,8 @@
         args="-0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-        args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" />
+        args="0.0 0.0 0.0 0 0 0 1 base_link gps_frame 100" />
+  <!--      args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" /> -->
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
         args="0 0 0 0 0 0 1 base_link imu_frame 100" />
