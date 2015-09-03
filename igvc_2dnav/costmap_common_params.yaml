@@ -2,7 +2,7 @@ obstacle_range: 2.5
 raytrace_range: 3.0
 footprint: [[1.0, 1.0], [-1.0, 1.0], [1.0, -1.0], [-1.0, -1.0]]
 
-inflation_radius: 10
+inflation_radius: 2
 transform_tolerance: 1.2
 
 observation_sources: laser_scan_sensor point_cloud_sensor cam_point_cloud_sensor

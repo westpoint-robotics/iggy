@@ -26,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -57,19 +57,17 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
+        bumblebee2:
+          Value: true
         gps_frame:
           Value: true
         imu_frame:
-          Value: true
-        left_camera_frame:
           Value: true
         left_wheel_frame:
           Value: true
         map:
           Value: true
         odom:
-          Value: true
-        right_camera_frame:
           Value: true
         right_wheel_frame:
           Value: true
@@ -85,15 +83,13 @@ Visualization Manager:
           odom:
             base_footprint:
               base_link:
+                bumblebee2:
+                  {}
                 gps_frame:
                   {}
                 imu_frame:
                   {}
-                left_camera_frame:
-                  {}
                 left_wheel_frame:
-                  {}
-                right_camera_frame:
                   {}
                 right_wheel_frame:
                   {}
@@ -142,10 +138,10 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Gloabl Map
       Topic: /move_base/global_costmap/costmap
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -234,15 +230,15 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -3.45607
-        Y: 0.746296
-        Z: -2.69127e-05
+        X: -2.67387
+        Y: -0.107681
+        Z: -2.21443e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.1948
+      Pitch: 1.1298
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.43084
+      Yaw: 3.19584
     Saved: ~
 Window Geometry:
   Displays:
