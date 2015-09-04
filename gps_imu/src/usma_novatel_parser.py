@@ -217,7 +217,7 @@ def parse_novatelINSPVA(insString):
     imu_msg.linear_acceleration.z = float(velcnsZ)#*.05/pow(2,15)
     imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #imu_msg.orientation_covariance.x = float(angcnsY)
-    euler = Vector3(curRoll, curPitch, curYaw)
+    #euler = Vector3(curRoll, curPitch, curYaw)
     #euler = vector_norm(euler)
     quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
