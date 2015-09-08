@@ -19,6 +19,13 @@ lastYaw = float(0.0)
 lastPitch = float(0.0)
 lastRoll = float(0.0)
 
+curvelcnsX = float(0.0)
+curvelcnsY = float(0.0)
+curvelcnsZ = float(0.0)
+lastvelcnsX = float(0.0)
+lastvelcnsY = float(0.0)
+lastvelcnsZ = float(0.0)
+
 
 def parse_novatelGPS(gpsString):    
     # ----- parse the data string from fields to variables -----
@@ -163,9 +170,9 @@ def parse_novatelINSPVA(insString):
     latitude = insString[2] # Latitude (WGS84)
     longitude = insString[3] # Longitude (WGS84)
     heightMSL = insString[4] # Ellipsoidal Height (WGS84) [m]
-    velcnsY = insString[5] # Velocity in northerly direction [m/s] (negative for south)
-    velcnsX = insString[6] # Velocity in easterly direction [m/s] (negative for west)
-    velcnsZ = insString[7] # Velocity in upward direction [m/s]
+    velcnsY = float(insString[5]) # Velocity in northerly direction [m/s] (negative for south)
+    velcnsX = float(insString[6]) # Velocity in easterly direction [m/s] (negative for west)
+    velcnsZ = float(insString[7]) # Velocity in upward direction [m/s]
     cnsRoll = float(insString[8])*(3.14159265/180) # yaw/azimuth - Right-handed rotation from local level around Z-axis -- changed from degress to radians (pi/180 deg)
     cnsPitch = float(insString[9])*(3.14159265/180)  # roll - (neg) Right-handed rotation from local level around y-axis  -- changed from degress to radians (pi/180 deg)
     cnsYaw = float(insString[10])*(3.14159265/180)  # pitch -Right-handed rotation from local level around x-axis  -- changed from degress to radians (pi/180 deg)
@@ -183,12 +190,20 @@ def parse_novatelINSPVA(insString):
     fix_msg.position_covariance_type = 1
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
+
     global curRoll
     global curYaw
     global curPitch
     global lastRoll
     global lastYaw
     global lastPitch
+
+    global curvelcnsX
+    global curvelcnsY
+    global curvelcnsZ
+    global lastvelcnsX
+    global lastvelcnsY
+    global lastvelcnsZ
 
     #cns to imu coordinate sytem conversion --> cnsX = -imuY, cnsY = imuX, cnsZ = imuZ
     #imuY comes in as negative of value --> cancels out negative conversion
@@ -203,6 +218,14 @@ def parse_novatelINSPVA(insString):
     lastRoll = curRoll
     curRoll   = imuRoll
 
+    lastvelcnsX = curvelcnsX
+    curvelcnsX = velcnsX
+    lastvelcnsY = curvelcnsY
+    curvelcnsY = velcnsY
+    lastvelcnsZ = curvelcnsZ
+    curvelcnsZ = velcnsZ
+
+
     lastTime = curTime    
     curTime = rospy.Time.now()
     deltime = (curTime-lastTime).to_sec()
@@ -212,9 +235,9 @@ def parse_novatelINSPVA(insString):
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
     imu_msg.header.frame_id = 'imu_frame'
-    imu_msg.linear_acceleration.x = float(velcnsY)#*.05/pow(2,15)
-    imu_msg.linear_acceleration.y = float(velcnsX)#*-1#*.05/pow(2,15)
-    imu_msg.linear_acceleration.z = float(velcnsZ)#*.05/pow(2,15)
+    imu_msg.linear_acceleration.x = (curvelcnsY-lastvalcnsY)/deltime #*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = (curvelcnsY-lastvalcnsY)/deltime #*-1#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = (curvelcnsY-lastvalcnsY)/deltime #*.05/pow(2,15)
     imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #imu_msg.orientation_covariance.x = float(angcnsY)
     #euler = Vector3(curRoll, curPitch, curYaw)
