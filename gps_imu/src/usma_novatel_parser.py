@@ -173,9 +173,9 @@ def parse_novatelINSPVA(insString):
     velcnsY = float(insString[5]) # Velocity in northerly direction [m/s] (negative for south)
     velcnsX = float(insString[6]) # Velocity in easterly direction [m/s] (negative for west)
     velcnsZ = float(insString[7]) # Velocity in upward direction [m/s]
-    cnsRoll = float(insString[8])*(3.14159265/180) # yaw/azimuth - Right-handed rotation from local level around Z-axis -- changed from degress to radians (pi/180 deg)
-    cnsPitch = float(insString[9])*(3.14159265/180)  # roll - (neg) Right-handed rotation from local level around y-axis  -- changed from degress to radians (pi/180 deg)
-    cnsYaw = float(insString[10])*(3.14159265/180)  # pitch -Right-handed rotation from local level around x-axis  -- changed from degress to radians (pi/180 deg)
+    cnsYaw = float(insString[8])*(3.14159265/180) # yaw/azimuth - Right-handed rotation from local level around Z-axis -- changed from degress to radians (pi/180 deg)
+    cnsRoll = float(insString[9])*(3.14159265/180)  # roll - (neg) Right-handed rotation from local level around y-axis  -- changed from degress to radians (pi/180 deg)
+    cnsPitch = float(insString[10])*(3.14159265/180)  # pitch -Right-handed rotation from local level around x-axis  -- changed from degress to radians (pi/180 deg)
     inertialStatus = insString[11].split('*')[0] # Inertial status
    
     #print "inertialStatus",inertialStatus
@@ -207,9 +207,10 @@ def parse_novatelINSPVA(insString):
 
     #cns to imu coordinate sytem conversion --> cnsX = -imuY, cnsY = imuX, cnsZ = imuZ
     #imuY comes in as negative of value --> cancels out negative conversion
-    imuRoll = cnsPitch
+    imuYaw = -1*cnsPitch + 1.57079632679 #rotate 90 deg, or pi/2 radians
+    print(imuYaw)
     imuPitch = cnsRoll
-    imuYaw = -1*cnsYaw   
+    imuRoll = cnsYaw   
     
     lastYaw = curYaw
     curYaw = imuYaw
@@ -235,14 +236,15 @@ def parse_novatelINSPVA(insString):
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
     imu_msg.header.frame_id = 'imu_frame'
-    imu_msg.linear_acceleration.x = (curvelcnsY-lastvalcnsY)/deltime #*.05/pow(2,15)
-    imu_msg.linear_acceleration.y = (curvelcnsY-lastvalcnsY)/deltime #*-1#*.05/pow(2,15)
-    imu_msg.linear_acceleration.z = (curvelcnsY-lastvalcnsY)/deltime #*.05/pow(2,15)
+    imu_msg.linear_acceleration.x = (curvelcnsY-lastvelcnsY)/deltime #*.05/pow(2,15)
+    imu_msg.linear_acceleration.y = (curvelcnsY-lastvelcnsY)/deltime #*-1#*.05/pow(2,15)
+    imu_msg.linear_acceleration.z = (curvelcnsY-lastvelcnsY)/deltime #*.05/pow(2,15)
     imu_msg.linear_acceleration_covariance = [0.1,0.0,0.0,0.0,0.1,0.0,0.0,0.0,0.1]
     #imu_msg.orientation_covariance.x = float(angcnsY)
     #euler = Vector3(curRoll, curPitch, curYaw)
     #euler = vector_norm(euler)
-    quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
+    quaternion = tf.transformations.quaternion_from_euler(0, 0, curYaw)
+    #print(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
     imu_msg.orientation.x = quaternion[0]
     imu_msg.orientation.y = quaternion[1]

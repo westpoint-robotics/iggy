@@ -41,7 +41,7 @@
       <param name="imu0_differential" value="false"/>
 
       <param name="odom0_relative" value="false"/>
-      <param name="imu0_relative" value="true"/>
+      <param name="imu0_relative" value="false"/>
 <!--
       Placeholder for output topic remapping
       <remap from="odometry/filtered" to=""/>

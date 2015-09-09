@@ -1,0 +1,4 @@
+<!--gps.launch-->
+<launch>
+  <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_fileIO.py" output="screen"/>
+</launch>
