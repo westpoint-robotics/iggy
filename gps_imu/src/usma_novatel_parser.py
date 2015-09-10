@@ -208,7 +208,7 @@ def parse_novatelINSPVA(insString):
     #cns to imu coordinate sytem conversion --> cnsX = -imuY, cnsY = imuX, cnsZ = imuZ
     #imuY comes in as negative of value --> cancels out negative conversion
     imuYaw = -1*cnsPitch + 1.57079632679 #rotate 90 deg, or pi/2 radians
-    print(imuYaw)
+    #print(imuYaw)
     imuPitch = cnsRoll
     imuRoll = cnsYaw   
     

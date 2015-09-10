@@ -12,4 +12,4 @@ DWAPlannerROS:
 
   yaw_goal_tolerance: 1.0
   xy_goal_tolerance: 0.1
-
+  sim_time: 5.0
