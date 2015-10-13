@@ -163,7 +163,7 @@ def parse_novatelIMU(imuString):
     
     return imu_msg
    
-def parse_novatelINSPVA(insString):
+def parse_novatelINSPVA(insHeader, insString):
     #print "++++instring:",insString
     gnssWeek = insString[0] # GNSS week
     secondsFromWeek = insString[1] # Seconds from week start
@@ -187,7 +187,12 @@ def parse_novatelINSPVA(insString):
     fix_msg.altitude = float(heightMSL)
 
     fix_msg.position_covariance = [0.01,0.0,0.0,0.0,0.01,0.0,0.0,0.0,999.0]
-    fix_msg.position_covariance_type = 1
+    
+    if (insHeader[4] == "FINESTEERING"):
+        fix_msg.position_covariance_type = 2
+    else:
+        fix_msg.position_covariance_type = 0
+
     #print "lat, long, alt:" + str(fix_msg.latitude)+ " , "+ str(fix_msg.longitude)+" , " + str(fix_msg.altitude)
     global curTime
 

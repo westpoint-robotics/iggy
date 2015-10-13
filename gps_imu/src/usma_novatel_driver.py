@@ -87,9 +87,11 @@ try:
                 imuPub.publish(imu_out)
 
             elif (velodyne_output.split(",")[0] == "#INSPVAA"): # check if this the INSPVA message
+                nova_Header = velodyne_output.split(';')[0]
+                nova_Header = velodyne_output.split(',')
                 nova_Data = velodyne_output.split(';')[1] # split the header and message body
                 nova_Data = nova_Data.split(',') # split the message body into fields
-                inspva_out = parse_novatelINSPVA(nova_Data) 
+                inspva_out = parse_novatelINSPVA(nova_Header, nova_Data) 
                 gpsPub.publish(inspva_out[1])
                 imuPub.publish(inspva_out[0])
                 novaPub.publish(velodyne_output)            
