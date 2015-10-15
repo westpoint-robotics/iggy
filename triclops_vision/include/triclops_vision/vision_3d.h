@@ -35,6 +35,8 @@ int grabImage ( FC2::Camera & camera, FC2::Image & grabbedImage );
 
 // convert image to BRGU
 int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage );
+// convert image to BRG
+int convertToBGR( FC2::Image & image, FC2::Image & convertedImage );
 
 // generate triclops input necessary to carry out stereo processing
 int generateTriclopsInput( FC2::Image const & grabbedImage, 
