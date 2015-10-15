@@ -16,7 +16,6 @@
 // ADDED to allow publishing of raw images. TODO clean this up. This is messy solution.
 #include <image_transport/image_transport.h>
 
-
 /* This is a program that tests the triclops camera driver and the triclops opencv code.
  * This test displays both the right and left camera images in the opencv highgui after
  * converting the camera triclops images into a opencv image.
@@ -116,20 +115,18 @@ int main(int  argc, char **argv)
     //DML get left and right image into opencv Mat
     for ( int i = 0; i < 2; ++i )
     {
-        if ( convertToBGRU(unprocessedImage[i], bgrImage[i]) )
+        if ( convertToBGR(unprocessedImage[i], bgrImage[i]) )
         {
             return 1;
         }
+
     }
     cv::Mat      leftImage;
     cv::Mat      rightImage;
-    // convert Left image to OpenCV Mat TODO Find a better way to do this.
-    unsigned int rowBytes = (double)bgrImage[LEFT].GetReceivedDataSize()/(double)bgrImage[LEFT].GetRows();
-    leftImage = cv::Mat(bgrImage[LEFT].GetRows(), bgrImage[LEFT].GetCols(), CV_8UC3, bgrImage[LEFT].GetData(),rowBytes);
 
-    // convert Right image to OpenCV Mat TODO Find a better way to do this.
-    rowBytes = (double)bgrImage[RIGHT].GetReceivedDataSize()/(double)bgrImage[RIGHT].GetRows();
-    rightImage = cv::Mat(bgrImage[RIGHT].GetRows(), bgrImage[RIGHT].GetCols(), CV_8UC3, bgrImage[RIGHT].GetData(),rowBytes);
+    // convert images to OpenCV Mat
+    convertTriclops2Opencv(bgrImage[1],leftImage);
+    convertTriclops2Opencv(bgrImage[0],rightImage);
 
     sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
     image_pub_left.publish(msg);
