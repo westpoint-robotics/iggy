@@ -1,5 +1,7 @@
-#include <triclops.h>
-#include <fc2triclops.h>
+//#include <triclops.h>
+//#include <fc2triclops.h>
+#include <triclops/triclops.h>
+#include <triclops/fc2triclops.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -94,7 +96,7 @@ int main(int  argc, char **argv)
                     return EXIT_FAILURE;
         }
 
-    // Messy solution to publish the images in ROS ----- STARTS HERE
+    // Messy solution to publish the images in ROS ----- STARTS HERE  ---------------------------------------------------------
     //TODO Clean up this code and put in OO paradigm
     FC2::Image * unprocessedImage = imageContainer.unprocessed;
 
@@ -108,7 +110,8 @@ int main(int  argc, char **argv)
       {
           return FC2T::handleFc2TriclopsError(fc2TriclopsError,
                                        "unpackUnprocessedRawOrMono16Image");
-      }
+      }// FlyCapture2::Image& unprocessedImage[RIGHT];
+
     FC2::PGMOption pgmOpt;
     pgmOpt.binaryFile = true;
     //DML get left and right image into opencv Mat
@@ -118,25 +121,28 @@ int main(int  argc, char **argv)
         {
             return 1;
         }
-        ROS_INFO(">>>>> unprocessed to bgr %d \n", i);
-
     }
-
     // convert images to OpenCV Mat
     cv::Mat      leftImage;
     cv::Mat      rightImage;
-    convertTriclops2Opencv(imageContainer.bgr[0], rightImage);
-    ROS_INFO(">>>>> right image made\n");
-    convertTriclops2Opencv(imageContainer.bgr[1], leftImage);
-    ROS_INFO(">>>>> left image made \n");
+
+    //ROS_INFO(">>>>> Data Size Bytes: %d \n",imageContainer.bgr[LEFT].GetDataSize());
+    unsigned int rowBytes = (double)imageContainer.bgr[LEFT].GetDataSize()/(double)imageContainer.bgr[LEFT].GetRows();
+    //ROS_INFO(">>>>> ROW Bytes: %d rows %d cols %d\n",rowBytes,imageContainer.bgr[LEFT].GetRows(), imageContainer.bgr[LEFT].GetCols());
+    leftImage = cv::Mat(imageContainer.bgr[LEFT].GetRows(), imageContainer.bgr[LEFT].GetCols(), CV_8UC3, imageContainer.bgr[LEFT].GetData(),rowBytes);
+    rowBytes = (double)imageContainer.bgr[RIGHT].GetDataSize()/(double)imageContainer.bgr[RIGHT].GetRows();
+    rightImage = cv::Mat(imageContainer.bgr[RIGHT].GetRows(), imageContainer.bgr[RIGHT].GetCols(), CV_8UC3, imageContainer.bgr[RIGHT].GetData(),rowBytes);
+
+    // Uncomment the below 3 lines to have opencv display the images
+    //cv::imshow("Image Right", rightImage);
+    //cv::imshow("Image Left", leftImage);
+    //cv::waitKey(3);
 
     sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
     image_pub_left.publish(msg);
-    ROS_INFO(">>>>> left image published \n");
     msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
     image_pub_right.publish(msg);
-    ROS_INFO(">>>>> right image published \n");
-    // Messy solution to publish the images in ROS ----- END HERE
+    // Messy solution to publish the images in ROS ----- END HERE -----------------------------------------------------------------
 
     // output image disparity image with subpixel interpolation
     TriclopsImage16 disparityImage16;
@@ -147,46 +153,7 @@ int main(int  argc, char **argv)
                 return EXIT_FAILURE;
     }
 
-//    cv::Mat      dispImage;
-//    cv::Mat      leftImage;
-//    cv::Mat      rightImage;
-//    convertTriclops2Opencv(imageContainer.bgru[0], rightImage);
-//    convertTriclops2Opencv(imageContainer.bgru[1], leftImage);
-//    convertTriclops2Opencv(disparityImage16, dispImage);
-//    bool SHOW_OPENCV = true;
-//    if (SHOW_OPENCV){
-//        cv::imshow("Image Disp", dispImage);
-////        cv::imshow("Image Left", leftImage);
-//        cv::waitKey(3);
-//      }
-
-//    cv::Mat filtered_image;
-//    cv::vector<cv::Vec4i> lines;
-//    lf.findLines(leftImage, filtered_image, lines);
-//    lf.displayCanny();
-//    lf.displayCyan();
-
-//    std::vector<cv::Point2i> oPixel;
-//    cv::Point pt1;
-//    cv::Point pt2;
-//    for ( int i = 0; i < lines.size(); i++)
-//      {
-//        pt1.x = lines[i][0];
-//        pt1.y = lines[i][1];
-//        pt2.x = lines[i][2];
-//        pt2.y = lines[i][3];
-//        cv::LineIterator it(rightImage, pt1, pt2, 8);
-//        for(int j = 0; j < it.count; j++, ++it){
-//            oPixel.push_back(cv::Point2i(it.pos().x,it.pos().y));
-////            ROS_INFO("posx %d posY %d",int(it.pos().x),int(it.pos().y));
-
-//        }
-////        ROS_INFO("siz OF oPixel %d",int(oPixel.size()));
-//      }
-
-
     PointCloud points;
-    //cv::vector<cv::Vec4i> lines;
     // publish the point cloud containing 3d points
     if ( gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
     {

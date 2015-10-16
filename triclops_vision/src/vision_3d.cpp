@@ -11,8 +11,8 @@
 //
 //=============================================================================
 
-#include <fc2triclops.h>
-#include <triclops.h>
+#include <triclops/fc2triclops.h>
+#include <triclops/triclops.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cv_bridge/cv_bridge.h>
