@@ -111,29 +111,32 @@ int main(int  argc, char **argv)
       }
     FC2::PGMOption pgmOpt;
     pgmOpt.binaryFile = true;
-    FC2::Image * bgrImage = imageContainer.bgr;
     //DML get left and right image into opencv Mat
     for ( int i = 0; i < 2; ++i )
     {
-        if ( convertToBGR(unprocessedImage[i], bgrImage[i]) )
+        if ( convertToBGR(unprocessedImage[i], imageContainer.bgr[i]) )
         {
             return 1;
         }
+        ROS_INFO(">>>>> unprocessed to bgr %d \n", i);
 
     }
-    cv::Mat      leftImage;
-    cv::Mat      rightImage;
 
     // convert images to OpenCV Mat
-    convertTriclops2Opencv(bgrImage[1],leftImage);
-    convertTriclops2Opencv(bgrImage[0],rightImage);
+    cv::Mat      leftImage;
+    cv::Mat      rightImage;
+    convertTriclops2Opencv(imageContainer.bgr[0], rightImage);
+    ROS_INFO(">>>>> right image made\n");
+    convertTriclops2Opencv(imageContainer.bgr[1], leftImage);
+    ROS_INFO(">>>>> left image made \n");
 
     sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
     image_pub_left.publish(msg);
+    ROS_INFO(">>>>> left image published \n");
     msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
     image_pub_right.publish(msg);
+    ROS_INFO(">>>>> right image published \n");
     // Messy solution to publish the images in ROS ----- END HERE
-
 
     // output image disparity image with subpixel interpolation
     TriclopsImage16 disparityImage16;
