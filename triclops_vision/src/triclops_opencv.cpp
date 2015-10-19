@@ -7,6 +7,7 @@
 
 #include "triclops_vision/typedefs.h"
 
+
 // aliases namespaces
 namespace FC2 = FlyCapture2;
 namespace FC2T = Fc2Triclops;
@@ -16,12 +17,19 @@ namespace FC2T = Fc2Triclops;
 // convert a triclops color image to opencv mat
 int convertTriclops2Opencv(FC2::Image & bgrImage,
                            cv::Mat & cvImage){
+    ROS_INFO("2c2c2c2c2c2c2c2c2c INSIDE convertTriclops 2 opencv\n");
+
   // convert bgr image to OpenCV Mat
   unsigned int rowBytes = (double)bgrImage.GetReceivedDataSize()/(double)bgrImage.GetRows();
+  ROS_INFO("2c2c2c2c2c2c2c2c2crow bytes %d\n",rowBytes);
+
   cvImage = cv::Mat(bgrImage.GetRows(), bgrImage.GetCols(), CV_8UC4, bgrImage.GetData(),rowBytes);
   char numstr[50];
+  ROS_INFO("2c2c2c2c2c2c2c2c2c cvimage creaeted\n");
+
   sprintf(numstr, "rows: %d cols: %d rowbytes: %d", cvImage.rows,cvImage.cols, rowBytes);
   putText(cvImage, numstr, cv::Point(10,cvImage.rows-30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(100,100,250), 1, false);
+  ROS_INFO("2c2c2c2c2c2c2c2c2c Done with converting to opencv\n");
 }
 
 // convert a triclops color image to opencv mat

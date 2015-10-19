@@ -11,8 +11,8 @@
 //
 //=============================================================================
 
-#include <fc2triclops.h>
-#include <triclops.h>
+#include <triclops/fc2triclops.h>
+#include <triclops/triclops.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cv_bridge/cv_bridge.h>
@@ -89,6 +89,24 @@ int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
     }
 
     fc2Error = image.Convert(FC2::PIXEL_FORMAT_BGRU, &convertedImage);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    return 0;
+}
+
+int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
+{
+    FC2::Error fc2Error;
+    fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    fc2Error = image.Convert(FC2::PIXEL_FORMAT_BGR, &convertedImage);
     if (fc2Error != FC2::PGRERROR_OK)
     {
         return FC2T::handleFc2Error(fc2Error);

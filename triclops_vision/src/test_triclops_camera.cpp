@@ -1,5 +1,7 @@
-#include <triclops.h>
-#include <fc2triclops.h>
+//#include <triclops.h>
+//#include <fc2triclops.h>
+#include <triclops/triclops.h>
+#include <triclops/fc2triclops.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -13,11 +15,13 @@
 #include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/line_filter.h"
 
+// ADDED to allow publishing of raw images. TODO clean this up. This is messy solution.
+#include <image_transport/image_transport.h>
+
 /* This is a program that tests the triclops camera driver and the triclops opencv code.
  * This test displays both the right and left camera images in the opencv highgui after
  * converting the camera triclops images into a opencv image.
  */
-
 
 TriclopsError     te;
 
@@ -67,10 +71,14 @@ int main(int  argc, char **argv)
   ros::init(argc, argv, "talker");
   ros::NodeHandle nh;
   ros::Rate loop_rate(10);
-  ros::Publisher pc2_pub = nh.advertise<sensor_msgs::PointCloud2>("points", 0);
+  ros::Publisher pc2_pub = nh.advertise<sensor_msgs::PointCloud2>("/triclops/points", 0);
 
   // Container of Images used for processing
   ImageContainer imageContainer;
+
+  image_transport::ImageTransport it(nh);
+  image_transport::Publisher image_pub_left= it.advertise("camera/left/rgb", 1);
+  image_transport::Publisher image_pub_right= it.advertise("camera/right/rgb", 1);
 
   while (ros::ok())
   {
@@ -88,6 +96,54 @@ int main(int  argc, char **argv)
                     return EXIT_FAILURE;
         }
 
+    // Messy solution to publish the images in ROS ----- STARTS HERE  ---------------------------------------------------------
+    //TODO Clean up this code and put in OO paradigm
+    FC2::Image * unprocessedImage = imageContainer.unprocessed;
+
+    FC2T::ErrorType fc2TriclopsError;
+    fc2TriclopsError = FC2T::unpackUnprocessedRawOrMono16Image(
+                            grabbedImage,
+                            true /*assume little endian*/,
+                            unprocessedImage[RIGHT],
+                            unprocessedImage[LEFT]);
+    if (fc2TriclopsError != FC2T::ERRORTYPE_OK)
+      {
+          return FC2T::handleFc2TriclopsError(fc2TriclopsError,
+                                       "unpackUnprocessedRawOrMono16Image");
+      }// FlyCapture2::Image& unprocessedImage[RIGHT];
+
+    FC2::PGMOption pgmOpt;
+    pgmOpt.binaryFile = true;
+    //DML get left and right image into opencv Mat
+    for ( int i = 0; i < 2; ++i )
+    {
+        if ( convertToBGR(unprocessedImage[i], imageContainer.bgr[i]) )
+        {
+            return 1;
+        }
+    }
+    // convert images to OpenCV Mat
+    cv::Mat      leftImage;
+    cv::Mat      rightImage;
+
+    //ROS_INFO(">>>>> Data Size Bytes: %d \n",imageContainer.bgr[LEFT].GetDataSize());
+    unsigned int rowBytes = (double)imageContainer.bgr[LEFT].GetDataSize()/(double)imageContainer.bgr[LEFT].GetRows();
+    //ROS_INFO(">>>>> ROW Bytes: %d rows %d cols %d\n",rowBytes,imageContainer.bgr[LEFT].GetRows(), imageContainer.bgr[LEFT].GetCols());
+    leftImage = cv::Mat(imageContainer.bgr[LEFT].GetRows(), imageContainer.bgr[LEFT].GetCols(), CV_8UC3, imageContainer.bgr[LEFT].GetData(),rowBytes);
+    rowBytes = (double)imageContainer.bgr[RIGHT].GetDataSize()/(double)imageContainer.bgr[RIGHT].GetRows();
+    rightImage = cv::Mat(imageContainer.bgr[RIGHT].GetRows(), imageContainer.bgr[RIGHT].GetCols(), CV_8UC3, imageContainer.bgr[RIGHT].GetData(),rowBytes);
+
+    // Uncomment the below 3 lines to have opencv display the images
+    //cv::imshow("Image Right", rightImage);
+    //cv::imshow("Image Left", leftImage);
+    //cv::waitKey(3);
+
+    sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
+    image_pub_left.publish(msg);
+    msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
+    image_pub_right.publish(msg);
+    // Messy solution to publish the images in ROS ----- END HERE -----------------------------------------------------------------
+
     // output image disparity image with subpixel interpolation
     TriclopsImage16 disparityImage16;
 
@@ -97,46 +153,7 @@ int main(int  argc, char **argv)
                 return EXIT_FAILURE;
     }
 
-//    cv::Mat      dispImage;
-//    cv::Mat      leftImage;
-//    cv::Mat      rightImage;
-//    convertTriclops2Opencv(imageContainer.bgru[0], rightImage);
-//    convertTriclops2Opencv(imageContainer.bgru[1], leftImage);
-//    convertTriclops2Opencv(disparityImage16, dispImage);
-//    bool SHOW_OPENCV = true;
-//    if (SHOW_OPENCV){
-//        cv::imshow("Image Disp", dispImage);
-////        cv::imshow("Image Left", leftImage);
-//        cv::waitKey(3);
-//      }
-
-//    cv::Mat filtered_image;
-//    cv::vector<cv::Vec4i> lines;
-//    lf.findLines(leftImage, filtered_image, lines);
-//    lf.displayCanny();
-//    lf.displayCyan();
-
-//    std::vector<cv::Point2i> oPixel;
-//    cv::Point pt1;
-//    cv::Point pt2;
-//    for ( int i = 0; i < lines.size(); i++)
-//      {
-//        pt1.x = lines[i][0];
-//        pt1.y = lines[i][1];
-//        pt2.x = lines[i][2];
-//        pt2.y = lines[i][3];
-//        cv::LineIterator it(rightImage, pt1, pt2, 8);
-//        for(int j = 0; j < it.count; j++, ++it){
-//            oPixel.push_back(cv::Point2i(it.pos().x,it.pos().y));
-////            ROS_INFO("posx %d posY %d",int(it.pos().x),int(it.pos().y));
-
-//        }
-////        ROS_INFO("siz OF oPixel %d",int(oPixel.size()));
-//      }
-
-
     PointCloud points;
-    //cv::vector<cv::Vec4i> lines;
     // publish the point cloud containing 3d points
     if ( gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
     {

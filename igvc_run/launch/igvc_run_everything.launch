@@ -2,6 +2,7 @@
 <launch>
 
 <!-- =============   TRANSFORMS  ======================= -->
+<!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
         args="-0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
 
@@ -70,7 +71,7 @@
 (the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
   <node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
   </node> 
-
+-->
 
 <!--creates bag files that get overwritten each time this runs-->
 <node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />

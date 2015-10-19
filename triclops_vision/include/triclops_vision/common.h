@@ -27,6 +27,7 @@ struct ImageContainer
 {
     FC2::Image unprocessed[2];
     FC2::Image bgru[2];
+    FC2::Image bgr[2];
     FC2::Image mono[2];
     FC2::Image packed;
 };
