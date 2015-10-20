@@ -16,11 +16,11 @@
     <arg name="calibration" value="$(arg calibration)"/>
     </include>
 -->
-      <!-- Run the pointcloud segmenter to remove the ground -->
+      <!-- Run the pointcloud segmenter to remove the ground 
       <node pkg="nodelet" type="nodelet" name="segmenter_nodelet" args="load structured_segmentation/ground_segmenter $(arg manager)" output="screen">
         <remap from="~input" to="/velodyne_points"/>
       </node>   
-
+-->
     <node name="pointcloud_to_laserscan" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
         <remap from="cloud_in" to="/velodyne_points"/>
         <!--remap from="scan" to="laser_scan"/-->

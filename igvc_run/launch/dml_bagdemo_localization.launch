@@ -21,9 +21,13 @@
 <node pkg="rosbag" type="play" name="player" output="screen" 
     args=" -r 0.5 --clock $(arg gps) $(arg rawimu) $(arg imu) $(arg rCamera) $(arg lCamera) $(arg laser3D)"/>
 
-<!-- =============   TRANSFORMS  ======================= -->
+<!-- =============   TRANSFORMS  ======================= 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
+        args="0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />        
+-->        
+
+  <node pkg="tf" type="static_transform_publisher" name="base2_link_to_velodyne"
+        args="0.1 0.0 0.70 0 0 0 1 base_link velodyne 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
         args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" />
@@ -46,7 +50,7 @@
   <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
         args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
 
-<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
         args="0 0 0 0 0 0 1 map odom 100" />
 
 <!-- =============   NODES and Launch Files  ======================= -->

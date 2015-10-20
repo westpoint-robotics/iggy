@@ -58,17 +58,19 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
-        bumblebee2:
-          Value: true
         gps_frame:
           Value: true
         imu_frame:
+          Value: true
+        left_camera_frame:
           Value: true
         left_wheel_frame:
           Value: true
         map:
           Value: true
         odom:
+          Value: true
+        right_camera_frame:
           Value: true
         right_wheel_frame:
           Value: true
@@ -84,13 +86,15 @@ Visualization Manager:
           odom:
             base_footprint:
               base_link:
-                bumblebee2:
-                  {}
                 gps_frame:
                   {}
                 imu_frame:
                   {}
+                left_camera_frame:
+                  {}
                 left_wheel_frame:
+                  {}
+                right_camera_frame:
                   {}
                 right_wheel_frame:
                   {}
@@ -166,9 +170,9 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.1
+      Size (m): 0.05
       Style: Flat Squares
-      Topic: /triclops/points
+      Topic: /velodyne_points
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -195,23 +199,20 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/XYOrbit
-      Distance: 31.1333
+      Angle: 0.06
+      Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: 0.194758
-        Y: -0.416227
-        Z: 3.47739e-06
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.204796
+      Scale: 31.0585
       Target Frame: <Fixed Frame>
-      Value: XYOrbit (rviz)
-      Yaw: 3.97088
+      Value: TopDownOrtho (rviz)
+      X: 4.03419
+      Y: 1.69281
     Saved: ~
 Window Geometry:
   Displays:
@@ -231,5 +232,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 60
-  Y: 60
+  X: 653
+  Y: 164
