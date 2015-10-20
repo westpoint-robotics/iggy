@@ -50,18 +50,24 @@
         args="0 0 0 0 0 0 1 map odom 100" />
 
 <!-- =============   NODES and Launch Files  ======================= -->
+<!--utm odom converter node for goal location, converts an lat/long goal to UTM-->
+<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
+  <remap from="odom" to="goal_utm"/>
+  <remap from="fix" to="goal_gps" />
+</node>
 
+<!--utm odom converter node for current location, converts he current lat/long to UTM-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
   <remap from="fix" to="/gps/fix" />
   <param name="frame_id" value="base_footprint" />
 </node>
 
-  <include file="$(find igvc_run)/launch/dml_ekf.launch">
-  </include>
+<include file="$(find velodyne_bringup)/launch/dml_sim_velodyne.launch"/>
 
-  <include file="$(find igvc_run)/launch/dml_move_base.launch">
-  </include>
+<include file="$(find igvc_run)/launch/dml_ekf.launch"/>
+
+<include file="$(find igvc_run)/launch/dml_move_base.launch"/>
 
 <!-- Start an rviz node with a custom configuration  -->
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/bagdemo_localization.rviz"/>
