@@ -68,11 +68,10 @@
     </include>
   
 <!--was originally running triclops_camera2.launch but this is the only node currently required for camera
-(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)
-    TODO change calibration default settings-->
+(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
   <node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
   </node> 
-
+-->
 
 <!--creates bag files that get overwritten each time this runs-->
 <node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />
