@@ -53,7 +53,7 @@
   <remap from="fix" to="gps/fix" />
   <param name="frame_id" value="base_footprint" />
 </node>
-
+<!-- Robot localization - how it knows where it is - UTM format -->
   <include file="$(find igvc_run)/launch/dml_ekf.launch">
   </include>
 
@@ -68,10 +68,11 @@
     </include>
   
 <!--was originally running triclops_camera2.launch but this is the only node currently required for camera
-(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
+(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)
+    TODO change calibration default settings-->
   <node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
   </node> 
--->
+
 
 <!--creates bag files that get overwritten each time this runs-->
 <node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />
