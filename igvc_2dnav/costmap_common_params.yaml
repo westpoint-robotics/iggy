@@ -11,4 +11,4 @@ laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, 
 
 point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /segmenter_nodelet/output_not_ground, marking: true, clearing: true}
 
-cam_point_cloud_sensor: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /points, marking: true, clearing: true}
+cam_point_cloud_sensor: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /triclops/points, marking: true, clearing: true}
