@@ -21,9 +21,13 @@
 <node pkg="rosbag" type="play" name="player" output="screen" 
     args=" -r 0.5 --clock $(arg gps) $(arg rawimu) $(arg imu) $(arg rCamera) $(arg lCamera) $(arg laser3D)"/>
 
-<!-- =============   TRANSFORMS  ======================= -->
+<!-- =============   TRANSFORMS  ======================= 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
+        args="0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />        
+-->        
+
+  <node pkg="tf" type="static_transform_publisher" name="base2_link_to_velodyne"
+        args="0.1 0.0 0.70 0 0 0 1 base_link velodyne 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
         args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" />
@@ -46,22 +50,28 @@
   <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
         args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
 
-<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
         args="0 0 0 0 0 0 1 map odom 100" />
 
 <!-- =============   NODES and Launch Files  ======================= -->
+<!--utm odom converter node for goal location, converts an lat/long goal to UTM-->
+<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
+  <remap from="odom" to="goal_utm"/>
+  <remap from="fix" to="goal_gps" />
+</node>
 
+<!--utm odom converter node for current location, converts he current lat/long to UTM-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
   <remap from="fix" to="/gps/fix" />
   <param name="frame_id" value="base_footprint" />
 </node>
 
-  <include file="$(find igvc_run)/launch/dml_ekf.launch">
-  </include>
+<include file="$(find velodyne_bringup)/launch/dml_sim_velodyne.launch"/>
 
-  <include file="$(find igvc_run)/launch/dml_move_base.launch">
-  </include>
+<include file="$(find igvc_run)/launch/dml_ekf.launch"/>
+
+<include file="$(find igvc_run)/launch/dml_move_base.launch"/>
 
 <!-- Start an rviz node with a custom configuration  -->
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/bagdemo_localization.rviz"/>

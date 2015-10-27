@@ -1,14 +1,14 @@
-obstacle_range: 2.5
-raytrace_range: 3.0
+obstacle_range: 25
+raytrace_range: 30
 footprint: [[1.0, 1.0], [-1.0, 1.0], [1.0, -1.0], [-1.0, -1.0]]
 
-inflation_radius: 2
-transform_tolerance: 1.2
+inflation_radius: 1
+transform_tolerance: 0.2
 
 observation_sources: laser_scan_sensor point_cloud_sensor cam_point_cloud_sensor
 
 laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
 
-point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /segmenter_nodelet/output_not_ground, marking: true, clearing: true}
+point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /velodyne_points, marking: true, clearing: true, min_obstacle_height: .20}
 
 cam_point_cloud_sensor: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /triclops/points, marking: true, clearing: true}
