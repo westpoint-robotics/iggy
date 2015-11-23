@@ -66,7 +66,7 @@ include_directories(include
 # )
 
 ## Declare a cpp executable
-add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp ${HEADER_FILES})
+add_executable(triclops_camera_driver src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp ${HEADER_FILES} src/image_publisher.cpp)
 
 add_executable(triclops_image_process src/images_into_triclops.cpp ${HEADER_FILESs})
 

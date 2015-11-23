@@ -14,6 +14,7 @@
 #include "triclops_vision/vision_3d.h"
 #include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/line_filter.h"
+#include "triclops_vision/image_publisher.h"
 
 // ADDED to allow publishing of raw images. TODO clean this up. This is messy solution.
 #include <image_transport/image_transport.h>
@@ -32,11 +33,11 @@ int main(int  argc, char **argv)
   TriclopsInput triclopsColorInput, triclopsMonoInput;
   TriclopsContext triclops;
 
-  FC2::Camera camera;
+  FC2::Camera camera; // namespace FC2 --> instantiating Camera
   FC2::Image grabbedImage;
 
   camera.Connect();
-  // configure camera
+  // configure camera - Identifies what camera is being used?
   if ( configureCamera( camera ) )
   {
       return EXIT_FAILURE;
@@ -96,14 +97,24 @@ int main(int  argc, char **argv)
                     return EXIT_FAILURE;
         }
 
+
+    // function call from image_publisher.cpp
+
+    ImagePublisher imagePublisher(grabbedImage, imageContainer, image_pub_left,image_pub_right);
+
+
+
     // Messy solution to publish the images in ROS ----- STARTS HERE  ---------------------------------------------------------
     //TODO Clean up this code and put in OO paradigm
+    /*
+ Inputs: grabbedImage, imageContainer
+
     FC2::Image * unprocessedImage = imageContainer.unprocessed;
 
     FC2T::ErrorType fc2TriclopsError;
     fc2TriclopsError = FC2T::unpackUnprocessedRawOrMono16Image(
                             grabbedImage,
-                            true /*assume little endian*/,
+                            true /*assume little endian*/      /*
                             unprocessedImage[RIGHT],
                             unprocessedImage[LEFT]);
     if (fc2TriclopsError != FC2T::ERRORTYPE_OK)
@@ -142,6 +153,10 @@ int main(int  argc, char **argv)
     image_pub_left.publish(msg);
     msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
     image_pub_right.publish(msg);
+
+//Outputs: None
+*/
+
     // Messy solution to publish the images in ROS ----- END HERE -----------------------------------------------------------------
 
     // output image disparity image with subpixel interpolation
