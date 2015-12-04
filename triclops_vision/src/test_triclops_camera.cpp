@@ -25,6 +25,7 @@
  */
 
 TriclopsError     te;
+Vision3D vs;
 
 bool SHOW_OPENCV = true;
 
@@ -160,17 +161,19 @@ int main(int  argc, char **argv)
     // Messy solution to publish the images in ROS ----- END HERE -----------------------------------------------------------------
 
     // output image disparity image with subpixel interpolation
+
+    
     TriclopsImage16 disparityImage16;
 
     // carry out the stereo pipeline
-    if ( doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
+    if ( vs.doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
     {
                 return EXIT_FAILURE;
     }
 
     PointCloud points;
     // publish the point cloud containing 3d points
-    if ( gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
+    if ( vs.gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
     {
         return EXIT_FAILURE;
     }
