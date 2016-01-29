@@ -20,7 +20,7 @@ class ImagePublisher
 {
     public:
 
-        ImagePublisher(FC2::Image grabbedImage, ImageContainer imageContainer, image_transport::Publisher image_pub_left, image_transport::Publisher image_pub_right);
+        ImagePublisher(FC2::Image grabbedImage, ImageContainer imageContainer, image_transport::Publisher *image_pub_left, image_transport::Publisher *image_pub_right);
 
     private:
         cv::Mat      leftImage;
