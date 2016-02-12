@@ -13,11 +13,11 @@
 #include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/line_filter.h"
 #include "triclops_vision/image_publisher.h"
-
+#include "triclops_vision/camera_system.h"
 #include <image_transport/image_transport.h>
 
 
-ImagePublisher::ImagePublisher(FC2::Image grabbedImage, ImageContainer imageContainer, image_transport::Publisher image_pub_left, image_transport::Publisher image_pub_right){
+ImagePublisher::ImagePublisher(FC2::Image grabbedImage, ImageContainer imageContainer, image_transport::Publisher *image_pub_left, image_transport::Publisher *image_pub_right){
 
     FC2::Image * unprocessedImage = imageContainer.unprocessed;
 
@@ -58,9 +58,10 @@ ImagePublisher::ImagePublisher(FC2::Image grabbedImage, ImageContainer imageCont
 
 
     sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", leftImage).toImageMsg();
-    image_pub_left.publish(msg);
+    image_pub_left->publish(msg);
     msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", rightImage).toImageMsg();
-    image_pub_right.publish(msg);
+    image_pub_right->publish(msg);
+    printf("I am publishing?\n");
 
 }
 

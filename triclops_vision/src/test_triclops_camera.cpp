@@ -23,7 +23,7 @@
  * This test displays both the right and left camera images in the opencv highgui after
  * converting the camera triclops images into a opencv image.
  */
-
+/* TEMP
 TriclopsError     te;
 Vision3D vs;
 
@@ -162,7 +162,7 @@ int main(int  argc, char **argv)
 
     // output image disparity image with subpixel interpolation
 
-    
+/* TEMP    
     TriclopsImage16 disparityImage16;
 
     // carry out the stereo pipeline

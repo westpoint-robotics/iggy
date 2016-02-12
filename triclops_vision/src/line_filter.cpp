@@ -3,8 +3,73 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <triclops_vision/line_filter.h>
-
+#include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/vision_3d.h"
+#include "triclops_vision/image_publisher_single.h"
+
+
+    //Create imagecontainer for moving images
+    ImageContainer imageContainerL;
+    cv::Mat cImageL; // An OpenCV version of the rectified stereo image from the camera
+    cv::Mat filtered_imageL; // The image with detected white lines painted cyan
+    cv::vector<cv::Vec4i> lines; // The detected white lines
+
+    //Create imagecontainer for moving images
+    ImageContainer imageContainerR;
+    cv::Mat cImageR; // An OpenCV version of the rectified stereo image from the camera
+    cv::Mat filtered_imageR; // The image with detected white lines painted cyan
+
+
+//Executable for linefilter when called by launch file, will subscribe to camera left and right nodes, and will publish filtered images for each.
+
+void imageCallbackL(const sensor_msgs::ImagePtr& msgL)
+{
+    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
+    convertTriclops2Opencv(msgL, cImageL);
+    //Execute filtration, map to new image filtered image
+    findLines(cImageL, filtered_imageL, lines);
+    //Execute line filteration code, and format for use by imagePublisher
+    ImagePublisherS imagePublisherS(filtered_imageL, imageContainerL, &image_pub_filtered_left);
+}
+
+void imageCallbackR(const sensor_msgs::ImagePtr& msg)
+{
+    //TODO: Copy format from imageCallbackL
+    ImagePublisherS imagePublisherS(msg, imageContainerR, &image_pub_filtered_right);
+}
+
+
+
+int main(int  argc, char **argv)
+{
+    ros::init(argc, argv, "linefilter");
+    //Create subscribers
+    ros::NodeHandle
+    //Create publishers
+    image_transport::Publisher image_pub_filtered_left= it.advertise("camera/left/linefiltered", 1);
+    image_transport::Publisher image_pub_filtered_right= it.advertise("camera/right/linefiltered", 1);
+    cv::Mat cImage; // An OpenCV version of the rectified stereo image from the camera
+    cv::Mat filtered_image; // The image with detected white lines painted cyan
+    cv::vector<cv::Vec4i> lines; // The detected white lines
+    
+    //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
+    ros::Subscriber subcamleft = n.subscribe("camera/left/rgb"), 0, imageCallbackL);
+    ros::Subscriber subcamright = n.subscribe("camera/right/rgb"), 0, imageCallbackR); 
+
+    //ROS loop that causes the system to keep moving.
+    while (ros::ok()){
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+}
+
+
+
+
+
+//BELOW: Original linefilter code
+
+
 
 /**
  * @brief LineFilter::LineFilter Used to find white lines in OpenCv Images.
@@ -34,6 +99,8 @@ LineFilter::~LineFilter()
 {
     cvDestroyAllWindows();
 }
+
+
 /**
  * @brief LineFilter::findLines This function finds the white lines in the src_image
  * @param src_image the original image to find white lines in

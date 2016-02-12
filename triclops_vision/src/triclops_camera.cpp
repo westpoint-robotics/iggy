@@ -39,6 +39,23 @@ int grabImage ( FC2::Camera & camera, FC2::Image& grabbedImage )
     return 0;
 }
 
+int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
+{
+    FC2::Error fc2Error;
+    fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    fc2Error = image.Convert(FC2::PIXEL_FORMAT_BGRU, &convertedImage);
+    if (fc2Error != FC2::PGRERROR_OK)
+    {
+        return FC2T::handleFc2Error(fc2Error);
+    }
+
+    return 0;
+}
 
 int generateTriclopsContext( FC2::Camera     & camera,
                              TriclopsContext & triclops )

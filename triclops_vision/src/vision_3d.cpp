@@ -23,7 +23,43 @@
 #include "triclops_vision/line_filter.h"
 
 
+int main(int  argc, char **argv)
+{
+  while (ros::ok())
+  {
 
+
+       //INSERT SUBSCRIBERS HERE IN ORDER TO PICK UP APPROPRIATE INPUTS
+
+
+    TriclopsImage16 disparityImage16;
+
+    // carry out the stereo pipeline
+    if ( vs.doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
+    {
+                return EXIT_FAILURE;
+    }
+
+    PointCloud points;
+    // publish the point cloud containing 3d points
+    if ( vs.gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
+    {
+        return EXIT_FAILURE;
+    }
+    else
+    {
+        points.header.frame_id="bumblebee2";
+        // Problem with time format in PCL see: http://answers.ros.org/question/172241/pcl-and-rostime/
+        //ros::Time time_st = ros::Time::now ();
+        //points.header.stamp = time_st.toNSec()/1e3;
+        //pcl_conversion::toPCL(ros::Time::now(), point_cloud_msg->header.stamp);
+        pc2_pub.publish(points);
+
+    }
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
+}
 
 LineFilter lf;
 
