@@ -32,10 +32,14 @@ void imageCallbackL(const sensor_msgs::ImagePtr& msgL)
     ImagePublisherS imagePublisherS(filtered_imageL, imageContainerL, &image_pub_filtered_left);
 }
 
-void imageCallbackR(const sensor_msgs::ImagePtr& msg)
+void imageCallbackR(const sensor_msgs::ImagePtr& msgR)
 {
-    //TODO: Copy format from imageCallbackL
-    ImagePublisherS imagePublisherS(msg, imageContainerR, &image_pub_filtered_right);
+    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
+    convertTriclops2Opencv(msgR, cImageR);
+    //Execute filtration, map to new image filtered image
+    findLines(cImageR, filtered_imageR, lines);
+    //Execute line filteration code, and format for use by imagePublisher
+    ImagePublisherS imagePublisherS(filtered_imageR, imageContainerR, &image_pub_filtered_right);
 }
 
 
@@ -48,10 +52,6 @@ int main(int  argc, char **argv)
     //Create publishers
     image_transport::Publisher image_pub_filtered_left= it.advertise("camera/left/linefiltered", 1);
     image_transport::Publisher image_pub_filtered_right= it.advertise("camera/right/linefiltered", 1);
-    cv::Mat cImage; // An OpenCV version of the rectified stereo image from the camera
-    cv::Mat filtered_image; // The image with detected white lines painted cyan
-    cv::vector<cv::Vec4i> lines; // The detected white lines
-    
     //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
     ros::Subscriber subcamleft = n.subscribe("camera/left/rgb"), 0, imageCallbackL);
     ros::Subscriber subcamright = n.subscribe("camera/right/rgb"), 0, imageCallbackR); 
