@@ -33,10 +33,10 @@
 class Vision3D
 {
     public:
-       Vision3D();
+        Vision3D::Vision3D();
         virtual ~Vision3D();
-
-
+        void run();
+        LineFilter* linefilter;
 
         // configue camera to capture image
         int configureCamera( FC2::Camera &camera );
@@ -82,7 +82,7 @@ class Vision3D
 
 
     private:
-
+        ros::Publisher pointCloudPublisher;
 
 };
 

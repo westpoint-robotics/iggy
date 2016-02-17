@@ -22,27 +22,26 @@
 #include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/line_filter.h"
 
+Vision3D::Vision3D(int argc, char **argv, LineFilter *linefilter) {
+    ros::init(argc,argv,"linefilter");
+    ros::NodeHandle nh;
+    ros::Publisher pointCloudPublisher = nh.advertise<sensor_msgs::PointCloud2>("/vision3D/points", 0);
 
-int main(int  argc, char **argv)
-{
-  while (ros::ok())
-  {
+    this->linefilter = linefilter;
+}
 
-
-       //INSERT SUBSCRIBERS HERE IN ORDER TO PICK UP APPROPRIATE INPUTS
-
-
+void Vision3D::run()
+{     
     TriclopsImage16 disparityImage16;
-
     // carry out the stereo pipeline
-    if ( vs.doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
+    if ( this->doStereo( triclops, triclopsMonoInput, disparityImage16 ) )
     {
                 return EXIT_FAILURE;
     }
 
     PointCloud points;
     // publish the point cloud containing 3d points
-    if ( vs.gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
+    if ( this->gets3dPoints(grabbedImage, triclops, disparityImage16, triclopsColorInput, points) )
     {
         return EXIT_FAILURE;
     }
@@ -56,14 +55,11 @@ int main(int  argc, char **argv)
         pc2_pub.publish(points);
 
     }
+
     ros::spinOnce();
-    loop_rate.sleep();
-  }
 }
 
-LineFilter lf;
-
-int configureCamera( FC2::Camera & camera )
+int Vision3D::configureCamera( FC2::Camera & camera )
 {
 	FC2T::ErrorType fc2TriclopsError;	      
 	FC2T::StereoCameraMode mode = FC2T::TWO_CAMERA;
@@ -76,7 +72,7 @@ int configureCamera( FC2::Camera & camera )
     return 0;
 }
 
-int grabImage ( FC2::Camera & camera, FC2::Image& grabbedImage )
+int Vision3D::grabImage ( FC2::Camera & camera, FC2::Image& grabbedImage )
 {
 	FC2::Error fc2Error = camera.StartCapture();
 	if (fc2Error != FC2::PGRERROR_OK)
@@ -94,7 +90,7 @@ int grabImage ( FC2::Camera & camera, FC2::Image& grabbedImage )
 }
 
 
-int generateTriclopsContext( FC2::Camera     & camera, 
+int Vision3D::generateTriclopsContext( FC2::Camera     & camera, 
                              TriclopsContext & triclops )
 {
 	FC2::CameraInfo camInfo;
@@ -115,7 +111,7 @@ int generateTriclopsContext( FC2::Camera     & camera,
 	return 0;
 }
 
-int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
+int Vision3D::convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
 {
     FC2::Error fc2Error;
     fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
@@ -133,7 +129,7 @@ int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
     return 0;
 }
 
-int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
+int Vision3D::convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
 {
     FC2::Error fc2Error;
     fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
@@ -151,7 +147,7 @@ int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
     return 0;
 }
 
-int generateTriclopsInput( FC2::Image const & grabbedImage, 
+int Vision3D::generateTriclopsInput( FC2::Image const & grabbedImage, 
                             ImageContainer  & imageContainer,
                             TriclopsInput   & triclopsColorInput,
                             TriclopsInput   & triclopsMonoInput ) 
@@ -261,7 +257,7 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
     return 0;
 }
 
-int doStereo( TriclopsContext const & triclops, 
+int Vision3D::doStereo( TriclopsContext const & triclops, 
                TriclopsInput  const & stereoData, 
                TriclopsImage16      & depthImage )
 {
@@ -289,7 +285,7 @@ int doStereo( TriclopsContext const & triclops,
     return 0;
 }
 
-int gets3dPoints( FC2::Image      const & grabbedImage,
+int Vision3D::gets3dPoints( FC2::Image      const & grabbedImage,
                   TriclopsContext const & triclops,
                   TriclopsImage16 const & disparityImage16,
                   TriclopsInput   const & colorData,
@@ -307,31 +303,14 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
     unsigned short * row;
     unsigned short   disparity;
 
-    cv::Mat cImage; // An OpenCV version of the rectified stereo image from the camera
-    cv::Mat filtered_image; // The image with detected white lines painted cyan
-    cv::vector<cv::Vec4i> lines; // The detected white lines
+    
+    
+    this->linefilter->findPointsOnLines(cImage, this->linefilter->lines, obstaclePixels);
 
-    // Rectify the color image
-    te = triclopsRectifyColorImage( triclops,
-                                    TriCam_REFERENCE,
-                                        const_cast<TriclopsInput *>(&colorData),
-                                        &colorImage );
-    _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
-
-    // Convert the image to OpenCv and detect white lines
-    convertTriclops2Opencv(colorImage, cImage);
-    lf.findLines(cImage, filtered_image, lines);
-    lf.displayCanny();
-    lf.displayCyan();
-
-    //Find all pixels in the image that should be marked as obstacles.
-    cv::vector<cv::Point2i> obstaclePixels;
     cv::vector<cv::Point3i> obstacleCoords;
-    cv::Point3i obstacleCoord;
-    lf.findPointsOnLines(cImage, lines, obstaclePixels);
-
     for (int i = 0; i != obstaclePixels.size();i++)
       {
+        cv::Point3i obstacleCoord;
         cv::Point2i cPix = obstaclePixels[i];
         int pixX = cPix.x;
         int pixY = cPix.y;
@@ -401,104 +380,3 @@ int gets3dPoints( FC2::Image      const & grabbedImage,
         }
     return 0;
 }
-
-int save3dPoints( FC2::Image      const & grabbedImage, 
-                  TriclopsContext const & triclops, 
-                  TriclopsImage16 const & disparityImage16, 
-                  TriclopsInput   const & colorData )
-{
-    TriclopsImage monoImage = {0};
-    TriclopsColorImage colorImage = {0};
-    TriclopsError te;
-
-    float            x, y, z; 
-    int	            r, g, b;
-    FILE             * pPointFile;
-    int              nPoints = 0;
-    int	             pixelinc ;
-    int	             i, j, k;
-    unsigned short * row;
-    unsigned short   disparity;
-
-    // Rectify the color image if applicable
-    bool isColor = false;
-    if ( grabbedImage.GetPixelFormat() == FC2::PIXEL_FORMAT_RAW16 )
-    {
-        isColor = true;
-        te = triclopsRectifyColorImage( triclops, 
-                                        TriCam_REFERENCE, 
-	                                    const_cast<TriclopsInput *>(&colorData), 
-	                                    &colorImage );
-        _HANDLE_TRICLOPS_ERROR( "triclopsRectifyColorImage()", te );
-    }
-    else
-    {
-        te = triclopsGetImage( triclops,
-	                            TriImg_RECTIFIED,
-	                            TriCam_REFERENCE,
-	                            &monoImage );
-        _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
-    }
-
-  
-    // Save points to disk
-    const char * pFilename = "out.pts";
-    pPointFile = fopen( pFilename, "w+" );
-    if ( pPointFile != NULL )
-    {
-        printf("Opening output file %s\n", pFilename);
-    }
-    else
-    {
-        printf("Error opening output file %s\n", pFilename);
-        return 1;
-    }
-
-    // The format for the output file is:
-    // <x> <y> <z> <red> <grn> <blu> <row> <col>
-    // <x> <y> <z> <red> <grn> <blu> <row> <col>
-    // ...
-
-    // Determine the number of pixels spacing per row
-    pixelinc = disparityImage16.rowinc/2;
-    for ( i = 0, k = 0; i < disparityImage16.nrows; i++ )
-    {
-        row = disparityImage16.data + i * pixelinc;
-        for ( j = 0; j < disparityImage16.ncols; j++, k++ )
-        {
-            disparity = row[j];
-
-            // do not save invalid points
-            if ( disparity < 0xFF00 )
-            {
-                // convert the 16 bit disparity value to floating point x,y,z
-                triclopsRCD16ToXYZ( triclops, i, j, disparity, &x, &y, &z );
-
-                // look at points within a range
-                if ( z < 5.0 )
-                {
-                    if ( isColor )
-                    {
-                        r = (int)colorImage.red[k];
-                        g = (int)colorImage.green[k];
-                        b = (int)colorImage.blue[k];		  
-                    }
-                    else
-                    {
-                        // For mono cameras, we just assign the same value to RGB
-                        r = (int)monoImage.data[k];
-                        g = (int)monoImage.data[k];
-                        b = (int)monoImage.data[k];
-                    }
-                    fprintf( pPointFile, "%f %f %f %d %d %d %d %d\n", x, y, z, r, g, b, i, j );
-                    nPoints++;
-                }
-            }
-        }
-    }
-    fclose( pPointFile );
-    printf( "Points in file: %d\n", nPoints );
-
-    return 0;
-}
-

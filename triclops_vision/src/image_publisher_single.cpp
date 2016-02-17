@@ -58,8 +58,6 @@ ImagePublisherS::ImagePublisherS(FC2::Image grabbedImage, ImageContainer imageCo
     sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", mainImage).toImageMsg();
     image_pub_main->publish(msg);
 
-    
-
 }
 
 

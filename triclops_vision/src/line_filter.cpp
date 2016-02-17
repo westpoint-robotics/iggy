@@ -2,88 +2,42 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
 #include <triclops_vision/line_filter.h>
 #include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/vision_3d.h"
 #include "triclops_vision/image_publisher_single.h"
 
-
-    //Create imagecontainer for moving images
-    ImageContainer imageContainerL;
-    cv::Mat cImageL; // An OpenCV version of the rectified stereo image from the camera
-    cv::Mat filtered_imageL; // The image with detected white lines painted cyan
-    cv::vector<cv::Vec4i> lines; // The detected white lines
-
-    //Create imagecontainer for moving images
-    ImageContainer imageContainerR;
-    cv::Mat cImageR; // An OpenCV version of the rectified stereo image from the camera
-    cv::Mat filtered_imageR; // The image with detected white lines painted cyan
+//Global publisher pointers
+image_transport::Publisher* globalFilterPubLeft = 0x0;
+image_transport::Publisher* globalFilterPubRight = 0x0;
 
 
-//Executable for linefilter when called by launch file, will subscribe to camera left and right nodes, and will publish filtered images for each.
+//Create imagecontainer for moving images
+ImageContainer imageContainerL;
+cv::Mat cImageL; // An OpenCV version of the rectified stereo image from the camera
+cv::Mat filtered_imageL; // The image with detected white lines painted cyan
 
-void imageCallbackL(const sensor_msgs::ImagePtr& msgL)
-{
-    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
-    convertTriclops2Opencv(msgL, cImageL);
-    //Execute filtration, map to new image filtered image
-    findLines(cImageL, filtered_imageL, lines);
-    //Execute line filteration code, and format for use by imagePublisher
-    ImagePublisherS imagePublisherS(filtered_imageL, imageContainerL, &image_pub_filtered_left);
-}
-
-void imageCallbackR(const sensor_msgs::ImagePtr& msgR)
-{
-    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
-    convertTriclops2Opencv(msgR, cImageR);
-    //Execute filtration, map to new image filtered image
-    findLines(cImageR, filtered_imageR, lines);
-    //Execute line filteration code, and format for use by imagePublisher
-    ImagePublisherS imagePublisherS(filtered_imageR, imageContainerR, &image_pub_filtered_right);
-}
-
-
-
-int main(int  argc, char **argv)
-{
-    ros::init(argc, argv, "linefilter");
-    //Create subscribers
-    ros::NodeHandle
-    //Create publishers
-    image_transport::Publisher image_pub_filtered_left= it.advertise("camera/left/linefiltered", 1);
-    image_transport::Publisher image_pub_filtered_right= it.advertise("camera/right/linefiltered", 1);
-    //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
-    ros::Subscriber subcamleft = n.subscribe("camera/left/rgb"), 0, imageCallbackL);
-    ros::Subscriber subcamright = n.subscribe("camera/right/rgb"), 0, imageCallbackR); 
-
-    //ROS loop that causes the system to keep moving.
-    while (ros::ok()){
-        ros::spinOnce();
-        loop_rate.sleep();
-    }
-}
-
-
-
-
-
-//BELOW: Original linefilter code
-
-
+//Create imagecontainer for moving images
+ImageContainer imageContainerR;
+cv::Mat cImageR; // An OpenCV version of the rectified stereo image from the camera
+cv::Mat filtered_imageR; // The image with detected white lines painted cyan
 
 /**
  * @brief LineFilter::LineFilter Used to find white lines in OpenCv Images.
  *
  */
-LineFilter::LineFilter():
-    thresh_val(222), // 225
-    erosion_size(5), // 2
-    h_rho(1), // 1
-    h_theta(180), // 180
-    h_thresh(30), // 40
-    h_minLineLen(20), // 20
-    h_maxLineGap(7) // 30
+LineFilter::LineFilter(int argc, char** argv)
 {
+  this->thresh_val=1; // 225
+  this->erosion_size=1; // 2
+  this->h_rho=1; // 1
+  this->h_theta=180; // 180
+  this->h_thresh=30; // 40
+  this->h_minLineLen=20; // 20
+  this->h_maxLineGap=7; // 30
+
   // Create control sliders that allow tunning of the parameters for line detection
   cv::namedWindow("ControlView", CV_WINDOW_AUTOSIZE);
   cv::createTrackbar( "Threshold Value", "ControlView", &thresh_val, 255);
@@ -93,6 +47,22 @@ LineFilter::LineFilter():
   cv::createTrackbar( "h_thresh", "ControlView", &h_thresh, 255);
   cv::createTrackbar( "minLineLen", "ControlView", &h_minLineLen, 250);
   cv::createTrackbar( "maxLineGap", "ControlView", &h_maxLineGap, 250);
+
+  //Start ROS
+  ros::init(argc,argv,"linefilter");
+  ros::NodeHandle nh;
+  image_transport::ImageTransport it(nh);
+
+  //Create publishers
+  this->image_pub_filtered_left = it.advertise("/camera/left/linefiltered", 1);
+  this->image_pub_filtered_right = it.advertise("/camera/right/linefiltered", 1);
+
+  //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
+  this->subcamleft = it.subscribe("/camera/left/rgb", 0, &LineFilter::imageCallbackL, this);
+  this->subcamright = it.subscribe("/camera/right/rgb", 0, &LineFilter::imageCallbackR, this); 
+
+  //ROS loop that causes the system to keep moving.
+  
 }
 
 LineFilter::~LineFilter()
@@ -100,6 +70,50 @@ LineFilter::~LineFilter()
     cvDestroyAllWindows();
 }
 
+void LineFilter::run() {
+    ros::spinOnce();
+}
+
+//Executable for linefilter when called by launch file, will subscribe to camera left and right nodes, and will publish filtered images for each.
+
+void LineFilter::imageCallbackL(const sensor_msgs::ImageConstPtr& msg)
+{
+    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
+    cImageL = cv_bridge::toCvShare(msg, "bgr8")->image;
+    //Execute filtration, map to new image filtered image
+    LineFilter::findLines(cImageL, filtered_imageL, this->lines);
+    //Execute line filteration code, and format for use by imagePublisher
+    //ImagePublisherS imagePublisherS((FC2::Image)filtered_imageL, imageContainerL, &(*globalFilterPubLeft));
+
+    cv_bridge::CvImage out_msg;
+    out_msg.encoding = sensor_msgs::image_encodings::TYPE_32FC1; // Or whatever
+    out_msg.image    = filtered_imageL; // Your cv::Mat
+
+    sensor_msgs::Image out;
+    out_msg.toImageMsg(out);
+
+    this->image_pub_filtered_left.publish(out);
+}
+
+void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
+{
+    
+    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
+    cImageR = cv_bridge::toCvShare(msg, "bgr8")->image;
+    //Execute filtration, map to new image filtered image
+    LineFilter::findLines(cImageR, filtered_imageR, this->lines);
+    //Execute line filteration code, and format for use by imagePublisher
+    //ImagePublisherS imagePublisherS((FC2::Image)filtered_imageR, imageContainerR, &(*globalFilterPubRight));
+    cv_bridge::CvImage out_msg;
+    out_msg.encoding = sensor_msgs::image_encodings::TYPE_32FC1; // Or whatever
+    out_msg.image    = filtered_imageR; // Your cv::Mat
+
+    sensor_msgs::Image out;
+    out_msg.toImageMsg(out);
+    cv::imshow("Filter Right", filtered_imageR);
+    cv::waitKey(10);
+    this->image_pub_filtered_right.publish(out);
+}
 
 /**
  * @brief LineFilter::findLines This function finds the white lines in the src_image
@@ -117,54 +131,54 @@ LineFilter::~LineFilter()
  */
 void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines)
 {
-    original_image = src_image;
+    this->original_image = src_image;
     // Convert the BGR image to Gray scale
-    cvtColor(src_image, gray_image, CV_BGR2GRAY);
+    cvtColor(src_image, this->gray_image, CV_BGR2GRAY);
 
     // Reduce resolution of image
-    cv::GaussianBlur(gray_image, blur_image, cv::Size(7,7), 0.0, 0.0, cv::BORDER_DEFAULT);
+    cv::GaussianBlur(this->gray_image, this->blur_image, cv::Size(7,7), 0.0, 0.0, cv::BORDER_DEFAULT);
 
     // Threshold the image
-    cv::threshold(blur_image, thresh_image, thresh_val, 1, cv::THRESH_TOZERO);
+    cv::threshold(this->blur_image, this->thresh_image, this->thresh_val, 1, cv::THRESH_TOZERO);
 
     // Erode the image
     cv::Mat element = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size( 2*erosion_size + 1, 2*erosion_size+1 ), cv::Point( erosion_size, erosion_size ) );
-    cv::erode(thresh_image, eroded_image, element);
+    cv::erode(this->thresh_image, this->eroded_image, element);
 
     // Canny edge detection
-    cv::Canny(eroded_image, canny_image, 50, 250, 3);
+    cv::Canny(this->eroded_image, this->canny_image, 50, 250, 3);
 
     // Prevent any divide by zero errors
     // TODO Find it if there is a better way to do avoid these values being zero.
-    if (h_rho == 0)
+    if (this->h_rho == 0)
     {
-        h_rho =1;
+        this->h_rho =1;
     }
-    if (h_theta == 0)
+    if (this->h_theta == 0)
     {
-        h_theta =1;
+        this->h_theta =1;
     }
-    if (h_thresh == 0)
+    if (this->h_thresh == 0)
     {
-        h_thresh =1;
+        this->h_thresh =1;
     }
 
     // Find the Hough lines
-    cv::HoughLinesP(canny_image, lines, h_rho, (CV_PI/h_theta), h_thresh, h_minLineLen, h_maxLineGap);
-    hough_image = cv::Mat::zeros(canny_image.size(), canny_image.type());
-    cyan_image = src_image.clone();
+    cv::HoughLinesP(this->canny_image, lines, this->h_rho, (CV_PI/this->h_theta), this->h_thresh, this->h_minLineLen, this->h_maxLineGap);
+    this->hough_image = cv::Mat::zeros(canny_image.size(), canny_image.type());
+    this->cyan_image = src_image.clone();
 
     // Draw the Hough lines on the image
     for( int i =0; i< lines.size(); i++)
     {
-        line(hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
-        line(cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
+        line(this->hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
+        line(this->cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
     }
 
     // Return the original image with detected white lines drawn in cyan
     //changed to only return hough_image
-    cyan_image = hough_image;
-    rtrn_image = cyan_image;
+    this->cyan_image = this->hough_image;
+    rtrn_image = this->cyan_image;
 }
 
 /**
@@ -201,7 +215,7 @@ void LineFilter::displayOriginal()
   {
     // Show the images in a window for debug purposes
     cv::Mat disImage;
-    cv::resize(original_image, disImage, cv::Size(400,300));
+    cv::resize(this->original_image, disImage, cv::Size(400,300));
     cv::imshow("Original Image", disImage);
     cv::waitKey(3);
   }
@@ -223,7 +237,7 @@ void LineFilter::displayGrayScale()
   {
     // Show the images in a window for debug purposes
     cv::Mat disImage;
-    cv::resize(gray_image, disImage, cv::Size(400,300));
+    cv::resize(this->gray_image, disImage, cv::Size(400,300));
     cv::imshow("Grayscale Image", disImage);
     cv::waitKey(3);
   }
@@ -244,7 +258,7 @@ void LineFilter::displayBlurred()
   try
   {
     cv::Mat disImage;
-    cv::resize(blur_image, disImage, cv::Size(400,300));
+    cv::resize(this->blur_image, disImage, cv::Size(400,300));
     cv::imshow("Blurred Image", disImage);
     cv::waitKey(3);
   }
@@ -266,7 +280,7 @@ void LineFilter::displayThreshold()
   {
     // Show the images in a window for debug purposes
     cv::Mat disImage;
-    cv::resize(thresh_image, disImage, cv::Size(400,300));
+    cv::resize(this->thresh_image, disImage, cv::Size(400,300));
     cv::imshow("Threshold Image", disImage);
     cv::waitKey(3);
   }
@@ -288,7 +302,7 @@ void LineFilter::displayEroded()
   {
     // Show the images in a window for debug purposes
     cv::Mat disImage;
-    cv::resize(eroded_image, disImage, cv::Size(400,300));
+    cv::resize(this->eroded_image, disImage, cv::Size(400,300));
     cv::imshow("Eroded Image", disImage);
     cv::waitKey(3);
   }
@@ -310,7 +324,7 @@ void LineFilter::displayCanny()
   {
     // Show the images in a window for debug purposes
     cv::Mat disImage;
-    cv::resize(canny_image, disImage, cv::Size(400,300));
+    cv::resize(this->canny_image, disImage, cv::Size(400,300));
     cv::imshow("Canny Edge Image", disImage);
     cv::waitKey(3);
   }
@@ -331,7 +345,7 @@ void LineFilter::displayHough()
   try
   {
     cv::Mat disImage;
-    cv::resize(hough_image, disImage, cv::Size(400,300));
+    cv::resize(this->hough_image, disImage, cv::Size(400,300));
     cv::imshow("Hough Lines Image", disImage);
     cv::waitKey(3);
   }
@@ -352,7 +366,7 @@ void LineFilter::displayCyan()
   try
   {
     cv::Mat disImage;
-    cv::resize(cyan_image, disImage, cv::Size(400,300));
+    cv::resize(this->cyan_image, disImage, cv::Size(400,300));
     cv::imshow("Blue Lines Image", disImage);
     cv::waitKey(3);
   }

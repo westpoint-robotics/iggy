@@ -13,12 +13,65 @@
 #include "triclops_vision/image_publisher.h"
 #include "triclops_vision/camera_system.h"
 
+
+CameraSystem::CameraSystem(int argc, char** argv) {
+  namespace FC2 = FlyCapture2;
+  namespace FC2T = Fc2Triclops;
+  TriclopsContext triclops;
+
+
+  this->camera.Connect();
+  // configure camera - Identifies what camera is being used?
+
+
+  if ( configureCamera(this->camera) )
+  {
+      exit(-1);
+  }
+
+  // generate the Triclops context
+  if ( generateTriclopsContext( this->camera, triclops ) )
+  {
+      exit(-1);
+  }
+
+  // Par 1 of 2 for grabImage method
+  FC2::Error fc2Error = this->camera.StartCapture();
+  if (fc2Error != FC2::PGRERROR_OK)
+  {
+      exit(FC2T::handleFc2Error(fc2Error));
+  }
+
+  // Get the camera info and print it out
+  FC2::CameraInfo camInfo;
+  fc2Error = this->camera.GetCameraInfo( &camInfo );
+  if ( fc2Error != FC2::PGRERROR_OK )
+  {
+      std::cout << "Failed to get camera info from camera" << std::endl;
+      exit(-1);
+  }
+  else
+  {
+      ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d \n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
+  }
+
+  ros::init(argc, argv, "camera");
+  ros::NodeHandle nh;
+  ros::Rate loop_rate(10);
+
+  // Container of Images used for processing
+  image_transport::ImageTransport it(nh);
+  //Publishers for the camera
+  this->image_pub_left= it.advertise("/camera/left/rgb", 1);
+  this->image_pub_right= it.advertise("/camera/right/rgb", 1);
+}
+
 //Copied over from older files.
-int configureCamera( FC2::Camera & camera )
+int CameraSystem::configureCamera( FC2::Camera & camera )
 {
     	
     FC2T::ErrorType fc2TriclopsError;	      
-	FC2T::StereoCameraMode mode = FC2T::TWO_CAMERA;
+	  FC2T::StereoCameraMode mode = FC2T::TWO_CAMERA;
     fc2TriclopsError = FC2T::setStereoMode( camera, mode );
     if ( fc2TriclopsError )
     {
@@ -29,7 +82,7 @@ int configureCamera( FC2::Camera & camera )
 }
 
 //Copied over from older files.
-int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
+int CameraSystem::convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
 {
     FC2::Error fc2Error;
     fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
@@ -48,7 +101,7 @@ int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
 }
 
 //Copied over from older files.
-int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
+int CameraSystem::convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
 {
     FC2::Error fc2Error;
     fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
@@ -67,7 +120,7 @@ int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
 }
 
 // generate Triclops context from connected camera. Copied over from older files.
-int generateTriclopsContext( FC2::Camera     & camera,
+int CameraSystem::generateTriclopsContext( FC2::Camera     & camera,
                              TriclopsContext & triclops )
 {
     FC2::CameraInfo camInfo;
@@ -89,7 +142,7 @@ int generateTriclopsContext( FC2::Camera     & camera,
 }
 
 //Copied over from older files.
-int generateTriclopsInput( FC2::Image const & grabbedImage, 
+int CameraSystem::generateTriclopsInput( FC2::Image const & grabbedImage, 
                             ImageContainer  & imageContainer,
                             TriclopsInput   & triclopsColorInput,
                             TriclopsInput   & triclopsMonoInput ) 
@@ -121,7 +174,7 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
 
         for ( int i = 0; i < 2; ++i )
         {
-            if ( convertToBGRU(unprocessedImage[i], bgruImage[i]) )
+            if ( this->convertToBGRU(unprocessedImage[i], bgruImage[i]) )
             {
                 return 1;
             }
@@ -199,92 +252,28 @@ int generateTriclopsInput( FC2::Image const & grabbedImage,
     return 0;
 }
 
-//Executable for the camera system, which connects to the camera and processes the raw input into an imagecontainer, and then publishes the images to ROS for the left and right camera feeds.
-int main(int  argc, char **argv)
-{
-  namespace FC2 = FlyCapture2;
-  namespace FC2T = Fc2Triclops;
-  TriclopsInput triclopsColorInput, triclopsMonoInput;
-  TriclopsContext triclops;
-
-  FC2::Camera camera; // namespace FC2 --> instantiating Camera
-  FC2::Image grabbedImage;
-
-
-  camera.Connect();
-  // configure camera - Identifies what camera is being used?
-
-
-  if ( configureCamera(camera) )
-  {
-      return EXIT_FAILURE;
-  }
-
-  // generate the Triclops context
-  if ( generateTriclopsContext( camera, triclops ) )
-  {
-      return EXIT_FAILURE;
-  }
-
-  // Par 1 of 2 for grabImage method
-  FC2::Error fc2Error = camera.StartCapture();
-  if (fc2Error != FC2::PGRERROR_OK)
-  {
-      return FC2T::handleFc2Error(fc2Error);
-  }
-
-  // Get the camera info and print it out
-  FC2::CameraInfo camInfo;
-  fc2Error = camera.GetCameraInfo( &camInfo );
-  if ( fc2Error != FC2::PGRERROR_OK )
-  {
-      std::cout << "Failed to get camera info from camera" << std::endl;
-      return false;
-  }
-  else
-  {
-      ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d \n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
-  }
-
-  ros::init(argc, argv, "talker");
-  ros::NodeHandle nh;
-  ros::Rate loop_rate(10);
-  ros::Publisher pc2_pub = nh.advertise<sensor_msgs::PointCloud2>("/triclops/points", 0);
-
-  // Container of Images used for processing
-  ImageContainer imageContainer;
-  image_transport::ImageTransport it(nh);
-  //Publishers for the camera
-  image_transport::Publisher image_pub_left= it.advertise("camera/left/rgb", 1);
-  image_transport::Publisher image_pub_right= it.advertise("camera/right/rgb", 1);
-
-
-  //Primary ROS loop that executes the publishing of data
-  while (ros::ok())
-  {
-    // Part 2 of 2 for grabImage method
+void CameraSystem::run() {
+    FC2::Error fc2Error;
+    ImageContainer imageContainer;
+    TriclopsInput triclopsColorInput, triclopsMonoInput;
     // this image contains both right and left images
-    fc2Error = camera.RetrieveBuffer(&grabbedImage);
+    fc2Error = this->camera.RetrieveBuffer(&(this->grabbedImage));
     if (fc2Error != FC2::PGRERROR_OK)
     {
-        return FC2T::handleFc2Error(fc2Error);
+        exit(FC2T::handleFc2Error(fc2Error));
     }
 
     // generate triclops inputs from grabbed image
-    if ( generateTriclopsInput( grabbedImage, imageContainer, triclopsColorInput, triclopsMonoInput ))
+    if ( this->generateTriclopsInput( this->grabbedImage, imageContainer, triclopsColorInput, triclopsMonoInput ))
         {
-                    return EXIT_FAILURE;
+                    exit(EXIT_FAILURE);
         }
 
-
     // function call from image_publisher.cpp
-    ImagePublisher imagePublisher(grabbedImage, imageContainer, &image_pub_left, &image_pub_right);
+    ImagePublisher imagePublisher(this->grabbedImage, imageContainer, &(this->image_pub_left), &(this->image_pub_right));
 
     ros::spinOnce();
-    loop_rate.sleep();
-    }
 }
-
 
 
 

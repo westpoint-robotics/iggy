@@ -4,7 +4,9 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "triclops_vision/triclops_opencv.h"
 #include "triclops_vision/vision_3d.h"
+#include "triclops_vision/image_publisher_single.h"
 #include "triclops_vision/common.h"
 
 /**
@@ -14,8 +16,9 @@
 class LineFilter
 {
     public:
-        LineFilter();
+        LineFilter(int argc, char** argv);
         virtual ~LineFilter();
+        void run();
 
         void findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines);
         void findPointsOnLines(const cv::Mat &cImage, const cv::vector<cv::Vec4i> &lines, std::vector<cv::Point2i> &pixels);
@@ -31,7 +34,10 @@ class LineFilter
 
         void returnCyan(cv::Mat cyanImage)
         { cyanImage = cyan_image;}
-
+        void imageCallbackL(const sensor_msgs::ImageConstPtr& msgL);
+        void imageCallbackR(const sensor_msgs::ImageConstPtr& msgR);
+        cv::vector<cv::Vec4i> lines;
+        
 
     protected:
     private:
@@ -51,6 +57,12 @@ class LineFilter
         int h_thresh;             // Accumulator threshold parameter. Only those lines are returned that get enough votes (hough transform)
         int h_minLineLen;         // Line segments shorter than that are rejected (hough transform)
         int h_maxLineGap;         // Maximum allowed gap between points on the same line to link them (hough transform)
+
+        image_transport::Publisher image_pub_filtered_right;
+        image_transport::Publisher image_pub_filtered_left;
+        image_transport::Subscriber subcamright;
+        image_transport::Subscriber subcamleft;
+
 
 };
 
