@@ -4,8 +4,8 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <image_transport/image_transport.h>
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/vision_3d.h"
 #include "triclops_vision/image_publisher_single.h"
 #include "triclops_vision/common.h"
 

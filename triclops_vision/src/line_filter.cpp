@@ -4,15 +4,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
-#include <triclops_vision/line_filter.h>
+#include "triclops_vision/line_filter.h"
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/vision_3d.h"
 #include "triclops_vision/image_publisher_single.h"
-
-//Global publisher pointers
-image_transport::Publisher* globalFilterPubLeft = 0x0;
-image_transport::Publisher* globalFilterPubRight = 0x0;
-
 
 //Create imagecontainer for moving images
 ImageContainer imageContainerL;
@@ -80,19 +74,17 @@ void LineFilter::imageCallbackL(const sensor_msgs::ImageConstPtr& msg)
 {
     //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
     cImageL = cv_bridge::toCvShare(msg, "bgr8")->image;
+
     //Execute filtration, map to new image filtered image
     LineFilter::findLines(cImageL, filtered_imageL, this->lines);
-    //Execute line filteration code, and format for use by imagePublisher
-    //ImagePublisherS imagePublisherS((FC2::Image)filtered_imageL, imageContainerL, &(*globalFilterPubLeft));
 
-    cv_bridge::CvImage out_msg;
-    out_msg.encoding = sensor_msgs::image_encodings::TYPE_32FC1; // Or whatever
-    out_msg.image    = filtered_imageL; // Your cv::Mat
+    sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", filtered_imageL).toImageMsg();
 
-    sensor_msgs::Image out;
-    out_msg.toImageMsg(out);
+    /*DEBUG
+    cv::imshow("Filter Left", filtered_imageL);
+    cv::waitKey(10);*/
 
-    this->image_pub_filtered_left.publish(out);
+    this->image_pub_filtered_left.publish(outmsg);
 }
 
 void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
@@ -102,17 +94,14 @@ void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
     cImageR = cv_bridge::toCvShare(msg, "bgr8")->image;
     //Execute filtration, map to new image filtered image
     LineFilter::findLines(cImageR, filtered_imageR, this->lines);
-    //Execute line filteration code, and format for use by imagePublisher
-    //ImagePublisherS imagePublisherS((FC2::Image)filtered_imageR, imageContainerR, &(*globalFilterPubRight));
-    cv_bridge::CvImage out_msg;
-    out_msg.encoding = sensor_msgs::image_encodings::TYPE_32FC1; // Or whatever
-    out_msg.image    = filtered_imageR; // Your cv::Mat
 
-    sensor_msgs::Image out;
-    out_msg.toImageMsg(out);
+    sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", filtered_imageR).toImageMsg();
+
+    /*DEBUG
     cv::imshow("Filter Right", filtered_imageR);
-    cv::waitKey(10);
-    this->image_pub_filtered_right.publish(out);
+    cv::waitKey(10);*/
+
+    this->image_pub_filtered_right.publish(outmsg);
 }
 
 /**

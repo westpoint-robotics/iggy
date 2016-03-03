@@ -6,10 +6,12 @@
 
 #include <triclops/triclops.h>
 #include <triclops/fc2triclops.h>
+#include <image_transport/image_transport.h>
 #include <pcl_ros/point_cloud.h>
 
 #include "triclops_vision/typedefs.h"
 #include "triclops_vision/common.h"
+#include "triclops_vision/line_filter.h"
 
 class CameraSystem {
     public:
@@ -54,11 +56,19 @@ class CameraSystem {
         // color process the image and convert to monochrome
         int convertColorToMonoImage( FC2::Image & colorImage,
                                      FC2::Image & monoImage );
+        TriclopsContext triclops;
+        
         private:
             FC2::Camera camera;
             FC2::Image grabbedImage;
+            TriclopsInput color;
+            TriclopsInput mono;
+            TriclopsImage16 disparityImageTriclops;
+            cv::Mat disparityImageCV;
             image_transport::Publisher image_pub_left;
             image_transport::Publisher image_pub_right;
+            image_transport::Publisher image_pub_disparity;
+            
 };
 
 #endif // CAMERA_SYSTEM_H

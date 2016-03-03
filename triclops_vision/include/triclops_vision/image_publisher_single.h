@@ -1,14 +1,12 @@
 #ifndef IMAGE_PUBLISHER_SINGLE_H
 #define IMAGE_PUBLISHER_SINGLE_H
+
 #include <stdio.h>
 #include <cv_bridge/cv_bridge.h>
+#include "triclops_vision/common.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "triclops_vision/vision_3d.h"
-#include "triclops_vision/common.h"
-
 #include <image_transport/image_transport.h>
-
 
 /**
  * @brief The ImagePublisher class. More details coming soon!

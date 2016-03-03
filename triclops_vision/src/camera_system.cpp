@@ -9,10 +9,18 @@
 #include <ros/ros.h>
 #include <sensor_msgs/image_encodings.h>
 #include "triclops_vision/typedefs.h"
-#include "triclops_vision/line_filter.h"
 #include "triclops_vision/image_publisher.h"
 #include "triclops_vision/camera_system.h"
 
+
+//TODO: Move this back to a seperate file
+int convertTriclops2Opencv(TriclopsImage16 & bgrImage,
+                           cv::Mat & cvImage){
+  cvImage = cv::Mat(bgrImage.nrows, bgrImage.ncols, CV_16UC1, bgrImage.data,bgrImage.rowinc);
+  char numstr[50];
+  sprintf(numstr, "rows: %d cols: %d RowInc: %d", cvImage.rows,cvImage.cols, bgrImage.rowinc);
+  putText(cvImage, numstr, cv::Point(10,cvImage.rows-30), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(100,100,250), 1, false);
+}
 
 CameraSystem::CameraSystem(int argc, char** argv) {
   namespace FC2 = FlyCapture2;
@@ -30,10 +38,19 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   }
 
   // generate the Triclops context
-  if ( generateTriclopsContext( this->camera, triclops ) )
+  if ( generateTriclopsContext( this->camera, this->triclops ) )
   {
       exit(-1);
   }
+
+  triclopsSetRectify(this->triclops, true);
+  //triclopsSetDisparity(this->triclops, 5, 60);
+  triclopsSetResolution(this->triclops, 480,640);
+  //triclopsSetStereoMask(this->triclops, 13);
+  //triclopsSetDisparityMapping(this->triclops, 1, 1);
+
+  //Use only for visuals?
+  //triclopsSetDisparityMapping(this->triclops, 128, 255);
 
   // Par 1 of 2 for grabImage method
   FC2::Error fc2Error = this->camera.StartCapture();
@@ -50,10 +67,10 @@ CameraSystem::CameraSystem(int argc, char** argv) {
       std::cout << "Failed to get camera info from camera" << std::endl;
       exit(-1);
   }
-  else
+  /*else
   {
       ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d \n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
-  }
+  }*/
 
   ros::init(argc, argv, "camera");
   ros::NodeHandle nh;
@@ -62,8 +79,9 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   // Container of Images used for processing
   image_transport::ImageTransport it(nh);
   //Publishers for the camera
-  this->image_pub_left= it.advertise("/camera/left/rgb", 1);
-  this->image_pub_right= it.advertise("/camera/right/rgb", 1);
+  this->image_pub_left = it.advertise("/camera/left/rgb", 1);
+  this->image_pub_right = it.advertise("/camera/right/rgb", 1);
+  this->image_pub_disparity = it.advertise("/camera/disparity", 1);
 }
 
 //Copied over from older files.
@@ -252,28 +270,68 @@ int CameraSystem::generateTriclopsInput( FC2::Image const & grabbedImage,
     return 0;
 }
 
+int CameraSystem::doStereo( TriclopsContext const & triclops, 
+               TriclopsInput  const & stereoData, 
+               TriclopsImage16      & depthImage )
+{
+    TriclopsError te;
+
+    // Set subpixel interpolation on to use 
+    // TriclopsImage16 structures when we access and save the disparity image
+    te = triclopsSetSubpixelInterpolation( triclops, 1 );
+    _HANDLE_TRICLOPS_ERROR( "triclopsSetSubpixelInterpolation()", te );
+
+    // Rectify the images
+    te = triclopsRectify( triclops, const_cast<TriclopsInput *>(&stereoData) );
+    _HANDLE_TRICLOPS_ERROR( "triclopsRectify()", te );
+
+    // Do stereo processing
+    te = triclopsStereo( triclops );
+    _HANDLE_TRICLOPS_ERROR( "triclopsStereo()", te );
+   
+    // Retrieve the interpolated depth image from the context
+    te = triclopsGetImage16( triclops, 
+                            TriImg16_DISPARITY, 
+                            TriCam_REFERENCE, 
+                            &depthImage );
+    _HANDLE_TRICLOPS_ERROR( "triclopsGetImage()", te );
+    return 0;
+}
+
 void CameraSystem::run() {
     FC2::Error fc2Error;
     ImageContainer imageContainer;
-    TriclopsInput triclopsColorInput, triclopsMonoInput;
+
     // this image contains both right and left images
     fc2Error = this->camera.RetrieveBuffer(&(this->grabbedImage));
     if (fc2Error != FC2::PGRERROR_OK)
     {
-        exit(FC2T::handleFc2Error(fc2Error));
+      exit(FC2T::handleFc2Error(fc2Error));
     }
 
     // generate triclops inputs from grabbed image
-    if ( this->generateTriclopsInput( this->grabbedImage, imageContainer, triclopsColorInput, triclopsMonoInput ))
-        {
-                    exit(EXIT_FAILURE);
-        }
+    if ( this->generateTriclopsInput( this->grabbedImage, imageContainer, this->color, this->mono ) )
+    {
+      exit(EXIT_FAILURE);
+    }
 
-    // function call from image_publisher.cpp
+    doStereo(this->triclops, this->mono, this->disparityImageTriclops);
+      
+    convertTriclops2Opencv(this->disparityImageTriclops, this->disparityImageCV);
+
+    // DEBUG
+    cv::imshow("Disparity", this->disparityImageCV);
+    cv::waitKey(10);
+
+    // Publish images
     ImagePublisher imagePublisher(this->grabbedImage, imageContainer, &(this->image_pub_left), &(this->image_pub_right));
+
+    sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono16", this->disparityImageCV).toImageMsg();
+    this->image_pub_disparity.publish(outmsg);
 
     ros::spinOnce();
 }
+
 
 
 

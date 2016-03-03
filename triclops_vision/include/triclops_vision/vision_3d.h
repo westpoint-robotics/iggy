@@ -11,18 +11,22 @@
 //
 //=============================================================================
 
-#include "triclops/triclops.h"
-
-#include "triclops/fc2triclops.h"
-#include <pcl_ros/point_cloud.h>
-#include "triclops_vision/typedefs.h"
 
 #ifndef VISION_3D_H
 #define VISION_3D_H
+
 #include <stdio.h>
 #include <stdlib.h>
+#include "triclops/triclops.h"
+#include "triclops/fc2triclops.h"
+#include <pcl_ros/point_cloud.h>
+#include "triclops_vision/typedefs.h"
 #include "triclops_vision/common.h"
 #include "triclops_vision/common.h"
+#include "triclops_vision/line_filter.h"
+#include "triclops_vision/camera_system.h"
+#include <pcl_ros/point_cloud.h>
+#include <image_transport/image_transport.h>
 
 
 /**
@@ -33,26 +37,12 @@
 class Vision3D
 {
     public:
-        Vision3D::Vision3D();
+        Vision3D(int argc, char **argv, CameraSystem *camera);
         virtual ~Vision3D();
         void run();
-        LineFilter* linefilter;
 
-        // configue camera to capture image
-        int configureCamera( FC2::Camera &camera );
-
-        // generate Triclops context from connected camera
-        int generateTriclopsContext( FC2::Camera     & camera, 
-                             TriclopsContext & triclops );
-
-        // capture image from connected camera
-        int grabImage ( FC2::Camera & camera, FC2::Image & grabbedImage );
-
-        // convert image to BRGU
-        int convertToBGRU( FC2::Image & image, FC2::Image & convertedImage );
-
-        // convert image to BRG
-        int convertToBGR( FC2::Image & image, FC2::Image & convertedImage );
+        // reference to the outside camera system
+        CameraSystem* camerasystem;
 
         // generate triclops input necessary to carry out stereo processing
         int generateTriclopsInput( FC2::Image const & grabbedImage, 
@@ -65,10 +55,8 @@ class Vision3D
                TriclopsInput  const & stereoData,
                TriclopsImage16      & depthImage );
 
-        int gets3dPoints( FC2::Image      const & grabbedImage,
-                  TriclopsContext const & triclops,
-                  TriclopsImage16 const & disparityImage16,
-                  TriclopsInput   const & colorData,
+        int producePointCloud( cv::Mat const &disparity,
+                  cv::Mat const &maskImage,
                   PointCloud      & returnedPoints);
 
         // save 3d points generated from stereo processing
@@ -77,12 +65,32 @@ class Vision3D
                   TriclopsImage16 const & disparityImage16, 
                   TriclopsInput   const & colorData );
 
+        void visionCallBackDisparity(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredLeft(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg);
+        void produceDisparity(cv::Mat left, cv::Mat right, cv::Mat *result);
+
 
     protected:
 
 
     private:
+        int numDisp;
+        int blockSize;
+        cv::Mat filteredLeft;
+        cv::Mat filteredRight;
+        cv::Mat imageLeft;
+        cv::Mat imageRight;
+        cv::Mat disparityImage;
+        image_transport::Subscriber subcamfilteredright;
+        image_transport::Subscriber subcamfilteredleft;
+        image_transport::Subscriber subcamrgbright;
+        image_transport::Subscriber subcamrgbleft;  
+        image_transport::Subscriber subcamdisp; 
         ros::Publisher pointCloudPublisher;
+        PointCloud cloud;
 
 };
 

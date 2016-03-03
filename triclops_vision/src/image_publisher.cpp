@@ -9,11 +9,8 @@
 #include <ros/ros.h>
 #include <sensor_msgs/image_encodings.h>
 #include "triclops_vision/typedefs.h"
-#include "triclops_vision/vision_3d.h"
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/line_filter.h"
 #include "triclops_vision/image_publisher.h"
-#include "triclops_vision/camera_system.h"
 #include <image_transport/image_transport.h>
 
 int convertToBGR( FC2::Image & image, FC2::Image & convertedImage )
