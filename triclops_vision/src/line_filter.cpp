@@ -79,6 +79,8 @@ void LineFilter::imageCallbackL(const sensor_msgs::ImageConstPtr& msg)
     LineFilter::findLines(cImageL, filtered_imageL, this->lines);
 
     sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", filtered_imageL).toImageMsg();
+    outmsg->header.frame_id="bumblebee2";
+    outmsg->header.stamp = ros::Time::now();
 
     /*DEBUG
     cv::imshow("Filter Left", filtered_imageL);
@@ -96,6 +98,8 @@ void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
     LineFilter::findLines(cImageR, filtered_imageR, this->lines);
 
     sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", filtered_imageR).toImageMsg();
+    outmsg->header.frame_id="bumblebee2";
+    outmsg->header.stamp = ros::Time::now();
 
     /*DEBUG
     cv::imshow("Filter Right", filtered_imageR);

@@ -44,7 +44,7 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   }
 
   triclopsSetRectify(this->triclops, true);
-  //triclopsSetDisparity(this->triclops, 5, 60);
+  triclopsSetDisparity(this->triclops, 5, 60);
   triclopsSetResolution(this->triclops, 480,640);
   //triclopsSetStereoMask(this->triclops, 13);
   //triclopsSetDisparityMapping(this->triclops, 1, 1);
