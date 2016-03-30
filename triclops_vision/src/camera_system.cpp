@@ -44,8 +44,9 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   }
 
   //triclopsSetRectify(this->triclops, true);
-  //triclopsSetDisparity(this->triclops, 5, 60);
-  //triclopsSetResolution(this->triclops, 480,640);
+  triclopsSetDisparity(this->triclops, 0, 70);
+  triclopsSetResolution(this->triclops, 480,640);
+  //triclopsSetResolution(this->triclops, 768,1024);
   //triclopsSetStereoMask(this->triclops, 13);
   //triclopsSetDisparityMapping(this->triclops, 1, 1);
 
@@ -67,10 +68,10 @@ CameraSystem::CameraSystem(int argc, char** argv) {
       std::cout << "Failed to get camera info from camera" << std::endl;
       exit(-1);
   }
-  /*else
+  else
   {
-      ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d \n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber);
-  }*/
+      ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d  Resolution: %s\n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber, camInfo.sensorResolution);
+  }
 
   ros::init(argc, argv, "camera");
   ros::NodeHandle nh;
@@ -103,6 +104,7 @@ int CameraSystem::configureCamera( FC2::Camera & camera )
 int CameraSystem::convertToBGRU( FC2::Image & image, FC2::Image & convertedImage )
 {
     FC2::Error fc2Error;
+
     fc2Error = image.SetColorProcessing(FC2::HQ_LINEAR);
     if (fc2Error != FC2::PGRERROR_OK)
     {
@@ -168,9 +170,18 @@ int CameraSystem::generateTriclopsInput( FC2::Image const & grabbedImage,
     FC2::Error fc2Error;
     FC2T::ErrorType fc2TriclopsError; 
     TriclopsError te;
-
     FC2::Image * unprocessedImage = imageContainer.unprocessed;
 
+/*
+    unsigned int*    pRows;
+    unsigned int*    pCols;
+    unsigned int*    pStride;
+    PixelFormat*     pPixelFormat;
+    BayerTileFormat* pBayerFormat;
+
+    unprocessedImage->GetDimensions(pRows,pCols,pStride,pPixelFormat,pBayerFormat);
+    triclopsSetResolution(this->triclops, pRows,pCols);
+*/
     fc2TriclopsError = FC2T::unpackUnprocessedRawOrMono16Image(
                             grabbedImage, 
                             true /*assume little endian*/,
@@ -316,9 +327,10 @@ void CameraSystem::run() {
     }
 
     doStereo(this->triclops, this->mono, this->disparityImageTriclops);
+
       
     convertTriclops2Opencv(this->disparityImageTriclops, this->disparityImageCV);
-
+    //printf("Size of image going in: %d, %d   Size of image going out, %d, %d", disparityImageTriclops.nrows, disparityImageTriclops.ncols, disparityImageCV.rows, disparityImageCV.cols);
     // DEBUG
     cv::imshow("Disparity", this->disparityImageCV);
     cv::waitKey(10);

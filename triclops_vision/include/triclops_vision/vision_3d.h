@@ -71,6 +71,7 @@ class Vision3D
         void visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg);
         void visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg);
         void produceDisparity(cv::Mat left, cv::Mat right, cv::Mat *result);
+        PointCloud cloud;
 
 
     protected:
@@ -90,7 +91,7 @@ class Vision3D
         image_transport::Subscriber subcamrgbleft;  
         image_transport::Subscriber subcamdisp; 
         ros::Publisher pointCloudPublisher;
-        PointCloud cloud;
+        
 
 };
 

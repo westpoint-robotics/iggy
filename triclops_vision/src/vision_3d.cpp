@@ -87,21 +87,31 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
 {
     float            x, y, z;
     int              i, j, k;
-    unsigned char    *disparityRow, disparity;
-    unsigned char    *maskRow, mask;
+    //unsigned char   disparity;
+    //unsigned char    mask;
 
-    //printf("[!] Searching through image at %p for obstacles...\n", &maskImage);
+    unsigned short   disparity;
+    char    mask;
+    //Resolution Checking will follow
+
+
+    //printf("[!] Searching through image at %p for obstacles..mask %d,%d,%d,%d,%d and dispar %d,%d,%d,%d,%d\n", &maskImage,maskImage.cols,maskImage.rows,int(maskImage.step),maskImage.channels(),int(maskImage.elemSize()),disparityImage.cols,disparityImage.rows,int(disparityImage.step),disparityImage.channels(),int(disparityImage.elemSize()) );
     for ( i = 0; i < disparityImage.rows; i++ )
     {
-        disparityRow = disparityImage.data + ( i * disparityImage.step );
-        maskRow = maskImage.data + ( i * maskImage.step );
-        for ( j = 0; j < disparityImage.cols; j++ )
+        const unsigned short* disparityRow = disparityImage.ptr<unsigned short>(i);
+        const unsigned char* maskRow = maskImage.ptr<unsigned char>(i);
+        for ( j = 0; j < disparityImage.cols; ++j )
         {
-            disparity = disparityRow[j];
-            mask = maskRow[j];
-
+            //disparity = disparityRow[j];
+           // mask = maskRow[j];
+            disparity = disparityImage.at<short>(i,j);
+            mask = maskImage.at<char>(i,j);
+            //printf("Disparity @ (%d,%d): %d\n", i, j, disparity);
+            //printf("Mask @ (%d,%d): %d\n", i, j, mask);
             // do not run invalid points
-            if ( disparity < 0xFF )
+            //printf("%p\n", &disparityRow[j]);
+           // if ( disparity < 0xFF )
+             //   if ( disparity < 0xFF )
             {
                 //if (mask != 0)
                 //  printf("MASK: %d @ (%i,%i)\n", mask, i, j);        
@@ -112,8 +122,9 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
                 // look at points within a range
                 PointT point;
                 //only fil out for points that are cyan
-                if (mask == 0xFF)
+                if (mask != 0)
                 {
+                    //std::cout << "mask and disparity: " << int(mask) << " and " << disparity << std::endl;
                     point.x = z;
                     point.y = -x;
                     point.z = -y;
@@ -124,6 +135,7 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
                 }
             }
         }
+
     }
     
     return 0;
@@ -138,4 +150,11 @@ void Vision3D::run()
     ros::spinOnce();
 }
 
+
+/*
+        disparityRow = disparityImage.data + ( i * disparityImage.step );
+        maskRow = maskImage.data + ( i * maskImage.step );
+        for ( j = 0; j < disparityImage.cols; j++ )
+        {
+            disparity = disparityRow[j]; */
 
