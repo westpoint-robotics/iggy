@@ -4,7 +4,7 @@
 <!-- =============   TRANSFORMS  ======================= -->
 <!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="-0.1 0.0 1.14 0 0 0 1 base_link velodyne 100" />
+        args="-0.1 0.0 1.14 0 0 0 base_link velodyne 100" />
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
         args="0.0 0.0 0.0 0 0 0 1 base_link gps_frame 100" />
@@ -13,8 +13,8 @@
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
         args="0 0 0 0 0 0 1 base_link imu_frame 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
-        args="0.27 0 1.08 0 0.75 0 base_link bumblebee2 100" />
+ <node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
+        args="0.27 0 1.08 0 0.628 0 base_link bumblebee2 100" />
 <!--
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_camera_frame"
         args="0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
@@ -69,12 +69,12 @@
   
 <!--was originally running triclops_camera2.launch but this is the only node currently required for camera
 (the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
-  <node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
-  </node> 
+	<node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen">
+  </node>
 -->
 
 <!--creates bag files that get overwritten each time this runs-->
-<node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />
+<!--<node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />-->
 
 <!-- Start an rviz node with a custom configuration  -->
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/igvc_run_everything.rviz"/>

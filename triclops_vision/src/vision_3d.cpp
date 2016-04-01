@@ -56,28 +56,28 @@ Vision3D::~Vision3D()
 
 void Vision3D::visionCallBackDisparity(const sensor_msgs::ImageConstPtr& msg)
 {
-    this->disparityImage = cv_bridge::toCvShare(msg, "mono16")->image;
+    this->disparityImage = cv_bridge::toCvCopy(msg, "mono16")->image;
 }
 
 void Vision3D::visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg)
 {
-    this->filteredRight = cv_bridge::toCvShare(msg, "mono8")->image;
+    this->filteredRight = cv_bridge::toCvCopy(msg, "mono8")->image;
 }
 
 void Vision3D::visionCallBackFilteredLeft(const sensor_msgs::ImageConstPtr& msg)
 {
-    this->filteredLeft = cv_bridge::toCvShare(msg, "mono8")->image;
+    this->filteredLeft = cv_bridge::toCvCopy(msg, "mono8")->image;
 }
 
 void Vision3D::visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg)
 {
-    this->imageRight = cv_bridge::toCvShare(msg, "bgr8")->image;
+    this->imageRight = cv_bridge::toCvCopy(msg, "bgr8")->image;
     cv::cvtColor(this->imageRight, this->imageRight, CV_BGR2GRAY);
 }
 
 void Vision3D::visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg)
 {
-    this->imageLeft = cv_bridge::toCvShare(msg, "bgr8")->image;
+    this->imageLeft = cv_bridge::toCvCopy(msg, "bgr8")->image;
     cv::cvtColor(this->imageLeft, this->imageLeft, CV_BGR2GRAY);
 }
 
@@ -86,56 +86,48 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
                 PointCloud      & returnedPoints)
 {
     float            x, y, z;
-    int              i, j, k;
+    int              i=0, j=0, k;
     //unsigned char   disparity;
     //unsigned char    mask;
 
     unsigned short   disparity;
-    char    mask;
+    unsigned char    mask;
     //Resolution Checking will follow
 
 
     //printf("[!] Searching through image at %p for obstacles..mask %d,%d,%d,%d,%d and dispar %d,%d,%d,%d,%d\n", &maskImage,maskImage.cols,maskImage.rows,int(maskImage.step),maskImage.channels(),int(maskImage.elemSize()),disparityImage.cols,disparityImage.rows,int(disparityImage.step),disparityImage.channels(),int(disparityImage.elemSize()) );
-    for ( i = 0; i < disparityImage.rows; i++ )
+    for ( i = 0; i < disparityImage.rows-1; i++ )
     {
-        const unsigned short* disparityRow = disparityImage.ptr<unsigned short>(i);
-        const unsigned char* maskRow = maskImage.ptr<unsigned char>(i);
-        for ( j = 0; j < disparityImage.cols; ++j )
+        for ( j = 0; j < disparityImage.cols-1; j++)
         {
             //disparity = disparityRow[j];
            // mask = maskRow[j];
-            disparity = disparityImage.at<short>(i,j);
-            mask = maskImage.at<char>(i,j);
+            disparity = disparityImage.at<unsigned short>(i,j);
+            mask = maskImage.at<unsigned char>(i,j);
             //printf("Disparity @ (%d,%d): %d\n", i, j, disparity);
             //printf("Mask @ (%d,%d): %d\n", i, j, mask);
             // do not run invalid points
             //printf("%p\n", &disparityRow[j]);
-           // if ( disparity < 0xFF )
-             //   if ( disparity < 0xFF )
+            if ( disparity < 0xFF00 )
             {
-                //if (mask != 0)
-                //  printf("MASK: %d @ (%i,%i)\n", mask, i, j);        
-            
-                // convert the 16 bit disparity value to floating point x,y,z
-                triclopsRCD16ToXYZ( this->camerasystem->triclops, i, j, disparity, &x, &y, &z );
-
+                
                 // look at points within a range
                 PointT point;
                 //only fil out for points that are cyan
                 if (mask != 0)
                 {
+                	triclopsRCD16ToXYZ( this->camerasystem->triclops, i, j, disparity, &x, &y, &z );
                     //std::cout << "mask and disparity: " << int(mask) << " and " << disparity << std::endl;
                     point.x = z;
                     point.y = -x;
                     point.z = -y;
-                    point.r = disparity;
-                    point.g = disparity;
-                    point.b = disparity;
+                    point.r = 255;
+                    point.g = 255;
+                    point.b = 255;
                     returnedPoints.push_back(point);
                 }
             }
         }
-
     }
     
     return 0;
@@ -144,17 +136,8 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
 void Vision3D::run()
 {     
     producePointCloud(this->disparityImage, this->filteredLeft, this->cloud);
-    this->cloud.header.frame_id = "map";
+    this->cloud.header.frame_id = "bumblebee2";
     this->pointCloudPublisher.publish(this->cloud);
     this->cloud.clear();
     ros::spinOnce();
 }
-
-
-/*
-        disparityRow = disparityImage.data + ( i * disparityImage.step );
-        maskRow = maskImage.data + ( i * maskImage.step );
-        for ( j = 0; j < disparityImage.cols; j++ )
-        {
-            disparity = disparityRow[j]; */
-

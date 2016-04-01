@@ -44,8 +44,7 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   }
 
   //triclopsSetRectify(this->triclops, true);
-  triclopsSetDisparity(this->triclops, 0, 70);
-  triclopsSetResolution(this->triclops, 480,640);
+  //triclopsSetDisparity(this->triclops, 0, 70);
   //triclopsSetResolution(this->triclops, 768,1024);
   //triclopsSetStereoMask(this->triclops, 13);
   //triclopsSetDisparityMapping(this->triclops, 1, 1);
@@ -286,7 +285,7 @@ int CameraSystem::doStereo( TriclopsContext const & triclops,
                TriclopsImage16      & depthImage )
 {
     TriclopsError te;
-
+    triclopsSetResolution(this->triclops, stereoData.nrows, stereoData.ncols);
     // Set subpixel interpolation on to use 
     // TriclopsImage16 structures when we access and save the disparity image
     te = triclopsSetSubpixelInterpolation( triclops, 1 );
