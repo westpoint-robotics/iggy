@@ -425,37 +425,6 @@ clean: CMakeFiles/doxygen.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/dummy_triclops_vision.dir
-
-# All Build rule for target.
-CMakeFiles/dummy_triclops_vision.dir/all:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/depend
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  1 2 3 4 5 6 7 8 9 10 11 12 13
-	@echo "Built target dummy_triclops_vision"
-.PHONY : CMakeFiles/dummy_triclops_vision.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/dummy_triclops_vision.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles 13
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/dummy_triclops_vision.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles 0
-.PHONY : CMakeFiles/dummy_triclops_vision.dir/rule
-
-# Convenience name for target.
-dummy_triclops_vision: CMakeFiles/dummy_triclops_vision.dir/rule
-.PHONY : dummy_triclops_vision
-
-# clean rule for target.
-CMakeFiles/dummy_triclops_vision.dir/clean:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/clean
-.PHONY : CMakeFiles/dummy_triclops_vision.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/dummy_triclops_vision.dir/clean
-.PHONY : clean
-
-#=============================================================================
 # Target rules for target CMakeFiles/dynamic_reconfigure_gencfg.dir
 
 # All Build rule for target.
@@ -1609,7 +1578,7 @@ clean: CMakeFiles/topic_tools_generate_messages_py.dir/clean
 CMakeFiles/triclops_camera_driver.dir/all:
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/depend
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  16 17 18 19 20
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  3 4 5 6 7
 	@echo "Built target triclops_camera_driver"
 .PHONY : CMakeFiles/triclops_camera_driver.dir/all
 
@@ -1638,41 +1607,6 @@ clean: CMakeFiles/triclops_camera_driver.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/triclops_image_process.dir
-
-# All Build rule for target.
-CMakeFiles/triclops_image_process.dir/all:
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/depend
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  21
-	@echo "Built target triclops_image_process"
-.PHONY : CMakeFiles/triclops_image_process.dir/all
-
-# Include target in all.
-all: CMakeFiles/triclops_image_process.dir/all
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/triclops_image_process.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles 1
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/triclops_image_process.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles 0
-.PHONY : CMakeFiles/triclops_image_process.dir/rule
-
-# Convenience name for target.
-triclops_image_process: CMakeFiles/triclops_image_process.dir/rule
-.PHONY : triclops_image_process
-
-# clean rule for target.
-CMakeFiles/triclops_image_process.dir/clean:
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/clean
-.PHONY : CMakeFiles/triclops_image_process.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/triclops_image_process.dir/clean
-.PHONY : clean
-
-#=============================================================================
 # Directory level rules for directory gtest
 
 # Convenience name for "all" pass in the directory.
@@ -1695,7 +1629,7 @@ gtest/preinstall:
 gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  14
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  1
 	@echo "Built target gtest"
 .PHONY : gtest/CMakeFiles/gtest.dir/all
 
@@ -1726,7 +1660,7 @@ clean: gtest/CMakeFiles/gtest.dir/clean
 gtest/CMakeFiles/gtest_main.dir/all: gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  15
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles  2
 	@echo "Built target gtest_main"
 .PHONY : gtest/CMakeFiles/gtest_main.dir/all
 

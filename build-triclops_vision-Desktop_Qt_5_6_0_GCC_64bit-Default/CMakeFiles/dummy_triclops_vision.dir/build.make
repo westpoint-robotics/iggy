@@ -162,9 +162,32 @@ CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.o.provides: CMakeFiles/
 
 CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.o.provides.build: CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.o
 
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o: 
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/flagfilter.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_6)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/flagfilter.cpp
+
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/user1/catkin_ws/src/triclops_vision/src/flagfilter.cpp > CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.i
+
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/user1/catkin_ws/src/triclops_vision/src/flagfilter.cpp -o CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.s
+
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.requires:
+.PHONY : CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.requires
+
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.provides: CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.requires
+	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.provides.build
+.PHONY : CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.provides
+
+CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o.provides.build: CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o
+
 CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/vision_3d.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/vision_3d.cpp
 
@@ -187,7 +210,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o.provides.build: CMakeFi
 
 CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/images_into_triclops.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/images_into_triclops.cpp
 
@@ -210,7 +233,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o.provides.bui
 
 CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/vision_3d_old.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_8)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/vision_3d_old.cpp
 
@@ -233,7 +256,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o.provides.build: CMa
 
 CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/runme.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/runme.cpp
 
@@ -256,7 +279,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/triclops_opencv.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/triclops_opencv.cpp
 
@@ -279,7 +302,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.o.provides.build: C
 
 CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/trans_image.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_11)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/trans_image.cpp
 
@@ -302,7 +325,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.o.provides.build: CMake
 
 CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/image_publisher.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_12)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_13)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/image_publisher.cpp
 
@@ -325,7 +348,7 @@ CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o.provides.build: C
 
 CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.o: 
 CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.o: /home/user1/catkin_ws/src/triclops_vision/src/triclops_camera.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_13)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles $(CMAKE_PROGRESS_14)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.o -c /home/user1/catkin_ws/src/triclops_vision/src/triclops_camera.cpp
 

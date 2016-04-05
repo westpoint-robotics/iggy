@@ -5,6 +5,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/dummy_triclops_vision.dir/src/line_filter_old.cpp.o"
   "CMakeFiles/dummy_triclops_vision.dir/src/camera_system.cpp.o"
   "CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.o"
+  "CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o"
   "CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o"
   "CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o"
   "CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o"

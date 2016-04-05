@@ -306,19 +306,6 @@ doxygen/fast:
 .PHONY : doxygen/fast
 
 #=============================================================================
-# Target rules for targets named dummy_triclops_vision
-
-# Build rule for target.
-dummy_triclops_vision: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dummy_triclops_vision
-.PHONY : dummy_triclops_vision
-
-# fast build rule for target.
-dummy_triclops_vision/fast:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/build
-.PHONY : dummy_triclops_vision/fast
-
-#=============================================================================
 # Target rules for targets named dynamic_reconfigure_gencfg
 
 # Build rule for target.
@@ -813,19 +800,6 @@ triclops_camera_driver/fast:
 .PHONY : triclops_camera_driver/fast
 
 #=============================================================================
-# Target rules for targets named triclops_image_process
-
-# Build rule for target.
-triclops_image_process: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 triclops_image_process
-.PHONY : triclops_image_process
-
-# fast build rule for target.
-triclops_image_process/fast:
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/build
-.PHONY : triclops_image_process/fast
-
-#=============================================================================
 # Target rules for targets named gtest
 
 # Build rule for target.
@@ -856,7 +830,6 @@ src/camera_system.o: src/camera_system.cpp.o
 
 # target to build an object file
 src/camera_system.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/camera_system.cpp.o
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/camera_system.cpp.o
 .PHONY : src/camera_system.cpp.o
 
@@ -865,7 +838,6 @@ src/camera_system.i: src/camera_system.cpp.i
 
 # target to preprocess a source file
 src/camera_system.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/camera_system.cpp.i
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/camera_system.cpp.i
 .PHONY : src/camera_system.cpp.i
 
@@ -874,7 +846,6 @@ src/camera_system.s: src/camera_system.cpp.s
 
 # target to generate assembly for a file
 src/camera_system.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/camera_system.cpp.s
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/camera_system.cpp.s
 .PHONY : src/camera_system.cpp.s
 
@@ -883,7 +854,6 @@ src/image_publisher.o: src/image_publisher.cpp.o
 
 # target to build an object file
 src/image_publisher.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/image_publisher.cpp.o
 .PHONY : src/image_publisher.cpp.o
 
@@ -892,7 +862,6 @@ src/image_publisher.i: src/image_publisher.cpp.i
 
 # target to preprocess a source file
 src/image_publisher.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.i
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/image_publisher.cpp.i
 .PHONY : src/image_publisher.cpp.i
 
@@ -901,67 +870,14 @@ src/image_publisher.s: src/image_publisher.cpp.s
 
 # target to generate assembly for a file
 src/image_publisher.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.s
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/image_publisher.cpp.s
 .PHONY : src/image_publisher.cpp.s
-
-src/image_publisher_single.o: src/image_publisher_single.cpp.o
-.PHONY : src/image_publisher_single.o
-
-# target to build an object file
-src/image_publisher_single.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/image_publisher_single.cpp.o
-.PHONY : src/image_publisher_single.cpp.o
-
-src/image_publisher_single.i: src/image_publisher_single.cpp.i
-.PHONY : src/image_publisher_single.i
-
-# target to preprocess a source file
-src/image_publisher_single.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/image_publisher_single.cpp.i
-.PHONY : src/image_publisher_single.cpp.i
-
-src/image_publisher_single.s: src/image_publisher_single.cpp.s
-.PHONY : src/image_publisher_single.s
-
-# target to generate assembly for a file
-src/image_publisher_single.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/image_publisher_single.cpp.s
-.PHONY : src/image_publisher_single.cpp.s
-
-src/images_into_triclops.o: src/images_into_triclops.cpp.o
-.PHONY : src/images_into_triclops.o
-
-# target to build an object file
-src/images_into_triclops.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/src/images_into_triclops.cpp.o
-.PHONY : src/images_into_triclops.cpp.o
-
-src/images_into_triclops.i: src/images_into_triclops.cpp.i
-.PHONY : src/images_into_triclops.i
-
-# target to preprocess a source file
-src/images_into_triclops.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.i
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/src/images_into_triclops.cpp.i
-.PHONY : src/images_into_triclops.cpp.i
-
-src/images_into_triclops.s: src/images_into_triclops.cpp.s
-.PHONY : src/images_into_triclops.s
-
-# target to generate assembly for a file
-src/images_into_triclops.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.s
-	$(MAKE) -f CMakeFiles/triclops_image_process.dir/build.make CMakeFiles/triclops_image_process.dir/src/images_into_triclops.cpp.s
-.PHONY : src/images_into_triclops.cpp.s
 
 src/line_filter.o: src/line_filter.cpp.o
 .PHONY : src/line_filter.o
 
 # target to build an object file
 src/line_filter.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.o
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/line_filter.cpp.o
 .PHONY : src/line_filter.cpp.o
 
@@ -970,7 +886,6 @@ src/line_filter.i: src/line_filter.cpp.i
 
 # target to preprocess a source file
 src/line_filter.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.i
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/line_filter.cpp.i
 .PHONY : src/line_filter.cpp.i
 
@@ -979,40 +894,14 @@ src/line_filter.s: src/line_filter.cpp.s
 
 # target to generate assembly for a file
 src/line_filter.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/line_filter.cpp.s
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/line_filter.cpp.s
 .PHONY : src/line_filter.cpp.s
-
-src/line_filter_old.o: src/line_filter_old.cpp.o
-.PHONY : src/line_filter_old.o
-
-# target to build an object file
-src/line_filter_old.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/line_filter_old.cpp.o
-.PHONY : src/line_filter_old.cpp.o
-
-src/line_filter_old.i: src/line_filter_old.cpp.i
-.PHONY : src/line_filter_old.i
-
-# target to preprocess a source file
-src/line_filter_old.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/line_filter_old.cpp.i
-.PHONY : src/line_filter_old.cpp.i
-
-src/line_filter_old.s: src/line_filter_old.cpp.s
-.PHONY : src/line_filter_old.s
-
-# target to generate assembly for a file
-src/line_filter_old.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/line_filter_old.cpp.s
-.PHONY : src/line_filter_old.cpp.s
 
 src/runme.o: src/runme.cpp.o
 .PHONY : src/runme.o
 
 # target to build an object file
 src/runme.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.o
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/runme.cpp.o
 .PHONY : src/runme.cpp.o
 
@@ -1021,7 +910,6 @@ src/runme.i: src/runme.cpp.i
 
 # target to preprocess a source file
 src/runme.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.i
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/runme.cpp.i
 .PHONY : src/runme.cpp.i
 
@@ -1030,112 +918,14 @@ src/runme.s: src/runme.cpp.s
 
 # target to generate assembly for a file
 src/runme.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/runme.cpp.s
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/runme.cpp.s
 .PHONY : src/runme.cpp.s
-
-src/test_triclops_camera.o: src/test_triclops_camera.cpp.o
-.PHONY : src/test_triclops_camera.o
-
-# target to build an object file
-src/test_triclops_camera.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/test_triclops_camera.cpp.o
-.PHONY : src/test_triclops_camera.cpp.o
-
-src/test_triclops_camera.i: src/test_triclops_camera.cpp.i
-.PHONY : src/test_triclops_camera.i
-
-# target to preprocess a source file
-src/test_triclops_camera.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/test_triclops_camera.cpp.i
-.PHONY : src/test_triclops_camera.cpp.i
-
-src/test_triclops_camera.s: src/test_triclops_camera.cpp.s
-.PHONY : src/test_triclops_camera.s
-
-# target to generate assembly for a file
-src/test_triclops_camera.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/test_triclops_camera.cpp.s
-.PHONY : src/test_triclops_camera.cpp.s
-
-src/trans_image.o: src/trans_image.cpp.o
-.PHONY : src/trans_image.o
-
-# target to build an object file
-src/trans_image.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.o
-.PHONY : src/trans_image.cpp.o
-
-src/trans_image.i: src/trans_image.cpp.i
-.PHONY : src/trans_image.i
-
-# target to preprocess a source file
-src/trans_image.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.i
-.PHONY : src/trans_image.cpp.i
-
-src/trans_image.s: src/trans_image.cpp.s
-.PHONY : src/trans_image.s
-
-# target to generate assembly for a file
-src/trans_image.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/trans_image.cpp.s
-.PHONY : src/trans_image.cpp.s
-
-src/triclops_camera.o: src/triclops_camera.cpp.o
-.PHONY : src/triclops_camera.o
-
-# target to build an object file
-src/triclops_camera.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.o
-.PHONY : src/triclops_camera.cpp.o
-
-src/triclops_camera.i: src/triclops_camera.cpp.i
-.PHONY : src/triclops_camera.i
-
-# target to preprocess a source file
-src/triclops_camera.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.i
-.PHONY : src/triclops_camera.cpp.i
-
-src/triclops_camera.s: src/triclops_camera.cpp.s
-.PHONY : src/triclops_camera.s
-
-# target to generate assembly for a file
-src/triclops_camera.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/triclops_camera.cpp.s
-.PHONY : src/triclops_camera.cpp.s
-
-src/triclops_opencv.o: src/triclops_opencv.cpp.o
-.PHONY : src/triclops_opencv.o
-
-# target to build an object file
-src/triclops_opencv.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.o
-.PHONY : src/triclops_opencv.cpp.o
-
-src/triclops_opencv.i: src/triclops_opencv.cpp.i
-.PHONY : src/triclops_opencv.i
-
-# target to preprocess a source file
-src/triclops_opencv.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.i
-.PHONY : src/triclops_opencv.cpp.i
-
-src/triclops_opencv.s: src/triclops_opencv.cpp.s
-.PHONY : src/triclops_opencv.s
-
-# target to generate assembly for a file
-src/triclops_opencv.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/triclops_opencv.cpp.s
-.PHONY : src/triclops_opencv.cpp.s
 
 src/vision_3d.o: src/vision_3d.cpp.o
 .PHONY : src/vision_3d.o
 
 # target to build an object file
 src/vision_3d.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.o
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/vision_3d.cpp.o
 .PHONY : src/vision_3d.cpp.o
 
@@ -1144,7 +934,6 @@ src/vision_3d.i: src/vision_3d.cpp.i
 
 # target to preprocess a source file
 src/vision_3d.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.i
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/vision_3d.cpp.i
 .PHONY : src/vision_3d.cpp.i
 
@@ -1153,33 +942,8 @@ src/vision_3d.s: src/vision_3d.cpp.s
 
 # target to generate assembly for a file
 src/vision_3d.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/vision_3d.cpp.s
 	$(MAKE) -f CMakeFiles/triclops_camera_driver.dir/build.make CMakeFiles/triclops_camera_driver.dir/src/vision_3d.cpp.s
 .PHONY : src/vision_3d.cpp.s
-
-src/vision_3d_old.o: src/vision_3d_old.cpp.o
-.PHONY : src/vision_3d_old.o
-
-# target to build an object file
-src/vision_3d_old.cpp.o:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.o
-.PHONY : src/vision_3d_old.cpp.o
-
-src/vision_3d_old.i: src/vision_3d_old.cpp.i
-.PHONY : src/vision_3d_old.i
-
-# target to preprocess a source file
-src/vision_3d_old.cpp.i:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.i
-.PHONY : src/vision_3d_old.cpp.i
-
-src/vision_3d_old.s: src/vision_3d_old.cpp.s
-.PHONY : src/vision_3d_old.s
-
-# target to generate assembly for a file
-src/vision_3d_old.cpp.s:
-	$(MAKE) -f CMakeFiles/dummy_triclops_vision.dir/build.make CMakeFiles/dummy_triclops_vision.dir/src/vision_3d_old.cpp.s
-.PHONY : src/vision_3d_old.cpp.s
 
 # Help Target
 help:
@@ -1199,7 +963,6 @@ help:
 	@echo "... clean_test_results"
 	@echo "... download_extra_data"
 	@echo "... doxygen"
-	@echo "... dummy_triclops_vision"
 	@echo "... dynamic_reconfigure_gencfg"
 	@echo "... dynamic_reconfigure_generate_messages_cpp"
 	@echo "... dynamic_reconfigure_generate_messages_lisp"
@@ -1245,7 +1008,6 @@ help:
 	@echo "... topic_tools_generate_messages_lisp"
 	@echo "... topic_tools_generate_messages_py"
 	@echo "... triclops_camera_driver"
-	@echo "... triclops_image_process"
 	@echo "... gtest"
 	@echo "... gtest_main"
 	@echo "... src/camera_system.o"
@@ -1254,39 +1016,15 @@ help:
 	@echo "... src/image_publisher.o"
 	@echo "... src/image_publisher.i"
 	@echo "... src/image_publisher.s"
-	@echo "... src/image_publisher_single.o"
-	@echo "... src/image_publisher_single.i"
-	@echo "... src/image_publisher_single.s"
-	@echo "... src/images_into_triclops.o"
-	@echo "... src/images_into_triclops.i"
-	@echo "... src/images_into_triclops.s"
 	@echo "... src/line_filter.o"
 	@echo "... src/line_filter.i"
 	@echo "... src/line_filter.s"
-	@echo "... src/line_filter_old.o"
-	@echo "... src/line_filter_old.i"
-	@echo "... src/line_filter_old.s"
 	@echo "... src/runme.o"
 	@echo "... src/runme.i"
 	@echo "... src/runme.s"
-	@echo "... src/test_triclops_camera.o"
-	@echo "... src/test_triclops_camera.i"
-	@echo "... src/test_triclops_camera.s"
-	@echo "... src/trans_image.o"
-	@echo "... src/trans_image.i"
-	@echo "... src/trans_image.s"
-	@echo "... src/triclops_camera.o"
-	@echo "... src/triclops_camera.i"
-	@echo "... src/triclops_camera.s"
-	@echo "... src/triclops_opencv.o"
-	@echo "... src/triclops_opencv.i"
-	@echo "... src/triclops_opencv.s"
 	@echo "... src/vision_3d.o"
 	@echo "... src/vision_3d.i"
 	@echo "... src/vision_3d.s"
-	@echo "... src/vision_3d_old.o"
-	@echo "... src/vision_3d_old.i"
-	@echo "... src/vision_3d_old.s"
 .PHONY : help
 
 

@@ -6,7 +6,7 @@
 #include <sensor_msgs/image_encodings.h>
 #include "triclops_vision/line_filter.h"
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/image_publisher_single.h"
+#include "triclops_vision/image_publisher.h"
 
 //Create imagecontainer for moving images
 ImageContainer imageContainerL;
@@ -50,6 +50,14 @@ LineFilter::LineFilter(int argc, char** argv)
   //Create publishers
   this->image_pub_filtered_left = it.advertise("/camera/left/linefiltered", 1);
   this->image_pub_filtered_right = it.advertise("/camera/right/linefiltered", 1);
+
+  //TODO Add Red and Blue flag filters to the ROS Node Publishers
+  /*
+  this->image_blue_flag_filtered_left = it.advertise("/camera/left/bflagfiltered", 1);
+  this->image_blue_flag_filtered_right = it.advertise("/camera/right/bflagfiltered", 1);
+  this->image_red_flag_filtered_left = it.advertise("/camera/left/rflagfiltered", 1);
+  this->image_red_flag_filtered_right = it.advertise("/camera/right/rflagfiltered", 1);
+  */
 
   //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
   this->subcamleft = it.subscribe("/camera/left/rgb", 0, &LineFilter::imageCallbackL, this);
@@ -119,7 +127,10 @@ void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
  *     2. blur the image
  *     3. run it through a threshold filter using THRESH_TO_ZERO mode
  *     4. run it through an erosion filter
- *     5. run it through a Canny edge detector
+ *     5. run it through a Canny edge detector//image_transport::Publisher image_blue_flag_filtered_right;
+        //image_transport::Publisher image_blue_flag_filtered_left;
+        //image_transport::Publisher image_red_flag_filtered_right;
+        //image_transport::Publisher image_red_flag_filtered_left;
  *     6. finally, take this processed image and find the lines using Probabilistic Hough Transform HoughLinesP
  */
 void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::vector<cv::Vec4i> &lines)

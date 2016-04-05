@@ -5,6 +5,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/user1/catkin_ws/src/triclops_vision/src/camera_system.cpp" "/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dummy_triclops_vision.dir/src/camera_system.cpp.o"
+  "/home/user1/catkin_ws/src/triclops_vision/src/flagfilter.cpp" "/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dummy_triclops_vision.dir/src/flagfilter.cpp.o"
   "/home/user1/catkin_ws/src/triclops_vision/src/image_publisher.cpp" "/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dummy_triclops_vision.dir/src/image_publisher.cpp.o"
   "/home/user1/catkin_ws/src/triclops_vision/src/image_publisher_single.cpp" "/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dummy_triclops_vision.dir/src/image_publisher_single.cpp.o"
   "/home/user1/catkin_ws/src/triclops_vision/src/images_into_triclops.cpp" "/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dummy_triclops_vision.dir/src/images_into_triclops.cpp.o"

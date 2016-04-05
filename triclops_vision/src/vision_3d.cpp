@@ -34,6 +34,7 @@ Vision3D::Vision3D(int argc, char **argv, CameraSystem *camera) {
     this->subcamfilteredright = it.subscribe("/camera/right/linefiltered", 0, &Vision3D::visionCallBackFilteredRight, this);
     this->subcamfilteredleft = it.subscribe("/camera/left/linefiltered", 0, &Vision3D::visionCallBackFilteredLeft, this);
 
+
     // TODO: Do we need these?
     //this->subcamrgbright = it.subscribe("/camera/right/rgb", 0, &Vision3D::visionCallBackRGBRight, this);
     //this->subcamrgbleft = it.subscribe("/camera/left/rgb", 0, &Vision3D::visionCallBackRGBLeft, this);

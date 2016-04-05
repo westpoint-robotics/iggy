@@ -137,16 +137,6 @@
             <DistClean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="dummy_triclops_vision">
-         <Option working_dir="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default" />
-         <Option type="4" />
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 dummy_triclops_vision" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
       <Target title="dynamic_reconfigure_gencfg">
          <Option working_dir="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default" />
          <Option type="4" />
@@ -645,74 +635,6 @@
             <DistClean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="triclops_image_process">
-         <Option output="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/devel/lib/triclops_vision/triclops_image_process" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/devel/lib/triclops_vision" />
-         <Option object_output="./" />
-         <Option type="1" />
-         <Option compiler="gcc" />
-         <Compiler>
-            <Add option="-DROS_PACKAGE_NAME=&quot;triclops_vision&quot;" />
-            <Add option="-DROSCONSOLE_BACKEND_LOG4CXX" />
-            <Add directory="/home/user1/catkin_ws/src/triclops_vision/include" />
-            <Add directory="/opt/ros/indigo/include" />
-            <Add directory="/usr/include" />
-            <Add directory="/usr/include/c++/4.8" />
-            <Add directory="/usr/include/c++/4.8/backward" />
-            <Add directory="/usr/include/eigen3" />
-            <Add directory="/usr/include/flycapture" />
-            <Add directory="/usr/include/ni" />
-            <Add directory="/usr/include/opencv" />
-            <Add directory="/usr/include/pcl-1.7" />
-            <Add directory="/usr/include/triclops" />
-            <Add directory="/usr/include/vtk-5.8" />
-            <Add directory="/usr/include/x86_64-linux-gnu" />
-            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-            <Add directory="/usr/local/include" />
-         </Compiler>
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 triclops_image_process" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="triclops_image_process/fast">
-         <Option output="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/devel/lib/triclops_vision/triclops_image_process" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/devel/lib/triclops_vision" />
-         <Option object_output="./" />
-         <Option type="1" />
-         <Option compiler="gcc" />
-         <Compiler>
-            <Add option="-DROS_PACKAGE_NAME=&quot;triclops_vision&quot;" />
-            <Add option="-DROSCONSOLE_BACKEND_LOG4CXX" />
-            <Add directory="/home/user1/catkin_ws/src/triclops_vision/include" />
-            <Add directory="/opt/ros/indigo/include" />
-            <Add directory="/usr/include" />
-            <Add directory="/usr/include/c++/4.8" />
-            <Add directory="/usr/include/c++/4.8/backward" />
-            <Add directory="/usr/include/eigen3" />
-            <Add directory="/usr/include/flycapture" />
-            <Add directory="/usr/include/ni" />
-            <Add directory="/usr/include/opencv" />
-            <Add directory="/usr/include/pcl-1.7" />
-            <Add directory="/usr/include/triclops" />
-            <Add directory="/usr/include/vtk-5.8" />
-            <Add directory="/usr/include/x86_64-linux-gnu" />
-            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-            <Add directory="/usr/local/include" />
-         </Compiler>
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 triclops_image_process/fast" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
       <Target title="gtest">
          <Option output="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/gtest/libgtest.so" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/gtest" />
@@ -822,27 +744,11 @@
       </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/image_publisher.cpp">
       </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/image_publisher_single.cpp">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/images_into_triclops.cpp">
-      </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/line_filter.cpp">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/line_filter_old.cpp">
       </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/runme.cpp">
       </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/test_triclops_camera.cpp">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/trans_image.cpp">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/triclops_camera.cpp">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/triclops_opencv.cpp">
-      </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/vision_3d.cpp">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/src/vision_3d_old.cpp">
       </Unit>
       <Unit filename="/usr/src/gtest/src/gtest-all.cc">
       </Unit>
@@ -850,61 +756,13 @@
       </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/camera_system.h">
       </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/common.h">
-      </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/image_publisher.h">
       </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/image_publisher_single.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/images_into_triclops.h">
-      </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/line_filter.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/line_filter_old.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/triclops_camera.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/triclops_opencv.h">
       </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/typedefs.h">
       </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/vision_3d.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/include/triclops_vision/vision_3d_old.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/launch/testing_suite.rviz">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/launch/triclops.rviz">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/launch/triclops_camera2.launch">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/launch/triclops_camera2.launch~">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/launch/triclops_rviz.launch">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/camera_system.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/common.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/image_publisher.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/image_publisher_single.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/images_into_triclops.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/line_filter.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/line_filter_old.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/triclops_camera.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/triclops_opencv.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/typedefs.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/vision_3d.h">
-      </Unit>
-      <Unit filename="/home/user1/catkin_ws/src/triclops_vision/triclops_vision/vision_3d_old.h">
       </Unit>
       <Unit filename="/home/user1/catkin_ws/src/triclops_vision/CMakeLists.txt">
           <Option virtualFolder="CMake Files\" />

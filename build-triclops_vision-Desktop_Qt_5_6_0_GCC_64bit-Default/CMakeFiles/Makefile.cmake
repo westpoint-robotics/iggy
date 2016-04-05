@@ -251,7 +251,6 @@ SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/clean_test_results.dir/DependInfo.cmake"
   "CMakeFiles/download_extra_data.dir/DependInfo.cmake"
   "CMakeFiles/doxygen.dir/DependInfo.cmake"
-  "CMakeFiles/dummy_triclops_vision.dir/DependInfo.cmake"
   "CMakeFiles/dynamic_reconfigure_gencfg.dir/DependInfo.cmake"
   "CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/DependInfo.cmake"
   "CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/DependInfo.cmake"
@@ -290,7 +289,6 @@ SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/topic_tools_generate_messages_lisp.dir/DependInfo.cmake"
   "CMakeFiles/topic_tools_generate_messages_py.dir/DependInfo.cmake"
   "CMakeFiles/triclops_camera_driver.dir/DependInfo.cmake"
-  "CMakeFiles/triclops_image_process.dir/DependInfo.cmake"
   "gtest/CMakeFiles/gtest.dir/DependInfo.cmake"
   "gtest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
   )

@@ -10,7 +10,6 @@
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/clean_test_results.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/download_extra_data.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/doxygen.dir
-/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dummy_triclops_vision.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dynamic_reconfigure_gencfg.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir
@@ -51,4 +50,3 @@
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/topic_tools_generate_messages_lisp.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/topic_tools_generate_messages_py.dir
 /home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/triclops_camera_driver.dir
-/home/user1/catkin_ws/src/build-triclops_vision-Desktop_Qt_5_6_0_GCC_64bit-Default/CMakeFiles/triclops_image_process.dir
