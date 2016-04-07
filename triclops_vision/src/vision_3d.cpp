@@ -193,9 +193,9 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
 void Vision3D::run()
 {     
     producePointCloud(this->disparityImage, this->filteredLeft, this->filteredLeftRed, this->filteredLeftBlue, this->lineCloud, this->redCloud, this->blueCloud);
-    this->lineCloud.header.frame_id = "map";
-    this->redCloud.header.frame_id = "map";
-    this->blueCloud.header.frame_id = "map";
+    this->lineCloud.header.frame_id = "bumblebee2";
+    this->redCloud.header.frame_id = "bumblebee2";
+    this->blueCloud.header.frame_id = "bumblebee2";
     this->lineCloudPublisher.publish(this->lineCloud);
     this->redCloudPublisher.publish(this->redCloud);
     this->blueCloudPublisher.publish(this->blueCloud);
