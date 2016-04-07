@@ -13,6 +13,14 @@ project(triclops_vision)
 #ENDFOREACH()
 #add_custom_target(dummy_${PROJECT_NAME} SOURCES ${extra_files})
 
+#SET(CMAKE_BUILD_TYPE DEBUG)
+#SET(CMAKE_C_FLAGS "-O0 -ggdb")
+#SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb")
+#SET(CMAKE_CXX_FLAGS_RELEASE "-O0 -ggdb")
+#SET(CMAKE_C_FLAGS "-O0 -ggdb")
+#SET(CMAKE_C_FLAGS_DEBUG "-O0 -ggdb")
+#SET(CMAKE_C_FLAGS_RELEASE "-O0 -ggdb")
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages

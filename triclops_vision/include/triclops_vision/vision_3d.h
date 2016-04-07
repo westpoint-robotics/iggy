@@ -57,7 +57,11 @@ class Vision3D
 
         int producePointCloud( cv::Mat const &disparity,
                   cv::Mat const &maskImage,
-                  PointCloud      & returnedPoints);
+                  cv::Mat const &redImage,
+                  cv::Mat const &blueImage,
+                  PointCloud      &returnedLines,
+                  PointCloud      &returnedRed,
+                  PointCloud      &returnedBlue);
 
         // save 3d points generated from stereo processing
         int save3dPoints( FC2::Image      const & grabbedImage, 
@@ -65,13 +69,18 @@ class Vision3D
                   TriclopsImage16 const & disparityImage16, 
                   TriclopsInput   const & colorData );
 
-        void visionCallBackDisparity(const sensor_msgs::ImageConstPtr& msg);
-        void visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg);
-        void visionCallBackFilteredLeft(const sensor_msgs::ImageConstPtr& msg);
+
         void visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg);
         void visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackDisparity(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredRightRed(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredRightBlue(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredLeft(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredLeftRed(const sensor_msgs::ImageConstPtr& msg);
+        void visionCallBackFilteredLeftBlue(const sensor_msgs::ImageConstPtr& msg);
         void produceDisparity(cv::Mat left, cv::Mat right, cv::Mat *result);
-        PointCloud cloud;
+        PointCloud lineCloud, redCloud, blueCloud;
 
 
     protected:
@@ -81,16 +90,27 @@ class Vision3D
         int numDisp;
         int blockSize;
         cv::Mat filteredLeft;
+        cv::Mat filteredLeftRed;
+        cv::Mat filteredLeftBlue;
         cv::Mat filteredRight;
+        cv::Mat filteredRightRed;
+        cv::Mat filteredRightBlue;
         cv::Mat imageLeft;
         cv::Mat imageRight;
         cv::Mat disparityImage;
         image_transport::Subscriber subcamfilteredright;
+        image_transport::Subscriber subcamfilteredrightred;
+        image_transport::Subscriber subcamfilteredrightblue;
         image_transport::Subscriber subcamfilteredleft;
+        image_transport::Subscriber subcamfilteredleftred;
+        image_transport::Subscriber subcamfilteredleftblue;
+
         image_transport::Subscriber subcamrgbright;
         image_transport::Subscriber subcamrgbleft;  
         image_transport::Subscriber subcamdisp; 
-        ros::Publisher pointCloudPublisher;
+        ros::Publisher lineCloudPublisher;
+        ros::Publisher blueCloudPublisher;
+        ros::Publisher redCloudPublisher;
         
 
 };
