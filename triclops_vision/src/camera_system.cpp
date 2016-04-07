@@ -331,8 +331,8 @@ void CameraSystem::run() {
     convertTriclops2Opencv(this->disparityImageTriclops, this->disparityImageCV);
     //printf("Size of image going in: %d, %d   Size of image going out, %d, %d", disparityImageTriclops.nrows, disparityImageTriclops.ncols, disparityImageCV.rows, disparityImageCV.cols);
     // DEBUG
-    cv::imshow("Disparity", this->disparityImageCV);
-    cv::waitKey(10);
+    //cv::imshow("Disparity", this->disparityImageCV);
+    //cv::waitKey(10);
 
     // Publish images
     ImagePublisher imagePublisher(this->grabbedImage, imageContainer, &(this->image_pub_left), &(this->image_pub_right));

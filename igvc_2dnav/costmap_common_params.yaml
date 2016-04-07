@@ -1,14 +1,14 @@
 obstacle_range: 25
 raytrace_range: 30
-footprint: [[1.0, 1.0], [-1.0, 1.0], [1.0, -1.0], [-1.0, -1.0]]
+footprint: [[0.25, 0.25], [-0.25, 0.25], [0.25, -0.25], [-0.25, -0.25]]
 
-inflation_radius: 1
+inflation_radius: 11
 transform_tolerance: 0.2
 
 observation_sources: laser_scan_sensor point_cloud_sensor cam_point_cloud_sensor
 
-laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true, min_obstacle_height: 1.0}
 
-point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /velodyne_points, marking: true, clearing: true, min_obstacle_height: .20}
+point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /velodyne_points, marking: true, clearing: true, min_obstacle_height: 1.0}
 
-cam_point_cloud_sensor: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /vision3D/points, marking: true, clearing: true, min_obstacle_height: -.05, max_obstacle_height: .05}
+cam_point_cloud_sensor: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /vision3D/points, marking: true, clearing: false, min_obstacle_height: -.05, max_obstacle_height: .05}

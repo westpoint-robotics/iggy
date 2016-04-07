@@ -15,14 +15,23 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O0 -ggdb")
 
 #Add all files in subdirectories of the project in
 # a dummy_target so qtcreator have access to all files
-FILE(GLOB children ${CMAKE_SOURCE_DIR}/*)
-FOREACH(child ${children})
-  IF(IS_DIRECTORY ${child})
-    file(GLOB_RECURSE dir_files "${child}/*")
-    LIST(APPEND extra_files ${dir_files})
-  ENDIF()
-ENDFOREACH()
-add_custom_target(dummy_${PROJECT_NAME} SOURCES ${extra_files})
+
+#FILE(GLOB children ${CMAKE_SOURCE_DIR}/*)
+#FOREACH(child ${children})
+#  IF(IS_DIRECTORY ${child})
+#    file(GLOB_RECURSE dir_files "${child}/*")
+#    LIST(APPEND extra_files ${dir_files})
+#  ENDIF()
+#ENDFOREACH()
+#add_custom_target(dummy_${PROJECT_NAME} SOURCES ${extra_files})
+
+#SET(CMAKE_BUILD_TYPE DEBUG)
+#SET(CMAKE_C_FLAGS "-O0 -ggdb")
+#SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb")
+#SET(CMAKE_CXX_FLAGS_RELEASE "-O0 -ggdb")
+#SET(CMAKE_C_FLAGS "-O0 -ggdb")
+#SET(CMAKE_C_FLAGS_DEBUG "-O0 -ggdb")
+#SET(CMAKE_C_FLAGS_RELEASE "-O0 -ggdb")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -92,7 +101,7 @@ include_directories(include
 add_executable(triclops_camera_driver ${HEADER_FILES} src/image_publisher.cpp src/line_filter.cpp src/camera_system.cpp src/runme.cpp src/vision_3d.cpp)
 #Removed:  src/test_triclops_camera.cpp src/vision_3d.cpp src/triclops_opencv.cpp src/line_filter.cpp
 
-add_executable(triclops_image_process src/images_into_triclops.cpp ${HEADER_FILESs})
+#add_executable(triclops_image_process src/images_into_triclops.cpp ${HEADER_FILESs})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -108,11 +117,11 @@ target_link_libraries(triclops_camera_driver
    ${PNMUTILS_LIB}
  )
 
-target_link_libraries(triclops_image_process
-   ${catkin_LIBRARIES}
-   ${OpenCV_LIBS}
-   ${TRICLOPS_LIB}
-   ${FLYCAPTURE_LIB}
-   ${FLYCAPTURE2BRIDGE_LIB}
-   ${PNMUTILS_LIB}
- )
+#target_link_libraries(triclops_image_process
+#   ${catkin_LIBRARIES}
+#   ${OpenCV_LIBS}
+#   ${TRICLOPS_LIB}
+#   ${FLYCAPTURE_LIB}
+#   ${FLYCAPTURE2BRIDGE_LIB}
+#   ${PNMUTILS_LIB}
+# )

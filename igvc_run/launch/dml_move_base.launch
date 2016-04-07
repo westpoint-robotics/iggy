@@ -3,6 +3,7 @@
 
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="conservative_reset_dist" value="0.5"/>
     <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
     <rosparam file="$(find igvc_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find igvc_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap"/>

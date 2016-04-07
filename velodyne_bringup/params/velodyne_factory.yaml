@@ -1,0 +1,911 @@
+lasers:
+    - 
+   px: 
+      id_: 0
+      rotCorrection_: "-5.7594442"
+      vertCorrection_: "-7.0913248"
+      distCorrection_: "120.11153"
+      distCorrectionX_: "123.66819"
+      distCorrectionY_: "122.24358"
+      vertOffsetCorrection_: "19.762794"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1000
+      focalSlope_: 1
+      _class_id: 9
+      _tracking_level: 1
+      _version: 1
+      _object_id: _1
+     _class_id: 8
+     _tracking_level: 0
+     _version: 1
+    - 
+   px: 
+      id_: 1
+      rotCorrection_: "-3.7548139"
+      vertCorrection_: "-6.7912569"
+      distCorrection_: "143.97354"
+      distCorrectionX_: "145.64833"
+      distCorrectionY_: "144.05963"
+      vertOffsetCorrection_: "19.80101"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: "1.5"
+      _class_id_reference: 9
+      _object_id: _2
+    - 
+   px: 
+      id_: 2
+      rotCorrection_: "2.1222644"
+      vertCorrection_: "0.33287099"
+      distCorrection_: "142.51649"
+      distCorrectionX_: "146.97914"
+      distCorrectionY_: "145.24107"
+      vertOffsetCorrection_: "20.699087"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1500
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _3
+    - 
+   px: 
+      id_: 3
+      rotCorrection_: "4.3285642"
+      vertCorrection_: "0.61394298"
+      distCorrection_: "142.66685"
+      distCorrectionX_: "144.60591"
+      distCorrectionY_: "146.68367"
+      vertOffsetCorrection_: "20.734364"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _4
+    - 
+   px: 
+      id_: 4
+      rotCorrection_: "-1.4306802"
+      vertCorrection_: "-6.4561248"
+      distCorrection_: "128.29123"
+      distCorrectionX_: "133.07935"
+      distCorrectionY_: "132.45966"
+      vertOffsetCorrection_: "19.843637"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1200
+      focalSlope_: "0.80000001"
+      _class_id_reference: 9
+      _object_id: _5
+    - 
+   px: 
+      id_: 5
+      rotCorrection_: "0.79867768"
+      vertCorrection_: "-6.1668611"
+      distCorrection_: "138.30305"
+      distCorrectionX_: "140.15825"
+      distCorrectionY_: "142.43333"
+      vertOffsetCorrection_: "19.880383"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1600
+      focalSlope_: "0.60000002"
+      _class_id_reference: 9
+      _object_id: _6
+    - 
+   px: 
+      id_: 6
+      rotCorrection_: "-2.2019145"
+      vertCorrection_: "-8.4480314"
+      distCorrection_: "131.09467"
+      distCorrectionX_: "135.58345"
+      distCorrectionY_: "134.4529"
+      vertOffsetCorrection_: "19.589354"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 700
+      focalSlope_: "1.3"
+      _class_id_reference: 9
+      _object_id: _7
+    - 
+   px: 
+      id_: 7
+      rotCorrection_: "-0.0083186999"
+      vertCorrection_: "-8.1269064"
+      distCorrection_: "133.91571"
+      distCorrectionX_: "139.00742"
+      distCorrectionY_: "140.08945"
+      vertOffsetCorrection_: "19.630508"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _8
+    - 
+   px: 
+      id_: 8
+      rotCorrection_: "2.876899"
+      vertCorrection_: "-5.7497702"
+      distCorrection_: "117.56062"
+      distCorrectionX_: "122.48052"
+      distCorrectionY_: "122.79292"
+      vertOffsetCorrection_: "19.933296"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1700
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _9
+    - 
+   px: 
+      id_: 9
+      rotCorrection_: "5.0840282"
+      vertCorrection_: "-5.4249392"
+      distCorrection_: "143.18227"
+      distCorrectionX_: "145.75626"
+      distCorrectionY_: "147.22295"
+      vertOffsetCorrection_: "19.974453"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1000
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _10
+    - 
+   px: 
+      id_: 10
+      rotCorrection_: "2.0984116"
+      vertCorrection_: "-7.8282561"
+      distCorrection_: "132.38147"
+      distCorrectionX_: "136.63808"
+      distCorrectionY_: "134.69823"
+      vertOffsetCorrection_: "19.668724"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1200
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _11
+    - 
+   px: 
+      id_: 11
+      rotCorrection_: "4.3213105"
+      vertCorrection_: "-7.483129"
+      distCorrection_: "141.35191"
+      distCorrectionX_: "142.96924"
+      distCorrectionY_: "144.75761"
+      vertOffsetCorrection_: "19.71282"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: "1.3"
+      _class_id_reference: 9
+      _object_id: _12
+    - 
+   px: 
+      id_: 12
+      rotCorrection_: "-5.7346468"
+      vertCorrection_: "-3.0256929"
+      distCorrection_: "127.46484"
+      distCorrectionX_: "130.6311"
+      distCorrectionY_: "129.78784"
+      vertOffsetCorrection_: "20.277241"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1500
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _13
+    - 
+   px: 
+      id_: 13
+      rotCorrection_: "-3.5073824"
+      vertCorrection_: "-2.698571"
+      distCorrection_: "132.58366"
+      distCorrectionX_: "134.02124"
+      distCorrectionY_: "136.23708"
+      vertOffsetCorrection_: "20.318398"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1800
+      focalSlope_: "0.80000001"
+      _class_id_reference: 9
+      _object_id: _14
+    - 
+   px: 
+      id_: 14
+      rotCorrection_: "-6.5457811"
+      vertCorrection_: "-5.041656"
+      distCorrection_: "138.06639"
+      distCorrectionX_: "141.5699"
+      distCorrectionY_: "140.67308"
+      vertOffsetCorrection_: "20.022959"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 900
+      focalSlope_: "1.8"
+      _class_id_reference: 9
+      _object_id: _15
+    - 
+   px: 
+      id_: 15
+      rotCorrection_: "-4.315537"
+      vertCorrection_: "-4.7509861"
+      distCorrection_: "136.62254"
+      distCorrectionX_: "137.54008"
+      distCorrectionY_: "140.14897"
+      vertOffsetCorrection_: "20.059704"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1600
+      focalSlope_: "0.80000001"
+      _class_id_reference: 9
+      _object_id: _16
+    - 
+   px: 
+      id_: 16
+      rotCorrection_: "-1.4466707"
+      vertCorrection_: "-2.371274"
+      distCorrection_: "124.07407"
+      distCorrectionX_: "128.44774"
+      distCorrectionY_: "129.34969"
+      vertOffsetCorrection_: "20.359552"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1600
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _17
+    - 
+   px: 
+      id_: 17
+      rotCorrection_: "0.75860971"
+      vertCorrection_: "-2.0438221"
+      distCorrection_: "140.52113"
+      distCorrectionX_: "142.23825"
+      distCorrectionY_: "143.31483"
+      vertOffsetCorrection_: "20.400707"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1500
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _18
+    - 
+   px: 
+      id_: 18
+      rotCorrection_: "-2.2294066"
+      vertCorrection_: "-4.3785729"
+      distCorrection_: "137.38562"
+      distCorrectionX_: "139.22229"
+      distCorrectionY_: "137.56592"
+      vertOffsetCorrection_: "20.106739"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1200
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _19
+    - 
+   px: 
+      id_: 19
+      rotCorrection_: "-0.00039289999"
+      vertCorrection_: "-4.0640588"
+      distCorrection_: "142.22653"
+      distCorrectionX_: "141.55518"
+      distCorrectionY_: "144.74527"
+      vertOffsetCorrection_: "20.146425"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 2000
+      focalSlope_: "0.69999999"
+      _class_id_reference: 9
+      _object_id: _20
+    - 
+   px: 
+      id_: 20
+      rotCorrection_: "2.8535075"
+      vertCorrection_: "-1.716236"
+      distCorrection_: "128.7359"
+      distCorrectionX_: "132.32471"
+      distCorrectionY_: "130.86714"
+      vertOffsetCorrection_: "20.441864"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1400
+      focalSlope_: "1.4"
+      _class_id_reference: 9
+      _object_id: _21
+    - 
+   px: 
+      id_: 21
+      rotCorrection_: "5.0072136"
+      vertCorrection_: "-1.376832"
+      distCorrection_: "141.92175"
+      distCorrectionX_: "142.18266"
+      distCorrectionY_: "146.03893"
+      vertOffsetCorrection_: "20.484489"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1300
+      focalSlope_: "1.3"
+      _class_id_reference: 9
+      _object_id: _22
+    - 
+   px: 
+      id_: 22
+      rotCorrection_: "2.0604811"
+      vertCorrection_: "-3.737638"
+      distCorrection_: "135.06519"
+      distCorrectionX_: "139.81757"
+      distCorrectionY_: "134.95525"
+      vertOffsetCorrection_: "20.18758"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 2000
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _23
+    - 
+   px: 
+      id_: 23
+      rotCorrection_: "4.2804694"
+      vertCorrection_: "-3.410974"
+      distCorrection_: "139.48857"
+      distCorrectionX_: "142.30002"
+      distCorrectionY_: "144.25766"
+      vertOffsetCorrection_: "20.228737"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1300
+      focalSlope_: "0.60000002"
+      _class_id_reference: 9
+      _object_id: _24
+    - 
+   px: 
+      id_: 24
+      rotCorrection_: "-5.7497444"
+      vertCorrection_: "0.988657"
+      distCorrection_: "122.48835"
+      distCorrectionX_: "129.55878"
+      distCorrectionY_: "129.41458"
+      vertOffsetCorrection_: "20.781399"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1200
+      focalSlope_: "1.5"
+      _class_id_reference: 9
+      _object_id: _25
+    - 
+   px: 
+      id_: 25
+      rotCorrection_: "-3.5556304"
+      vertCorrection_: "1.304757"
+      distCorrection_: "140.08098"
+      distCorrectionX_: "144.64171"
+      distCorrectionY_: "143.18906"
+      vertOffsetCorrection_: "20.821083"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: "0.80000001"
+      _class_id_reference: 9
+      _object_id: _26
+    - 
+   px: 
+      id_: 26
+      rotCorrection_: "-6.5570974"
+      vertCorrection_: "-1.04904"
+      distCorrection_: "142.97362"
+      distCorrectionX_: "145.48715"
+      distCorrectionY_: "144.21574"
+      vertOffsetCorrection_: "20.525644"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1000
+      focalSlope_: "1.9"
+      _class_id_reference: 9
+      _object_id: _27
+    - 
+   px: 
+      id_: 27
+      rotCorrection_: "-4.3123536"
+      vertCorrection_: "-0.68604797"
+      distCorrection_: "138.35861"
+      distCorrectionX_: "140.35689"
+      distCorrectionY_: "143.32968"
+      vertOffsetCorrection_: "20.571211"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1800
+      focalSlope_: "0.60000002"
+      _class_id_reference: 9
+      _object_id: _28
+    - 
+   px: 
+      id_: 28
+      rotCorrection_: "-1.4410582"
+      vertCorrection_: "1.6792901"
+      distCorrection_: "131.90709"
+      distCorrectionX_: "136.83156"
+      distCorrectionY_: "134.89764"
+      vertOffsetCorrection_: "20.868118"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1400
+      focalSlope_: "1.3"
+      _class_id_reference: 9
+      _object_id: _29
+    - 
+   px: 
+      id_: 29
+      rotCorrection_: "0.69438881"
+      vertCorrection_: "1.960097"
+      distCorrection_: "138.7634"
+      distCorrectionX_: "142.71652"
+      distCorrectionY_: "144.6886"
+      vertOffsetCorrection_: "20.903397"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _30
+    - 
+   px: 
+      id_: 30
+      rotCorrection_: "-2.2306213"
+      vertCorrection_: "-0.31128901"
+      distCorrection_: "139.39909"
+      distCorrectionX_: "142.57791"
+      distCorrectionY_: "142.2317"
+      vertOffsetCorrection_: "20.618246"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1700
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _31
+    - 
+   px: 
+      id_: 31
+      rotCorrection_: "-0.0348938"
+      vertCorrection_: "-0.041912999"
+      distCorrection_: "141.77229"
+      distCorrectionX_: "142.44449"
+      distCorrectionY_: "143.90199"
+      vertOffsetCorrection_: "20.652052"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 1200
+      focalSlope_: "0.60000002"
+      _class_id_reference: 9
+      _object_id: _32
+    - 
+   px: 
+      id_: 32
+      rotCorrection_: "-8.8942213"
+      vertCorrection_: "-22.337473"
+      distCorrection_: "142.0081"
+      distCorrectionX_: "143.27258"
+      distCorrectionY_: "138.90103"
+      vertOffsetCorrection_: "10.861773"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 500
+      focalSlope_: "1.6"
+      _class_id_reference: 9
+      _object_id: _33
+    - 
+   px: 
+      id_: 33
+      rotCorrection_: "-5.3187089"
+      vertCorrection_: "-22.026152"
+      distCorrection_: "134.08716"
+      distCorrectionX_: "134.47029"
+      distCorrectionY_: "134.33308"
+      vertOffsetCorrection_: "10.90115"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _34
+    - 
+   px: 
+      id_: 34
+      rotCorrection_: "3.5865533"
+      vertCorrection_: "-11.374042"
+      distCorrection_: "115.61446"
+      distCorrectionX_: "118.99057"
+      distCorrectionY_: "118.11803"
+      vertOffsetCorrection_: "12.165006"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _35
+    - 
+   px: 
+      id_: 35
+      rotCorrection_: "6.9516773"
+      vertCorrection_: "-10.855309"
+      distCorrection_: "135.02769"
+      distCorrectionX_: "135.66583"
+      distCorrectionY_: "137.71184"
+      vertOffsetCorrection_: "12.223436"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 700
+      focalSlope_: "1.9"
+      _class_id_reference: 9
+      _object_id: _36
+    - 
+   px: 
+      id_: 36
+      rotCorrection_: "-1.8832392"
+      vertCorrection_: "-21.612293"
+      distCorrection_: "137.37495"
+      distCorrectionX_: "141.70979"
+      distCorrectionY_: "141.53966"
+      vertOffsetCorrection_: "10.953228"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _37
+    - 
+   px: 
+      id_: 37
+      rotCorrection_: "1.6362786"
+      vertCorrection_: "-21.14513"
+      distCorrection_: "124.91668"
+      distCorrectionX_: "127.9473"
+      distCorrectionY_: "123.9732"
+      vertOffsetCorrection_: "11.011658"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 500
+      focalSlope_: "1.5"
+      _class_id_reference: 9
+      _object_id: _38
+    - 
+   px: 
+      id_: 38
+      rotCorrection_: "-3.1910584"
+      vertCorrection_: "-24.545382"
+      distCorrection_: "128.46048"
+      distCorrectionX_: "128.97321"
+      distCorrectionY_: "125.99706"
+      vertOffsetCorrection_: "10.577247"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _39
+    - 
+   px: 
+      id_: 39
+      rotCorrection_: "0.31228891"
+      vertCorrection_: "-24.107775"
+      distCorrection_: "129.72705"
+      distCorrectionX_: "126.54193"
+      distCorrectionY_: "128.8154"
+      vertOffsetCorrection_: "10.634406"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _40
+    - 
+   px: 
+      id_: 40
+      rotCorrection_: "4.9687538"
+      vertCorrection_: "-20.562143"
+      distCorrection_: "123.47609"
+      distCorrectionX_: "128.39229"
+      distCorrectionY_: "126.51001"
+      vertOffsetCorrection_: "11.084059"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _41
+    - 
+   px: 
+      id_: 41
+      rotCorrection_: "8.3992214"
+      vertCorrection_: "-19.964329"
+      distCorrection_: "130.75757"
+      distCorrectionX_: "132.16559"
+      distCorrectionY_: "131.49187"
+      vertOffsetCorrection_: "11.157732"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 600
+      focalSlope_: "1.8"
+      _class_id_reference: 9
+      _object_id: _42
+    - 
+   px: 
+      id_: 42
+      rotCorrection_: "3.9267704"
+      vertCorrection_: "-23.54915"
+      distCorrection_: "125.40752"
+      distCorrectionX_: "126.62753"
+      distCorrectionY_: "125.16071"
+      vertOffsetCorrection_: "10.706808"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _43
+    - 
+   px: 
+      id_: 43
+      rotCorrection_: "7.3889098"
+      vertCorrection_: "-22.916222"
+      distCorrection_: "132.65134"
+      distCorrectionX_: "131.00598"
+      distCorrectionY_: "131.91449"
+      vertOffsetCorrection_: "10.788101"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 600
+      focalSlope_: "1.8"
+      _class_id_reference: 9
+      _object_id: _44
+    - 
+   px: 
+      id_: 44
+      rotCorrection_: "-8.6532259"
+      vertCorrection_: "-16.370895"
+      distCorrection_: "141.90152"
+      distCorrectionX_: "145.01208"
+      distCorrectionY_: "142.68758"
+      vertOffsetCorrection_: "11.589602"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 1000
+      focalSlope_: "1.9"
+      _class_id_reference: 9
+      _object_id: _45
+    - 
+   px: 
+      id_: 45
+      rotCorrection_: "-5.1389856"
+      vertCorrection_: "-15.92785"
+      distCorrection_: "131.91846"
+      distCorrectionX_: "133.43291"
+      distCorrectionY_: "135.13896"
+      vertOffsetCorrection_: "11.641681"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 100
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _46
+    - 
+   px: 
+      id_: 46
+      rotCorrection_: "-9.9974432"
+      vertCorrection_: "-19.111368"
+      distCorrection_: "128.70972"
+      distCorrectionX_: "128.87854"
+      distCorrectionY_: "127.7883"
+      vertOffsetCorrection_: "11.261889"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 800
+      focalSlope_: "1.9"
+      _class_id_reference: 9
+      _object_id: _47
+    - 
+   px: 
+      id_: 47
+      rotCorrection_: "-6.4990721"
+      vertCorrection_: "-18.891487"
+      distCorrection_: "127.66776"
+      distCorrectionX_: "130.55257"
+      distCorrectionY_: "132.74336"
+      vertOffsetCorrection_: "11.288563"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _48
+    - 
+   px: 
+      id_: 48
+      rotCorrection_: "-1.8619244"
+      vertCorrection_: "-15.461083"
+      distCorrection_: "132.7877"
+      distCorrectionX_: "136.00459"
+      distCorrectionY_: "133.5062"
+      vertOffsetCorrection_: "11.6963"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 600
+      focalSlope_: "1.3"
+      _class_id_reference: 9
+      _object_id: _49
+    - 
+   px: 
+      id_: 49
+      rotCorrection_: "1.5749465"
+      vertCorrection_: "-14.970345"
+      distCorrection_: "99.678955"
+      distCorrectionX_: "104.78856"
+      distCorrectionY_: "102.85476"
+      vertOffsetCorrection_: "11.753459"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 800
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _50
+    - 
+   px: 
+      id_: 50
+      rotCorrection_: "-3.1004958"
+      vertCorrection_: "-18.428911"
+      distCorrection_: "127.70037"
+      distCorrectionX_: "135.33424"
+      distCorrectionY_: "128.69424"
+      vertOffsetCorrection_: "11.344452"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 600
+      focalSlope_: "1.5"
+      _class_id_reference: 9
+      _object_id: _51
+    - 
+   px: 
+      id_: 51
+      rotCorrection_: "0.3079806"
+      vertCorrection_: "-18.048578"
+      distCorrection_: "128.01445"
+      distCorrectionX_: "131.13521"
+      distCorrectionY_: "129.41096"
+      vertOffsetCorrection_: "11.39018"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 600
+      focalSlope_: "1.3"
+      _class_id_reference: 9
+      _object_id: _52
+    - 
+   px: 
+      id_: 52
+      rotCorrection_: "4.7683749"
+      vertCorrection_: "-14.356501"
+      distCorrection_: "118.03233"
+      distCorrectionX_: "121.70876"
+      distCorrectionY_: "119.22374"
+      vertOffsetCorrection_: "11.824591"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _53
+    - 
+   px: 
+      id_: 53
+      rotCorrection_: "8.1389799"
+      vertCorrection_: "-13.78347"
+      distCorrection_: "116.10701"
+      distCorrectionX_: "115.21738"
+      distCorrectionY_: "118.92721"
+      vertOffsetCorrection_: "11.890641"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 800
+      focalSlope_: "1.9"
+      _class_id_reference: 9
+      _object_id: _54
+    - 
+   px: 
+      id_: 54
+      rotCorrection_: "3.6830511"
+      vertCorrection_: "-17.421692"
+      distCorrection_: "147.07202"
+      distCorrectionX_: "150.77596"
+      distCorrectionY_: "151.52864"
+      vertOffsetCorrection_: "11.465122"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _55
+    - 
+   px: 
+      id_: 55
+      rotCorrection_: "7.0697861"
+      vertCorrection_: "-16.919199"
+      distCorrection_: "130.51837"
+      distCorrectionX_: "130.28032"
+      distCorrectionY_: "132.8763"
+      vertOffsetCorrection_: "11.524822"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 900
+      focalSlope_: "1.9"
+      _class_id_reference: 9
+      _object_id: _56
+    - 
+   px: 
+      id_: 56
+      rotCorrection_: "-8.3357067"
+      vertCorrection_: "-10.130603"
+      distCorrection_: "141.90373"
+      distCorrectionX_: "144.85481"
+      distCorrectionY_: "142.13324"
+      vertOffsetCorrection_: "12.304729"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 600
+      focalSlope_: "1.6"
+      _class_id_reference: 9
+      _object_id: _57
+    - 
+   px: 
+      id_: 57
+      rotCorrection_: "-5.111629"
+      vertCorrection_: "-9.8579788"
+      distCorrection_: "119.30688"
+      distCorrectionX_: "120.49686"
+      distCorrectionY_: "120.68738"
+      vertOffsetCorrection_: "12.335214"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _58
+    - 
+   px: 
+      id_: 58
+      rotCorrection_: "-9.7371664"
+      vertCorrection_: "-13.074332"
+      distCorrection_: "144.5916"
+      distCorrectionX_: "145.00798"
+      distCorrectionY_: "144.8988"
+      vertOffsetCorrection_: "11.971935"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 700
+      focalSlope_: "1.8"
+      _class_id_reference: 9
+      _object_id: _59
+    - 
+   px: 
+      id_: 59
+      rotCorrection_: "-6.3534436"
+      vertCorrection_: "-12.829609"
+      distCorrection_: "133.07481"
+      distCorrectionX_: "133.87561"
+      distCorrectionY_: "135.04515"
+      vertOffsetCorrection_: "11.999879"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _60
+    - 
+   px: 
+      id_: 60
+      rotCorrection_: "-1.764872"
+      vertCorrection_: "-9.4254036"
+      distCorrection_: "140.9415"
+      distCorrectionX_: "143.61565"
+      distCorrectionY_: "143.92374"
+      vertOffsetCorrection_: "12.383482"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _61
+    - 
+   px: 
+      id_: 61
+      rotCorrection_: "1.4296508"
+      vertCorrection_: "-8.9460325"
+      distCorrection_: "120.19529"
+      distCorrectionX_: "119.69304"
+      distCorrectionY_: "121.55537"
+      vertOffsetCorrection_: "12.436831"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: "1.1"
+      _class_id_reference: 9
+      _object_id: _62
+    - 
+   px: 
+      id_: 62
+      rotCorrection_: "-3.0267792"
+      vertCorrection_: "-12.294024"
+      distCorrection_: "147.58168"
+      distCorrectionX_: "151.32835"
+      distCorrectionY_: "147.44029"
+      vertOffsetCorrection_: "12.060849"
+      horizOffsetCorrection_: "2.5999999"
+      focalDistance_: 400
+      focalSlope_: "1.2"
+      _class_id_reference: 9
+      _object_id: _63
+    - 
+   px: 
+      id_: 63
+      rotCorrection_: "0.25931731"
+      vertCorrection_: "-11.879678"
+      distCorrection_: "134.09526"
+      distCorrectionX_: "133.98631"
+      distCorrectionY_: "137.26865"
+      vertOffsetCorrection_: "12.107847"
+      horizOffsetCorrection_: "-2.5999999"
+      focalDistance_: 25
+      focalSlope_: 1
+      _class_id_reference: 9
+      _object_id: _64
+   _class_id: 7
+   _tracking_level: 0
+   _version: 0
+  _class_id: 0
+  _tracking_level: 1
+  _version: 0
+  _object_id: _0
+ _signature: "serialization::archive"
+ _version: 4

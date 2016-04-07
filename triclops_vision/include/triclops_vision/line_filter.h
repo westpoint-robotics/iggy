@@ -6,7 +6,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <image_transport/image_transport.h>
 #include "triclops_vision/triclops_opencv.h"
-#include "triclops_vision/image_publisher_single.h"
+#include "triclops_vision/image_publisher.h"
 #include "triclops_vision/common.h"
 
 /**
@@ -60,6 +60,7 @@ class LineFilter
 
         image_transport::Publisher image_pub_filtered_right;
         image_transport::Publisher image_pub_filtered_left;
+
         image_transport::Subscriber subcamright;
         image_transport::Subscriber subcamleft;
 
