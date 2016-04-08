@@ -122,7 +122,7 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
     //unsigned char    mask;
 
     unsigned short   disparity;
-    char    mask, red, blue;
+    unsigned char    mask, red, blue;
     //Resolution Checking will follow
 
     if (redImage.cols <= 0 || blueImage.cols <= 0 || maskImage.cols <= 0 || disparityImage.cols <= 0) {
@@ -137,10 +137,10 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
         {
             //disparity = disparityRow[j];
             //mask = maskRow[j];
-            disparity = disparityImage.at<short>(i,j);
-            mask = maskImage.at<char>(i,j);
-            red = redImage.at<char>(i,j);
-            blue = blueImage.at<char>(i,j);
+            disparity = disparityImage.at<unsigned short>(i,j);
+            mask = maskImage.at<unsigned char>(i,j);
+            red = redImage.at<unsigned char>(i,j);
+            blue = blueImage.at<unsigned char>(i,j);
 
             //convert from disparity to pointcloud
             triclopsRCD16ToXYZ( this->camerasystem->triclops, i, j, disparity, &x, &y, &z );
@@ -183,7 +183,9 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
                 pointBlue.b = 0xFF;
                 bluePoints.push_back(pointBlue);
             }
-
+            mask = 0;
+            red = 0;
+            blue = 0;
         }
     }
     
