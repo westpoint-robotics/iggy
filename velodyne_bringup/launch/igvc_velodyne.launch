@@ -7,8 +7,10 @@
 
   <!-- declare arguments with default values -->
   <arg name="pcap" default="" />
-  <!--arg name="pcap" default="/home/igvc/catkin_ws/data/velodyne64.pcap"/-->
-  <arg name="calibration" default="$(find velodyne_bringup)/params/64e_utexas.yaml"/>
+  <!--arg name="pcap" default="/home/igvc/catkin_ws/data/velodyne64.pcap"/>
+  <arg name="calibration" default="$(find velodyne_bringup)/params/64E_FactoryModSmall.yaml"/>  -->
+
+  <arg name="calibration" default="$(find velodyne_bringup)/params/64e_utexas.yaml"/> 
 
   <!-- start nodelet manager and driver nodelets -->
   <include file="$(find velodyne_driver)/launch/nodelet_manager.launch">
@@ -20,13 +22,7 @@
     <include file="$(find velodyne_pointcloud)/launch/cloud_nodelet.launch">
     <arg name="calibration" value="$(arg calibration)"/>
       <!-- <param name="view_direction" value="3.14159265"/> -->
-    </include>
-
-  <!-- Run the pointcloud segmenter to remove the ground -->
-  <node pkg="nodelet" type="nodelet" name="segmenter_nodelet" args="load structured_segmentation/ground_segmenter $(arg manager)" output="screen">
-    <remap from="~input" to="/velodyne_points"/>
-  </node>
-   
+    </include>   
 
 <node name="pointcloud_to_laserscan" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
 
