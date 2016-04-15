@@ -1,5 +1,5 @@
 ------------------------------------------
-28JUN2015 - DML Recommendations
+28JUN2015 - DML Recommendations  
 ------------------------------------------
 Recommendation for Integrated Developement Environment (IDE): This is not required, many programmers do not use IDEs. For those who wish to use one for ROS and CPP development I recommend QtCreator. Strengths: It integrates nicely with ROS and Git repos, and it is light weight. Weakness: Limited python support.
 
