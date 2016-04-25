@@ -18,6 +18,7 @@ int main (int argc, char **argv) {
 		camera.run();
 		linefilter.run();
         vision3D.run();
+        linefilter.displayHough();
 		loop_rate.sleep();
 	}	
 }
