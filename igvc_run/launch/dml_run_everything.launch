@@ -42,17 +42,17 @@
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
 
 <!--utm odom converter node for goal location -->
-<!--<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
+<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="goal_utm"/>
   <remap from="fix" to="goal_gps" />
-</node>-->
+</node>
 
-<!--utm odom converter node for current location
+<!--utm odom converter node for current location-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="vo"/>
   <remap from="fix" to="gps/fix" />
   <param name="frame_id" value="base_footprint" />
-</node>-->
+</node>
 
   <!--<include file="$(find igvc_run)/launch/dml_ekf.launch">
   </include>-->
@@ -67,10 +67,15 @@
 	</include>
   
 <!--was originally running triclops_camera2.launch but this is the only node currently required for camera
-(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
+(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)
 	<node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen"></node>
 
-  <node pkg="triclops_vision" type="Hansing_converter.py" name="red_blue_flag_filter" output="screen"></node>
+  <node pkg="triclops_vision" type="Hansing_converter.py" name="red_blue_flag_filter" output="screen"></node>  -->
+
+
+	<include file="$(find usma_triclops)/launch/igvc_bumblebee.launch">
+	</include> 
+
 
   	<node pkg="laser_scan_matcher" type="laser_scan_matcher_node"   
 name="laser_scan_matcher_node" output="screen"> 
@@ -83,10 +88,10 @@ name="laser_scan_matcher_node" output="screen">
 		<param name="fixed_frame" type="string" value="/map" />    
 		<param name="base_frame" type="string" value="/base_footprint" />
 	</node>
-<!--creates bag files that get overwritten each time this runs-->
-<node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />
+<!--creates bag files that get overwritten each time this runs
+<node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />  -->
 
-<!-- Start an rviz node with a custom configuration  -->
-<!-- <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/igvc_run_everything.rviz"/> -->
+<!-- Start an rviz node with a custom configuration
+<node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/igvc_run_everything.rviz"/>  -->
 </launch>
 

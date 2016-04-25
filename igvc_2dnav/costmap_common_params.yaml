@@ -7,9 +7,9 @@ transform_tolerance: 0.2
 
 observation_sources: laser_scan_sensor point_cloud_sensor white_lines red_flags blue_flags
 
-laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true, min_obstacle_height: 0.5}
+laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true, max_obstacle_height: 1.0, min_obstacle_height: 0.2}
 
-point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /velodyne_points, marking: true, clearing: true, min_obstacle_height: 0.5}
+point_cloud_sensor: {sensor_frame: velodyne, data_type: PointCloud2, topic: /velodyne_points, marking: true, clearing: true, max_obstacle_height: 1.0, min_obstacle_height: 0.2}
 
 white_lines: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /vision3D/lines, marking: true, clearing: false, min_obstacle_height: -.05, max_obstacle_height: .05, observaion_persistence: 12.0, expected_update_rate: 12.0}
 red_flags: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /vision3D/red, marking: true, clearing: false,  min_obstacle_height: -.05, max_obstacle_height: .5}
