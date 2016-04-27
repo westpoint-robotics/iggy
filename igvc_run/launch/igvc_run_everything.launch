@@ -38,8 +38,10 @@
 <!-- =============   NODES and Launch Files  ======================= -->
 <!--
  check until "INS_SOLUTION_GOOD" is given, navigation cannot start before.
- If you power off the cns than restart the process.-->
+ If you power off the cns than restart the process.
+<node name="novatel_CNS5000" pkg="gps_imu" type="imu_parser.py" output="screen"/> -->
 <node name="novatel_CNS5000" pkg="gps_imu" type="imu_parser.py" output="screen"/>
+
 
 <!--utm odom converter node for goal location -->
 <!--<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
