@@ -22,7 +22,7 @@ from std_msgs.msg import String
 #SETIMUTOANTOFFSET 0.0 0.6096 0.8636 0.05 0.05 0.05
 #SETALIGNMENTVEL 1.15
 ser = serial.Serial(
-    port='/dev/ttyUSB0',
+    port='/dev/ttyUSB1',
     baudrate=115200, #8N1
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
