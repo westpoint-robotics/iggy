@@ -1,7 +1,9 @@
 <!--rosbag_record.launch-->
 <launch>
 
-<arg name="path" default="$(env HOME)/catkin_ws/rosbags/" />
+<!-- <arg name="path" default="$(env HOME)/catkin_ws/rosbags/" /> -->
+<arg name="path" default="/media/user1/DBR_MASTER/rosbags/" />
+
   
 <node pkg="rosbag" type="record" name="record_bag1" respawn="true" args="-o $(arg path)disparity.bag /triclops/disparity"/>
 <node pkg="rosbag" type="record" name="record_bag2" respawn="true" args="-o $(arg path)rectified.bag /triclops/rectified"/>
