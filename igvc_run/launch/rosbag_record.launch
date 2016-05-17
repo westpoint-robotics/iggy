@@ -1,4 +1,4 @@
-<!--igvc_run.launch-->
+<!--rosbag_record.launch-->
 <launch>
 
 <arg name="path" default="$(env HOME)/catkin_ws/rosbags/" />
