@@ -13,7 +13,9 @@
 <node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)imu_raw.bag /raw_data"/>
 <node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)pointcloud.bag /velodyne_points"/>
 
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)other.bag -x '/triclops/disparity|/triclops/rectified|/vision3D/blue|/vision3D/lines|/vision3D/red|/gps/fix|/raw_data|/velodyne_points'"/>
+<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)other.bag -x '/triclops/disparity|/triclops/rectified|/vision3D/blue|/vision3D/lines|/vision3D/red|/imu_data|/gps/fix|/raw_data|/velodyne_points'"/>
 
 </launch>
+
+
 
