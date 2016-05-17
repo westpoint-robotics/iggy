@@ -77,7 +77,7 @@
 	</include> 
 
 
-  	<node pkg="laser_scan_matcher" type="laser_scan_matcher_node"   
+<!--  	<node pkg="laser_scan_matcher" type="laser_scan_matcher_node"   
 name="laser_scan_matcher_node" output="screen"> 
 		<remap from="/imu_data" to="/imu/data"/>   
 		<param name="cloud" value="/velodyne_points"/>
@@ -87,7 +87,7 @@ name="laser_scan_matcher_node" output="screen">
 		<param name="use_odom" type="bool" value="false" />    
 		<param name="fixed_frame" type="string" value="/map" />    
 		<param name="base_frame" type="string" value="/base_footprint" />
-	</node>
+	</node>  -->
 <!--creates bag files that get overwritten each time this runs-->
 <node name="bags" pkg="igvc_run" type="dml_rosbagRecord.sh" /> 
 
