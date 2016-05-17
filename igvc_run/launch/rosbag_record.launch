@@ -2,7 +2,7 @@
 <launch>
 
 <!-- <arg name="path" default="$(env HOME)/catkin_ws/rosbags/" /> -->
-<arg name="path" default="/media/user1/DBR_MASTER/rosbags/" />
+<arg name="path" default="/media/user1/Images/rosbags/" />
 
   
 <node pkg="rosbag" type="record" name="record_bag1" respawn="true" args="-o $(arg path)disparity.bag /triclops/disparity"/>
