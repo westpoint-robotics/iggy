@@ -3,17 +3,17 @@
 
 <arg name="path" default="$(env HOME)/catkin_ws/rosbags/" />
   
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)disparity.bag /triclops/disparity"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)rectified.bag /triclops/rectified"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)blue3d.bag /vision3D/blue"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)lines3d.bag /vision3D/lines"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)red3d.bag /vision3D/red"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)imudata.bag /imu_data"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)gps_fix.bag /gps/fix"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)imu_raw.bag /raw_data"/>
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)pointcloud.bag /velodyne_points"/>
+<node pkg="rosbag" type="record" name="record_bag1" args="-o $(arg path)disparity.bag /triclops/disparity"/>
+<node pkg="rosbag" type="record" name="record_bag2" args="-o $(arg path)rectified.bag /triclops/rectified"/>
+<node pkg="rosbag" type="record" name="record_bag3" args="-o $(arg path)blue3d.bag /vision3D/blue"/>
+<node pkg="rosbag" type="record" name="record_bag4" args="-o $(arg path)lines3d.bag /vision3D/lines"/>
+<node pkg="rosbag" type="record" name="record_bag5" args="-o $(arg path)red3d.bag /vision3D/red"/>
+<node pkg="rosbag" type="record" name="record_bag6" args="-o $(arg path)imudata.bag /imu_data"/>
+<node pkg="rosbag" type="record" name="record_bag7" args="-o $(arg path)gps_fix.bag /gps/fix"/>
+<node pkg="rosbag" type="record" name="record_bag8" args="-o $(arg path)imu_raw.bag /raw_data"/>
+<node pkg="rosbag" type="record" name="record_bag9" args="-o $(arg path)pointcloud.bag /velodyne_points"/>
 
-<node pkg="rosbag" type="record" name="record_bag" args="-o $(arg path)other.bag -x '/triclops/disparity|/triclops/rectified|/vision3D/blue|/vision3D/lines|/vision3D/red|/imu_data|/gps/fix|/raw_data|/velodyne_points'"/>
+<node pkg="rosbag" type="record" name="record_bag0" args="-o $(arg path)other.bag -x '/triclops/disparity|/triclops/rectified|/vision3D/blue|/vision3D/lines|/vision3D/red|/imu_data|/gps/fix|/raw_data|/velodyne_points'"/>
 
 </launch>
 
