@@ -66,35 +66,35 @@ try:
         #ser.write('LOG COM1 INSPVAA ONCE \r\n')
         while ser.inWaiting() > 0:
             # While data is in the buffer
-            velodyne_output = ser.readline() # Read data a line of data from buffer
-            outFile.write(velodyne_output) # Option to log data to file
-            #print(velodyne_output)
-            #novaPub = velodyne_output
+            kvh5000_output = ser.readline() # Read data a line of data from buffer
+            outFile.write(kvh5000_output) # Option to log data to file
+            #print(kvh5000_output)
+            #novaPub = kvh5000_output
             #TODO print once when gets into different mode like initializing, finesteering, etc
                 
-            if (velodyne_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message
+            if (kvh5000_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message
                 #print "Inside best gps"
-                nova_Data = velodyne_output.split(';')[1] # split the header and message body
+                nova_Data = kvh5000_output.split(';')[1] # split the header and message body
                 nova_Data = nova_Data.split(',') # split the message body into fields
                 gps_out = NavSatFix()
                 gps_out = parse_novatelGPS(nova_Data) # returns a NavSatFix message
                 gpsPub.publish(gps_out) # publish the ROS message
 
-            elif (velodyne_output.split(",")[0] == "%RAWIMUSA"): # check if this the IMU message
-                nova_Data = velodyne_output.split(';')[1] # split the header and message body
+            elif (kvh5000_output.split(",")[0] == "%RAWIMUSA"): # check if this the IMU message
+                nova_Data = kvh5000_output.split(';')[1] # split the header and message body
                 nova_Data = nova_Data.split(',') # split the message body into fields
                 imu_out = parse_novatelIMU(nova_Data) 
                 imuPub.publish(imu_out)
 
-            elif (velodyne_output.split(",")[0] == "#INSPVAA"): # check if this the INSPVA message
-                nova_Header = velodyne_output.split(';')[0]
-                nova_Header = velodyne_output.split(',')
-                nova_Data = velodyne_output.split(';')[1] # split the header and message body
+            elif (kvh5000_output.split(",")[0] == "#INSPVAA"): # check if this the INSPVA message
+                nova_Header = kvh5000_output.split(';')[0]
+                nova_Header = kvh5000_output.split(',')
+                nova_Data = kvh5000_output.split(';')[1] # split the header and message body
                 nova_Data = nova_Data.split(',') # split the message body into fields
                 inspva_out = parse_novatelINSPVA(nova_Header, nova_Data) 
                 gpsPub.publish(inspva_out[1])
                 imuPub.publish(inspva_out[0])
-                novaPub.publish(velodyne_output)            
+                novaPub.publish(kvh5000_output)            
                      
 except KeyboardInterrupt:
     ser.write('unlogall\r\n') # Send a message to CNS-5000 to stop sending logs

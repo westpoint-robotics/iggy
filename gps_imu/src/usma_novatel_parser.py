@@ -73,7 +73,7 @@ uint8 COVARIANCE_TYPE_KNOWN=3
 std_msgs/Header header
   uint32 seq
   time stamp
-  string frame_idvelodyne
+  string frame_idkvh5000
 sensor_msgs/NavSatStatus status
   int8 STATUS_NO_FIX=-1
   int8 STATUS_FIX=0

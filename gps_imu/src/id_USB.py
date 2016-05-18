@@ -36,5 +36,5 @@ if __name__ == '__main__':
     time.sleep(1)
     while ser.inWaiting() > 0:
                 # While data is in the buffer
-                velodyne_output = ser.readline()
-                print velodyne_output,'\n'
+                kvh5000_output = ser.readline()
+                print kvh5000_output,'\n'

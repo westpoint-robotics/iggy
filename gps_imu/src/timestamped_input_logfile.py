@@ -33,10 +33,10 @@ try:
             timethen = timenow
             timenow = time.time()
             speed = timenow - timethen
-            velodyne_output = timethen + ": " + ser.readline() # Read data a line of data from buffer
+            kvh5000_output = timethen + ": " + ser.readline() # Read data a line of data from buffer
             
-            outFile.write(velodyne_output) # Option to log data to file
-            print(velodyne_output)
+            outFile.write(kvh5000_output) # Option to log data to file
+            print(kvh5000_output)
 
          
                      
