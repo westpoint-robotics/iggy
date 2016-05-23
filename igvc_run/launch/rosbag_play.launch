@@ -28,4 +28,6 @@
 <node pkg="rosbag" type="play" name="player" output="screen" 
     args=" -r 0.5 --clock $(arg pointcloud) $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg other)"/>
     
+<node name ="rosbridge" pkg ="rosbridge_server" type="rosbridge_websocket"/>
+    
 </launch>
