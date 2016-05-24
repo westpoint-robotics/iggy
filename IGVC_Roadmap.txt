@@ -21,7 +21,7 @@ Short Term Fixes:
 Mid-Long Term improvements:
 -Hardware
     Adjust Chassis:
-        Top heavy, technically ½ inch too tall
+        Top heavy, 
         Wheel clearance from shocks structure too low?
     Sensor locations:
         Move LiDAR lower?

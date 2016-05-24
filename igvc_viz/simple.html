@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> IGVC Diagnostics </title>
+<meta charset="utf-8" />
+<script src="js/jquery.min.js"></script>
+<script src="js/eventemitter2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script src="js/roslib.js"></script>
+<script>
+  function setupUnsubscribeForm() {
+    $( "form#unsubscribeForm" ).submit(function( event ) {
+	event.preventDefault();
+	$(this).closest('tr').remove();
+    });
+  };
+  
+  function subscribe(topicname, topictype) {
+    var listener = new ROSLIB.Topic({
+        ros : ros,
+        name : topicname,
+        messageType : topictype
+    });
+    topics.push(listener);
+    $('#topicTable tr:first').after('<tr><td>'+listener.name+'</td><td>Never</td><td>N/A</td><td><form id="unsubscribeForm"><input type = "hidden" name = "name" value = "'+listener.name+'"><input value = "X" class = "btn-primary" type="submit"></td></tr>');
+      // Then we add a callback to be called every time a message is published on this topic.
+      setupUnsubscribeForm();
+      listener.subscribe(function(message) {
+        //console.log('Received message on ' + listener.name + ': ' + message.toSource());
+        var triggered = 0;
+        $('#topicTable tr').each(function() {
+            var row = $('td', this);
+            if (row.html() == listener.name) {
+                $(row[1]).html(Date());
+                $(row[2]).html(message.toSource());
+            }        
+        });
+      });
+  }
+  // Connecting to ROS
+  // -----------------
+  var ros = new ROSLIB.Ros();
+  var topics = [];
+   
+  // If there is an error on the backend, an 'error' emit will be emitted.
+  ros.on('error', function(error) {
+    document.getElementById('connecting').style.display = 'none';
+    document.getElementById('connected').style.display = 'none';
+    document.getElementById('closed').style.display = 'none';
+    document.getElementById('error').style.display = 'inline';
+    console.log(error);
+  });
+
+  // Find out exactly when we made a connection.
+  ros.on('connection', function() {
+    console.log('Connection made!');
+    document.getElementById('connecting').style.display = 'none';
+    document.getElementById('error').style.display = 'none';
+    document.getElementById('closed').style.display = 'none';
+    document.getElementById('connected').style.display = 'inline';
+  });
+
+  ros.on('close', function() {
+    console.log('Connection closed.');
+    document.getElementById('connecting').style.display = 'none';
+    document.getElementById('connected').style.display = 'none';
+    document.getElementById('closed').style.display = 'inline';
+  });
+
+  // Create a connection to the rosbridge WebSocket server.
+  //ros.connect('ws://10.42.0.1:9090');
+    ros.connect('localhost');
+  $(document).ready(function() {
+    $( "form#topicForm" ).submit(function( event ) {
+        subscribe($("input[name='topicname']",this).val(), $("input[name='topictype']",this).val());
+        event.preventDefault();
+    });
+
+    subscribe('/gps/fix', 'sensor_msgs/NavSatFix');
+
+  });
+</script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">IGVC - The Future is Meow</a>
+        </div>
+      </div>
+  </nav><br><br><br><br>
+
+  <div class = "container">
+      <center>
+      <h1> IGVC Diagnostics </h1> 
+      
+      <div id="statusIndicator">
+        <p id="connecting">
+          Connecting to rosbridge...
+        </p>
+        <p id="connected" style="color:#00D600; display:none">
+          Connected
+        </p>
+        <p id="error" style="color:#FF0000; display:none">
+          Error in the backend!
+        </p>
+        <p id="closed" style="display:none">
+          Connection closed.
+        </p>
+      </div><br>
+
+      <div class = "col-lg-3 form-group">
+      <form id="topicForm">
+        <input class="form-control" type = "text" name = "topicname">
+        <select class="form-control" form = "topicForm" name = "topictype">
+            <option value="geometry_msgs/Twist">geometry_msgs/Twist</option>
+            <option value="raw_data">raw_data</option>
+            <option value="geometry_msgs/Vector3">geometry_msgs/Vector3</option>
+            <option value="diagnostic_msgs/DiagnosticArray">diagnostic_msgs/DiagnosticArray</option>
+            <option value="sensor_msgs/NavSatFix">sensor_msgs/NavSatFix</option>
+            <option value="std_msgs/String">std_msgs/String</option>
+        </select>
+        <input class = "btn-primary" type = "submit" value = "subscribe">
+        <br><br>
+      </form>
+      </div>
+      <div id="topics">
+        <table align="center" class = "span8 table table.striped table.hover" id="topicTable">
+            <tr>
+                <th> Topic </th>
+                <th> Last Updated </th>
+                <th> Data </th>
+		<th> Unsubscribe </th>
+            </tr>      
+        </table>
+      </div>
+      </center>
+    </div>
+</body>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="js/jquery-ui.css">
+<script src="js/bootstrap.min.js"></script>
+</html>
