@@ -21,12 +21,14 @@
 <arg name="imu_raw" default="$(arg path)imu_raw_$(arg dtg).bag" />
 <arg name="gps_fix" default="$(arg path)gps_fix_$(arg dtg).bag" />
 <arg name="other" default="$(arg path)other_$(arg dtg).bag" />
+<arg name="transform" default="$(arg path)transform_$(arg dtg).bag" />
+
 
 <!--<arg name="other" default="$(arg path)other.bag" /> -->
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.5 --clock $(arg pointcloud) $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg other)"/>
+    args=" -r 0.5 --clock $(arg pointcloud) $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg transform) $(arg other)"/>
     
 <node name ="rosbridge" pkg ="rosbridge_server" type="rosbridge_websocket"/>
     
