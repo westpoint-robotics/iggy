@@ -1,13 +1,8 @@
 global_costmap:
   global_frame: /map
   robot_base_frame: /base_footprint
-<<<<<<< Updated upstream
-  publish_frequency: 0.1
-  update_frequency: 0.1
-=======
   publish_frequency: 0.0
   update_frequency: 15.0
->>>>>>> Stashed changes
   static_map: false
   resolution: 0.25
   origin_x: -50
