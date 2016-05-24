@@ -3,91 +3,93 @@
 
 <!-- =============   TRANSFORMS  ======================= -->
 <!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="-0.1 0.0 1.14 0 0 0 base_link velodyne 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
+    args="-0.1 0.0 1.14 0 0 0 base_link velodyne 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-        args="0.0 0.0 0.0 0 0 0 1 base_link gps_frame 100" />
-  <!--      args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" /> -->
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
+    args="0.0 0.0 0.0 0 0 0 1 base_link gps_frame 100" />
+<!--      args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" /> -->
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
-        args="0 0 0 0 0 0 1 base_link imu_frame 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
+    args="0 0 0 0 0 0 1 base_link imu_frame 100" />
 
- <node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
-        args="0.27 0 1.08 0 0.628 0 base_link bumblebee2 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
+    args="0.27 0 1.08 0 0.628 0 base_link bumblebee2 100" />
 <!--
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_camera_frame"
-        args="0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_right_camera_frame"
+    args="0.27 -0.06 1.08 0 0.75 0 base_link right_camera_frame 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_camera_frame"
-        args="0.27 0.06 1.08 0 0.75 0 base_link left_camera_frame 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_left_camera_frame"
+    args="0.27 0.06 1.08 0 0.75 0 base_link left_camera_frame 100" />
 -->
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
-        args="-0.27 0.28 -0.47 0 0 0 1 base_link left_wheel_frame 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
+    args="-0.27 0.28 -0.47 0 0 0 1 base_link left_wheel_frame 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
-        args="-0.27 -0.28 -0.47 0 0 0 1 base_link right_wheel_frame 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
+    args="-0.27 -0.28 -0.47 0 0 0 1 base_link right_wheel_frame 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
-        args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
+    args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
 
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
-        args="0 0 0 0 0 0 1 map odom 100" />
-
+<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+    args="0 0 0 0 0 0 1 map odom 100" />
 
 <!-- =============   NODES and Launch Files  ======================= -->
-<!--
- check until "INS_SOLUTION_GOOD" is given, navigation cannot start before.
- If you power off the cns than restart the process.
-<node name="novatel_CNS5000" pkg="gps_imu" type="imu_parser.py" output="screen"/> -->
-<node name="novatel_CNS5000" pkg="gps_imu" type="imu_parser.py" output="screen"/>
-
+<!-- check until "INS_SOLUTION_GOOD" is given, navigation cannot start before.
+ If you power off the cns than restart the process -->
+<node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
 
 <!--utm odom converter node for goal location -->
-<!--<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
-  <remap from="odom" to="goal_utm"/>
-  <remap from="fix" to="goal_gps" />
-</node>-->
+<node name="gps_goal_conv" pkg="gps_common" type="utm_odometry_node">
+    <remap from="odom" to="goal_utm"/>
+    <remap from="fix" to="goal_gps" />
+</node>
 
-<!--utm odom converter node for current location
+<!--utm odom converter node for current location-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
-  <remap from="odom" to="vo"/>
-  <remap from="fix" to="gps/fix" />
-  <param name="frame_id" value="base_footprint" />
-</node>-->
+    <remap from="odom" to="vo"/>
+    <remap from="fix" to="gps/fix" />
+    <param name="frame_id" value="base_footprint" />
+</node>
 
-  <!--<include file="$(find igvc_run)/launch/dml_ekf.launch">
-  </include>-->
+<include file="$(find igvc_run)/launch/ekf.launch">
+</include>
 
-	<include file="$(find igvc_run)/launch/dml_move_base.launch">
-	</include>
-	
-	<include file="$(find roboteq)/launch/roboteq_driver.launch">
-	</include> 
+<include file="$(find igvc_run)/launch/move_base.launch">
+</include>
 
-	<include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
-	</include>
+<include file="$(find roboteq)/launch/roboteq_driver.launch">
+</include> 
+
+<include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
+</include>
   
 <!--was originally running triclops_camera2.launch but this is the only node currently required for camera
-(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)-->
-	<node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen"></node>
+(the node runs test_triclops_camera.cpp, vision_3d.cpp, triclops_opencv.cpp, line_filter.cpp)
+<node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen"></node>
+<node pkg="triclops_vision" type="Hansing_converter.py" name="red_blue_flag_filter" output="screen"></node>  -->
 
-  <node pkg="triclops_vision" type="Hansing_converter.py" name="red_blue_flag_filter" output="screen"></node>
+<include file="$(find usma_triclops)/launch/igvc_bumblebee.launch">
+</include> 
 
-  	<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
-		<remap from="/imu/data" to="/imu_data"/>   
-		<param name="cloud" value="/velodyne_points"/>
-		<param name="use_cloud_input" value="yes"/>
-		<param name="max_iterations" value="10"/>    
-		<param name="use_imu" type="bool" value="true" />    
-		<param name="use_odom" type="bool" value="false" />    
-		<param name="fixed_frame" type="string" value="/map" />    
-		<param name="base_frame" type="string" value="/base_footprint" />
-	</node>
-<!--creates bag files that get overwritten each time this runs
-<node name="bags" pkg="igvc_run" type="rosbagRecord.sh" />  -->
 
-<!-- Start an rviz node with a custom configuration  -->
-<!-- <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/igvc_run_everything.rviz"/> -->
+<!--<node pkg="laser_scan_matcher" type="laser_scan_matcher_node"   
+name="laser_scan_matcher_node" output="screen"> 
+	<remap from="/imu_data" to="/imu/data"/>   
+	<param name="cloud" value="/velodyne_points"/>
+	<param name="use_cloud_input" value="yes"/>
+	<param name="max_iterations" value="10"/>    
+	<param name="use_imu" type="bool" value="true" />    
+	<param name="use_odom" type="bool" value="false" />    
+	<param name="fixed_frame" type="string" value="/map" />    
+	<param name="base_frame" type="string" value="/base_footprint" />
+</node>  -->
+	
+<!--creates bag files that get overwritten each time this runs-->
+<include file="$(find igvc_run)/launch/rosbag_record.launch">
+</include>
+
+<!-- Start an rviz node with a custom configuration
+<node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find igvc_run)/launch/igvc_run_everything.rviz"/>  -->
 </launch>
 
