@@ -26,8 +26,14 @@
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.5 --clock $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg other)"/>
-    <!-- Add in "$(arg pointcloud)" to load the pointcloud -->
-<node name ="rosbridge" pkg ="rosbridge_server" type="rosbridge_websocket"/>
+    args=" -r 0.5 --clock $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg other)"/>
+    <!-- Add in "$(arg pointcloud)" to load the pointcloud 
+         $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) -->
+
+<!--<node name ="rosbridge" pkg ="rosbridge_server" type="rosbridge_websocket"/>    -->
+
+
+<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
+</include>
     
 </launch>

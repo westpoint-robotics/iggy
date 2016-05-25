@@ -3,44 +3,42 @@
 <head>
 <title> IGVC Diagnostics </title>
 <meta charset="utf-8" />
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/simple.css">
+<link rel="stylesheet" href="js/jquery-ui.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="js/eventemitter2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script src="js/roslib.js"></script>
 <script>
-  function setupUnsubscribeForm() {
-    $( "form#unsubscribeForm" ).submit(function( event ) {
-	event.preventDefault();
-	$(this).closest('tr').remove();
-    });
-  };
+ 
+  // Connecting to ROS
+  // -----------------
+  var ros = new ROSLIB.Ros();
+  var topics = [];
   
-  function subscribe(topicname, topictype) {
+  
+  
+  function subscribe(topicname, topictype, destDiv) {
     var listener = new ROSLIB.Topic({
         ros : ros,
         name : topicname,
         messageType : topictype
     });
-    topics.push(listener);
-    $('#topicTable tr:first').after('<tr><td>'+listener.name+'</td><td>Never</td><td>N/A</td><td><form id="unsubscribeForm"><input type = "hidden" name = "name" value = "'+listener.name+'"><input value = "X" class = "btn-primary" type="submit"></td></tr>');
+    topics.push(listener); // adds listener to queue of topics
+ 
       // Then we add a callback to be called every time a message is published on this topic.
-      setupUnsubscribeForm();
-      listener.subscribe(function(message) {
-        //console.log('Received message on ' + listener.name + ': ' + message.toSource());
-        var triggered = 0;
-        $('#topicTable tr').each(function() {
-            var row = $('td', this);
-            if (row.html() == listener.name) {
-                $(row[1]).html(Date());
-                $(row[2]).html(message.toSource());
-            }        
-        });
-      });
+   //   listener.subscribe(function(message) {
+   //     //console.log('Received message on ' + listener.name + ': ' + message.toSource());
+   //     var triggered = 0;
+   //     alert('here!');
+   //     $(destDiv).html(message.toSource());
+   //   });
   }
-  // Connecting to ROS
-  // -----------------
-  var ros = new ROSLIB.Ros();
-  var topics = [];
+
+  
    
   // If there is an error on the backend, an 'error' emit will be emitted.
   ros.on('error', function(error) {
@@ -67,19 +65,37 @@
     document.getElementById('closed').style.display = 'inline';
   });
 
+
   // Create a connection to the rosbridge WebSocket server.
-  //ros.connect('ws://10.42.0.1:9090');
-    ros.connect('localhost');
+  //ros.connect('ws://10.42.0.1:9090');       //Use this For connecting to Iggy
+  ros.connect('ws://127.0.0.1:9090');       //Use this For running from RosBags
+  
+  //var dataText = "data: #INSPVAA,COM1,0,76.0,FINESTEERING,2921,317466.000,00000000,54e2,13306;2921,317466.000000000,41.39022087375,-73.95348110786,-43.2046,-14.4050,-0.1705,-2.0699,-2.928802673,4.369177308,327.900970992,INS_ALIGNMENT_COMPLETE*390c3ac7";
+  //var dataArray = dataText.split(",");
+  //var lastElem = dataArray[20].split("*");
+  
+  
+  
+  
+ //jQuery
   $(document).ready(function() {
-    $( "form#topicForm" ).submit(function( event ) {
+	$("#topicForm").submit(function() { //When anything is submitted into something with ID 'topicForm', subscribe 
         subscribe($("input[name='topicname']",this).val(), $("input[name='topictype']",this).val());
         event.preventDefault();
     });
 
-    subscribe('/gps/fix', 'sensor_msgs/NavSatFix');
-
-  });
-</script>
+  //$('#ros-sub').click(function(){
+	//subscribe('/raw_data','std_msgs/String','#ins-align')
+	//)};
+//    subscribe('/gps/fix');
+    
+  $(document).ready(function(){
+		document.getElementById("rossub").innerHTML = "Steering Status:"; //+ dataArray[4] + "<br><br> INS Status: " + lastElem;
+		alert("doc writing")
+});
+  
+  
+</script> 
 </head>
 
 <body>
@@ -116,6 +132,45 @@
           Connection closed.
         </p>
       </div><br>
+        <br>
+        <br>
+
+<!-------------  INS ALIGNMENT WINDOW -------------->
+  <div class = "container">
+    <div class = "row">
+
+      <div class = "col-md-4" id="ins-align">
+        <div class = "panel panel-primary">
+          <div class = "panel-heading">INS Alignment</div>
+          <div class = "panel-body" id="rossub">blah 
+
+            
+
+          </div>
+        </div>
+      </div>
+      
+      
+<!------------  GPS LOCALIZATION WINDOW ------------>
+      <div class = "col-md-4">
+        <div class = "panel panel-primary">
+          <div class = "panel-heading">GPS Localization</div>
+          <div class = "panel-body">Fluff Text</div>
+        </div>
+      </div>
+
+<!------------  BATTERY PERCENT WINDOW ------------->
+      <div class = "col-md-4">
+          <div class = "panel panel-primary">
+          <div class = "panel-heading">Battery Percentage</div>
+          <div class = "panel-body">Fluff Text</div>
+        </div>
+      </div>
+<!-------------------------------------------------->      
+    </div>
+  </div>
+
+
 
       <div class = "col-lg-3 form-group">
       <form id="topicForm">
@@ -146,8 +201,5 @@
     </div>
 </body>
 
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="js/jquery-ui.css">
-<script src="js/bootstrap.min.js"></script>
+
 </html>
