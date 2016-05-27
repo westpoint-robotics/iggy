@@ -18,80 +18,157 @@
   // -----------------
   var ros = new ROSLIB.Ros();
   var topics = [];
-  
-  
-  
-  function subscribe(topicname, topictype, destDiv) {
-    var listener = new ROSLIB.Topic({
-        ros : ros,
-        name : topicname,
-        messageType : topictype
-    });
-    topics.push(listener); // adds listener to queue of topics
+  var realData = ""
+  //~ 
+// ========== /RAW_DATA TOPIC SUBSCRIPTION ========== //
  
-      // Then we add a callback to be called every time a message is published on this topic.
-   //   listener.subscribe(function(message) {
-   //     //console.log('Received message on ' + listener.name + ': ' + message.toSource());
-   //     var triggered = 0;
-   //     alert('here!');
-   //     $(destDiv).html(message.toSource());
-   //   });
-  }
+	var rawData = new ROSLIB.Topic({ 		// Identifies the name and type of topic you want to subscribe to
+		ros : ros,
+		name : '/novatel/raw_data', // rostopic list to get topics
+		messageType : 'std_msgs/String' // rostopic type to get messageType
+	}); 
+	   
+	rawData.subscribe(function(message) {	// Actually subscribes. Anything done with the data MUST be inside the .subscribe brackets
+		realData = message.data;
+		//console.log(message.data)
+	  	var dataArray = realData.split(",");	//splits data by commas
+		var lastElem = dataArray[20].split("*");	// last bit has '*' and crap after it, so splits on '*;
+	  	document.getElementById("ins-sub").innerHTML = "Steering Status: " + dataArray[4] + "<br><br> INS Alignment: " + lastElem[0];
+		
+		if 		(realData.search("ORIENTATION") > 0) {	document.getElementById("ins-align").className = "panel panel-danger";		} //8
+		else if (realData.search("INITIALPOS") > 0) {	document.getElementById("ins-align").className = "panel panel-danger";		} //9
+		else if (realData.search("FREE") > 0) {	 		document.getElementById("ins-align").className = "panel panel-warning";		} //6
+		else if (realData.search("INACTIVE") > 0) {		document.getElementById("ins-align").className = "panel panel-danger";		} //0
+		else if (realData.search("ALIGNING") > 0) {		document.getElementById("ins-align").className = "panel panel-warning";		} //1
+		else if (realData.search("VARIANCE") > 0) {	 	document.getElementById("ins-align").className = "panel panel-warning";		} //2
+		else if (realData.search("COMPLETE") > 0) {		document.getElementById("ins-align").className = "panel panel-success";		} //7
+		else if (realData.search("GOOD") > 0) {	 		document.getElementById("ins-align").className = "panel panel-success";		} //3	
+		
+		else if (realData.search("FREEWHEELING") > 0) {	document.getElementById("ins-align").className = "panel panel-warning";		}
+	});
+// ================================================== //
 
-  
+// =========== /GPS/FIX TOPIC SUBSCRIPTION ========== //
+
+	var gpsData = new ROSLIB.Topic({
+		ros : ros,
+		name : '/gps/fix', // "rostopic list" in a terminal to get topics
+		messageType : 'sensor_msgs/NavSatFix' // "rostopic type [topicName]" in a terminal to get messageType
+	}); 
+	
+	gpsData.subscribe(function(message) {
+		realData = (JSON.stringify(message));
+		dataArray = realData.split(",");
+		alt = (dataArray[2].split('"'))[2].substring(1);
+		lon = (dataArray[3].split('"'))[2].substring(1,14);
+		lat = (dataArray[17].split('"'))[2].substring(1,15);
+		//console.log(alt, lat, lon);
+	  	document.getElementById("gps-sub").innerHTML = "Altitude: "+alt+"<br><br>Latitude: "+lat+"<br>Longitude: "+lon;
+	  	document.getElementById("gps-align").className = "panel panel-success";
+	});
+	
+	
+// ================================================== //  
+
+// ========== /IMU_DATA TOPIC SUBSCRIPTION ========== //
+
+	var imuData = new ROSLIB.Topic({
+		ros : ros,
+		name : 'imu/raw', // "rostopic list" in a terminal to get topics
+		messageType : 'sensor_msgs/Imu' // "rostopic type [topicName]" in a terminal to get messageType
+	}); 
+	
+	imuData.subscribe(function(message) {
+		realData = (JSON.stringify(message));
+		dataArray = realData.split(",");
+		accelY = (dataArray[35].split('"'))[4].substr(1,15);
+		accelX = (dataArray[36].split('"'))[2].substr(1,15);
+		accelZ = (dataArray[37].split('"'))[2].substr(1,15);
+		
+		velY = (dataArray[38].split('"'))[4].substr(1,15);
+		velX = (dataArray[39].split('"'))[2].substr(1,15);
+		velZ = (dataArray[40].split('"'))[2].substr(1,15);
+		
+		//console.log(dataArray);
+		//console.log(velY, velX, velZ);
+	  	document.getElementById("imu-sub").innerHTML = "<center>Linear Acceleration</center>X: "+accelX+"<br>Y: "+accelY+"<br>Z: "+accelZ+"<br><br><center>Angular Velocity</center>X: "+velX+"<br>Y: "+velY+"<br>Z: "+velZ;
+	  	//"<br><br>Latitude: "+lat+"<br>Longitude: "+lon ;
+	  	document.getElementById("imu-align").className = "panel panel-success";
+	});
+	
+	
+// ================================================== //  
+
+// ============ /ODOM TOPIC SUBSCRIPTION ============ //
+
+	var odomData = new ROSLIB.Topic({
+		ros : ros,
+		name : '/odom', // "rostopic list" in a terminal to get topics
+		messageType : 'nav_msgs/Odometry' // "rostopic type [topicName]" in a terminal to get messageType
+	}); 
+	
+	odomData.subscribe(function(message) {
+		console.log("stuff");
+		newData = (JSON.stringify(message));
+		dataArray = realData.split(",");
+		posY = (dataArray[46].split('"'))[8].substr(1,15);
+		posX = (dataArray[47].split('"'))[2].substr(1,15);
+				
+		orientZ = (dataArray[49].split('"'))[2].substr(1,15);
+		orientW = (dataArray[50].split('"'))[2].substr(1,15);
+		
+		console.log(posY);
+		//console.log(velY, velX, velZ);
+	  	document.getElementById("odom-sub").innerHTML = "<center>Position</center>X: "+posX+"<br>Y: "+posY+"<br><center>Orientation</center>Z: "+orientZ+"<br>W: "+orientW;
+	  	//"<br><br>Latitude: "+lat+"<br>Longitude: "+lon ;
+	  	//document.getElementById("odom-align").className = "panel panel-success";
+	//~ 
+	});
+	//~ //position Y [46] = "pose":{"pose":{"position":{"y":4.5072942933795614
+	//~ //position X [47] = "x":1.5276708407690165
+
+	//~ //orient Z [51] = "z":0.9735931216614143
+	//~ //orient W [52] = "w":0.22829023950572783}}
+	
+// ================================================== //  
    
   // If there is an error on the backend, an 'error' emit will be emitted.
-  ros.on('error', function(error) {
-    document.getElementById('connecting').style.display = 'none';
-    document.getElementById('connected').style.display = 'none';
-    document.getElementById('closed').style.display = 'none';
-    document.getElementById('error').style.display = 'inline';
-    console.log(error);
-  });
+	  ros.on('error', function(error) {
+		document.getElementById('connecting').style.display = 'none';
+		document.getElementById('connected').style.display = 'none';
+		document.getElementById('closed').style.display = 'none';
+		document.getElementById('error').style.display = 'inline';
+		console.log(error);
+	  });
 
   // Find out exactly when we made a connection.
-  ros.on('connection', function() {
-    console.log('Connection made!');
-    document.getElementById('connecting').style.display = 'none';
-    document.getElementById('error').style.display = 'none';
-    document.getElementById('closed').style.display = 'none';
-    document.getElementById('connected').style.display = 'inline';
-  });
-
-  ros.on('close', function() {
-    console.log('Connection closed.');
-    document.getElementById('connecting').style.display = 'none';
-    document.getElementById('connected').style.display = 'none';
-    document.getElementById('closed').style.display = 'inline';
-  });
-
+	  ros.on('connection', function() {
+		console.log('Connection made!');
+		document.getElementById('connecting').style.display = 'none';
+		document.getElementById('error').style.display = 'none';
+		document.getElementById('closed').style.display = 'none';
+		document.getElementById('connected').style.display = 'inline';
+	  });
+  // Close Connection
+	  ros.on('close', function() {
+		console.log('Connection closed.');
+		document.getElementById('connecting').style.display = 'none';
+		document.getElementById('connected').style.display = 'none';
+		document.getElementById('closed').style.display = 'inline';
+	  });
+console.log("test 1");
 
   // Create a connection to the rosbridge WebSocket server.
   //ros.connect('ws://10.42.0.1:9090');       //Use this For connecting to Iggy
   ros.connect('ws://127.0.0.1:9090');       //Use this For running from RosBags
   
-  //var dataText = "data: #INSPVAA,COM1,0,76.0,FINESTEERING,2921,317466.000,00000000,54e2,13306;2921,317466.000000000,41.39022087375,-73.95348110786,-43.2046,-14.4050,-0.1705,-2.0699,-2.928802673,4.369177308,327.900970992,INS_ALIGNMENT_COMPLETE*390c3ac7";
-  //var dataArray = dataText.split(",");
-  //var lastElem = dataArray[20].split("*");
-  
-  
-  
+    
   
  //jQuery
-  $(document).ready(function() {
-	$("#topicForm").submit(function() { //When anything is submitted into something with ID 'topicForm', subscribe 
-        subscribe($("input[name='topicname']",this).val(), $("input[name='topictype']",this).val());
-        event.preventDefault();
-    });
+$(document).ready(function(){  
+  
 
-  //$('#ros-sub').click(function(){
-	//subscribe('/raw_data','std_msgs/String','#ins-align')
-	//)};
-//    subscribe('/gps/fix');
-    
-  $(document).ready(function(){
-		document.getElementById("rossub").innerHTML = "Steering Status:"; //+ dataArray[4] + "<br><br> INS Status: " + lastElem;
-		alert("doc writing")
+
 });
   
   
@@ -101,104 +178,105 @@
 <body>
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">IGVC - The Future is Meow</a>
-        </div>
-      </div>
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#">IGVC - The Future is Meow</a>
+		</div>
+	  </div>
   </nav><br><br><br><br>
 
   <div class = "container">
-      <center>
-      <h1> IGVC Diagnostics </h1> 
-      
-      <div id="statusIndicator">
-        <p id="connecting">
-          Connecting to rosbridge...
-        </p>
-        <p id="connected" style="color:#00D600; display:none">
-          Connected
-        </p>
-        <p id="error" style="color:#FF0000; display:none">
-          Error in the backend!
-        </p>
-        <p id="closed" style="display:none">
-          Connection closed.
-        </p>
-      </div><br>
-        <br>
-        <br>
+	  <center>
+	  <p style="color:#FFF;"><h1> IGVC Diagnostics </h1> </p>
+	  
+	  <div id="statusIndicator">
+		<p id="connecting">
+		  Connecting to rosbridge...
+		</p>
+		<p id="connected" style="color:#00D600; display:none">
+		  Connected
+		</p>
+		<p id="error" style="color:#FF0000; display:none">
+		  Error in the back end!
+		</p>
+		<p id="closed" style="display:none">
+		  Connection closed.
+		</p>
+	  </div><br>
+		<br>
+		<br>
 
-<!-------------  INS ALIGNMENT WINDOW -------------->
+<!-------------  ALL FEEDBACK WINDOWS -------------->
   <div class = "container">
-    <div class = "row">
-
-      <div class = "col-md-4" id="ins-align">
-        <div class = "panel panel-primary">
-          <div class = "panel-heading">INS Alignment</div>
-          <div class = "panel-body" id="rossub">blah 
-
-            
-
-          </div>
-        </div>
-      </div>
-      
-      
+	<div class = "row">
+<!-------------  INS ALIGNMENT WINDOW -------------->
+	  <div class = "col-md-4">
+		<div class = "panel panel-danger"  id="ins-align">
+		  <div class = "panel-heading"><b><u>INS Status</u></b></div>
+		  <div class = "panel-heading" id="ins-sub">Loading... </div>
+		</div>
+	  </div>
+	  
+	  
 <!------------  GPS LOCALIZATION WINDOW ------------>
-      <div class = "col-md-4">
-        <div class = "panel panel-primary">
-          <div class = "panel-heading">GPS Localization</div>
-          <div class = "panel-body">Fluff Text</div>
-        </div>
-      </div>
+	  <div class = "col-md-4">
+		<div class = "panel panel-danger"  id="gps-align">
+		  <div class = "panel-heading"><b><u>GPS Localization</u></b></div>
+		  <div class = "panel-heading" id = "gps-sub">No GPS Signal...</div>
+		</div>
+	  </div>
 
 <!------------  BATTERY PERCENT WINDOW ------------->
-      <div class = "col-md-4">
-          <div class = "panel panel-primary">
-          <div class = "panel-heading">Battery Percentage</div>
-          <div class = "panel-body">Fluff Text</div>
-        </div>
-      </div>
+	  <div class = "col-md-4">
+		  <div class = "panel panel-danger">
+		  <div class = "panel-heading"><b><u>Battery Percentage</u></b></div>
+		  <div class = "panel-heading" id = "bat-sub"><h1>14%</h1></div>
+		</div>
+	  </div>
 <!-------------------------------------------------->      
-    </div>
+	</div>
+
+<!-------------- SECOND ROW WINDOWS ---------------->
+<!------------- IMU ACCELERATION DATA -------------->
+	<div class = "row">
+	  <div class = "col-md-4">
+		<div class = "panel panel-danger"  id="imu-align">
+		  <div class = "panel-heading"><b><u>IMU Data</u></b></div>
+		  <div class = "panel-heading" id="imu-sub">Loading... </div>
+		</div>
+	  </div>
+	  
+	  
+<!---------------  REAL TIME ODOMETRY -------------->
+	  <div class = "col-md-4">
+		<div class = "panel panel-danger"  id="odom-align">
+		  <div class = "panel-heading"><b><u>Real Time Odometry</u></b></div>
+		  <div class = "panel-heading" id = "odom-sub">No Odom Data...</div>
+		</div>
+	  </div>
+
+<!-------------- VELODYNE PUBLISHING --------------->
+	  <div class = "col-md-4">
+		  <div class = "panel panel-danger" id="vel-align">
+		  <div class = "panel-heading"><b><u>Velodyne Status</u></b></div>
+		  <div class = "panel-heading" id = "vel-sub">Not Publishing...</div>
+		</div>
+	  </div>
+<!-------------------------------------------------->      
+	</div>
   </div>
 
 
 
-      <div class = "col-lg-3 form-group">
-      <form id="topicForm">
-        <input class="form-control" type = "text" name = "topicname">
-        <select class="form-control" form = "topicForm" name = "topictype">
-            <option value="geometry_msgs/Twist">geometry_msgs/Twist</option>
-            <option value="raw_data">raw_data</option>
-            <option value="geometry_msgs/Vector3">geometry_msgs/Vector3</option>
-            <option value="diagnostic_msgs/DiagnosticArray">diagnostic_msgs/DiagnosticArray</option>
-            <option value="sensor_msgs/NavSatFix">sensor_msgs/NavSatFix</option>
-            <option value="std_msgs/String">std_msgs/String</option>
-        </select>
-        <input class = "btn-primary" type = "submit" value = "subscribe">
-        <br><br>
-      </form>
-      </div>
-      <div id="topics">
-        <table align="center" class = "span8 table table.striped table.hover" id="topicTable">
-            <tr>
-                <th> Topic </th>
-                <th> Last Updated </th>
-                <th> Data </th>
-		<th> Unsubscribe </th>
-            </tr>      
-        </table>
-      </div>
-      </center>
-    </div>
+	  
+	  </center>
+	</div>
 </body>
 
 

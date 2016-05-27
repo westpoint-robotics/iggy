@@ -6,8 +6,10 @@
 
 <!--This line sets the path to the ROS bagfiles to run -->
 <arg name="path" default="$(env HOME)/catkin_ws/rosbags/SummerBAGFiles/" />
+
+
 <!--DTG argument must be changed for appropriate set of bag files every use. -->
-<arg name="dtg" default="2016-05-18-12-09-30" />   
+<arg name="dtg" default="2016-05-25-10-58-55" />   
 
 <!--These are the bag files to run 
 <arg name="enc_raw" default="$(arg path)enc_raw.bag" /> -->
@@ -26,8 +28,9 @@
 
 <!-- This line runs all the bag files specified above -->
 <node pkg="rosbag" type="play" name="player" output="screen" 
-    args=" -r 0.5 --clock $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg other)"/>
-    <!-- Add in "$(arg pointcloud)" to load the pointcloud 
+    args=" -r 0.5 --clock $(arg imudata) $(arg gps_fix)  $(arg other)"/>
+    
+    <!-- Add in "$(arg pointcloud)" to load the pointcloud $(arg imu_raw)  $(arg other)
          $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) -->
 
 <!--<node name ="rosbridge" pkg ="rosbridge_server" type="rosbridge_websocket"/>    -->
