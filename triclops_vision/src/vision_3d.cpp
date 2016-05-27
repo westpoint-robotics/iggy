@@ -24,18 +24,17 @@
 #include "triclops_vision/line_filter.h"
 
 Vision3D::Vision3D(int argc, char **argv, CameraSystem *camera) {
-    ros::init(argc,argv,"linefilter");
-    ros::NodeHandle nh;
-    image_transport::ImageTransport it(nh);
+    this->nh = new ros::NodeHandle();
+    image_transport::ImageTransport it(*(this->nh));
 
-    this->lineCloudPublisher = nh.advertise<sensor_msgs::PointCloud2>("/vision3D/lines", 0);
-    this->redCloudPublisher = nh.advertise<sensor_msgs::PointCloud2>("/vision3D/red", 0);
-    this->blueCloudPublisher = nh.advertise<sensor_msgs::PointCloud2>("/vision3D/blue", 0);
+    this->lineCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/lines", 0);
+    this->redCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/red", 0);
+    this->blueCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/blue", 0);
 
     this->subcamdisp = it.subscribe("/camera/disparity", 1, &Vision3D::visionCallBackDisparity, this);
-    this->subcamfilteredright = it.subscribe("/camera/right/linefiltered", 0, &Vision3D::visionCallBackFilteredRight, this);
-    this->subcamfilteredrightred = it.subscribe("/camera/right/redFilter", 0, &Vision3D::visionCallBackFilteredRightRed, this);
-    this->subcamfilteredrightblue = it.subscribe("/camera/right/blueFilter", 0, &Vision3D::visionCallBackFilteredRightBlue, this);
+    //this->subcamfilteredright = it.subscribe("/camera/right/linefiltered", 0, &Vision3D::visionCallBackFilteredRight, this);
+    //this->subcamfilteredrightred = it.subscribe("/camera/right/redFilter", 0, &Vision3D::visionCallBackFilteredRightRed, this);
+    //this->subcamfilteredrightblue = it.subscribe("/camera/right/blueFilter", 0, &Vision3D::visionCallBackFilteredRightBlue, this);
     this->subcamfilteredleft = it.subscribe("/camera/left/linefiltered", 0, &Vision3D::visionCallBackFilteredLeft, this);
     this->subcamfilteredleftred = it.subscribe("/camera/left/redFilter", 0, &Vision3D::visionCallBackFilteredLeftRed, this);
     this->subcamfilteredleftblue = it.subscribe("/camera/left/blueFilter", 0, &Vision3D::visionCallBackFilteredLeftBlue, this);
@@ -63,10 +62,11 @@ Vision3D::~Vision3D()
 
 void Vision3D::visionCallBackDisparity(const sensor_msgs::ImageConstPtr& msg)
 {
+    //printf("Copying disparity over...\n");
     this->disparityImage = cv_bridge::toCvCopy(msg, "mono16")->image;
 }
 
-void Vision3D::visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg)
+/*void Vision3D::visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg)
 {
     this->filteredRight = cv_bridge::toCvCopy(msg, "mono8")->image;
 }
@@ -79,24 +79,27 @@ void Vision3D::visionCallBackFilteredRightRed(const sensor_msgs::ImageConstPtr& 
 void Vision3D::visionCallBackFilteredRightBlue(const sensor_msgs::ImageConstPtr& msg)
 {
     this->filteredRightBlue = cv_bridge::toCvCopy(msg, "mono8")->image;
-}
+}*/
 
 void Vision3D::visionCallBackFilteredLeft(const sensor_msgs::ImageConstPtr& msg)
 {
+    //printf("Copying left line filtered\n");
     this->filteredLeft = cv_bridge::toCvCopy(msg, "mono8")->image;
 }
 
 void Vision3D::visionCallBackFilteredLeftRed(const sensor_msgs::ImageConstPtr& msg)
 {
+    //printf("Copying left line red filtered\n");
     this->filteredLeftRed = cv_bridge::toCvCopy(msg, "mono8")->image;
 }
 
 void Vision3D::visionCallBackFilteredLeftBlue(const sensor_msgs::ImageConstPtr& msg)
 {
+    //printf("Copying left line blue filtered\n");
     this->filteredLeftBlue = cv_bridge::toCvCopy(msg, "mono8")->image;
 }
 
-void Vision3D::visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg)
+/*void Vision3D::visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg)
 {
     this->imageRight = cv_bridge::toCvCopy(msg, "bgr8")->image;
     cv::cvtColor(this->imageRight, this->imageRight, CV_BGR2GRAY);
@@ -106,7 +109,7 @@ void Vision3D::visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg)
 {
     this->imageLeft = cv_bridge::toCvCopy(msg, "bgr8")->image;
     cv::cvtColor(this->imageLeft, this->imageLeft, CV_BGR2GRAY);
-}
+}*/
 
 int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
                 cv::Mat const &maskImage,
@@ -148,7 +151,7 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
             // look at points within a range
             PointT pointLine, pointRed, pointBlue;
             //only fil out for points that are cyan
-            if (mask != 0)
+            if (mask != 0 && i > 200)
             {
                 //std::cout << "mask and disparity: " << int(mask) << " and " << disparity << std::endl;
                 pointLine.x = z;
@@ -194,6 +197,7 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
 
 void Vision3D::run()
 {     
+    //printf("Producing point cloud\n");
     producePointCloud(this->disparityImage, this->filteredLeft, this->filteredLeftRed, this->filteredLeftBlue, this->lineCloud, this->redCloud, this->blueCloud);
     this->lineCloud.header.frame_id = "bumblebee2";
     this->redCloud.header.frame_id = "bumblebee2";
@@ -204,5 +208,15 @@ void Vision3D::run()
     this->lineCloud.clear();
     this->redCloud.clear();
     this->blueCloud.clear();
-    ros::spinOnce();
 }
+
+
+
+
+
+
+
+
+
+
+

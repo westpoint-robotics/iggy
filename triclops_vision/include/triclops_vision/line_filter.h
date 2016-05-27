@@ -64,7 +64,9 @@ class LineFilter
         image_transport::Subscriber subcamright;
         image_transport::Subscriber subcamleft;
 
-
+	ros::Rate *loop_rate;
+	ros::AsyncSpinner *async_wheels;
+	
 };
 
 #endif // LINE_FILTER_H

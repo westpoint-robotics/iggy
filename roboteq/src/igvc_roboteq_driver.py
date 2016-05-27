@@ -4,6 +4,7 @@ import rospy
 import time
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistWithCovarianceStamped
 #from nav_msgs.msg import Odometry
 #from std_msgs.msg import Int16
 from geometry_msgs.msg import Vector3
@@ -135,6 +136,12 @@ def moveWheels(speed):  #not currently in use
 def moveCallback(data):
     global estopCount
     global RCmode
+
+    pub_covariance = TwistWithCovarianceStamped()
+    pub_covariance.twist.twist.linear.x = data.linear.x
+    pub_covariance.twist.twist.angular.z = data.angular.z
+    pub2.publish(pub_covariance)
+
     #print('im here')
     RCVals = getRCInput()
     estopValue = RCVals[0]
@@ -199,11 +206,12 @@ if __name__ == '__main__':
     rospy.init_node('igvc_roboteq', anonymous=True)
     #print('hello world')
     pub = rospy.Publisher("enc_raw", Vector3, queue_size=1) 
+    pub2 = rospy.Publisher("roboteq_driver/cmd_with_covariance", TwistWithCovarianceStamped, queue_size=1) 
     rospy.Subscriber("roboteq_driver/cmd", Twist, moveCallback)
 
     try:
         #print('try.. try again')
-        rate = rospy.Rate(3)
+        rate = rospy.Rate(10)
         #encodermsg = Vector3()
         while not rospy.is_shutdown():
             #print('here234')

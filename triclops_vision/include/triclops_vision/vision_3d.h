@@ -70,12 +70,12 @@ class Vision3D
                   TriclopsInput   const & colorData );
 
 
-        void visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg);
-        void visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg);
+        //void visionCallBackRGBRight(const sensor_msgs::ImageConstPtr& msg);
+        //void visionCallBackRGBLeft(const sensor_msgs::ImageConstPtr& msg);
         void visionCallBackDisparity(const sensor_msgs::ImageConstPtr& msg);
-        void visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg);
-        void visionCallBackFilteredRightRed(const sensor_msgs::ImageConstPtr& msg);
-        void visionCallBackFilteredRightBlue(const sensor_msgs::ImageConstPtr& msg);
+        //void visionCallBackFilteredRight(const sensor_msgs::ImageConstPtr& msg);
+        //void visionCallBackFilteredRightRed(const sensor_msgs::ImageConstPtr& msg);
+        //void visionCallBackFilteredRightBlue(const sensor_msgs::ImageConstPtr& msg);
         void visionCallBackFilteredLeft(const sensor_msgs::ImageConstPtr& msg);
         void visionCallBackFilteredLeftRed(const sensor_msgs::ImageConstPtr& msg);
         void visionCallBackFilteredLeftBlue(const sensor_msgs::ImageConstPtr& msg);
@@ -111,7 +111,9 @@ class Vision3D
         ros::Publisher lineCloudPublisher;
         ros::Publisher blueCloudPublisher;
         ros::Publisher redCloudPublisher;
-        
+	ros::Rate *loop_rate;
+	ros::NodeHandle *nh;
+	ros::AsyncSpinner *async_wheels;
 
 };
 

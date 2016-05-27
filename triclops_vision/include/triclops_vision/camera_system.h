@@ -68,6 +68,7 @@ class CameraSystem {
             image_transport::Publisher image_pub_left;
             image_transport::Publisher image_pub_right;
             image_transport::Publisher image_pub_disparity;
+	    ros::Rate *loop_rate;
             
 };
 

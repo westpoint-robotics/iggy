@@ -26,7 +26,7 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   namespace FC2 = FlyCapture2;
   namespace FC2T = Fc2Triclops;
   TriclopsContext triclops;
-
+  
 
   this->camera.Connect();
   // configure camera - Identifies what camera is being used?
@@ -45,7 +45,7 @@ CameraSystem::CameraSystem(int argc, char** argv) {
 
   //triclopsSetRectify(this->triclops, true);
   //triclopsSetDisparity(this->triclops, 0, 70);
-  //triclopsSetResolution(this->triclops, 768,1024);
+  triclopsSetResolution(this->triclops, 480,640);
   //triclopsSetStereoMask(this->triclops, 13);
   //triclopsSetDisparityMapping(this->triclops, 1, 1);
 
@@ -58,7 +58,7 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   {
       exit(FC2T::handleFc2Error(fc2Error));
   }
-
+  triclopsSetResolution(this->triclops, 480,640);
   // Get the camera info and print it out
   FC2::CameraInfo camInfo;
   fc2Error = this->camera.GetCameraInfo( &camInfo );
@@ -69,12 +69,11 @@ CameraSystem::CameraSystem(int argc, char** argv) {
   }
   else
   {
-      ROS_INFO(">>>>> CAMERA INFO  Vendor: %s     Model: %s     Serail#: %d  Resolution: %s\n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber, camInfo.sensorResolution);
+      ROS_INFO("[!] Triclops booting!\n[-] CAMERA INFO: Vendor: %s     Model: %s     Serial#: %d  Resolution: %s\n", camInfo.vendorName, camInfo.modelName, camInfo.serialNumber, camInfo.sensorResolution);
   }
 
   ros::init(argc, argv, "camera");
   ros::NodeHandle nh;
-  ros::Rate loop_rate(10);
 
   // Container of Images used for processing
   image_transport::ImageTransport it(nh);
@@ -89,7 +88,7 @@ int CameraSystem::configureCamera( FC2::Camera & camera )
 {
     	
     FC2T::ErrorType fc2TriclopsError;	      
-	  FC2T::StereoCameraMode mode = FC2T::TWO_CAMERA;
+    FC2T::StereoCameraMode mode = FC2T::TWO_CAMERA;
     fc2TriclopsError = FC2T::setStereoMode( camera, mode );
     if ( fc2TriclopsError )
     {
@@ -327,7 +326,6 @@ void CameraSystem::run() {
 
     doStereo(this->triclops, this->mono, this->disparityImageTriclops);
 
-      
     convertTriclops2Opencv(this->disparityImageTriclops, this->disparityImageCV);
     //printf("Size of image going in: %d, %d   Size of image going out, %d, %d", disparityImageTriclops.nrows, disparityImageTriclops.ncols, disparityImageCV.rows, disparityImageCV.cols);
     // DEBUG
@@ -339,9 +337,9 @@ void CameraSystem::run() {
 
     sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono16", this->disparityImageCV).toImageMsg();
     this->image_pub_disparity.publish(outmsg);
-
-    ros::spinOnce();
 }
+
+
 
 
 
