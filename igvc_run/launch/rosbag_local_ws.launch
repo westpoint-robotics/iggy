@@ -1,0 +1,39 @@
+<!--igvc_run.launch-->
+<launch>
+
+ <!-- =============   bagfiles  =======================-->
+<param name="use_sim_time" value="true"/>
+
+<!--This line sets the path to the ROS bagfiles to run -->
+<arg name="path" default="$(env HOME)/catkin_ws/rosbags/SummerBAGFiles/" />
+<!--DTG argument must be changed for appropriate set of bag files every use. -->
+<arg name="dtg" default="2016-05-18-12-09-30" />   
+
+<!--These are the bag files to run 
+<arg name="enc_raw" default="$(arg path)enc_raw.bag" /> -->
+<arg name="pointcloud" default="$(arg path)pointcloud_$(arg dtg).bag" />
+<arg name="rectified" default="$(arg path)rectified_$(arg dtg).bag" />
+<arg name="disparity" default="$(arg path)disparity_$(arg dtg).bag" />
+<arg name="lines3d" default="$(arg path)lines3d_$(arg dtg).bag" />
+<arg name="red3d" default="$(arg path)red3d_$(arg dtg).bag" />
+<arg name="blue3d" default="$(arg path)blue3d_$(arg dtg).bag" />
+<arg name="imudata" default="$(arg path)imudata_$(arg dtg).bag" />
+<arg name="imu_raw" default="$(arg path)imu_raw_$(arg dtg).bag" />
+<arg name="gps_fix" default="$(arg path)gps_fix_$(arg dtg).bag" />
+<arg name="other" default="$(arg path)other_$(arg dtg).bag" />
+
+<!--<arg name="other" default="$(arg path)other.bag" /> -->
+
+<!-- This line runs all the bag files specified above -->
+<node pkg="rosbag" type="play" name="player" output="screen" 
+    args=" -r 0.5 --clock $(arg imudata) $(arg imu_raw) $(arg gps_fix) $(arg other)"/>
+    <!-- Add in "$(arg pointcloud)" to load the pointcloud 
+         $(arg rectified) $(arg disparity) $(arg lines3d) $(arg red3d) $(arg blue3d) -->
+
+<!--<node name ="rosbridge" pkg ="rosbridge_server" type="rosbridge_websocket"/>    -->
+
+
+<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
+</include>
+    
+</launch>
