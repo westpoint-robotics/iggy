@@ -149,8 +149,8 @@ if __name__ == '__main__':
     global KVH_IMU
     global SerialData
     rospy.init_node('KVHCG5100IMU')
-    Pos_pub = rospy.Publisher('imu/Heading_local', Pose2D)
-    Imu_pub = rospy.Publisher('imu_data', Imu)
+    Pos_pub = rospy.Publisher('imu/raw/heading', Pose2D)
+    Imu_pub = rospy.Publisher('imu/raw', Imu)
     #Twist_pub = rospy.Publisher('imu/speed', Twist)
     # TODO add publisher for IMU_Status here
     # TODO add publisher for IMU velocity here
@@ -171,7 +171,7 @@ if __name__ == '__main__':
 
 
     imu_data = Imu()
-    imu_data = Imu(header=rospy.Header(frame_id="KVH_CG5100_IMU"))
+    imu_data = Imu(header=rospy.Header(frame_id="imu_frame"))
     
     #TODO find a right way to convert imu acceleration/angularvel./orientation accuracy to covariance
     imu_data.orientation_covariance = [1e-6, 0, 0, 
@@ -229,7 +229,7 @@ if __name__ == '__main__':
         Vx_old=0.0
         Vy_old=0.0
         Vz_old=0.0
-        Time_step=0.01
+        Time_step=0.1
         while not rospy.is_shutdown():
   
             ### start of loop back test ###
@@ -279,8 +279,8 @@ if __name__ == '__main__':
                                 Ex =fields[0] # X angle +/-0.66 radians
                                 Ey =fields[1] # Y angle +/-0.66 radians
                                 Ez =fields[2] # Z angle +/-0.66 radians
-                                Vx=fields[3] # X velocity, +/-1 m/sec
-                                Vy=fields[4] # Y velocity, +/-1 m/sec
+                                Vy=fields[3] # X velocity, +/-1 m/sec
+                                Vx=fields[4] # Y velocity, +/-1 m/sec
                                 Vz=fields[5] # Z velocity, +/-1 m/sec
                                 Odometer=fields[6]  # Odometer pulses
                                 Status  =fields[7]    # Status, Value=119 == All sensor OK.

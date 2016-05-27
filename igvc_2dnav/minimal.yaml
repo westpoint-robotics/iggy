@@ -1,4 +1,4 @@
 plugins: []
-publish_frequency: 1.0
+publish_frequency: 0.0
 footprint: [[-0.325, -0.325], [-0.325, 0.325], [0.325, 0.325], [0.46, 0.0], [0.325, -0.325]]
 recovery_behavior_enabled: false

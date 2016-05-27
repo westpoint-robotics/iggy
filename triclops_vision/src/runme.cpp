@@ -8,17 +8,19 @@
 int main (int argc, char **argv) {
 	ros::init(argc,argv,"triclops_vision");
 	ros::NodeHandle nh;
-  	ros::Rate loop_rate(10);
+	ros::Rate loop_rate(15);
 
 	CameraSystem camera(argc,argv);
 	LineFilter linefilter(argc,argv);
-    Vision3D vision3D(argc, argv, &camera);
+    	Vision3D vision3D(argc, argv, &camera);
 
 	while (ros::ok()) {
 		camera.run();
-		linefilter.run();
-        vision3D.run();
-        linefilter.displayHough();
+		ros::spinOnce();
+	  	linefilter.run();
+		ros::spinOnce();
+         	vision3D.run();
+		ros::spinOnce();
 		loop_rate.sleep();
-	}	
+	}
 }

@@ -34,9 +34,9 @@ if (ser.isOpen()):
 ser.open()
 
 # Create a log file
-home = expanduser("~")
-fName = home+"/catkin_ws/rosbags/novatelLog.txt"
-outFile = open(fName, "wb")
+#home = expanduser("~")
+#fName = home+"/catkin_ws/rosbags/novatelLog.txt"
+#outFile = open(fName, "wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 
@@ -57,17 +57,15 @@ ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
 imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
-novaPub = rospy.Publisher('raw_data', String, queue_size=1)
+novaPub = rospy.Publisher('novatel/raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
-rate = rospy.Rate(15) # 10hz
+rate = rospy.Rate(5) 
 try:
-    while not rospy.is_shutdown(): 
- 
-        #ser.write('LOG COM1 INSPVAA ONCE \r\n')
+    while not rospy.is_shutdown():  
         while ser.inWaiting() > 0:
             # While data is in the buffer
             kvh5000_output = ser.readline() # Read data a line of data from buffer
-            outFile.write(kvh5000_output) # Option to log data to file
+            #outFile.write(kvh5000_output) # Option to log data to file
             #print(kvh5000_output)
             #novaPub = kvh5000_output
             #TODO print once when gets into different mode like initializing, finesteering, etc
@@ -95,6 +93,7 @@ try:
                 gpsPub.publish(inspva_out[1])
                 imuPub.publish(inspva_out[0])
                 novaPub.publish(kvh5000_output)            
+	rate.sleep()
                      
 except KeyboardInterrupt:
     ser.write('unlogall\r\n') # Send a message to CNS-5000 to stop sending logs

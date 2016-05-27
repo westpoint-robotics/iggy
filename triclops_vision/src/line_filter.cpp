@@ -25,25 +25,23 @@ cv::Mat filtered_imageR; // The image with detected white lines painted cyan
 LineFilter::LineFilter(int argc, char** argv)
 {
   this->thresh_val=229; // 225
-  this->erosion_size=1; // 2
+  this->erosion_size=4; // 2
   this->h_rho=1; // 1
   this->h_theta=180; // 180
   this->h_thresh=30; // 40
-  this->h_minLineLen=20; // 20
-  this->h_maxLineGap=7; // 30
-
+  this->h_minLineLen=47; // 20
+  this->h_maxLineGap=68; // 30
   // Create control sliders that allow tunning of the parameters for line detection
-  cv::namedWindow("ControlView", CV_WINDOW_AUTOSIZE);
+  /*cv::namedWindow("ControlView", CV_WINDOW_AUTOSIZE);
   cv::createTrackbar( "Threshold Value", "ControlView", &thresh_val, 255);
   cv::createTrackbar( "Erosion Size", "ControlView", &erosion_size, 25);
   cv::createTrackbar( "h_rho", "ControlView", &h_rho, 25);
   cv::createTrackbar( "h_theta", "ControlView", &h_theta, 360);
   cv::createTrackbar( "h_thresh", "ControlView", &h_thresh, 255);
   cv::createTrackbar( "minLineLen", "ControlView", &h_minLineLen, 250);
-  cv::createTrackbar( "maxLineGap", "ControlView", &h_maxLineGap, 250);
+  cv::createTrackbar( "maxLineGap", "ControlView", &h_maxLineGap, 250);*/
 
   //Start ROS
-  ros::init(argc,argv,"linefilter");
   ros::NodeHandle nh;
   image_transport::ImageTransport it(nh);
 
@@ -61,10 +59,9 @@ LineFilter::LineFilter(int argc, char** argv)
 
   //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
   this->subcamleft = it.subscribe("/camera/left/rgb", 0, &LineFilter::imageCallbackL, this);
-  this->subcamright = it.subscribe("/camera/right/rgb", 0, &LineFilter::imageCallbackR, this); 
+  //this->subcamright = it.subscribe("/camera/right/rgb", 0, &LineFilter::imageCallbackR, this);
 
   //ROS loop that causes the system to keep moving.
-  
 }
 
 LineFilter::~LineFilter()
@@ -73,17 +70,7 @@ LineFilter::~LineFilter()
 }
 
 void LineFilter::run() {
-    ros::spinOnce();
-}
-
-//Executable for linefilter when called by launch file, will subscribe to camera left and right nodes, and will publish filtered images for each.
-
-void LineFilter::imageCallbackL(const sensor_msgs::ImageConstPtr& msg)
-{
-    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
-    cImageL = cv_bridge::toCvShare(msg, "bgr8")->image;
-
-    //Execute filtration, map to new image filtered image
+    //printf("Finding lines in left...\n");
     LineFilter::findLines(cImageL, filtered_imageL, this->lines);
 
     sensor_msgs::ImagePtr outmsg = cv_bridge::CvImage(std_msgs::Header(), "mono8", filtered_imageL).toImageMsg();
@@ -97,9 +84,17 @@ void LineFilter::imageCallbackL(const sensor_msgs::ImageConstPtr& msg)
     this->image_pub_filtered_left.publish(outmsg);
 }
 
-void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
+//Executable for linefilter when called by launch file, will subscribe to camera left and right nodes, and will publish filtered images for each.
+
+void LineFilter::imageCallbackL(const sensor_msgs::ImageConstPtr& msg)
 {
-    
+    //printf("Copying image left...\n");
+    //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
+    cImageL = cv_bridge::toCvCopy(msg, "bgr8")->image;
+}
+
+/*void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
+{
     //Pull subscribed data inside this callback, formatting for linefilter use based on original vision_3d code
     cImageR = cv_bridge::toCvShare(msg, "bgr8")->image;
     //Execute filtration, map to new image filtered image
@@ -111,10 +106,10 @@ void LineFilter::imageCallbackR(const sensor_msgs::ImageConstPtr& msg)
 
     /*DEBUG
     cv::imshow("Filter Right", filtered_imageR);
-    cv::waitKey(10);*/
+    cv::waitKey(10);
 
     this->image_pub_filtered_right.publish(outmsg);
-}
+}*/
 
 /**
  * @brief LineFilter::findLines This function finds the white lines in the src_image
@@ -349,9 +344,9 @@ void LineFilter::displayHough()
   try
   {
     cv::Mat disImage;
-    cv::resize(this->hough_image, disImage, cv::Size(400,300));
+    /*cv::resize(this->hough_image, disImage, cv::Size(400,300));
     cv::imshow("Hough Lines Image", disImage);
-    cv::waitKey(3);
+    cv::waitKey(3);*/
   }
   catch (cv::Exception& e)
   {
