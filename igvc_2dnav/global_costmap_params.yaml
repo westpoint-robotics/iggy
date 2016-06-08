@@ -5,10 +5,10 @@ global_costmap:
   update_frequency: 5.0
   static_map: false
   resolution: 0.1
-  origin_x: -25.0
-  origin_y: -25.0
-  width: 50
-  height: 50
+  origin_x: -75.0
+  origin_y: -75.0
+  width: 150
+  height: 150
   footprint_padding: 0.04
 
 

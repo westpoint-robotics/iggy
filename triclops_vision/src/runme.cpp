@@ -8,7 +8,7 @@
 int main (int argc, char **argv) {
 	ros::init(argc,argv,"triclops_vision");
 	ros::NodeHandle nh;
-	ros::Rate loop_rate(15);
+	ros::Rate loop_rate(5);
 
 	CameraSystem camera(argc,argv);
 	LineFilter linefilter(argc,argv);

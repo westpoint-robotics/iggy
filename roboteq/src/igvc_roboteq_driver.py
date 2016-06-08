@@ -2,14 +2,20 @@
 import serial
 import rospy
 import time
+import os
 from std_msgs.msg import String
+from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import TwistWithCovarianceStamped
 #from nav_msgs.msg import Odometry
 #from std_msgs.msg import Int16
 from geometry_msgs.msg import Vector3
 
+global lastSwitchVal
+global switchValue
 
+lastSwitchVal = 0
+switchValue = 0
 RCmode = 2
 
 #print("here1")
@@ -116,7 +122,8 @@ def getRCInput():
         switch = getdata()
         estopVal = makeCleanMsgTwoLetters(estopVal)
         switch = makeCleanMsgTwoLetters(switch)
-    except: # catch *all* exceptions
+    except Exception as e: # catch *all* exceptions
+        print e
         print( "Error: getRCInput" )
         estopVal = 1000
         switch = 1900
@@ -136,16 +143,15 @@ def moveWheels(speed):  #not currently in use
 def moveCallback(data):
     global estopCount
     global RCmode
+    global lastSwitchVal
+    global switchValue
 
     pub_covariance = TwistWithCovarianceStamped()
     pub_covariance.twist.twist.linear.x = data.linear.x
     pub_covariance.twist.twist.angular.z = data.angular.z
     pub2.publish(pub_covariance)
-
+    estopValue = 0
     #print('im here')
-    RCVals = getRCInput()
-    estopValue = RCVals[0]
-    switchValue = RCVals[1]
     if (estopValue > 1500):  #estop button pushed
         ser.write('!EX\r')
         estopCount = True
@@ -158,31 +164,13 @@ def moveCallback(data):
         RCmode = 4
     else:
         if (switchValue > 1500):  #switch in RC mode
-            #do RC commands
-            #print ('RC things')
             RCmode = 1
-        else:                     
-            #print('sending command')
-            #print('comp things')
-            #print(switchValue)
+        else:    
             if (abs(data.linear.x) > 0.001 or abs(data.angular.z) > 0.001):
                 #rospy.loginfo("I heard %f %f",data.linear.x,data.angular.z)
                 speed = data.linear.x *1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
                                             #1000 would give full speed range, but setting to lower value to better control robot
-                turn = (data.angular.z + 0.009)*500*-1  #angular.z value is between -0.5 and 0.5 and input to wheels is between -1000 and 1000
-                                                     #2000 would give full speed range, but setting to lower value to better control robot
-                                                     #through testing found 0.009 to be the approximate offset in the wheels
-                                                     #the wheels are balanced improperly and so a true number is hard to find
-                                                     #since based on the incline the robot is facing, the value changes dramatically
-           #     if (turn > 100):
-           #         turn = 100
-           #     elif (turn < -100):
-           #         turn = -100
-           #     if (speed > 500):
-           #         speed = 500
-           #     elif (speed < -500):
-           #         speed = -500
-                #print(speed,turn)
+                turn = (data.angular.z + 0.009)*500*-1 
                 cmd = '!G 1 ' + str(speed) + '\r'
                 ser.write(cmd)
                 #getdata()
@@ -192,48 +180,39 @@ def moveCallback(data):
                 #getdata()
                 #print(cmd)
                 RCmode = 0
-       
 
+if __name__ == "__main__":
+    global lastSwitchVal 
+    global switchValue 	
 
-#def valsToOdom(encVals):
-#    leftenc = encVals[0]
-#    rightenc = encVals[1]
-#    odom_mes = Odometry()
-#    return odom_mes
-
-
-if __name__ == '__main__':
     rospy.init_node('igvc_roboteq', anonymous=True)
-    #print('hello world')
     pub = rospy.Publisher("enc_raw", Vector3, queue_size=1) 
     pub2 = rospy.Publisher("roboteq_driver/cmd_with_covariance", TwistWithCovarianceStamped, queue_size=1) 
+    lights = rospy.Publisher("/lights", Bool, queue_size=1)
+    auto = rospy.Publisher("/autonomous", Bool, queue_size=1)
     rospy.Subscriber("roboteq_driver/cmd", Twist, moveCallback)
-
+   
     try:
         #print('try.. try again')
         rate = rospy.Rate(10)
         #encodermsg = Vector3()
         while not rospy.is_shutdown():
-            #print('here234')
-            #enclist = getEncoders()
-            #if (enclist[0] == 10000000 or enclist[1] == 10000000 or enclist[0] == None or enclist[1] == None):
-                #print ('error happened')
-            #    pass
-           # else:
-                #odom_msg = valsToOdom(encoders)
-                
-                #encodermsg.x = enclist[0]
-                #encodermsg.y = enclist[1]
-                #encodermsg.z = RCmode
-                #pub.publish(encodermsg)
-                #print(odom_msg)            
-                #print (encoders)
-                #moveCallback()
-                #look at move subcriber, if not empty, move = true
+            RCVals = getRCInput()
+            estopValue = RCVals[0]
+	    switchValue = RCVals[1]
+
+            if (lastSwitchVal != switchValue/100):
+                lastSwitchVal = switchValue/100
+                if (switchValue > 1500):  #switch in RC mode
+                    lights.publish(False)
+                else:    
+                    lights.publish(True) 
+	    else:
+            	if (switchValue > 1500):
+                    auto.publish(False)
+            	else:
+                    auto.publish(True)             
             rate.sleep()
-
-
-
     except KeyboardInterrupt:
         ser.close()
         raise
@@ -248,3 +227,4 @@ if __name__ == '__main__':
 
 
 
+			

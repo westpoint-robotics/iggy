@@ -39,5 +39,19 @@
     
 </node>
 
+<node name="pointcloud_to_laserscan_lines" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
+
+    <remap from="cloud_in" to="/vision3D/lines"/>
+    <remap from="scan" to="line_scan"/>
+    <param name="output_frame_id" value="/bumblebee"/>
+    <param name="min_height" value="-1.0"/>
+    <param name="max_height" value="0"/>
+    <param name="angle_min" value="-3.141"/>
+    <param name="angle_max" value="3.141"/>
+    <param name="scan_time" value="1/5.0"/>
+    <param name="range_min" value="0"/>
+    <param name="range_max" value="5"/>
+
+</node>
 
 </launch>
