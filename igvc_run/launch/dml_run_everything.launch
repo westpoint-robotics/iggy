@@ -36,6 +36,9 @@
 <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch"></include>
 
 <!--vision3d-->
+<!--
+<node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen"></node>
+<node pkg="triclops_vision" type="Hansing_converter.py" name="red_blue_flag_filter" output="screen"></node>-->
 <include file="$(find usma_triclops)/launch/threeNodebumblebee.launch"></include>
 
 <!--<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
