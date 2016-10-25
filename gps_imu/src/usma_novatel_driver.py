@@ -22,7 +22,7 @@ from std_msgs.msg import String
 #SETIMUTOANTOFFSET 0.0 0.6096 0.8636 0.05 0.05 0.05
 #SETALIGNMENTVEL 1.15
 ser = serial.Serial(
-    port='/dev/ttyUSB1',
+    port='/dev/raw_gps',
     baudrate=115200, #8N1
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
@@ -50,16 +50,16 @@ ser.write('unlogall\r\n')
 #  command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
 #  ser.write(command)
 
-ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
+#ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
 #ser.write('LOG COM1 RAWIMUSA ONTIME 0.2\r\n')
-#ser.write('LOG COM1 BESTGPSPOSA ONTIME 0.2\r\n')
+ser.write('LOG COM1 BESTGPSPOSA ONTIME 2\r\n')
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
 imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
 novaPub = rospy.Publisher('novatel/raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
-rate = rospy.Rate(5) 
+rate = rospy.Rate(2) 
 try:
     while not rospy.is_shutdown():  
         while ser.inWaiting() > 0:
@@ -92,7 +92,7 @@ try:
                 inspva_out = parse_novatelINSPVA(nova_Header, nova_Data) 
                 gpsPub.publish(inspva_out[1])
                 imuPub.publish(inspva_out[0])
-                novaPub.publish(kvh5000_output)            
+            novaPub.publish(kvh5000_output)            
 	rate.sleep()
                      
 except KeyboardInterrupt:

@@ -19,22 +19,40 @@ import csv
 import roslib
 import rospy
 import actionlib
+import time
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Pose, PoseWithCovarianceStamped, Point, Quaternion, Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from sensor_msgs.msg import NavSatFix
 from nav_msgs.msg import Odometry 
 from random import sample
 from math import pow, sqrt
-from LatLongUTMconversion import LLtoUTM
+from LatLongUTMconversion import LLtoUTM, UTMtoLL
+
+global nav
+
+def update_current_pose(current_pose):
+    #rospy.loginfo("Current Pose is: (%.4f,%.4f)" %((current_pose.pose.pose.position.x),(current_pose.pose.pose.position.y)))
+    try:
+        nav.current_pose = current_pose
+    except NameError:
+        print "Still booting..."
+
+def update_utm(current_latlong):
+    #rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))
+    try:
+        nav.current_utm = LLtoUTM(23, current_latlong.latitude,current_latlong.longitude)
+    except NameError:
+        print "Still booting..."
+
 
 class NavTest():
     def __init__(self):        
         rospy.init_node('nav_test', anonymous=True)        
         rospy.on_shutdown(self.shutdown)    
-        rospy.Subscriber('/odometry/filtered', Odometry, self.update_current_pose)
-        rospy.Subscriber('/gps/fix', NavSatFix, self.update_latlong)
 
         # Subscribe to the move_base action server
+	self.goal = MoveBaseGoal()
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)        
         rospy.loginfo("Waiting for move_base action server...")        
         # Wait 60 seconds for the action server to become available
@@ -46,14 +64,20 @@ class NavTest():
         
         # A variable to hold the initial and current pose of the robot
         self.current_pose = Odometry()
+        self.initial_pose = Odometry()
+        self.current_utm = [] # return (UTMZone, UTMEasting, UTMNorthing)
+        self.initial_utm = [] # return (UTMZone, UTMEasting, UTMNorthing)
         
         # Goal state return values
-        goal_states = ['PENDING', 'ACTIVE', 'PREEMPTED', 
+        self.goal_states = ['PENDING', 'ACTIVE', 'PREEMPTED', 
                        'SUCCEEDED', 'ABORTED', 'REJECTED',
                        'PREEMPTING', 'RECALLING', 'RECALLED',
                        'LOST']       
-        
-    def navigate(goals):
+
+        rospy.Subscriber('/odom', Odometry, update_current_pose)
+        rospy.Subscriber('/gps/fix', NavSatFix, update_utm)
+	        
+    def navigate(self):
         # Variables to keep track of success rate, running time,
         # and distance traveled
         n_goals = 0
@@ -62,31 +86,34 @@ class NavTest():
         start_time = rospy.Time.now()
         running_time = 0
         
+        # TODO Use Dynamic reconfig for this
         # How long in seconds should the robot pause at each location?
         rest_time = rospy.get_param("~rest_time", 10)
+        
+        # TODO set the state variable for current location as start location
+        self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
     
-        # TODO getGoals in odom frame 
-        # TODO Add ability to set pause at waypoint and acceptable distance to waypoint.
+        # TODO getGoals in odom frame, make a list in odom frame. 
+        goals=self.makeWaypointsIntoGoals('waypoints.csv')
     
         # Begin the main loop and run through a sequence of locations
         i = 0
         while not rospy.is_shutdown():                        
             # Keep track of the distance traveled.
+            # TODO update the tolerance and pause time.
+            cur_coord = goals[i][0]
+            last_coord = goals[i-1][0]
             if i != 0:
-                distance = sqrt(pow(locations[i].position.x - 
-                                    locations[i-1].position.x, 2) +
-                                pow(locations[i].position.y - 
-                                    locations[i-1].position.y, 2))
+                distance = sqrt(pow(cur_coord.position.x - last_coord.position.x, 2) +
+                                pow(cur_coord.position.y - last_coord.position.y, 2))
             else:
-                distance = sqrt(pow(locations[i].position.x - 
-                                    initial_pose.pose.pose.position.x, 2) +
-                                pow(locations[i].position.y - 
-                                    initial_pose.pose.pose.position.y, 2))         
-
+                distance = sqrt(pow(cur_coord.position.x - self.initial_pose.pose.pose.position.x, 2) +
+                                pow(cur_coord.position.y - self.initial_pose.pose.pose.position.y, 2))         
             # Set up the next goal location
-            self.goal.target_pose.pose = locations[i]
-            self.goal.target_pose.headupdate_latlonger.frame_id = 'map'
+            self.goal.target_pose.pose = cur_coord
+            self.goal.target_pose.header.frame_id = 'map'
             self.goal.target_pose.header.stamp = rospy.Time.now()
+            self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
 
             # Let the user know where the robot is going next
             rospy.loginfo("Going to: (%.4f,%.4f)" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y))
@@ -109,7 +136,7 @@ class NavTest():
                     distance_traveled += distance
                     rospy.loginfo("State:" + str(state))
                 else:
-                  rospy.loginfo("Goal failed with error code: " + str(goal_states[state]))
+                  rospy.loginfo("Goal failed with error code: " + str(self.goal_states[state]))
             
             # How long have we been running?
             running_time = rospy.Time.now() - start_time
@@ -127,38 +154,56 @@ class NavTest():
                 rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE")
             rospy.sleep(rest_time)
 
-    def getInitialPose():            
+    def setInitialPose(self):            
         # Make sure we have the initial pose
         rospy.loginfo("Waiting for initial pose")
-        initial_pose = Odometry()
-        while initial_pose.header.stamp == "":
-            # Get the initial pose from the robot
-            rospy.wait_for_message('/odometry/filtered', Odometry)
-            rospy.sleep(1) 
-        rospy.sleep(.25) 
-        initial_pose = self.current_pose      
-        rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(initial_pose.pose.pose.position.x,initial_pose.pose.pose.position.y))  
-        return initial_pose            
+        # Get the initial pose from the robot
+        rospy.wait_for_message('/odom', Odometry)
+	while len(self.current_utm) != 3:
+            time.sleep(1) 
+        rospy.loginfo("Establishing initial position wait 10 seconds.")	
+	easts=[]
+	nrths=[]
+	for i in range(1):
+       	    utm_c=self.current_utm
+	    print self.current_utm
+	    easts.append(utm_c[1])
+	    nrths.append(utm_c[2])
+	    rospy.sleep(1.5)
+	easting = sum(easts) / float(len(easts))
+	northing = sum(nrths) / float(len(nrths))
+        self.initial_pose = self.current_pose 
+        self.initial_utm = [utm_c[0],easting,northing]
+        rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))               
+	rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
+	print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
 
     # Turn list of waypoints into Goals. Goals are coordinates in the robot odom frame.
     # TODO Look into makeing this in the map frame if map and odom frame diverge.
-    def makeLLIntoGoals(current_lat,current_long):
+    def makeWaypointsIntoGoals(self, filename):
         log_directory = rospy.get_param("~log_directory", "~/")+"waypoints2Goals_log.csv"
-        wps = loadWaypoints('waypoints.csv')
-        (initZone,initEasting,initNorthing)=LLtoUTM(23, current_lat,current_long)
+        # Load and parse waypoints from file.
+        wps = self.loadWaypoints(filename)
         goals=[]
+        for waypointLat,waypointLong,search_duration,rest_duration in wps:
+            goal_pose=Pose()
+            (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
+            print "Waypoint ll",waypointLat,waypointLong,"east,north", wpEasting,wpNorthing,"init",self.initial_utm
+            goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
+            goal_pose.position.y=(wpNorthing - self.initial_utm[2])
+            goals.append((goal_pose, search_duration, rest_duration))
+        return goals
+        
+        '''
+        (initZone,initEasting,initNorthing)=LLtoUTM(23, current_lat,current_long)
         outString = "lat,long,restTime,tolerance,zone,easting,northing,
         print outString
         outString = current_lat+','+current_long+','+rest_time+','+tolerance+','+initZone+','+initEasting+','+initNorthing
         print outString
-        for waypointLat,waypointLong,rest_time,tolerance in wps:
-            (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
-            print "Waypoint ll",waypointLat,waypointLong,"east,north", wpEasting,wpNorthing
-            goals.append(((initEasting-wpEasting),(initNorthing-wpNorthing),rest_time,tolerance))
-        return goals
+        '''
 
     # Read from file the list of Lat,Long,Duration,Tolerance and put into a list of waypoints
-    def loadWaypoints(filename):
+    def loadWaypoints(self, filename):
         waypoints=[]
         with open(filename, mode='r') as infile:
             reader = csv.reader(infile)
@@ -172,9 +217,9 @@ class NavTest():
         rospy.loginfo("Current Pose is: (%.4f,%.4f)" %((current_pose.pose.pose.position.x),(current_pose.pose.pose.position.y)))        
         self.current_pose = current_pose
 
-    def update_latlong(self, current_latlong):
+    def update_utm(self, current_latlong):
         rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))        
-        self.current_latlong = current_latlong
+        self.current_utm = LLtoUTM(23, current_latlong.latitude,current_latlong.longitude)
 
     def shutdown(self):
         rospy.loginfo("Stopping the robot...")
@@ -184,6 +229,7 @@ class NavTest():
         rospy.sleep(1)
 
 if __name__ == '__main__':
+    global nav
     try:
         nav = NavTest()
         nav.navigate()
