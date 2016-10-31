@@ -47,6 +47,7 @@
 	<param name="base_frame" type="string" value="/base_footprint" />
 </node>-->
 
+<<<<<<< HEAD
 <!--connects the arduino to the computer
 <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
     <param name="port" value="/dev/arduino"/>
@@ -55,6 +56,16 @@
 
 <!--creates bag files that get overwritten each time this runs
 <include file="$(find igvc_run)/launch/rosbag_record.launch"></include>-->
+=======
+<!--connects the arduino to the computer-->
+<node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+    <param name="port" value="/dev/arduino"/>
+    <param name="baud" value="57600"/>
+</node>
+
+<!--creates bag files that get overwritten each time this runs-->
+<!--<include file="$(find igvc_run)/launch/rosbag_record.launch"></include>-->
+>>>>>>> 047a23ce23adc06d6381e4ffe916a45ee497cb78
 
 <!--start ros bridge for user interface
 <node name="rosbridge" pkg="rosbridge_server" type="rosbridge_websocket"/>-->
