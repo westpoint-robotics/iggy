@@ -10,7 +10,7 @@ with open("64E_Factory_Mod.yaml", 'r') as ymlfile:
         for section in cfg:
             for item in section["lasers"]:
                 print type(item),
-                item['dist_correction']=0
+                item['dist_correction']=item['dist_correction']*0.1
                 item['dist_correction_x']=0
                 item['dist_correction_y']=0
                 item['focal_distance']=0

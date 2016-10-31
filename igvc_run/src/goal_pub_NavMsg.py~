@@ -15,8 +15,8 @@
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 """
-
-import roslib;
+import csv
+import roslib
 import rospy
 import actionlib
 from actionlib_msgs.msg import *
@@ -25,17 +25,18 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from nav_msgs.msg import Odometry 
 from random import sample
 from math import pow, sqrt
+from LatLongUTMconversion import LLtoUTM
 
 class NavTest():
     def __init__(self):
         # A list of goal coordinates to move to. This assumes (0,0) is the coordinate
         # that the robot started at.
-        deltas = [(-0.5,0),(0.5,0)]
+        deltas = [(0.5,0),(0.5,0)] #TODO remove once migration to lat long complete
 
         rospy.init_node('nav_test', anonymous=True)        
         rospy.on_shutdown(self.shutdown)        
 
-        # A variable to hold the initial pose of the robot
+        # A variable to hold the initial and current pose of the robot
         self.initial_pose = Odometry()
         self.current_pose = Odometry()
         
@@ -63,6 +64,7 @@ class NavTest():
         # Make sure we have the initial pose
         rospy.loginfo("Waiting for initial pose")
         rospy.Subscriber('/odometry/filtered', Odometry, self.update_current_pose)
+        rospy.Subscriber('/gps/fix', NavSatFix, self.update_latlong)
         while self.initial_pose.header.stamp == "":
             # Get the initial pose from the robot
             rospy.wait_for_message('/odometry/filtered', Odometry)
@@ -71,14 +73,8 @@ class NavTest():
         self.initial_pose = self.current_pose      
         rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))
 
-        # Calculating goal positions based on initial position.
-        locations = []        
-        for delta_x,delta_y in deltas:
-            goal_pose = Pose()
-            goal_pose.position.x = self.initial_pose.pose.pose.position.x + delta_x
-            goal_pose.position.y = self.initial_pose.pose.pose.position.y + delta_y
-            goal_pose.orientation = self.initial_pose.pose.pose.orientation                        
-            locations.append(goal_pose)
+
+
 
         # Variables to keep track of success rate, running time,
         # and distance traveled
@@ -109,7 +105,7 @@ class NavTest():
             # Set up the next goal location
             self.goal = MoveBaseGoal()
             self.goal.target_pose.pose = locations[i]
-            self.goal.target_pose.header.frame_id = 'map'
+            self.goal.target_pose.headupdate_latlonger.frame_id = 'map'
             self.goal.target_pose.header.stamp = rospy.Time.now()
             
             # Let the user know where the robot is going next
@@ -152,10 +148,38 @@ class NavTest():
                 rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE") 
 
             rospy.sleep(self.rest_time)
+
+''' Algorithm:  1. Convert waypoint latlong to utm
+            2. convert current latlong to utm     return (UTMZone, UTMEasting, UTMNorthing)
+            3. subtract current from waypoint
+            4. publish this as the goal
+'''
+def navigate():
+    wps = loadWaypoints('waypoins.csv')
+    (initZone,initEasting,initNorthing)=LLtoUTM(23, self.current_latlong.latitude,self.current_latlong.latitude)
+    goals=[]
+    for waypointLat,waypointLong in wps:
+        (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, self.current_latlong.latitude,self.current_latlong.latitude)
+        goals.append(((initEasting-wpEasting),(initNorthing-wpNorthing)))
+    return goals     
+
+def loadWaypoints(filename):
+    waypoints=[]
+    with open(filename, mode='r') as infile:
+        reader = csv.reader(infile)
+        for rows in reader:
+            if rows[0][0] != '#': # ignore commented out waypoints
+                print rows[0],rows[1]
+                waypoints.append((float(rows[0]),float(rows[1])))
+    return waypoints
             
     def update_current_pose(self, current_pose):
         rospy.loginfo("Current Pose is: (%.4f,%.4f)" %((current_pose.pose.pose.position.x),(current_pose.pose.pose.position.y)))        
         self.current_pose = current_pose
+
+    def update_latlong(self, current_latlong):
+        rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))        
+        self.current_latlong = current_latlong
 
     def shutdown(self):
         rospy.loginfo("Stopping the robot...")
@@ -166,7 +190,10 @@ class NavTest():
 
 if __name__ == '__main__':
     try:
-        NavTest()
+        nav = NavTest()
+        nav.loadWayPoints('waypoints.csv')
+        nav.navigate()
+        
         rospy.spin()
     except rospy.ROSInterruptException:
         rospy.loginfo("Navigation test finished.")

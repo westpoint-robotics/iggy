@@ -159,7 +159,7 @@ if __name__ == '__main__':
     KVHCG5100Pose2D.y=float(0.0)
     #Init KVH_IMU port
     #KVH_IMUport = rospy.get_param('~port','/dev/ttyUSB0')
-    KVH_IMUport = rospy.get_param('~port','/dev/ttyUSB0')
+    KVH_IMUport = rospy.get_param('~port','/dev/raw_imu')
     KVH_IMUrate = rospy.get_param('~baud',115200)
     # printmodulus set to 1 is 100 Hz. 2 : 50Hz 
     #KVH_IMUprintmodulus = rospy.get_param('~printmodulus',1)

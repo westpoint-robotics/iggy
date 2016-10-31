@@ -58,7 +58,7 @@ LineFilter::LineFilter(int argc, char** argv)
   */
 
   //Creation of Subscribers, which use callback functions to execute transform and republishing upon receipt of data.
-  this->subcamleft = it.subscribe("/camera/left/rgb", 0, &LineFilter::imageCallbackL, this);
+  this->subcamleft = it.subscribe("/camera/left/rgb", 1, &LineFilter::imageCallbackL, this);
   //this->subcamright = it.subscribe("/camera/right/rgb", 0, &LineFilter::imageCallbackR, this);
 
   //ROS loop that causes the system to keep moving.
@@ -171,12 +171,12 @@ void LineFilter::findLines(const cv::Mat &src_image, cv::Mat &rtrn_image, cv::ve
     for( int i =0; i< lines.size(); i++)
     {
         line(this->hough_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),3,8);
-        line(this->cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
+        //line(this->cyan_image, cv::Point(lines[i][0],lines[i][1]),cv::Point(lines[i][2],lines[i][3]), cv::Scalar(255,255,0),5,8);
     }
 
     // Return the original image with detected white lines drawn in cyan
     //changed to only return hough_image
-    this->cyan_image = this->hough_image;
+    //this->cyan_image = this->hough_image;
     rtrn_image = this->cyan_image;
 }
 

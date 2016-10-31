@@ -32,8 +32,7 @@ if __name__ == '__main__':
         rospy.Subscriber("gps/fix", NavSatFix, gps_callback)
         #rospy.Subscriber("imu_data", Imu, callback)
         seqnum = 0
-    while not rospy.is_shutdown():
-        
+    while not rospy.is_shutdown():        
         gpsGoal = PoseStamped()
         gpsGoal.header.seq = seqnum
         gpsGoal.header.stamp = rospy.get_rostime()

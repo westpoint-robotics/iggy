@@ -7,7 +7,7 @@
 
 
 <!-- =============   NODES and Launch Files  ======================= -->
-<node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen"/>
+<!-- <node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen"/> -->
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
 
 <!--utm odom converter node for goal location
@@ -23,31 +23,37 @@
   <param name="frame_id" value="base_footprint" />
 </node>
 
-<node name="odom_generator" pkg="odom_generator" type="odom_generator"> </node>
+<node name="odom_generator" pkg="odom_generator" type="odom_generator"> </node> 
 
-<include file="$(find robot_localization)/launch/navsat_transform_template.launch"></include>
+    	<include file="$(find igvc_run)/launch/ekf.launch">
+    	</include>
 
-<include file="$(find robot_localization)/launch/ekf_template.launch"></include>
+	<include file="$(find igvc_run)/launch/move_base.launch">
+	</include>
+	
+	<include file="$(find roboteq)/launch/roboteq_driver.launch">
+	</include> 
 
-<include file="$(find igvc_run)/launch/move_base.launch"></include>
-
-<include file="$(find roboteq)/launch/roboteq_driver.launch"></include> 
-
-<include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch"></include>
-
+	<include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch">
+	</include>
+  
 <!--vision3d-->
-<include file="$(find usma_triclops)/launch/threeNodebumblebee.launch"></include>
+<!--<node pkg="triclops_vision" type="triclops_camera_driver" name="triclops_camera_driver" output="screen"></node>
+<node pkg="triclops_vision" type="Hansing_converter.py" name="red_blue_flag_filter" output="screen"></node>-->
+<include file="$(find usma_triclops)/launch/igvc_bumblebee.launch"></include>
 
-<!--<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
-	<remap from="/imu_data" to="/imu/data"/>   
-	<param name="cloud" value="/velodyne_points"/>
-	<param name="use_cloud_input" value="yes"/>
-	<param name="max_iterations" value="10"/>    
-	<param name="use_imu" type="bool" value="true" />    
-	<param name="use_odom" type="bool" value="false" />    
-	<param name="fixed_frame" type="string" value="/map" />    
-	<param name="base_frame" type="string" value="/base_footprint" />
-</node>-->
+<!--laserscan matcher
+  	<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
+		<remap from="/imu/data" to="/imu_data"/>   
+		<param name="cloud" value="/velodyne_points"/>
+		<param name="use_cloud_input" value="yes"/>
+		<param name="max_iterations" value="10"/>    
+		<param name="use_imu" type="bool" value="true" />    
+		<param name="use_odom" type="bool" value="false" />    
+		<param name="fixed_frame" type="string" value="/map" />    
+		<param name="base_frame" type="string" value="/base_footprint" />
+	</node>
+-->
 
 <!--creates bag files that get overwritten each time this runs-->
 <!--<include file="$(find igvc_run)/launch/rosbag_record.launch"></include>-->

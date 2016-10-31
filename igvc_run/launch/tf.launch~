@@ -1,0 +1,33 @@
+<launch>
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
+        args="0.21 0 1.58 0 0 0 base_link velodyne 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
+    args="-0.28 0 1.18 0 0 0 base_link gps_frame 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
+    args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
+    args="0.44 0.0 1.35 0 -0.75 0  base_link bumblebee2 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="bumblebee2_to_right_camera_frame"
+    args="0.0 0.06 0.0 0 0 0 bumblebee2 right_camera_frame 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="bumblebee2_to_left_camera_frame"
+    args="0.0 -0.06 0.0 0 0 0 bumblebee2 left_camera_frame 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
+    args="0.0 -0.29 0.0 0 0 0 base_link left_wheel_frame 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
+    args="0.0 0.29 0.0 0 0 0 base_link right_wheel_frame 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
+    args="0 0 0.11 0 0 0 1 base_footprint base_link 100" />
+
+<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+    args="0 0 0 0 0 0 1 map odom 100" />
+
+</launch>

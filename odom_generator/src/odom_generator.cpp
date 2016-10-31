@@ -7,7 +7,6 @@ double vx = 0.0;
 double vy = 0.0;
 
 void publishCallBack(const geometry_msgs::Twist& cmd) {
-    printf("I got to the callback!\n");
     vx = cmd.linear.x;
     vy = cmd.linear.y;
 }
@@ -17,7 +16,7 @@ int main(int argc, char** argv){
 
   ros::NodeHandle n;
   ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom/virtual", 50);
-  ros::Subscriber cmd_read = n.subscribe("roboteq_driver/cmd", 1, publishCallBack);
+  ros::Subscriber cmd_read = n.subscribe("/cmd_vel", 1, publishCallBack);
   tf::TransformBroadcaster odom_broadcaster;
 
   double x = 0.0;
@@ -71,7 +70,6 @@ int main(int argc, char** argv){
     odom.twist.twist.linear.y = vy;
 
     //publish the message
-    printf("I published the odom! (%f,%f)\n",vx,vy);
     odom_pub.publish(odom);
 
     last_time = current_time;

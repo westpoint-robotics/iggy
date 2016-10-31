@@ -27,17 +27,17 @@ Vision3D::Vision3D(int argc, char **argv, CameraSystem *camera) {
     this->nh = new ros::NodeHandle();
     image_transport::ImageTransport it(*(this->nh));
 
-    this->lineCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/lines", 0);
-    this->redCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/red", 0);
-    this->blueCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/blue", 0);
+    this->lineCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/lines", 1);
+    this->redCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/red", 1);
+    this->blueCloudPublisher = this->nh->advertise<sensor_msgs::PointCloud2>("/vision3D/blue", 1);
 
     this->subcamdisp = it.subscribe("/camera/disparity", 1, &Vision3D::visionCallBackDisparity, this);
     //this->subcamfilteredright = it.subscribe("/camera/right/linefiltered", 0, &Vision3D::visionCallBackFilteredRight, this);
     //this->subcamfilteredrightred = it.subscribe("/camera/right/redFilter", 0, &Vision3D::visionCallBackFilteredRightRed, this);
     //this->subcamfilteredrightblue = it.subscribe("/camera/right/blueFilter", 0, &Vision3D::visionCallBackFilteredRightBlue, this);
-    this->subcamfilteredleft = it.subscribe("/camera/left/linefiltered", 0, &Vision3D::visionCallBackFilteredLeft, this);
-    this->subcamfilteredleftred = it.subscribe("/camera/left/redFilter", 0, &Vision3D::visionCallBackFilteredLeftRed, this);
-    this->subcamfilteredleftblue = it.subscribe("/camera/left/blueFilter", 0, &Vision3D::visionCallBackFilteredLeftBlue, this);
+    this->subcamfilteredleft = it.subscribe("/camera/left/linefiltered", 1, &Vision3D::visionCallBackFilteredLeft, this);
+    this->subcamfilteredleftred = it.subscribe("/camera/left/redFilter", 1, &Vision3D::visionCallBackFilteredLeftRed, this);
+    this->subcamfilteredleftblue = it.subscribe("/camera/left/blueFilter", 1, &Vision3D::visionCallBackFilteredLeftBlue, this);
 
 
     // TODO: Do we need these?
@@ -138,6 +138,8 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
     {
         for ( j = 0; j < disparityImage.cols; j++ )
         {
+	    if (i%2 && j%2) continue;
+
             //disparity = disparityRow[j];
             //mask = maskRow[j];
             disparity = disparityImage.at<unsigned short>(i,j);
@@ -196,7 +198,7 @@ int Vision3D::producePointCloud(  cv::Mat const &disparityImage,
 }
 
 void Vision3D::run()
-{     
+{
     //printf("Producing point cloud\n");
     producePointCloud(this->disparityImage, this->filteredLeft, this->filteredLeftRed, this->filteredLeftBlue, this->lineCloud, this->redCloud, this->blueCloud);
     this->lineCloud.header.frame_id = "bumblebee2";
