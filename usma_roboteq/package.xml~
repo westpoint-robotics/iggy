@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>usma_roboteq</name>
+  <name>roboteq</name>
   <version>0.0.0</version>
   <description>The roboteq package</description>
 
