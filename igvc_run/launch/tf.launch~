@@ -1,5 +1,8 @@
 <launch>
 
+<node pkg="tf" type="static_transform_publisher" name="map_to_base_footprint"
+        args="0.0 0 0.0 0 0 0 map base_footprint 100" />
+
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
         args="0.21 0 1.58 0 0 0 base_link velodyne 100" />
 
@@ -10,7 +13,7 @@
     args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_bumblebee2"
-    args="0.44 0.0 1.35 0 -0.75 0  base_link bumblebee2 100" />
+    args="0.44 0.0 1.28 0 0.52 0  base_link bumblebee2 100" />
 
 <node pkg="tf" type="static_transform_publisher" name="bumblebee2_to_right_camera_frame"
     args="0.0 0.06 0.0 0 0 0 bumblebee2 right_camera_frame 100" />

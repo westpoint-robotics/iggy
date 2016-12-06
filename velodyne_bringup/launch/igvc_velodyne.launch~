@@ -38,7 +38,7 @@
     <param name="range_max" value="50"/>
     
 </node>
-<!--
+
 <node name="pointcloud_to_laserscan_lines" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
 
     <remap from="cloud_in" to="/vision3D/lines"/>
@@ -53,5 +53,5 @@
     <param name="range_max" value="5"/>
 
 </node>
--->
+
 </launch>
