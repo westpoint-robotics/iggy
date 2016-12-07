@@ -19,7 +19,7 @@
 	<param name="cloud" value="/velodyne_points"/>
 	<param name="use_cloud_input" value="yes"/>
 	<param name="max_iterations" value="10"/>    
-	<param name="use_imu" type="bool" value="true" />    
+	<param name="use_imu" type="bool" value="false" />    
 	<param name="use_odom" type="bool" value="false" />    
 	<param name="fixed_frame" type="string" value="/map" />    
 	<param name="base_frame" type="string" value="/base_footprint" />

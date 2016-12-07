@@ -1,7 +1,5 @@
 <launch>
 
-<node pkg="tf" type="static_transform_publisher" name="map_to_base_footprint"
-        args="0.0 0 0.0 0 0 0 map base_footprint 100" />
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
         args="0.21 0 1.58 0 0 0 base_link velodyne 100" />
