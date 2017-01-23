@@ -6,7 +6,7 @@ from geometry_msgs.msg import Vector3
 from geometry_msgs.msg import Twist
 
 def talker():
-    pub = rospy.Publisher('gvr_bot/cmd_vel', Twist, queue_size=1)
+    pub = rospy.Publisher('roboteq_driver/cmd', Twist, queue_size=1)
     rospy.init_node('send_roboteq_cmd', anonymous=True)
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():

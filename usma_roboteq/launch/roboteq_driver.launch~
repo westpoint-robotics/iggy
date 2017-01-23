@@ -5,7 +5,7 @@
   <remap from="cmd_vel" to="roboteq_driver/cmd"/>
   </node>
 
-  <node pkg="usma_oboteq" type="igvc_roboteq_driver.py" name="roboteq_driver" output="screen">
+  <node pkg="usma_roboteq" type="igvc_roboteq_driver.py" name="roboteq_driver" output="screen">
   </node> 
 
 </launch>
