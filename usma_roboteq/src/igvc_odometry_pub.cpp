@@ -60,7 +60,7 @@ int main(int argc, char **argv)
   double y;
   double th;
   double vth;
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(15);
   while(ros::ok()){
 
     current_time = ros::Time::now();

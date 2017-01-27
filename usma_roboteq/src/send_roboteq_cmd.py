@@ -8,7 +8,7 @@ from geometry_msgs.msg import Twist
 def talker():
     pub = rospy.Publisher('gvr_bot/cmd_vel', Twist, queue_size=1)
     rospy.init_node('send_roboteq_cmd', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
+    rate = rospy.Rate(15) # 10hz
     while not rospy.is_shutdown():
         cmd = Twist()
         cmd.linear.x = 1.0

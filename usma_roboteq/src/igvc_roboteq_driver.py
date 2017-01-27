@@ -194,7 +194,7 @@ if __name__ == "__main__":
    
     try:
         #print('try.. try again')
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(15)
         #encodermsg = Vector3()
         while not rospy.is_shutdown():
             RCVals = getRCInput()

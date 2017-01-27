@@ -28,7 +28,7 @@ if __name__ == '__main__':
     try:
         rospy.init_node('igvc_gps_goals', anonymous=True)
         pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1)
-        rate = rospy.Rate(10) # 10hz
+        rate = rospy.Rate(15) # 10hz
         rospy.Subscriber("gps/fix", NavSatFix, gps_callback)
         #rospy.Subscriber("imu_data", Imu, callback)
         seqnum = 0

@@ -80,7 +80,7 @@ class igvc_localizer:
 if __name__ == '__main__':
     localizer = igvc_localizer()
     rospy.init_node('igvc_localizer', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
+    rate = rospy.Rate(15) # 10hz
     init_position = None
     while not rospy.is_shutdown():
         if (init_position is None) and localizer.isIMU and localizer.isGPS:

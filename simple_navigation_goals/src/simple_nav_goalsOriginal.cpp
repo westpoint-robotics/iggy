@@ -94,7 +94,7 @@ int main(int argc, char** argv){
 
   //pub.publish(gpsgoal);
 
-ros::Rate loop_rate(10);
+ros::Rate loop_rate(15);
 
   while(ros::ok()){
   ROS_INFO("top");
