@@ -9,8 +9,9 @@
     <rosparam file="$(find igvc_2dnav)/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find igvc_2dnav)/base_local_planner_params.yaml" command="load" />
     
-    <remap from="cmd_vel" to="iggy/cmd_vel"/>
+    <remap from="cmd_vel" to="roboteq_driver/cmd_vel"/>
     <remap from="points"  to="triclops/points"/> 
+    <remap from="odom"  to="iggy/odom"/> 
 
   </node>
 
