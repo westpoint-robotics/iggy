@@ -1,0 +1,20 @@
+<launch>
+  <arg name="config" default="base" />
+
+  <param name="robot_description"
+         command="$(find iggy_description)/scripts/env_run
+                    $(find iggy_description)/urdf/configs/$(arg config)
+                    $(find xacro)/xacro $(find iggy_description)/urdf/iggy.urdf.xacro" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>
+
+<!--
+Code for testing of urdf files generated using xacro
+
+rosrun xacro xacro.py `rospack find iggy_description`/urdf/iggy.urdf.xacro -o deletme.urdf
+
+check_urdf deletme.urdf 
+
+
+
+-->

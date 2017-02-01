@@ -25,7 +25,7 @@ broadcast_utm_transform: false
 
 # If this is true, all received odometry data is converted back to a lat/lon and published as a NavSatFix message as
 # /gps/filtered. Defaults to false.
-publish_filtered_gps: false
+publish_filtered_gps: true
 
 # If this is true, the node ignores the IMU data and gets its heading from the odometry source (typically the
 # /odometry/filtered topic coming from one of robot_localization's state estimation nodes). BE CAREFUL when using this!
@@ -40,5 +40,7 @@ wait_for_datum: false
 # Instead of using the first GPS location and IMU-based heading for the local-frame origin, users can specify the
 # origin (datum) using this parameter. The fields in the parameter represent latitude and longitude in decimal degrees,
 # and heading in radians. As navsat_transform_node assumes an ENU standard, a 0 heading corresponds to east.
-datum: [55.944904, -3.186693, 0.0]
+#datum: [55.944904, -3.186693, 0.0]
+datum: [42.679239, -83.195619, 1.571]
+
 

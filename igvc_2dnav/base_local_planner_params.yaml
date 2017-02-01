@@ -16,6 +16,7 @@ TrajectoryPlannerROS:
   xy_goal_tolerance: 1.2
 
   heading_scoring_timestep: 10
+  meter_scoring: true
 
   sim_time: 10
   sim_granularity: 0.2

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <name>iggy_control</name>
+  <version>0.0.0</version>
+  <description>Controllers for Iggy</description>
+
+  <maintainer email="user1@westpointrobotics.com">Dominic Larkin</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/westpoint-robotics</url> 
+   <author email="user1@westpointrobotics.com">Dominic Larkin</author> 
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <run_depend>controller_manager</run_depend>
+  <run_depend>interactive_marker_twist_server</run_depend>
+  <run_depend>diff_drive_controller</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>joy</run_depend>
+  <run_depend>robot_localization</run_depend>
+  <run_depend>teleop_twist_joy</run_depend>
+  <run_depend>topic_tools</run_depend>
+
+  <export>
+  </export>
+</package>
