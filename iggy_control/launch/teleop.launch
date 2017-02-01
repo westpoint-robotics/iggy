@@ -2,7 +2,7 @@
   <arg name="joy_dev" default="/dev/input/js0" />
   <arg name="joystick" default="true" />
 
-  <group ns="bluetooth_teleop" if="$(arg joystick)">
+  <group ns="roboteq_driver" if="$(arg joystick)">
 
     <group unless="$(optenv IGGY_PS4 0)" >
       <rosparam command="load" file="$(find iggy_control)/config/teleop.yaml" />
