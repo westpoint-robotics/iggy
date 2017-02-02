@@ -6,8 +6,8 @@
   <arg name="world_name" default="$(find iggy_gazebo)/worlds/igvc_basic.world" />
 
   <!-- Robot Pose -->
-  <arg name="x" default="-1.88"/>
-  <arg name="y" default="-21.70"/>
+  <arg name="x" default="-3.714"/>
+  <arg name="y" default="-21.26"/>
   <arg name="z" default="0"/>
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
