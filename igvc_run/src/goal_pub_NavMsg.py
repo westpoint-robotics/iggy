@@ -6,7 +6,7 @@
     Attempt to move to each location in succession.  Keep track of success rate, time elapsed, and 
     total distance traveled. The goal locations are determined by adding distances to the current
     location of the robot on the map.
-    based on nav_test.py - Version 0.1 2012-01-10. Modified for use with West Point Robotics.
+    based on nav_test.py - Version 0.1 2012-ub_IGVC.py01-10. Modified for use with West Point Robotics.
     Originaly created for the Pi Robot Project: http://www.pirobot.org
     Copyright (c) 2012 Patrick Goebel.  All rights reserved.
     Original License:
@@ -57,15 +57,15 @@ class NavTest():
         
         # Wait 60 seconds for the action server to become available
         self.move_base.wait_for_server(rospy.Duration(60))        
-        rospy.loginfo("Connected to move base server")
-
-        
+        rospy.loginfo("Connected to move base server")        
         # Make sure we have the initial pose
         rospy.loginfo("Waiting for initial pose")
         rospy.Subscriber('/odometry/filtered', Odometry, self.update_current_pose)
         while self.initial_pose.header.stamp == "":
             # Get the initial pose from the robot
+            rospy.loginfo("Trying to subscribe...")
             rospy.wait_for_message('/odometry/filtered', Odometry)
+            
             rospy.sleep(1) 
         rospy.sleep(.25) 
         self.initial_pose = self.current_pose      

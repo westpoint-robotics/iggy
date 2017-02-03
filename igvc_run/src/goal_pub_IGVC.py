@@ -29,6 +29,8 @@ from random import sample
 from math import pow, sqrt
 from LatLongUTMconversion import LLtoUTM, UTMtoLL
 
+
+
 global nav
 
 def update_current_pose(current_pose):
@@ -74,8 +76,9 @@ class NavTest():
                        'PREEMPTING', 'RECALLING', 'RECALLED',
                        'LOST']       
 
-        rospy.Subscriber('/odom', Odometry, update_current_pose)
+        #rospy.Subscriber('/odom', Odometry, update_current_pose)
         rospy.Subscriber('/gps/fix', NavSatFix, update_utm)
+        rospy.Subscriber('/odometry/gps', Odometry, update_current_pose)
 	        
     def navigate(self):
         # Variables to keep track of success rate, running time,
@@ -158,9 +161,11 @@ class NavTest():
         # Make sure we have the initial pose
         rospy.loginfo("Waiting for initial pose")
         # Get the initial pose from the robot
-        rospy.wait_for_message('/odom', Odometry)
+        rospy.wait_for_message('/odometry/gps', Odometry)
+        rospy.loginfo("Initial Pose from /odometry/gps recieved")
 	while len(self.current_utm) != 3:
             time.sleep(1) 
+            rospy.loginfo("Stuck?")
         rospy.loginfo("Establishing initial position wait 10 seconds.")	
 	easts=[]
 	nrths=[]
