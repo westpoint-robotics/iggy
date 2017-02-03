@@ -37,6 +37,57 @@
     </plugin>
   </gazebo>
 
+<!--
+    <plugin name="zed_controller" filename="libros_stereo_camera.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>60.0</updateRate>
+      <leftCamera>zed_left_camera</leftCamera>
+      <rightCamera>zed_right_camera</rightCamera>
+      <topicName>/raw_stereo</topicName>
+      <frameName>optical_frame</frameName>
+      <CxPrime>960</CxPrime>
+      <Cx>960</Cx>
+      <Cy>540</Cy>
+      <focal_length>1.4</focal_length> 
+      <distortion_k1>-0.16</distortion_k1>
+      <distortion_k2>0</distortion_k2>
+      <distortion_k3>0</distortion_k3>
+      <distortion_t1>0</distortion_t1>
+      <distortion_t2>0</distortion_t2>
+      <baseline>.12</baseline> 
+    </plugin>
+
+
+<gazebo reference="zed_left_camera">
+  <sensor name="zed_sensor" type="CameraSensor">
+    <plugin name="zed_controller" filename="libgazebo_ros_multicamera.so">
+     <alwaysOn>true</alwaysOn>
+     <updateRate>25.0</updateRate>
+     <cameraName>zed</cameraName>
+     <imageTopicName>image</imageTopicName>
+     <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+     <frameName>zed</frameName>
+     <hackBaseline>.12</hackBaseline>
+      <CxPrime>960</CxPrime>
+      <Cx>960</Cx>
+      <Cy>540</Cy>
+      <focal_length>1.4</focal_length> 
+      <distortion_k1>-0.16</distortion_k1>
+      <distortion_k2>0</distortion_k2>
+      <distortion_k3>0</distortion_k3>
+      <distortion_t1>0</distortion_t1>
+      <distortion_t2>0</distortion_t2>
+    </plugin>
+  </sensor> 
+</gazebo>     -->
+
+
+
+
+
+
+
+
   <gazebo reference="base_link">
     <turnGravityOff>false</turnGravityOff>
   </gazebo>

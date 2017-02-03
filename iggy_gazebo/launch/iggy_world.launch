@@ -36,6 +36,7 @@
   <!-- Load Iggy's description, controllers, and teleop nodes. -->
   <include file="$(find iggy_description)/launch/description.launch">
     <arg name="config" value="$(arg config)" />
+    
   </include>
   <include file="$(find iggy_control)/launch/control.launch" />
   <include file="$(find iggy_control)/launch/teleop.launch">
