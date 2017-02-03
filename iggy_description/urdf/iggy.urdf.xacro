@@ -197,18 +197,25 @@
 
   <!-- Optional custom includes. -->
   <xacro:include filename="$(optenv IGGY_URDF_EXTRAS empty.urdf)" />
-
-
-
+  <!--
   <joint name="zed_left_camera_joint" type="fixed">
     <parent link="front_mount" />
     <child link="zed_left_camera" />
-    <origin xyz="${mount_spacing} 0 0" />
+    <origin xyz="${mount_spacing} 0.06 0" />
   </joint>
 
   <xacro:include filename="zed_camera.urdf.xacro" />
 
   <xacro:zed_camera prefix="zed_camera"/>
 
+  <xacro:include filename="depth_camera.urdf.xacro" />
 
+  <xacro:depth_camera/>
+
+  <joint name="depth_camera_joint" type="fixed">
+    <parent link="front_mount" />
+    <child link="depth_camera_link" />
+    <origin xyz="${mount_spacing} 0.06 0" />
+  </joint>
+ -->
 </robot>

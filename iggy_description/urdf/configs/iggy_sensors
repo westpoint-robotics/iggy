@@ -4,4 +4,4 @@
 # pointing forward.
 
 IGGY_LASER=1
-IGGY_ZED=0
+IGGY_BB2=1
