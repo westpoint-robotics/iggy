@@ -207,8 +207,8 @@
 
   <xacro:include filename="depth_camera.urdf.xacro" />
 
-  <xacro:depth_camera/>
-
-
+  <xacro:depth_camera>
+    <origin xyz="0 0 ${chassis_height}" rpy="0 0 0" />
+  </xacro:depth_camera>
 
 </robot>

@@ -17,7 +17,7 @@
                         <far>5</far>
                     </clip>
                 </camera>
-                <plugin name="depth_camera_frame_controller" filename="libgazebo_ros_depth_camera.so">
+                <plugin name="depth_camera_frame_controller" filename="libgazebo_tutorials.so">
                     <always_on>true</always_on>
                     <updateRate>20.0</updateRate>
                     <cameraName>depth_camera</cameraName>
@@ -32,86 +32,87 @@
                     <distortionT1>0.00000001</distortionT1>
                     <distortionT2>0.00000001</distortionT2>
                 </plugin>
-            </sensor> 
+            </sensor>
         </gazebo>
-   <link name="left_camera">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 1.57 0"/>
-            <geometry>
-                <cylinder radius="0.007" length=".031"/>
-            </geometry>
-            <material name="dark_grey">
-                <color rgba="0.1 0.1 0.1 1"/>
-            </material>
-        </visual>
-    </link>
-    <link name="camera_center">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <mesh filename="package://iggy_description/meshes/zed.stl" />
-            </geometry>
-            <material name="light_grey">
-                <color rgba="0.8 0.8 0.8 0.8"/>
-            </material>
-        </visual>
-    </link>
-    <link name="camera_arm">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder radius="0.007" length=".51"/>
-            </geometry>
-            <material name="dark_grey">
-                <color rgba="0.1 0.1 0.1 1"/>
-            </material>
-        </visual>
-    </link>
 
-    <link name="right_camera">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 1.57 0"/>
-            <geometry>
-                <cylinder radius="0.007" length=".031"/>
-            </geometry>
-            <material name="dark_grey">
-                <color rgba="0.1 0.1 0.1 1"/>
-            </material>
-        </visual>
-    </link>
+        <link name="left_camera">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 1.57 0" />
+                <geometry>
+                    <cylinder radius="0.007" length=".031" />
+                </geometry>
+                <material name="dark_grey">
+                    <color rgba="0.1 0.1 0.1 1" />
+                </material>
+            </visual>
+        </link>
 
-    <joint name="left_camera_joint" type="fixed">
-        <parent link="camera_center"/>
-        <child link="left_camera"/>
-        <origin xyz="0 0.06 0" rpy="0 0 0" />
-    </joint>
+        <link name="right_camera">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 1.57 0" />
+                <geometry>
+                    <cylinder radius="0.007" length=".031" />
+                </geometry>
+                <material name="dark_grey">
+                    <color rgba="0.1 0.1 0.1 1" />
+                </material>
+            </visual>
+        </link>
 
-    <joint name="right_camera_joint" type="fixed">
-        <parent link="camera_center"/>
-        <child link="right_camera"/>
-        <origin xyz="0 -0.06 0" rpy="0 0 0" />
-    </joint>
+        <link name="camera_center">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://iggy_description/meshes/zed.stl" />
+                </geometry>
+                <material name="light_grey">
+                    <color rgba="0.8 0.8 0.8 0.8" />
+                </material>
+            </visual>
+        </link>
 
-  <link name="depth_camera_optical"></link>
-    <joint name="depth_camera_optical_joint" type="fixed">
-      <parent link="camera_center"/>
-      <child link="depth_camera_optical"/>
-      <origin rpy="-1.57 0 -1.57" xyz="0 0 0"/>
-    </joint>
+        <link name="camera_arm">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder radius="0.007" length=".50" />
+                </geometry>
+                <material name="dark_grey">
+                    <color rgba="0.1 0.1 0.1 1" />
+                </material>
+            </visual>
+        </link>
 
+        <joint name="left_camera_joint" type="fixed">
+            <parent link="camera_center" />
+            <child link="left_camera" />
+            <origin xyz="0 0.06 0" rpy="0 0 0" />
+        </joint>
 
-    <joint name="camera_arm_joint" type="fixed">
-      <parent link="mid_mount"/>
-      <child link="camera_arm"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-    </joint>
+        <joint name="right_camera_joint" type="fixed">
+            <parent link="camera_center" />
+            <child link="right_camera" />
+            <origin xyz="0 -0.06 0" rpy="0 0 0" />
+        </joint>
 
-    <joint name="camera_center_joint" type="fixed">
-      <parent link="camera_arm"/>
-      <child link="camera_center"/>
-      <origin rpy="0 0.24 0" xyz="0 0 0.25"/>
-    </joint>
+        <!-- Align the optical frame to the camera frame -->
+        <link name="depth_camera_optical"></link>
+        <joint name="depth_camera_optical_joint" type="fixed">
+            <parent link="camera_center" />
+            <child link="depth_camera_optical" />
+            <origin rpy="-1.57 0 -1.57" xyz="0 0 0" />
+        </joint>
 
+        <joint name="camera_center_joint" type="fixed">
+            <parent link="camera_arm" />
+            <child link="camera_center" />
+            <origin rpy="0 0 0" xyz="0 0 0.25" />
+        </joint>
 
+        <joint name="camera_arm_joint" type="fixed">
+            <parent link="mid_mount" />
+            <child link="camera_arm" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </joint>
     </xacro:macro>
 </robot>

@@ -19,7 +19,7 @@ observation_sources: laser_sim_sensor laser_scan_sensor white_lines #red_flags b
 laser_sim_sensor: {sensor_frame: front_laser, data_type: LaserScan, topic: /front/scan, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
 
 
-laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
+# laser_scan_sensor: {sensor_frame: velodyne, data_type: LaserScan, topic: /scan, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
 
 white_lines: {sensor_frame: bumblebee2, data_type: PointCloud2, topic: /vision3D/lines, marking: true, clearing: true, min_obstacle_height: -.5, max_obstacle_height: .5}
 
