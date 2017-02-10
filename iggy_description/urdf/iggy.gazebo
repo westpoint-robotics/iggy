@@ -36,27 +36,9 @@
       <!-- <drift>0.0001 0.0001 0.0001</drift> -->
     </plugin>
   </gazebo>
-<!--
-<gazebo reference="depth_camera_link">
-  <sensor>
-        <plugin name="depth_camera_frame_controller" filename="libgazebo_ros_openni_kinect.so">
-          <alwaysOn>true</alwaysOn>
-          <updateRate>20.0</updateRate>
-          <cameraName>depth_camera</cameraName>
-          <imageTopicName>rgb/image_raw</imageTopicName>
-          <pointCloudTopicName>rgb/points</pointCloudTopicName>
-          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-          <frameName>depth_camera_frame</frameName>
-          <pointCloudCutoff>0.5</pointCloudCutoff>
-          <distortionK1>0.00000001</distortionK1>
-          <distortionK2>0.00000001</distortionK2>
-          <distortionK3>0.00000001</distortionK3>
-          <distortionT1>0.00000001</distortionT1>
-          <distortionT2>0.00000001</distortionT2>
-        </plugin>
-  <sensor>
-</gazebo>
 
+
+<!--
     <plugin name="zed_controller" filename="libros_stereo_camera.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>60.0</updateRate>
