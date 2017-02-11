@@ -92,7 +92,7 @@ class NavTest():
         return distance
     def calculateDistFromGoal(self, curGoalLat, curGoalLong, resFile):
         distance= sqrt(pow(self.curLat -curGoalLat,2) + pow(self.curLong - curGoalLong, 2)) *100000
-        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters" )
+        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters \n" )
         return distance            
     def test(self):
         #curPos=NavSatFix
@@ -100,7 +100,7 @@ class NavTest():
     def navigate(self):
         # Variables to keep track of success rate, running time, and distance traveled
         rospy.loginfo(self) 
-        results= open('testResults.csv', 'w')   
+        results= open('testResults3.csv', 'w')   
         n_goals = 0
         n_successes = 0
         distance_traveled = 0
