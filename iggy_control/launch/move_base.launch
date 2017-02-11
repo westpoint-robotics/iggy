@@ -10,7 +10,7 @@
     <rosparam file="$(find igvc_2dnav)/base_local_planner_params.yaml" command="load" />
     
     <remap from="cmd_vel" to="cmd_vel"/>
-    <remap from="/scan"  to="/front/scan"/> 
+    <remap from="/scan"  to="triclops/points"/> 
     <remap from="odom"  to="odometry/filtered_map"/> 
 
   </node>
