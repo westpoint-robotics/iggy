@@ -1,0 +1,306 @@
+TRIAL 1
+Going to: (-2.8885,1.4519)
+Goal succeeded!
+Going to: (-2.8307,3.6729)
+Goal succeeded!
+Going to: (-2.7730,5.8939)
+Goal failed with error code: ABORTED
+Going to: (-2.7153,8.1149)
+Goal Succeeded!
+Going to: (-2.5998,12.5568)
+
+Trial 1 Revise
+[INFO] [WallTime: 1486817730.905990] [397.277000] Going to: (-2.8885,1.4519)
+[INFO] [WallTime: 1486817759.952145] [425.033000] Goal succeeded!
+[INFO] [WallTime: 1486817759.952534] [425.033000] State:3
+[INFO] [WallTime: 1486817759.953903] [425.035000] Success so far: 1/1 = 100%
+[INFO] [WallTime: 1486817759.954143] [425.035000] Running time: 0.48 min Distance: 3.233
+[INFO] [WallTime: 1486817759.954358] [425.035000] Current distance from goal: 
+[INFO] [WallTime: 1486817770.232307] [435.037000] Going to: (-2.8307,3.6729)
+[INFO] [WallTime: 1486817770.336600] [435.139000] Goal succeeded!
+[INFO] [WallTime: 1486817770.336924] [435.139000] State:3
+[INFO] [WallTime: 1486817770.337325] [435.140000] Success so far: 2/2 = 100%
+[INFO] [WallTime: 1486817770.337568] [435.140000] Running time: 0.65 min Distance: 7.870
+[INFO] [WallTime: 1486817770.337783] [435.140000] Current distance from goal: 
+[INFO] [WallTime: 1486817780.618546] [445.140000] Going to: (-2.7730,5.8939)
+[INFO] [WallTime: 1486817825.553845] [487.461000] Goal failed with error code: ABORTED
+[INFO] [WallTime: 1486817825.554208] [487.461000] Success so far: 2/3 = 66%
+[INFO] [WallTime: 1486817825.554534] [487.462000] Running time: 1.52 min Distance: 7.870
+[INFO] [WallTime: 1486817825.554816] [487.462000] Current distance from goal: 
+[INFO] [WallTime: 1486817836.069911] [497.463000] Going to: (-2.7153,8.1149)
+[INFO] [WallTime: 1486817844.484829] [505.334000] Goal succeeded!
+[INFO] [WallTime: 1486817844.485187] [505.334000] State:3
+[INFO] [WallTime: 1486817844.485533] [505.335000] Success so far: 3/4 = 75%
+[INFO] [WallTime: 1486817844.485840] [505.335000] Running time: 1.82 min Distance: 16.428
+[INFO] [WallTime: 1486817844.486018] [505.335000] Current distance from goal: 
+[INFO] [WallTime: 1486817855.262405] [515.335000] Going to: (-2.5998,12.5568)
+[INFO] [WallTime: 1486817887.779036] [545.235000] Goal succeeded!
+[INFO] [WallTime: 1486817887.779478] [545.236000] State:3
+[INFO] [WallTime: 1486817887.779843] [545.236000] Success so far: 4/5 = 80%
+[INFO] [WallTime: 1486817887.780120] [545.236000] Running time: 2.48 min Distance: 29.251
+[INFO] [WallTime: 1486817887.780386] [545.236000] Current distance from goal: 
+[INFO] [WallTime: 1486817898.349290] [555.236000] Going to: (-2.5421,14.7778)
+[INFO] [WallTime: 1486817911.477653] [567.491000] Goal succeeded!
+[INFO] [WallTime: 1486817911.478016] [567.491000] State:3
+[INFO] [WallTime: 1486817911.478364] [567.492000] Success so far: 5/6 = 83%
+[INFO] [WallTime: 1486817911.478670] [567.492000] Running time: 2.85 min Distance: 44.246
+[INFO] [WallTime: 1486817911.479084] [567.493000] Current distance from goal: 
+[INFO] [WallTime: 1486817922.227888] [577.493000] Going to: (-2.4844,16.9988)
+[INFO] [WallTime: 1486817971.506357] [623.455000] Goal succeeded!
+[INFO] [WallTime: 1486817971.507052] [623.456000] State:3
+[INFO] [WallTime: 1486817971.507382] [623.456000] Success so far: 6/7 = 85%
+[INFO] [WallTime: 1486817971.507571] [623.456000] Running time: 3.78 min Distance: 61.426
+[INFO] [WallTime: 1486817971.507698] [623.456000] Current distance from goal: 
+[INFO] [WallTime: 1486817982.031330] [633.456000] Going to: (-2.4266,19.2197)
+[INFO] [WallTime: 1486817982.139475] [633.558000] Goal succeeded!
+[INFO] [WallTime: 1486817982.139905] [633.558000] State:3
+[INFO] [WallTime: 1486817982.140183] [633.558000] Success so far: 7/8 = 87%
+[INFO] [WallTime: 1486817982.140424] [633.558000] Running time: 3.95 min Distance: 80.799
+[INFO] [WallTime: 1486817982.140637] [633.558000] Current distance from goal: 
+[INFO] [WallTime: 1486817992.635967] [643.558000] Going to: (-2.3689,21.4407)
+[INFO] [WallTime: 1486818037.368987] [685.331000] Goal succeeded!
+[INFO] [WallTime: 1486818037.369398] [685.331000] State:3
+[INFO] [WallTime: 1486818037.369895] [685.332000] Success so far: 8/9 = 88%
+[INFO] [WallTime: 1486818037.370121] [685.332000] Running time: 4.82 min Distance: 102.370
+[INFO] [WallTime: 1486818037.370283] [685.332000] Current distance from goal: 
+[INFO] [WallTime: 1486818047.943584] [695.332000] Going to: (-2.3112,23.6617)
+[INFO] [WallTime: 1486818048.051477] [695.433000] Goal succeeded!
+[INFO] [WallTime: 1486818048.051860] [695.433000] State:3
+[INFO] [WallTime: 1486818048.052160] [695.433000] Success so far: 9/10 = 90%
+[INFO] [WallTime: 1486818048.052439] [695.433000] Running time: 4.98 min Distance: 126.145
+[INFO] [WallTime: 1486818048.052686] [695.433000] Current distance from goal: 
+[INFO] [WallTime: 1486818058.623295] [705.433000] Going to: (-2.2535,25.8827)
+[INFO] [WallTime: 1486818075.956096] [721.748000] Goal succeeded!
+[INFO] [WallTime: 1486818075.956419] [721.748000] State:3
+[INFO] [WallTime: 1486818075.956765] [721.749000] Success so far: 10/11 = 90%
+[INFO] [WallTime: 1486818075.956960] [721.749000] Running time: 5.42 min Distance: 152.126
+[INFO] [WallTime: 1486818075.957145] [721.749000] Current distance from goal: 
+[INFO] [WallTime: 1486818086.549053] [731.749000] Going to: (-2.1957,28.1036)
+[INFO] [WallTime: 1486818116.504996] [759.933000] Goal failed with error code: ABORTED
+[INFO] [WallTime: 1486818116.505408] [759.933000] Success so far: 10/12 = 83%
+[INFO] [WallTime: 1486818116.505651] [759.933000] Running time: 6.07 min Distance: 152.126
+[INFO] [WallTime: 1486818116.505882] [759.933000] Current distance from goal: 
+[INFO] [WallTime: 1486818127.216477] [769.933000] Going to: (-2.1380,30.3246)
+[INFO] [WallTime: 1486818172.896419] [813.193000] Goal failed with error code: ABORTED
+[INFO] [WallTime: 1486818172.897005] [813.193000] Success so far: 10/13 = 76%
+[INFO] [WallTime: 1486818172.897530] [813.194000] Running time: 6.95 min Distance: 152.126
+[INFO] [WallTime: 1486818172.898016] [813.195000] Current distance from goal: 
+[INFO] [WallTime: 1486818183.329402] [823.195000] Going to: (-2.0803,32.5456)
+[INFO] [WallTime: 1486818187.800073] [827.467000] Goal succeeded!
+[INFO] [WallTime: 1486818187.800537] [827.467000] State:3
+[INFO] [WallTime: 1486818187.800798] [827.467000] Success so far: 11/14 = 78%
+[INFO] [WallTime: 1486818187.801043] [827.467000] Running time: 7.18 min Distance: 184.739
+[INFO] [WallTime: 1486818187.801310] [827.467000] Current distance from goal: 
+[INFO] [WallTime: 1486818198.210821] [837.470000] Going to: (-2.0226,34.7666)
+[INFO] [WallTime: 1486818215.037135] [853.538000] Goal succeeded!
+[INFO] [WallTime: 1486818215.037528] [853.539000] State:3
+[INFO] [WallTime: 1486818215.037769] [853.539000] Success so far: 12/15 = 80%
+[INFO] [WallTime: 1486818215.037986] [853.539000] Running time: 7.62 min Distance: 219.564
+[INFO] [WallTime: 1486818215.038259] [853.539000] Current distance from goal: 
+[INFO] [WallTime: 1486818225.565483] [863.540000] Going to: (-1.9648,36.9875)
+[INFO] [WallTime: 1486818250.108508] [887.102000] Goal succeeded!
+[INFO] [WallTime: 1486818250.108858] [887.102000] State:3
+[INFO] [WallTime: 1486818250.109106] [887.102000] Success so far: 13/16 = 81%
+[INFO] [WallTime: 1486818250.109485] [887.103000] Running time: 8.18 min Distance: 256.604
+[INFO] [WallTime: 1486818250.109720] [887.103000] Current distance from goal: 
+[INFO] [WallTime: 1486818260.535936] [897.103000] Going to: (-1.9071,39.2085)
+[INFO] [WallTime: 1486818300.105370] [935.454000] Goal succeeded!
+[INFO] [WallTime: 1486818300.105682] [935.454000] State:3
+[INFO] [WallTime: 1486818300.105949] [935.454000] Success so far: 14/17 = 82%
+[INFO] [WallTime: 1486818300.106275] [935.455000] Running time: 8.98 min Distance: 295.860
+[INFO] [WallTime: 1486818300.106506] [935.455000] Current distance from goal: 
+[INFO] [WallTime: 1486818310.596392] [945.455000] Going to: (-1.8494,41.4295)
+[INFO] [WallTime: 1486818325.925709] [960.357000] Goal succeeded!
+[INFO] [WallTime: 1486818325.926320] [960.358000] State:3
+[INFO] [WallTime: 1486818325.926677] [960.358000] Success so far: 15/18 = 83%
+[INFO] [WallTime: 1486818325.927102] [960.359000] Running time: 9.40 min Distance: 337.331
+[INFO] [WallTime: 1486818325.927313] [960.359000] Current distance from goal: 
+[INFO] [WallTime: 1486818336.292354] [970.359000] Going to: (-1.7917,43.6505)
+^C[INFO] [WallTime: 1486818350.067375] [983.681000] Stopping the robot...
+[INFO] [WallTime: 1486818353.253044] [986.687000] Goal failed with error code: PREEMPTED
+[INFO] [WallTime: 1486818353.253277] [986.687000] Success so far: 15/19 = 78%
+[INFO] [WallTime: 1486818353.253396] [986.687000] Running time: 9.83 min Distance: 337.331
+[INFO] [WallTime: 1486818353.253500] [986.687000] Current distance from goal: 
+[INFO] [WallTime: 1486818353.253620] [986.687000] Navigation test finished.
+
+TRIAL 2
+
+[INFO] [WallTime: 1486819383.581249] [391.903000] Going to: (-2.8889,1.4519)
+[INFO] [WallTime: 1486819411.690758] [418.718000] Goal succeeded!
+[INFO] [WallTime: 1486819411.691152] [418.719000] State:3
+[INFO] [WallTime: 1486819411.691399] [418.719000] Distance from goal according to the GPS: 125.874756872
+[INFO] [WallTime: 1486819411.691633] [418.719000] Success so far: 1/1 = 100%
+[INFO] [WallTime: 1486819411.691877] [418.719000] Running time: 0.47 min Distance: 3.233
+[INFO] [WallTime: 1486819421.975730] [428.720000] Going to: (-2.8311,3.6729)
+[INFO] [WallTime: 1486819422.083691] [428.824000] Goal succeeded!
+[INFO] [WallTime: 1486819422.083977] [428.824000] State:3
+[INFO] [WallTime: 1486819422.084391] [428.825000] Distance from goal according to the GPS: 125.874776871
+[INFO] [WallTime: 1486819422.084710] [428.825000] Success so far: 2/2 = 100%
+[INFO] [WallTime: 1486819422.084980] [428.825000] Running time: 0.63 min Distance: 7.871
+[INFO] [WallTime: 1486819432.404306] [438.826000] Going to: (-2.7734,5.8938)
+[INFO] [WallTime: 1486819450.934261] [456.254000] Goal succeeded!
+[INFO] [WallTime: 1486819450.934621] [456.254000] State:3
+[INFO] [WallTime: 1486819450.934924] [456.254000] Distance from goal according to the GPS: 125.874808669
+[INFO] [WallTime: 1486819450.935123] [456.254000] Success so far: 3/3 = 100%
+[INFO] [WallTime: 1486819450.935259] [456.254000] Running time: 1.08 min Distance: 14.385
+[INFO] [WallTime: 1486819461.618417] [466.255000] Going to: (-2.7157,8.1148)
+[INFO] [WallTime: 1486819481.815134] [484.857000] Goal succeeded!
+[INFO] [WallTime: 1486819481.815584] [484.857000] State:3
+[INFO] [WallTime: 1486819481.815939] [484.858000] Distance from goal according to the GPS: 125.874809095
+[INFO] [WallTime: 1486819481.816244] [484.858000] Success so far: 4/4 = 100%
+[INFO] [WallTime: 1486819481.816572] [484.859000] Running time: 1.57 min Distance: 22.942
+[INFO] [WallTime: 1486819492.680946] [494.859000] Going to: (-2.6002,12.5568)
+[INFO] [WallTime: 1486819523.700236] [523.184000] Goal succeeded!
+[INFO] [WallTime: 1486819523.700646] [523.185000] State:3
+[INFO] [WallTime: 1486819523.700881] [523.185000] Distance from goal according to the GPS: 125.874846984
+[INFO] [WallTime: 1486819523.701127] [523.185000] Success so far: 5/5 = 100%
+[INFO] [WallTime: 1486819523.701512] [523.186000] Running time: 2.20 min Distance: 35.765
+[INFO] [WallTime: 1486819534.387378] [533.186000] Going to: (-2.5425,14.7777)
+[INFO] [WallTime: 1486819548.075459] [545.749000] Goal succeeded!
+[INFO] [WallTime: 1486819548.075902] [545.750000] State:3
+[INFO] [WallTime: 1486819548.076106] [545.750000] Distance from goal according to the GPS: 125.874878018
+[INFO] [WallTime: 1486819548.076411] [545.751000] Success so far: 6/6 = 100%
+[INFO] [WallTime: 1486819548.076596] [545.751000] Running time: 2.58 min Distance: 50.760
+[INFO] [WallTime: 1486819559.010125] [555.753000] Going to: (-2.4848,16.9987)
+[INFO] [WallTime: 1486819630.360238] [620.616000] Goal failed with error code: ABORTED
+[INFO] [WallTime: 1486819630.360615] [620.616000] Success so far: 6/7 = 85%
+[INFO] [WallTime: 1486819630.360979] [620.616000] Running time: 3.83 min Distance: 50.760
+[INFO] [WallTime: 1486819641.216805] [630.617000] Going to: (-2.4271,19.2197)
+[INFO] [WallTime: 1486819661.278968] [648.971000] Goal succeeded!
+[INFO] [WallTime: 1486819661.279290] [648.971000] State:3
+[INFO] [WallTime: 1486819661.279605] [648.972000] Distance from goal according to the GPS: 125.874907676
+[INFO] [WallTime: 1486819661.279896] [648.972000] Success so far: 7/8 = 87%
+[INFO] [WallTime: 1486819661.280142] [648.972000] Running time: 4.30 min Distance: 70.132
+[INFO] [WallTime: 1486819672.158970] [658.972000] Going to: (-2.3693,21.4407)
+[INFO] [WallTime: 1486819720.199186] [703.146000] Goal succeeded!
+[INFO] [WallTime: 1486819720.199704] [703.146000] State:3
+[INFO] [WallTime: 1486819720.199984] [703.146000] Distance from goal according to the GPS: 125.87495363
+[INFO] [WallTime: 1486819720.200194] [703.146000] Success so far: 8/9 = 88%
+[INFO] [WallTime: 1486819720.200382] [703.146000] Running time: 5.20 min Distance: 91.704
+[INFO] [WallTime: 1486819731.021527] [713.146000] Going to: (-2.3116,23.6616)
+[INFO] [WallTime: 1486819757.195372] [737.100000] Goal succeeded!
+[INFO] [WallTime: 1486819757.195686] [737.100000] State:3
+[INFO] [WallTime: 1486819757.195919] [737.100000] Distance from goal according to the GPS: 125.87494783
+[INFO] [WallTime: 1486819757.196181] [737.100000] Success so far: 9/10 = 90%
+[INFO] [WallTime: 1486819757.196433] [737.101000] Running time: 5.77 min Distance: 115.478
+[INFO] [WallTime: 1486819768.078809] [747.101000] Going to: (-2.2539,25.8826)
+[INFO] [WallTime: 1486819796.343911] [773.114000] Goal succeeded!
+[INFO] [WallTime: 1486819796.344221] [773.114000] State:3
+[INFO] [WallTime: 1486819796.344505] [773.115000] Distance from goal according to the GPS: 125.874968919
+[INFO] [WallTime: 1486819796.344720] [773.115000] Success so far: 10/11 = 90%
+[INFO] [WallTime: 1486819796.344957] [773.115000] Running time: 6.37 min Distance: 141.459
+[INFO] [WallTime: 1486819807.035865] [783.115000] Going to: (-2.1962,28.1036)
+[INFO] [WallTime: 1486819818.253395] [793.528000] Goal succeeded!
+[INFO] [WallTime: 1486819818.253706] [793.528000] State:3
+[INFO] [WallTime: 1486819818.254002] [793.529000] Distance from goal according to the GPS: 125.874999635
+[INFO] [WallTime: 1486819818.254196] [793.529000] Success so far: 11/12 = 91%
+[INFO] [WallTime: 1486819818.254383] [793.529000] Running time: 6.72 min Distance: 169.648
+[INFO] [WallTime: 1486819828.974918] [803.530000] Going to: (-2.1384,30.3246)
+[INFO] [WallTime: 1486819885.103653] [855.884000] Goal failed with error code: ABORTED
+[INFO] [WallTime: 1486819885.104108] [855.884000] Success so far: 11/13 = 84%
+[INFO] [WallTime: 1486819885.104395] [855.884000] Running time: 7.75 min Distance: 169.648
+[INFO] [WallTime: 1486819895.689876] [865.887000] Going to: (-2.0807,32.5455)
+[INFO] [WallTime: 1486819941.757528] [909.190000] Goal succeeded!
+[INFO] [WallTime: 1486819941.757934] [909.190000] State:3
+[INFO] [WallTime: 1486819941.758416] [909.191000] Distance from goal according to the GPS: 125.875035551
+[INFO] [WallTime: 1486819941.758673] [909.191000] Success so far: 12/14 = 85%
+[INFO] [WallTime: 1486819941.758905] [909.191000] Running time: 8.63 min Distance: 202.260
+[INFO] [WallTime: 1486819952.346703] [919.192000] Going to: (-2.0230,34.7665)
+[INFO] [WallTime: 1486820085.029100] [1044.102000] Goal succeeded!
+[INFO] [WallTime: 1486820085.029481] [1044.102000] State:3
+[INFO] [WallTime: 1486820085.029700] [1044.102000] Distance from goal according to the GPS: 125.875046819
+[INFO] [WallTime: 1486820085.029954] [1044.103000] Success so far: 13/15 = 86%
+[INFO] [WallTime: 1486820085.030205] [1044.103000] Running time: 10.88 min Distance: 237.085
+[INFO] [WallTime: 1486820095.660082] [1054.103000] Going to: (-1.9653,36.9875)
+[INFO] [WallTime: 1486820155.421169] [1110.932000] Goal succeeded!
+[INFO] [WallTime: 1486820155.421640] [1110.933000] State:3
+[INFO] [WallTime: 1486820155.421940] [1110.933000] Distance from goal according to the GPS: 125.875072845
+[INFO] [WallTime: 1486820155.422211] [1110.933000] Success so far: 14/16 = 87%
+[INFO] [WallTime: 1486820155.422675] [1110.934000] Running time: 12.00 min Distance: 274.125
+[INFO] [WallTime: 1486820166.064414] [1120.934000] Going to: (-1.9075,39.2085)
+[INFO] [WallTime: 1486820291.267717] [1240.149000] Goal succeeded!
+[INFO] [WallTime: 1486820291.267990] [1240.149000] State:3
+[INFO] [WallTime: 1486820291.268257] [1240.149000] Distance from goal according to the GPS: 125.875114675
+[INFO] [WallTime: 1486820291.268534] [1240.149000] Success so far: 15/17 = 88%
+[INFO] [WallTime: 1486820291.268738] [1240.149000] Running time: 14.15 min Distance: 313.380
+[INFO] [WallTime: 1486820301.924891] [1250.149000] Going to: (-1.8498,41.4294)
+[INFO] [WallTime: 1486820321.117245] [1268.654000] Goal succeeded!
+[INFO] [WallTime: 1486820321.117568] [1268.654000] State:3
+[INFO] [WallTime: 1486820321.117836] [1268.654000] Distance from goal according to the GPS: 125.875132893
+[INFO] [WallTime: 1486820321.118078] [1268.654000] Success so far: 16/18 = 88%
+[INFO] [WallTime: 1486820321.118309] [1268.654000] Running time: 14.63 min Distance: 354.851
+[INFO] [WallTime: 1486820331.473605] [1278.654000] Going to: (-1.7921,43.6504)
+[INFO] [WallTime: 1486820353.511698] [1300.205000] Goal succeeded!
+[INFO] [WallTime: 1486820353.512016] [1300.206000] State:3
+[INFO] [WallTime: 1486820353.512238] [1300.206000] Distance from goal according to the GPS: 125.875127304
+[INFO] [WallTime: 1486820353.512441] [1300.206000] Success so far: 17/19 = 89%
+[INFO] [WallTime: 1486820353.512737] [1300.207000] Running time: 15.15 min Distance: 398.538
+[INFO] [WallTime: 1486820363.653936] [1310.207000] Going to: (-1.7343,45.8714)
+[INFO] [WallTime: 1486820388.359791] [1334.723000] Goal succeeded!
+[INFO] [WallTime: 1486820388.360193] [1334.723000] State:3
+[INFO] [WallTime: 1486820388.360533] [1334.723000] Distance from goal according to the GPS: 125.875148517
+[INFO] [WallTime: 1486820388.360899] [1334.724000] Success so far: 18/20 = 90%
+[INFO] [WallTime: 1486820388.361155] [1334.724000] Running time: 15.73 min Distance: 444.442
+[INFO] [WallTime: 1486820398.560195] [1344.725000] Going to: (-1.6766,48.0924)
+[INFO] [WallTime: 1486820408.581579] [1354.628000] Goal succeeded!
+[INFO] [WallTime: 1486820408.581900] [1354.629000] State:3
+[INFO] [WallTime: 1486820408.582082] [1354.629000] Distance from goal according to the GPS: 125.875180493
+[INFO] [WallTime: 1486820408.582226] [1354.629000] Success so far: 19/21 = 90%
+[INFO] [WallTime: 1486820408.582372] [1354.629000] Running time: 16.07 min Distance: 492.564
+[INFO] [WallTime: 1486820418.663876] [1364.629000] Going to: (-1.6189,50.3133)
+[INFO] [WallTime: 1486820442.764647] [1388.557000] Goal succeeded!
+[INFO] [WallTime: 1486820442.765028] [1388.558000] State:3
+[INFO] [WallTime: 1486820442.765238] [1388.558000] Distance from goal according to the GPS: 125.875186848
+[INFO] [WallTime: 1486820442.765483] [1388.558000] Success so far: 20/22 = 90%
+[INFO] [WallTime: 1486820442.765723] [1388.558000] Running time: 16.63 min Distance: 542.903
+[INFO] [WallTime: 1486820452.824307] [1398.559000] Going to: (-1.5612,52.5343)
+[INFO] [WallTime: 1486820474.664624] [1420.290000] Goal succeeded!
+[INFO] [WallTime: 1486820474.665136] [1420.291000] State:3
+[INFO] [WallTime: 1486820474.665411] [1420.291000] Distance from goal according to the GPS: 125.875207293
+[INFO] [WallTime: 1486820474.665626] [1420.291000] Success so far: 21/23 = 91%
+[INFO] [WallTime: 1486820474.666015] [1420.292000] Running time: 17.15 min Distance: 595.461
+[INFO] [WallTime: 1486820484.740451] [1430.292000] Going to: (-1.5034,54.7553)
+[INFO] [WallTime: 1486820495.222051] [1440.714000] Goal succeeded!
+[INFO] [WallTime: 1486820495.222539] [1440.715000] State:3
+[INFO] [WallTime: 1486820495.222843] [1440.715000] Distance from goal according to the GPS: 125.875240029
+[INFO] [WallTime: 1486820495.223232] [1440.716000] Success so far: 22/24 = 91%
+[INFO] [WallTime: 1486820495.223453] [1440.716000] Running time: 17.50 min Distance: 650.237
+[INFO] [WallTime: 1486820505.268339] [1450.716000] Going to: (-1.4457,56.9763)
+[INFO] [WallTime: 1486820528.447920] [1473.780000] Goal succeeded!
+[INFO] [WallTime: 1486820528.448282] [1473.781000] State:3
+[INFO] [WallTime: 1486820528.448495] [1473.781000] Distance from goal according to the GPS: 125.875246899
+[INFO] [WallTime: 1486820528.448690] [1473.781000] Success so far: 23/25 = 92%
+[INFO] [WallTime: 1486820528.448883] [1473.781000] Running time: 18.05 min Distance: 707.231
+[INFO] [WallTime: 1486820538.485313] [1483.781000] Going to: (-1.3880,59.1972)
+[INFO] [WallTime: 1486820560.052934] [1505.241000] Goal succeeded!
+[INFO] [WallTime: 1486820560.053402] [1505.241000] State:3
+[INFO] [WallTime: 1486820560.053848] [1505.241000] Distance from goal according to the GPS: 125.875266837
+[INFO] [WallTime: 1486820560.054347] [1505.241000] Success so far: 24/26 = 92%
+[INFO] [WallTime: 1486820560.054837] [1505.242000] Running time: 18.57 min Distance: 766.445
+[INFO] [WallTime: 1486820570.092795] [1515.243000] Going to: (-1.3303,61.4182)
+[INFO] [WallTime: 1486820581.610098] [1526.720000] Goal succeeded!
+[INFO] [WallTime: 1486820581.610379] [1526.720000] State:3
+[INFO] [WallTime: 1486820581.610599] [1526.720000] Distance from goal according to the GPS: 125.875299556
+[INFO] [WallTime: 1486820581.610798] [1526.720000] Success so far: 25/27 = 92%
+[INFO] [WallTime: 1486820581.611080] [1526.721000] Running time: 18.93 min Distance: 827.877
+[INFO] [WallTime: 1486820591.636000] [1536.721000] Going to: (-1.2725,63.6392)
+[INFO] [WallTime: 1486820614.738031] [1559.736000] Goal succeeded!
+[INFO] [WallTime: 1486820614.738551] [1559.736000] State:3
+[INFO] [WallTime: 1486820614.739302] [1559.737000] Distance from goal according to the GPS: 125.875306904
+[INFO] [WallTime: 1486820614.739922] [1559.738000] Success so far: 26/28 = 92%
+[INFO] [WallTime: 1486820614.740301] [1559.738000] Running time: 19.48 min Distance: 891.529
+[INFO] [WallTime: 1486820624.769925] [1569.738000] Going to: (-1.2148,65.8602)
+[INFO] [WallTime: 1486820646.001842] [1590.901000] Goal succeeded!
+[INFO] [WallTime: 1486820646.002209] [1590.902000] State:3
+[INFO] [WallTime: 1486820646.002462] [1590.902000] Distance from goal according to the GPS: 125.875327615
+[INFO] [WallTime: 1486820646.002695] [1590.902000] Success so far: 27/29 = 93%
+[INFO] [WallTime: 1486820646.002980] [1590.902000] Running time: 20.00 min Distance: 957.401
+[INFO] [WallTime: 1486820656.039178] [1600.903000] Going to: (-1.1571,68.0812)
+[INFO] [WallTime: 1486820675.870195] [1620.677000] Goal succeeded!
+[INFO] [WallTime: 1486820675.870564] [1620.677000] State:3
+[INFO] [WallTime: 1486820675.870883] [1620.677000] Distance from goal according to the GPS: 125.875347725
+[INFO] [WallTime: 1486820675.871310] [1620.678000] Success so far: 28/30 = 93%
+[INFO] [WallTime: 1486820675.871511] [1620.678000] Running time: 20.50 min Distance: 1025.492
+[INFO] [WallTime: 1486820675.871932] [1620.678000] Stopping the robot...
+
+

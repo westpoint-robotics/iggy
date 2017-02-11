@@ -44,11 +44,10 @@ def update_utm(current_latlong):
     #rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))
     try:
         nav.current_utm = LLtoUTM(23, current_latlong.latitude,current_latlong.longitude)
+        nav.curLat=current_latlong.latitude        
+        nav.curLong=current_latlong.longitude
     except NameError:
         print "Still booting..."
-def calculateDistNew(x):
-        rospy.loginfo(x)
-        return x
 
 class NavTest():
     def __init__(self):        
@@ -65,7 +64,8 @@ class NavTest():
            
         # Publisher to manually control the robot (e.g. to stop it)
         self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1) 
-        
+        self.curLat=0.0
+        self.curLong=0.0
         # A variable to hold the initial and current pose of the robot
         self.current_pose = Odometry()
         self.initial_pose = Odometry()
@@ -90,8 +90,12 @@ class NavTest():
             distance =  sqrt(pow(currX - self.initial_pose.pose.pose.position.x, 2) + pow(currY - self.initial_pose.pose.pose.position.y, 2))
             #rospy.loginfo(currX)        
         return distance
-            
-
+    def calculateDistFromGoal(self, curGoalLat, curGoalLong):
+        distance= sqrt(pow(self.curLat -curGoalLat,2) + pow(self.curLong - curGoalLong, 2)) *100000
+        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters" )            
+    def test(self):
+        #curPos=NavSatFix
+        rospy.loginfo(curPos)
     def navigate(self):
         # Variables to keep track of success rate, running time, and distance traveled
         rospy.loginfo(self) 
@@ -110,7 +114,7 @@ class NavTest():
     
         # TODO getGoals in odom frame, make a list in odom frame. 
         goals=self.makeWaypointsIntoGoals('waypoints.csv')
-    
+        latLongs=self.wayPointLatLongList("waypoints.csv")
         # Begin the main loop and run through a sequence of locations
         i=0        
         firstRun=True
@@ -126,9 +130,14 @@ class NavTest():
             self.goal.target_pose.header.frame_id = 'map'
             self.goal.target_pose.header.stamp = rospy.Time.now()
             self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
-
+            self.goalLat= latLongs[i][0]
+            self.goalLong= latLongs[i][1]
             # Let the user know where the robot is going next
             rospy.loginfo("Going to: (%.4f,%.4f)" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y))
+            rospy.loginfo("Current lat is: " + str(self.curLat))
+            rospy.loginfo("Goal lat is: " + str(self.goalLat))            
+            rospy.loginfo("Current long is: " + str(self.curLong))
+            rospy.loginfo("Goal long is: " + str(self.goalLong))
             
             # Start the robot toward the next location
             self.move_base.send_goal(self.goal)
@@ -147,6 +156,8 @@ class NavTest():
                     n_successes += 1
                     distance_traveled += distance
                     rospy.loginfo("State:" + str(state))
+                    self.calculateDistFromGoal(self.goalLat, self.goalLong)
+                    
                 else:
                   rospy.loginfo("Goal failed with error code: " + str(self.goal_states[state]))
             
@@ -194,6 +205,13 @@ class NavTest():
 
     # Turn list of waypoints into Goals. Goals are coordinates in the robot odom frame.
     # TODO Look into makeing this in the map frame if map and odom frame diverge.
+    def wayPointLatLongList(self,filename):
+        wps = self.loadWaypoints(filename)
+        latLongs= []
+        for waypointLat,waypointLong,search_duration,rest_duration in wps:
+            latLongs.append((waypointLat, waypointLong))
+        return latLongs
+
     def makeWaypointsIntoGoals(self, filename):
         log_directory = rospy.get_param("~log_directory", "~/")+"waypoints2Goals_log.csv"
         # Load and parse waypoints from file.
@@ -249,6 +267,7 @@ if __name__ == '__main__':
         nav = NavTest()
         #rospy.loginfo(nav.calculateDist(2,2,1,1,False))
         nav.navigate()
+        #nav.calculateDistFromGoal(3,3)
         
         rospy.spin()
     except rospy.ROSInterruptException:
