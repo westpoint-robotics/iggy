@@ -48,6 +48,12 @@
   <run_depend>rospy</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>turtlesim</run_depend>
+<!-- **** All files beneath this and the export tag comment added by Royal **** -->
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

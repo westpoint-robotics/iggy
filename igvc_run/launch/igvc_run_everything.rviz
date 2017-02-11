@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Local Map1
+        - /Line Points1
       Splitter Ratio: 0.525907
     Tree Height: 695
   - Class: rviz/Selection
@@ -25,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Line Points
 Visualization Manager:
   Class: ""
   Displays:
@@ -94,6 +95,8 @@ Visualization Manager:
           Value: true
         velodyne:
           Value: true
+        zed_current_frame:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -103,11 +106,6 @@ Visualization Manager:
         map:
           base_footprint:
             base_link:
-              bumblebee2:
-                left_camera_frame:
-                  {}
-                right_camera_frame:
-                  {}
               gps_frame:
                 {}
               imu_frame:
@@ -117,6 +115,8 @@ Visualization Manager:
               right_wheel_frame:
                 {}
               velodyne:
+                {}
+              zed_current_frame:
                 {}
           odom:
             {}
@@ -164,7 +164,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 254
@@ -181,7 +181,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
     - Alpha: 1
       Axes Length: 1
       Axes Radius: 0.1
@@ -326,7 +326,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Flat Squares
-      Topic: /vision3D/lines
+      Topic: /point_cloud/white_cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -355,7 +355,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 7.02153
+      Distance: 12.37
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -367,10 +367,10 @@ Visualization Manager:
         Z: -1.89256e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.4598
+      Pitch: 1.0898
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 2.6827
+      Yaw: 1.70786
     Saved: ~
 Window Geometry:
   Displays:

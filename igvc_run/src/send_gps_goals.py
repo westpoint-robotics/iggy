@@ -6,7 +6,17 @@
 
 
 
+
+
+
 import rospy
+
+#additions from Royal
+import roslib
+import actionlib
+
+#end of additions
+
 
 from std_msgs.msg import String
 from geometry_msgs.msg import PoseStamped
