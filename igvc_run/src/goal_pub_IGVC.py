@@ -50,7 +50,7 @@ def update_utm(current_latlong):
         print "Still booting..."
 
 class NavTest():
-    def __init__(self):        
+    def __init__(self):     
         rospy.init_node('nav_test', anonymous=True)        
         rospy.on_shutdown(self.shutdown)    
 
@@ -90,21 +90,22 @@ class NavTest():
             distance =  sqrt(pow(currX - self.initial_pose.pose.pose.position.x, 2) + pow(currY - self.initial_pose.pose.pose.position.y, 2))
             #rospy.loginfo(currX)        
         return distance
-    def calculateDistFromGoal(self, curGoalLat, curGoalLong):
+    def calculateDistFromGoal(self, curGoalLat, curGoalLong, resFile):
         distance= sqrt(pow(self.curLat -curGoalLat,2) + pow(self.curLong - curGoalLong, 2)) *100000
-        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters" )            
+        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters" )
+        return distance            
     def test(self):
         #curPos=NavSatFix
         rospy.loginfo(curPos)
     def navigate(self):
         # Variables to keep track of success rate, running time, and distance traveled
         rospy.loginfo(self) 
+        results= open('testResults.csv', 'w')   
         n_goals = 0
         n_successes = 0
         distance_traveled = 0
         start_time = rospy.Time.now()
         running_time = 0
-        
         # TODO Use Dynamic reconfig for this
         # How long in seconds should the robot pause at each location?
         rest_time = rospy.get_param("~rest_time", 10)
@@ -134,10 +135,16 @@ class NavTest():
             self.goalLong= latLongs[i][1]
             # Let the user know where the robot is going next
             rospy.loginfo("Going to: (%.4f,%.4f)" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y))
+            results.write("Going to: (%.4f,%.4f)" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y) + "\n")
             rospy.loginfo("Current lat is: " + str(self.curLat))
+            results.write("Current lat is: " + str(self.curLat) + "\n")
             rospy.loginfo("Goal lat is: " + str(self.goalLat))            
+            results.write("Goal lat is: " + str(self.goalLat) + "\n")            
             rospy.loginfo("Current long is: " + str(self.curLong))
+            a = self.curLong            
+            results.write("Current long is: " + str(a) + "\n")
             rospy.loginfo("Goal long is: " + str(self.goalLong))
+            results.write("Goal long is: " + str(self.goalLong) + "\n")
             
             # Start the robot toward the next location
             self.move_base.send_goal(self.goal)
@@ -149,17 +156,22 @@ class NavTest():
             if not finished_within_time:
                 self.move_base.cancel_goal()
                 rospy.loginfo("Timed out achieving goal")
+                results.write("Timed out achieving goal \n")
             else:
                 state = self.move_base.get_state()
                 if state == GoalStatus.SUCCEEDED:
                     rospy.loginfo("Goal succeeded!")
+                    results.write("Goal succeeded! \n")
                     n_successes += 1
                     distance_traveled += distance
                     rospy.loginfo("State:" + str(state))
-                    self.calculateDistFromGoal(self.goalLat, self.goalLong)
+                    results.write("State: " + str(state) + "\n")
+                    newD= self.calculateDistFromGoal(self.goalLat, self.goalLong, results)
+                    results.write("Distance from goal according to the GPS: " + str(distance) + " meters" )
                     
                 else:
                   rospy.loginfo("Goal failed with error code: " + str(self.goal_states[state]))
+                  results.write("Goal failed with error code: " + str(self.goal_states[state]) + "\n")
             
             # How long have we been running?
             running_time = rospy.Time.now() - start_time
@@ -170,11 +182,17 @@ class NavTest():
             rospy.loginfo("Success so far: " + str(n_successes) + "/" + 
                           str(n_goals) + " = " + 
                           str(100 * n_successes/n_goals) + "%")
+            results.write("Success so far: " + str(n_successes) + "/" + 
+                          str(n_goals) + " = " + 
+                          str(100 * n_successes/n_goals) + "% \n")
             rospy.loginfo("Running time: %.2f min Distance: %.3f"  % (running_time,distance_traveled))
+            results.write("Running time: %.2f min Distance: %.3f"  % (running_time,distance_traveled) +"\n")
             # Increment the counters
             i += 1
             if (i >= len(goals)):
                 rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE")
+                results.write("NO MORE GOALS TO ACHIEVE \n")
+                results.close()
             rospy.sleep(rest_time)
 
     def setInitialPose(self):            
