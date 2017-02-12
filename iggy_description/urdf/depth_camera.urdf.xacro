@@ -17,7 +17,8 @@
                         <far>5</far>
                     </clip>
                 </camera>
-                <plugin name="depth_camera_frame_controller" filename="libgazebo_tutorials.so">
+                 <plugin name="depth_camera_frame_controller" filename="libgazebo_tutorials.so"> 
+                <!-- <plugin name="depth_camera_frame_controller" filename="libgazebo_ros_depth_camera.so"> -->
                     <always_on>true</always_on>
                     <updateRate>20.0</updateRate>
                     <cameraName>depth_camera</cameraName>
@@ -31,6 +32,7 @@
                     <distortionK3>0.00000001</distortionK3>
                     <distortionT1>0.00000001</distortionT1>
                     <distortionT2>0.00000001</distortionT2>
+                    <linesOnly>1</linesOnly>
                 </plugin>
             </sensor>
         </gazebo>
