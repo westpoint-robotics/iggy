@@ -111,7 +111,7 @@
     <inertial>
       <!-- Center of mass -->
       <origin xyz="0.012  0.002 0.067" rpy="0 0 0"/>
-      <mass value="16.523"/>
+      <mass value="86.523"/>
       <!-- Moments of inertia: ( chassis without wheels ) -->
       <inertia
         ixx="0.3136" ixy="-0.0008" ixz="0.0164"
@@ -192,18 +192,17 @@
 
   <!-- Optional standard accessories, including their simulation data. The rendering
        of these into the final description is controlled by optenv variables, which
-       default each one to off.-->
-  <xacro:include filename="accessories.urdf.xacro" />
+       default each one to off.  -->
+  <xacro:include filename="accessories.urdf.xacro" />  
+
+
+
+
+
 
   <!-- Optional custom includes. -->
   <xacro:include filename="$(optenv IGGY_URDF_EXTRAS empty.urdf)" />
- <!--
-  <link name="depth_camera_mount"></link>
-  <joint name="depth_camera_mount" type="fixed">
-    <parent link="front_mount" />
-    <child link="depth_camera_mount" />
-    <origin xyz="${mount_spacing} 0.00 0.20" />
-  </joint>   -->
+
 
   <xacro:include filename="depth_camera.urdf.xacro" />
 

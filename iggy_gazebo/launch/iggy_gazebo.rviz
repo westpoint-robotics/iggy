@@ -5,8 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1/Frames1
+        - /Local Map1
         - /RobotModel1/Links1
+        - /Vision3D1
       Splitter Ratio: 0.525907
     Tree Height: 438
   - Class: rviz/Selection
@@ -51,7 +52,7 @@ Visualization Manager:
       Value: true
     - Alpha: 0.25
       Class: rviz/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
       Enabled: true
       Name: Local Map
@@ -60,13 +61,13 @@ Visualization Manager:
       Value: true
     - Alpha: 0.3
       Class: rviz/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Global Map
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
-      Value: false
+      Value: true
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
@@ -79,8 +80,6 @@ Visualization Manager:
         camera_center:
           Value: false
         chassis_link:
-          Value: false
-        depth_camera_optical:
           Value: false
         fenders_link:
           Value: false
@@ -116,47 +115,48 @@ Visualization Manager:
           Value: false
         world:
           Value: false
-      Marker Scale: 10
+        zed_current_frame:
+          Value: true
+      Marker Scale: 0.5
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          odom:
-            base_link:
-              chassis_link:
-                fenders_link:
-                  {}
-                front_left_wheel_link:
-                  {}
-                front_right_wheel_link:
-                  {}
-                imu_link:
-                  {}
-                mid_mount:
-                  camera_arm:
-                    camera_center:
-                      depth_camera_optical:
-                        {}
-                      left_camera:
-                        {}
-                      right_camera:
-                        {}
-                  front_mount:
-                    front_laser_mount:
-                      front_laser:
-                        {}
-                  rear_mount:
-                    {}
-                navsat_link:
-                  {}
-                rear_left_wheel_link:
-                  {}
-                rear_right_wheel_link:
-                  {}
         world:
-          {}
+          map:
+            odom:
+              base_link:
+                chassis_link:
+                  fenders_link:
+                    {}
+                  front_left_wheel_link:
+                    {}
+                  front_right_wheel_link:
+                    {}
+                  imu_link:
+                    {}
+                  mid_mount:
+                    camera_arm:
+                      camera_center:
+                        left_camera:
+                          {}
+                        right_camera:
+                          {}
+                        zed_current_frame:
+                          {}
+                    front_mount:
+                      front_laser_mount:
+                        front_laser:
+                          {}
+                    rear_mount:
+                      {}
+                  navsat_link:
+                    {}
+                  rear_left_wheel_link:
+                    {}
+                  rear_right_wheel_link:
+                    {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -384,7 +384,7 @@ Visualization Manager:
       Max Color: 255; 255; 255
       Max Intensity: 999999
       Min Color: 0; 0; 0
-      Min Intensity: 0
+      Min Intensity: -1.54642e-10
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -432,9 +432,9 @@ Visualization Manager:
       Queue Size: 1
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.05
+      Size (m): 0.01
       Style: Flat Squares
-      Topic: /depth_camera/rgb/points
+      Topic: /point_cloud/white_cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -463,22 +463,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 17.7181
+      Distance: 11.511
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 6.63834
-        Y: -0.657578
+        X: 5.01687
+        Y: -1.94379
         Z: -1.99984e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.0148
+      Pitch: 0.4998
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 5.13272
+      Yaw: 5.43272
     Saved: ~
 Window Geometry:
   Camera:

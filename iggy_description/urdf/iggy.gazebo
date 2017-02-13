@@ -12,12 +12,12 @@
       <updateRate>50.0</updateRate>
       <bodyName>imu_link</bodyName>
       <topicName>imu/data</topicName>
-      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelDrift>0.00015 0.00015 0.00015</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateDrift>0.00015 0.00015 0.00015 </rateDrift>
       <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-      <headingDrift>0.005</headingDrift>
-      <headingGaussianNoise>0.005</headingGaussianNoise>
+      <headingDrift>0.00015</headingDrift>
+      <headingGaussianNoise>0.00015</headingGaussianNoise>
     </plugin>
   </gazebo>
 
