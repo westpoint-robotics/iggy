@@ -9,7 +9,7 @@ Panels:
         - /RobotModel1/Links1
         - /Vision3D1
       Splitter Ratio: 0.525907
-    Tree Height: 438
+    Tree Height: 329
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -73,6 +73,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        base_footprint:
+          Value: true
         base_link:
           Value: true
         camera_arm:
@@ -126,37 +128,38 @@ Visualization Manager:
         world:
           map:
             odom:
-              base_link:
-                chassis_link:
-                  fenders_link:
-                    {}
-                  front_left_wheel_link:
-                    {}
-                  front_right_wheel_link:
-                    {}
-                  imu_link:
-                    {}
-                  mid_mount:
-                    camera_arm:
-                      camera_center:
-                        left_camera:
-                          {}
-                        right_camera:
-                          {}
-                        zed_current_frame:
-                          {}
-                    front_mount:
-                      front_laser_mount:
-                        front_laser:
-                          {}
-                    rear_mount:
+              base_footprint:
+                base_link:
+                  chassis_link:
+                    fenders_link:
                       {}
-                  navsat_link:
-                    {}
-                  rear_left_wheel_link:
-                    {}
-                  rear_right_wheel_link:
-                    {}
+                    front_left_wheel_link:
+                      {}
+                    front_right_wheel_link:
+                      {}
+                    imu_link:
+                      {}
+                    mid_mount:
+                      camera_arm:
+                        camera_center:
+                          left_camera:
+                            {}
+                          right_camera:
+                            {}
+                          zed_current_frame:
+                            {}
+                      front_mount:
+                        front_laser_mount:
+                          front_laser:
+                            {}
+                      rear_mount:
+                        {}
+                    navsat_link:
+                      {}
+                    rear_left_wheel_link:
+                      {}
+                    rear_right_wheel_link:
+                      {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -209,9 +212,6 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Local Plan
@@ -219,10 +219,6 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/local_plan
       Unreliable: false
       Value: true
@@ -231,9 +227,6 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Global Plan
@@ -241,10 +234,6 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/global_plan
       Unreliable: false
       Value: true
@@ -384,7 +373,7 @@ Visualization Manager:
       Max Color: 255; 255; 255
       Max Intensity: 999999
       Min Color: 0; 0; 0
-      Min Intensity: -1.54642e-10
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -398,7 +387,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Class: rviz/Image
-      Enabled: true
+      Enabled: false
       Image Topic: /depth_camera/rgb/image_raw
       Max Value: 1
       Median window: 5
@@ -408,7 +397,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -463,32 +452,32 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 11.511
+      Distance: 5.32312
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 5.01687
-        Y: -1.94379
-        Z: -1.99984e-05
+        X: 1.12593
+        Y: -2.61641
+        Z: -1.98792e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.4998
+      Pitch: 0.6848
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 5.43272
+      Yaw: 3.81272
     Saved: ~
 Window Geometry:
   Camera:
-    collapsed: false
+    collapsed: true
   Displays:
-    collapsed: false
-  Height: 973
-  Hide Left Dock: false
+    collapsed: true
+  Height: 823
+  Hide Left Dock: true
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001940000032afc020000000dfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000004100000247000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d0061006700650100000230000000bc0000000000000000fb0000001a004c006500660074005f00460069006c00740065007200650064020000045a000001220000013c000000bafb0000000a0049006d0061006700650100000230000000bc0000000000000000fb0000000c00430061006d006500720061010000028e000000dd0000001600fffffffb000000160052006900670068007400430061006d00650072006100000002c0000000ab0000000000000000000000010000010f000002abfc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000041000002ab000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b20000000000000000fb00000010004c006500660074005f0052004700420200000457000002080000013c000000ba0000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000068e0000003efc0100000002fb0000000800540069006d006501000000000000068e000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000004f40000032a00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000019400000294fc020000000dfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730000000041000001da000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d0061006700650100000230000000bc0000000000000000fb0000001a004c006500660074005f00460069006c00740065007200650064020000045a000001220000013c000000bafb0000000a0049006d0061006700650100000230000000bc0000000000000000fb0000000c00430061006d0065007200610000000221000000b40000001600fffffffb000000160052006900670068007400430061006d00650072006100000002c0000000ab0000000000000000000000010000010f000002abfc0200000004fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000041000002ab000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b20000000000000000fb00000010004c006500660074005f0052004700420200000457000002080000013c000000ba0000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000063e0000003efc0100000002fb0000000800540069006d006501000000000000063e000002f600fffffffb0000000800540069006d006501000000000000045000000000000000000000063e0000029400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -497,6 +486,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1678
+  Width: 1598
   X: 0
-  Y: 24
+  Y: 343

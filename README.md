@@ -7,6 +7,11 @@ United States Military Academy Computer Science and Electrical Engineering Depar
 
 ## Installation
 
-Please fill me out..
+Dependencies:
+ros-indigo-teleop-twist-joy
+
+rviz_satellite at https://github.com/gareth-cross/rviz_satellite.git
+
+user1:src$ sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
 
 

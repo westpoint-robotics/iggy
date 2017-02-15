@@ -51,6 +51,9 @@
 
 <node pkg="tf" type="static_transform_publisher" name="world_to_map"
     args="0 0 0 0 0 0 1 world map 100" />
+    
+<node pkg="tf" type="static_transform_publisher" name="baseFootprint_to_baseLink"
+    args="0 0 0.0655 0 0 0 base_footprint base_link 100" />
 
 <!--vision3d 
 
