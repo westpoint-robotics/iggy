@@ -4,6 +4,8 @@ footprint_padding: 0.30
 # laserscan parameters
 obstacle_range: 10.0
 raytrace_range: 10.0
+publish_frequency: 1.0
+
 
 # costmap inflation parameters
 inflation_radius: 1.50
@@ -13,8 +15,10 @@ cost_scaling_factor: 15.0
 min_obstacle_height: -1
 
 # the cost at which a cell is considered lethal
-lethal_cost_threshold: 1
+lethal_cost_threshold: 100
 
-observation_sources: white_lines
+observation_sources: white_lines laser_scan_sensor
+
+laser_scan_sensor: {sensor_frame: front_laser, data_type: LaserScan, topic: /front/scan, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
 
 white_lines: {enabled: true, sensor_frame: zed_current_frame, data_type: PointCloud2, topic: /point_cloud/white_cloud, marking: true, clearing: true}
