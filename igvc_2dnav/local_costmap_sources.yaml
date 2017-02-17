@@ -3,7 +3,7 @@ footprint: [[-0.08,-0.31], [-0.08,0.31], [0.84, 0.31], [0.84, -0.31]]
 footprint_padding: 0.30
 # laserscan parameters
 obstacle_range: 10.0
-raytrace_range: 10.0
+raytrace_range: 1.0
 publish_frequency: 1.0
 
 
