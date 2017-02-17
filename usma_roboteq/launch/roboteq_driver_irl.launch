@@ -1,11 +1,12 @@
 <!-- roboteq driver -->
 <launch>
-
+<!--
   <node pkg="teleop_twist_joy" type="teleop_node" name="teleop">
-  <remap from="cmd_vel" to="cmd_vel"/>
+  <remap from="cmd_vel" to="/cmd_vel"/>
   </node>
-
+ -->
   <node pkg="usma_roboteq" type="igvc_roboteq_driver.py" name="roboteq_driver" output="screen">
+<remap from="/roboteq_driver/cmd" to="/cmd_vel"/>
   </node> 
 
 </launch>

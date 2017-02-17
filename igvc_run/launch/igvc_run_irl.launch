@@ -14,16 +14,29 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
 
+<!-- Navigatin System CNS5000 -->
+<node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen">
+	<remap from="gps/fix" to="/navsat/fix"/>   
+</node>  
+<!--utm odom converter node for current location-->
+<node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+  <remap from="odom" to="/odom"/>
+  <remap from="fix" to="/navsat/fix" />
+  <param name="frame_id" value="base_footprint" />
+</node>
+
+
+
+
 
 <!-- Robot Control -->
-  </include>
   <include file="$(find iggy_control)/launch/control.launch" />
   <include file="$(find iggy_control)/launch/teleop.launch">
     <arg name="joystick" value="true"/>
   </include>
-<include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"></include> #TODO: Adjust topic name 
-<include file="$(find iggy_control)/launch/move_base.launch"></include>
 
+<include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"></include>  
+<include file="$(find iggy_control)/launch/move_base.launch"></include>
 
 <!-- Laser Range Finder  -->
 <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 

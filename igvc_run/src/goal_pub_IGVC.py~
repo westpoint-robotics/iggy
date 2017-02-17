@@ -100,7 +100,7 @@ class NavTest():
     def navigate(self):
         # Variables to keep track of success rate, running time, and distance traveled
         rospy.loginfo(self) 
-        results= open('testResults2.csv', 'w')   
+        results= open('testResults3.csv', 'w')   
         n_goals = 0
         n_successes = 0
         distance_traveled = 0
@@ -114,8 +114,8 @@ class NavTest():
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
     
         # TODO getGoals in odom frame, make a list in odom frame. 
-        goals=self.makeWaypointsIntoGoals('waypoints.csv')
-        latLongs=self.wayPointLatLongList("waypoints.csv")
+        goals=self.makeWaypointsIntoGoals('waypoints2.csv')
+        latLongs=self.wayPointLatLongList("waypoints2.csv")
         # Begin the main loop and run through a sequence of locations
         i=0        
         firstRun=True
