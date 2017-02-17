@@ -3,6 +3,7 @@
 *swp
 *swm
 *swn
+*.pyc
 
 build/
 bin/

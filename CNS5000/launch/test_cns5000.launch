@@ -1,34 +1,22 @@
-<!--igvc_run.launch-->
+<!--AY2017 Test Launch file for CNS5000-->
 <launch>
 
-<!-- =============   TRANSFORMS  =======================-->
+<!-- =============   TRANSFORMS  ======================= -->
+<!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
+<include file="$(find igvc_run)/launch/tf.launch"></include>
 
-<node name="imu_tfpy" pkg="gps_imu" type="imu_tf.py" output="screen"/>
+<!-- Navigatin System CNS5000 -->
+<node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen">
+	<remap from="gps/fix" to="/navsat/fix"/>   
+</node>  
+<node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen"/>
 
-<node pkg="tf" type="static_transform_publisher" name="odom_to_map"
-        args="0 0 0 0 0 0 1 map odom 100" />
-
- <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
-        args="0 0 0.47 0 0 0 1 base_footprint base_link 100" />
-
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-        args="-0.52 0.0 0.92 0 0 0 1 base_link gps_frame 100" />
-
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
-        args="0 0 0 0 0 0 1 base_link imu_frame 100" />
-
-
-<!-- =============   NODES  =======================  -->
+<!--utm odom converter node for current location-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
-  <remap from="odom" to="vo"/>
-  <remap from="fix" to="/gps/fix" />
+  <remap from="odom" to="/odom"/>
+  <remap from="fix" to="/navsat/fix" />
   <param name="frame_id" value="base_footprint" />
-  <param name="use_sim_time" value="false"/>
 </node>
-
-
-<node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen"/>
-
 
 <!-- Start an rviz node with a custom configuration  -->
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find gps_imu)/launch/demobag_imu.rviz"/>

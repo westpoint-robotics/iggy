@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <launch>
 
-
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
         args="0.21 0 1.58 0 0 0 base_link velodyne 100" />
 
@@ -25,9 +24,9 @@
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_right_wheel_frame"
     args="0.0 0.29 0.0 0 0 0 base_link right_wheel_frame 100" />
-<!--
+
 <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
-    args="0 0 0.11 0 0 0 1 base_footprint base_link 100" /> -->
+    args="0 0 0.11 0 0 0 1 base_footprint base_link 100" /> 
 
 <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
     args="0 0 0 0 0 0 1 map odom 100" />

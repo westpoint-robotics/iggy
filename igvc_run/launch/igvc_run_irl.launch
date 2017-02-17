@@ -5,7 +5,6 @@
 <!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
 <include file="$(find igvc_run)/launch/tf.launch"></include>
 
-
   <!-- Robot Pose -->
   <arg name="x" default="-3.714"/>
   <arg name="y" default="-21.26"/>
@@ -24,10 +23,6 @@
   <remap from="fix" to="/navsat/fix" />
   <param name="frame_id" value="base_footprint" />
 </node>
-
-
-
-
 
 <!-- Robot Control -->
   <include file="$(find iggy_control)/launch/control.launch" />

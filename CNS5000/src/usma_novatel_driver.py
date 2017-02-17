@@ -62,7 +62,8 @@ time.sleep(0.03)
 
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
-imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
+# The below line is not needed in current config. We are using raw imu from another serial connection.
+# imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
 novaPub = rospy.Publisher('novatel/raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(2) 
