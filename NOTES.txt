@@ -1,0 +1,8 @@
+git difftool -d origin/irl 
+
+
+rosrun xacro xacro.py -o deleteme.urdf `rospack find iggy_description`/urdf/iggy.urdf.xacro
+check_urdf deleteme.urdf
+
+
+rosrun igvc_run goal_pub_IGVC.py waypoint_file:="igvc_run/src/waypoints3.csv"
