@@ -38,23 +38,23 @@
   </gazebo>
 
   <gazebo reference="base_link">
-    <turnGravityOff>false</turnGravityOff>  
+    <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
   <gazebo reference="chassis_link">
     <material>Gazebo/DarkGrey</material>
-    <turnGravityOff>false</turnGravityOff> 
+    <turnGravityOff>false</turnGravityOff>
   </gazebo>
     <gazebo reference="imu_link">
-    <turnGravityOff>false</turnGravityOff> 
+    <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
   <gazebo reference="navsat_link">
     <material>Gazebo/DarkGrey</material>
-    <turnGravityOff>false</turnGravityOff> 
+    <turnGravityOff>false</turnGravityOff>
   </gazebo>
   <gazebo reference="fenders_link">
     <material>Gazebo/Yellow</material>
-    <turnGravityOff>false</turnGravityOff> 
+    <turnGravityOff>false</turnGravityOff>
   </gazebo>
 </robot>
