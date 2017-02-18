@@ -10,20 +10,17 @@ from usma_novatel_parser import *
 from os.path import expanduser
 from std_msgs.msg import String
 
-# configure the serial connections
-#defualt after an FRESET command is sent is at buadrate 9600.
-#to change baud rate, enter minicom at 9600 and send command "serialconfig com1 115200 n 8 1 n on"
-#then exit minicom, re-enter at 115200 baudrate and send command "saveconfig" so that it will stay at that buadrate after turning off
-#other settings saved:
-#FLIPPED front and back of robot, rotated 180 about z axis
-#TODO make this rotation and imu/antenna offset more accurate. the INS not perfectly alligned with robot (a little crooked) and the
-#ser.write('VEHICLEBODYROTATION 0 0 180\r\n')
-#APPLYVEHICLEBODYROTATION ENABLE
-#SETIMUTOANTOFFSET 0.0 0.6096 0.8636 0.05 0.05 0.05
-#SETALIGNMENTVEL 1.15
+'''
+udev rule settings for the CNS 5000 and flexpak6
+SUBSYSTEM=="tty", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ATTRS{product}=="USB-Serial Controller", SYMLINK+="raw_imu"
+SUBSYSTEM=="tty", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ATTRS{product}=="USB-Serial Controller D", SYMLINK+="raw_gps"
+SUBSYSTEM=="tty", ATTRS{idProduct}=="0100", ATTRS{idVendor}=="09d7", SYMLINK+="flex6_gps"
+'''
+# TODO rename these devices. raw_gps is not accurate name, this the cns5000 ins device.
 ser = serial.Serial(
     port='/dev/raw_gps',
-    baudrate=115200, #8N1
+    #baudrate=115200, #8N1
+    baudrate=9600, #8N1
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS
@@ -37,11 +34,24 @@ ser.open()
 #home = expanduser("~")
 #fName = home+"/catkin_ws/rosbags/novatelLog.txt"
 #outFile = open(fName, "wb")
+
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
+time.sleep(0.03)
+ser.write('ASSIGNLBANDBEAM AUTO\r\n')
+time.sleep(0.03)
+#ser.write('LOG COM1 INSPVAA ONTIME 1\r\n')
+time.sleep(0.03)
+ser.write('LOG COM1 BESTPOSA ONTIME 1\r\n')
+time.sleep(0.03)
+ser.write('LOG COM1 PPPPOSA ONTIME 1\r\n')
+time.sleep(0.03)
+ser.write('LOG COM1 GPGSA ONTIME 1\r\n')
+time.sleep(0.03)
+ser.write('LOG COM1 GPGSV ONTIME 1\r\n')
+time.sleep(0.03)
 
-
-#TODO write code that checks if INS_SOLUTION_GOOD or INS_HIGH_VARIANCE, if high variance maybe pause navigation and wait till solution good (might need a cap on how long you wait since sometimes the wait is over 2 minutes)
+#TODO write code that checks if INS_SOLUTION_GOOD or INS_HIGH_VARIANCE, if high variance pause navigation and wait till solution good (might need a cap on how long you wait since sometimes the wait is over 2 minutes)
 
 #these lines are no longer used, better to do kinematic alignment (drive around)
 #setinitaz = input("type 1 to SETINITAZIMUTH, and 2 to skip it:")
@@ -50,13 +60,10 @@ ser.write('unlogall\r\n')
 #  command = 'SETINITAZIMUTH ' + str(align) + ' 10\r\n'
 #  ser.write(command)
 
-#ser.write('LOG COM1 INSPVAA ONTIME 0.2\r\n')
-#ser.write('LOG COM1 RAWIMUSA ONTIME 0.2\r\n')
-ser.write('LOG COM1 BESTGPSPOSA ONTIME 2\r\n')
-
 # Start the ROS node and create the ROS publisher    
 gpsPub = rospy.Publisher('gps/fix', NavSatFix, queue_size=1)
-imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
+# The below line is not needed in current config. We are using raw imu from another serial connection.
+# imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
 novaPub = rospy.Publisher('novatel/raw_data', String, queue_size=1)
 rospy.init_node('novatel_CNS5000', anonymous=True)
 rate = rospy.Rate(2) 
@@ -67,11 +74,9 @@ try:
             kvh5000_output = ser.readline() # Read data a line of data from buffer
             #outFile.write(kvh5000_output) # Option to log data to file
             #print(kvh5000_output)
-            #novaPub = kvh5000_output
+            novaPub.publish(kvh5000_output)            
             #TODO print once when gets into different mode like initializing, finesteering, etc
-                
-            if (kvh5000_output.split(",")[0] == "#BESTGPSPOSA"): # check if this the gps message
-                #print "Inside best gps"
+            if (kvh5000_output.split(",")[0] == "#BESTPOSA"): # check if this the gps message
                 nova_Data = kvh5000_output.split(';')[1] # split the header and message body
                 nova_Data = nova_Data.split(',') # split the message body into fields
                 gps_out = NavSatFix()
@@ -92,7 +97,7 @@ try:
                 inspva_out = parse_novatelINSPVA(nova_Header, nova_Data) 
                 gpsPub.publish(inspva_out[1])
                 imuPub.publish(inspva_out[0])
-            novaPub.publish(kvh5000_output)            
+
 	rate.sleep()
                      
 except KeyboardInterrupt:
@@ -100,5 +105,6 @@ except KeyboardInterrupt:
     outFile.close() 
     ser.close()
     raise
+
 
 
