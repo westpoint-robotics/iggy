@@ -29,8 +29,6 @@ from random import sample
 from math import pow, sqrt
 from LatLongUTMconversion import LLtoUTM, UTMtoLL
 
-
-
 global nav
 
 def update_current_pose(current_pose):
