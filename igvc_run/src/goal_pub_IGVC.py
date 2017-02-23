@@ -106,7 +106,7 @@ class NavTest():
         running_time = 0
         # TODO Use Dynamic reconfig for this
         # How long in seconds should the robot pause at each location?
-        rest_time = rospy.get_param("~rest_time", 10)
+        rest_time = rospy.get_param("~rest_time", 0)
         
         # DML read the filename from rosparam server
         wp_file = rospy.get_param("~waypoint_file", "waypoint.csv")
