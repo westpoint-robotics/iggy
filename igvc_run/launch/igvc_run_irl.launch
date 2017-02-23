@@ -17,9 +17,13 @@
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen">
 	<remap from="gps/fix" to="/navsat/fix"/>   
 </node>  
+<node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen">
+	<remap from="/imu/raw" to="/imu/data"/>   
+</node>
+
 <!--utm odom converter node for current location-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
-  <remap from="odom" to="/odom"/>
+  <remap from="odom" to="/iggy_velocity_controller/odom"/>
   <remap from="fix" to="/navsat/fix" />
   <param name="frame_id" value="base_footprint" />
 </node>
@@ -35,7 +39,8 @@
 
 <!-- Laser Range Finder  -->
 <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
-<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
+<!-- FOR INDOOR NAVIGATION USE-->
+<!--<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
 	<remap from="/imu_data" to="/imu/data"/>   
 	<param name="cloud" value="/velodyne_points"/>
 	<param name="use_cloud_input" value="yes"/>
@@ -44,7 +49,7 @@
 	<param name="use_odom" type="bool" value="false" />    
 	<param name="fixed_frame" type="string" value="/map" />    
 	<param name="base_frame" type="string" value="/base_footprint" />
-</node> 
+</node>-->  
 
 <!--vision3d  -->
 #TODO: Add zed camera
