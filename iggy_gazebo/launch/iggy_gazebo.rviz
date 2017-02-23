@@ -5,7 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Global Map1
+        - /TF1
+        - /TF1/Frames1
+        - /TF1/Tree1
         - /RobotModel1/Links1
         - /Vision3D1
       Splitter Ratio: 0.525907
@@ -48,17 +50,17 @@ Visualization Manager:
         Z: 0
       Plane: XY
       Plane Cell Count: 100
-      Reference Frame: <Fixed Frame>
+      Reference Frame: map
       Value: true
     - Alpha: 0.25
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: Local Map
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 0.3
       Class: rviz/Map
       Color Scheme: map
@@ -209,6 +211,9 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Local Plan
@@ -216,6 +221,10 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
+      Pose Style: None
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/local_plan
       Unreliable: false
       Value: true
@@ -224,6 +233,9 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Global Plan
@@ -231,6 +243,10 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
+      Pose Style: None
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/global_plan
       Unreliable: false
       Value: true
@@ -449,22 +465,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 29.1364
+      Distance: 54.0032
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.12593
-        Y: -2.61641
-        Z: -1.98792e-05
+        X: -0.233363
+        Y: -1.23356
+        Z: -2.45049e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.6898
+      Pitch: 1.5548
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.81272
+      Yaw: 3.95272
     Saved: ~
 Window Geometry:
   Camera:
