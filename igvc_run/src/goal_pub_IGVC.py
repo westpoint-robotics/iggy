@@ -114,8 +114,8 @@ class NavTest():
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
     
         # TODO getGoals in odom frame, make a list in odom frame. 
-        goals=self.makeWaypointsIntoGoals('waypoints2.csv')
-        latLongs=self.wayPointLatLongList("waypoints2.csv")
+        goals=self.makeWaypointsIntoGoals('waypoints.csv')
+        latLongs=self.wayPointLatLongList("waypoints.csv")
         # Begin the main loop and run through a sequence of locations
         i=0        
         firstRun=True
