@@ -190,9 +190,9 @@ class NavTest():
             # Increment the counters
             i += 1
             if (i >= len(goals)):
-                results.close()
                 rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE")
                 results.write("NO MORE GOALS TO ACHIEVE \n")
+                results.close()
             rospy.sleep(rest_time)
 
     def setInitialPose(self):            

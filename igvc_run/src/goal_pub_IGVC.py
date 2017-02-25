@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#TODO Stop code from locking up after CTRL+C
 """ Code modified by: Dominic Larkin 5FEB2016
     
     Command a robot to move autonomously among a number of goal locations defined in the map frame.
