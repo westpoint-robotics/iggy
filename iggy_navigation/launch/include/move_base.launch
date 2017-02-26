@@ -21,6 +21,6 @@
     <remap from="odom"  to="odometry/filtered_map"/> 
   </node>
 
-  <node pkg="map_server" type="map_server" name="map_server" output="screen" args="$(find igvc_2dnav)/my_map.yaml"></node>
+  <node pkg="map_server" type="map_server" name="map_server" output="screen" args="$(find iggy_navigation)/maps/my_map.yaml"></node>
 
 </launch>
