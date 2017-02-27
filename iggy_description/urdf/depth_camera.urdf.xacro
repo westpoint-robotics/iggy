@@ -6,7 +6,7 @@
                 <always_on>true</always_on>
                 <update_rate>20.0</update_rate>
                 <camera>
-                    <horizontal_fov>${57.0*3.141/180.0}</horizontal_fov>
+                    <horizontal_fov>${110.0*3.141/180.0}</horizontal_fov>
                     <image>
                         <format>B8G8R8</format>
                         <width>640</width>
@@ -108,13 +108,13 @@
         <joint name="camera_center_joint" type="fixed">
             <parent link="camera_arm" />
             <child link="camera_center" />
-            <origin rpy="0 0 0" xyz="0 0 0.25" />
+            <origin rpy="0 0.30 0" xyz="0 0 0.25" />
         </joint>
 
         <joint name="camera_arm_joint" type="fixed">
             <parent link="mid_mount" />
             <child link="camera_arm" />
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0.25" />
         </joint>
     </xacro:macro>
 </robot>

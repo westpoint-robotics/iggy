@@ -56,11 +56,11 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Local Map
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 0.3
       Class: rviz/Map
       Color Scheme: map
@@ -211,9 +211,6 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Local Plan
@@ -221,10 +218,6 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/local_plan
       Unreliable: false
       Value: true
@@ -233,9 +226,6 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Global Plan
@@ -243,10 +233,6 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/global_plan
       Unreliable: false
       Value: true
@@ -465,22 +451,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 54.0032
+      Distance: 60.4836
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.233363
-        Y: -1.23356
+        X: 4.62117
+        Y: 5.69764
         Z: -2.45049e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.5548
+      Pitch: 1.3598
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.95272
+      Yaw: 4.73772
     Saved: ~
 Window Geometry:
   Camera:
