@@ -11,7 +11,7 @@
       <robotNamespace>/</robotNamespace>
       <updateRate>50.0</updateRate>
       <bodyName>imu_link</bodyName>
-      <topicName>imu/data</topicName>
+      <topicName>cns5000/imu_data</topicName>
       <accelDrift>0.00015 0.00015 0.00015</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
       <rateDrift>0.00015 0.00015 0.00015 </rateDrift>
@@ -27,8 +27,8 @@
       <robotNamespace>/</robotNamespace>
       <bodyName>navsat_link</bodyName>
       <frameId>base_link</frameId>
-      <topicName>/navsat/fix</topicName>
-      <velocityTopicName>/navsat/vel</velocityTopicName>
+      <topicName>/cns5000/fix</topicName>
+      <velocityTopicName>/cns5000/vel</velocityTopicName>
         <referenceLatitude>42.679239</referenceLatitude>
         <referenceLongitude>-83.195619</referenceLongitude>
         <referenceHeading>90</referenceHeading>

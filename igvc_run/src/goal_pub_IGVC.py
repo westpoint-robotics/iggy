@@ -206,9 +206,9 @@ class NavTest():
         # Get the initial pose from the robot
         rospy.wait_for_message('/odometry/gps', Odometry)
         rospy.loginfo("Initial Pose from /odometry/gps recieved")
-        while len(self.current_utm) != 3:
-            time.sleep(1) 
-            rospy.loginfo("Stuck?")
+        #while len(self.current_utm) != 3:
+        #    time.sleep(1) 
+        #    rospy.loginfo("Stuck?")
         rospy.loginfo("Establishing initial position wait 10 seconds.")
         easts=[]
         nrths=[]
