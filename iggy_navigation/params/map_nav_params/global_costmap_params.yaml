@@ -1,0 +1,17 @@
+global_costmap:
+   global_frame: world
+   robot_base_frame: base_link
+   update_frequency: 10.0
+   publish_frequency: 2.0
+   width: 50
+   height: 50
+   resolution: 0.10
+   origin_x: 3
+   origin_y: 4
+   static_map: true
+   rolling_window: false
+
+   plugins:
+   - {name: static_layer, type: "costmap_2d::StaticLayer"}
+   - {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
+   - {name: inflater_layer, type: "costmap_2d::InflationLayer"}
