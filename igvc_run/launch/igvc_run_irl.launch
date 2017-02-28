@@ -15,7 +15,7 @@
 
 <!-- Navigatin System CNS5000 -->
 <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen">
-	<remap from="gps/fix" to="/navsat/fix"/>   
+	<remap from="gps/fix" to="/navsat/fix"/>   <!--Working -->
 </node>  
 <node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen">
 	<remap from="/imu/raw" to="/imu/data"/>   
@@ -24,7 +24,7 @@
 <!--utm odom converter node for current location-->
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
   <remap from="odom" to="/iggy_velocity_controller/odom"/>
-  <remap from="fix" to="/navsat/fix" />
+  <remap from="fix" to="/odom/fix" />
   <param name="frame_id" value="base_footprint" />
 </node>
 

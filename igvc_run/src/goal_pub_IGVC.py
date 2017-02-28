@@ -114,8 +114,8 @@ class NavTest():
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
     
         # TODO getGoals in odom frame, make a list in odom frame. 
-        goals=self.makeWaypointsIntoGoals('waypoints.csv')
-        latLongs=self.wayPointLatLongList("waypoints.csv")
+        goals=self.makeWaypointsIntoGoals('ThayerRoof.csv')
+        latLongs=self.wayPointLatLongList("ThayerRoof.csv")
         # Begin the main loop and run through a sequence of locations
         i=0        
         firstRun=True
@@ -167,7 +167,7 @@ class NavTest():
                     rospy.loginfo("State:" + str(state))
                     results.write("State: " + str(state) + "\n")
                     newD= self.calculateDistFromGoal(self.goalLat, self.goalLong, results)
-                    results.write("Distance from goal according to the GPS: " + str(distance) + " meters" )
+                    results.write("Distance from goal according to the GPS: " + str(distance) + " meters " )
                     
                 else:
                   rospy.loginfo("Goal failed with error code: " + str(self.goal_states[state]))

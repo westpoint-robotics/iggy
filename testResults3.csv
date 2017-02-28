@@ -1,8 +1,16 @@
-Going to: (421476.8237,4582619.4949)
-Current lat is: 0.0
-Goal lat is: 41.39035
-Current long is: 0.0
-Goal long is: -73.95342
+Going to: (5.4527,-2.6998)
+Current lat is: 41.3912783141
+Goal lat is: 41.3912533813
+Current long is: -73.95443472
+Goal long is: -73.9543698984
 Timed out achieving goal 
 Success so far: 0/1 = 0% 
-Running time: 0.80 min Distance: 0.000
+Running time: 5.02 min Distance: 0.000
+Going to: (-12.7736,-58.8690)
+Current lat is: 41.3912561353
+Goal lat is: 41.3907494947
+Current long is: -73.9543722901
+Goal long is: -73.954595979
+Timed out achieving goal 
+Success so far: 0/2 = 0% 
+Running time: 6.67 min Distance: 0.000
