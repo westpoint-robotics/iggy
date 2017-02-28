@@ -10,7 +10,7 @@ material igvc_basic_ground/Image
 
             texture_unit
             {
-                texture IGVC_basic_marked.png
+                texture IGVC_basic_USMA.png
                 filtering trilinear
             }
         }
