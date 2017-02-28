@@ -1,0 +1,21 @@
+/home/user1/catkin_ws/src/iggy/iggy_gazebo/launch/iggy_world.launch
+    /home/user1/catkin_ws/src/iggy/iggy_description/launch/description.launch
+        - igvc_description/urdf/configs/base
+        - igvc_description/urdf/iggy.urdf.xacro 
+    /opt/ros/indigo/share/gazebo_ros/launch/empty_world.launch
+    /home/user1/catkin_ws/src/iggy/iggy_control/launch/teleop.launch
+        - igvc_contorl/config/teleop.yaml
+    /home/user1/catkin_ws/src/iggy/iggy_control/launch/control.launch
+        - igvc_control/config/control.yaml
+        - iggy_control/launch/dual_ekf_navsat_example.launch
+        - iggy_control/config/dual_ekf_navsat_example.yaml
+        - iggy_control/config/navsat_transform_template.yaml
+    /home/user1/catkin_ws/src/iggy/iggy_navigation/launch/include/move_base.launch
+        - iggy_navigation/params/costmap_common_params.yaml
+        - iggy_navigation/params/map_nav_params/local_costmap_params.yaml
+        - iggy_navigation/params/map_nav_params/global_costmap_params.yaml
+        - iggy_navigation/params/base_local_planner_params.yaml
+        - iggy_navigation/params/move_base_params.yaml
+        - igvc_navigation/maps/my_map.yaml
+    /home/user1/catkin_ws/src/iggy/iggy_gazebo/launch/iggy_world.launch
+
