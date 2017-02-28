@@ -21,7 +21,7 @@ ekf_se_odom:
                  false, false, false]
   odom0_queue_size: 10
   odom0_nodelay: true
-  odom0_differential: true
+  odom0_differential: false
   odom0_relative: false
 
   imu0: imu/data
@@ -29,10 +29,10 @@ ekf_se_odom:
                 true,  true,  false,
                 false, false, false,
                 true,  true,  true,
-                false, false,  false]
+                true,  true,  true]
   imu0_nodelay: false
   imu0_differential: false
-  imu0_relative: true
+  imu0_relative: false
   imu0_queue_size: 10
   imu0_remove_gravitational_acceleration: true
 
@@ -91,7 +91,7 @@ ekf_se_map:
                  false, false, false]
   odom0_queue_size: 10
   odom0_nodelay: true
-  odom0_differential: true
+  odom0_differential: false
   odom0_relative: false
 
   odom1: odometry/gps
@@ -102,7 +102,7 @@ ekf_se_map:
                  false, false, false]
   odom1_queue_size: 10
   odom1_nodelay: true
-  odom1_differential: true
+  odom1_differential: false
   odom1_relative: false
 
   imu0: imu/data
