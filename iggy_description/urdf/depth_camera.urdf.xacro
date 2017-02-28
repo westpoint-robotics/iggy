@@ -6,7 +6,7 @@
                 <always_on>true</always_on>
                 <update_rate>20.0</update_rate>
                 <camera>
-                    <horizontal_fov>${57.0*3.141/180.0}</horizontal_fov>
+                    <horizontal_fov>${110.0*3.141/180.0}</horizontal_fov>
                     <image>
                         <format>B8G8R8</format>
                         <width>640</width>
@@ -17,20 +17,22 @@
                         <far>5</far>
                     </clip>
                 </camera>
-                <plugin name="depth_camera_frame_controller" filename="libgazebo_tutorials.so">
+                 <plugin name="depth_camera_frame_controller" filename="libgazebo_iggy_vision.so"> 
+                <!-- <plugin name="depth_camera_frame_controller" filename="libgazebo_ros_depth_camera.so"> -->
                     <always_on>true</always_on>
                     <updateRate>20.0</updateRate>
                     <cameraName>depth_camera</cameraName>
                     <imageTopicName>rgb/image_raw</imageTopicName>
-                    <pointCloudTopicName>rgb/points</pointCloudTopicName>
+                    <pointCloudTopicName>/point_cloud/white_cloud</pointCloudTopicName>
                     <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-                    <frameName>depth_camera_optical</frameName>
+                    <frameName>zed_current_frame</frameName>
                     <pointCloudCutoff>1.5</pointCloudCutoff>
-                    <distortionK1>0.00000001</distortionK1>
-                    <distortionK2>0.00000001</distortionK2>
-                    <distortionK3>0.00000001</distortionK3>
-                    <distortionT1>0.00000001</distortionT1>
-                    <distortionT2>0.00000001</distortionT2>
+                    <distortionK1>0</distortionK1>
+                    <distortionK2>0</distortionK2>
+                    <distortionK3>0</distortionK3>
+                    <distortionT1>0</distortionT1>
+                    <distortionT2>0</distortionT2>
+                    <linesOnly>1</linesOnly>
                 </plugin>
             </sensor>
         </gazebo>
@@ -96,23 +98,23 @@
         </joint>
 
         <!-- Align the optical frame to the camera frame -->
-        <link name="depth_camera_optical"></link>
-        <joint name="depth_camera_optical_joint" type="fixed">
+        <link name="zed_current_frame"></link>
+        <joint name="zed_current_frame_joint" type="fixed">
             <parent link="camera_center" />
-            <child link="depth_camera_optical" />
+            <child link="zed_current_frame" />
             <origin rpy="-1.57 0 -1.57" xyz="0 0 0" />
         </joint>
 
         <joint name="camera_center_joint" type="fixed">
             <parent link="camera_arm" />
             <child link="camera_center" />
-            <origin rpy="0 0 0" xyz="0 0 0.25" />
+            <origin rpy="0 0.30 0" xyz="0 0 0.25" />
         </joint>
 
         <joint name="camera_arm_joint" type="fixed">
             <parent link="mid_mount" />
             <child link="camera_arm" />
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0.25" />
         </joint>
     </xacro:macro>
 </robot>

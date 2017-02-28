@@ -1,3 +1,7 @@
+iggy_joint_publisher:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50
+
 iggy_velocity_controller:
   type: "diff_drive_controller/DiffDriveController"
   left_wheel: ['front_left_wheel', 'rear_left_wheel']

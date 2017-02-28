@@ -14,6 +14,10 @@
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
+
+
+example of usage: rosrun igvc_run goal_pub_IGVC.py _waypoint_file:=igvc_run/src/waypoints3.csv
+
 """
 import csv
 import roslib
@@ -28,8 +32,6 @@ from nav_msgs.msg import Odometry
 from random import sample
 from math import pow, sqrt
 from LatLongUTMconversion import LLtoUTM, UTMtoLL
-
-
 
 global nav
 
@@ -55,7 +57,7 @@ class NavTest():
         rospy.on_shutdown(self.shutdown)    
 
         # Subscribe to the move_base action server
-	self.goal = MoveBaseGoal()
+        self.goal = MoveBaseGoal()
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)        
         rospy.loginfo("Waiting for move_base action server...")        
         # Wait 60 seconds for the action server to become available
@@ -100,7 +102,7 @@ class NavTest():
     def navigate(self):
         # Variables to keep track of success rate, running time, and distance traveled
         rospy.loginfo(self) 
-        results= open('testResults3.csv', 'w')   
+        results= open('testResults.csv', 'w')   
         n_goals = 0
         n_successes = 0
         distance_traveled = 0
@@ -108,14 +110,17 @@ class NavTest():
         running_time = 0
         # TODO Use Dynamic reconfig for this
         # How long in seconds should the robot pause at each location?
-        rest_time = rospy.get_param("~rest_time", 10)
+        rest_time = rospy.get_param("~rest_time", 0)
         
+        # DML read the filename from rosparam server
+        wp_file = rospy.get_param("~waypoint_file", "waypoint.csv")
+        rospy.loginfo("Waypoing file is: %s",wp_file)
         # TODO set the state variable for current location as start location
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
     
         # TODO getGoals in odom frame, make a list in odom frame. 
-        goals=self.makeWaypointsIntoGoals('ThayerRoof.csv')
-        latLongs=self.wayPointLatLongList("ThayerRoof.csv")
+        goals=self.makeWaypointsIntoGoals(wp_file)
+        latLongs=self.wayPointLatLongList(wp_file)
         # Begin the main loop and run through a sequence of locations
         i=0        
         firstRun=True
@@ -167,7 +172,7 @@ class NavTest():
                     rospy.loginfo("State:" + str(state))
                     results.write("State: " + str(state) + "\n")
                     newD= self.calculateDistFromGoal(self.goalLat, self.goalLong, results)
-                    results.write("Distance from goal according to the GPS: " + str(distance) + " meters " )
+                    results.write("Distance from goal according to the GPS: " + str(distance) + " meters" )
                     
                 else:
                   rospy.loginfo("Goal failed with error code: " + str(self.goal_states[state]))
@@ -201,25 +206,25 @@ class NavTest():
         # Get the initial pose from the robot
         rospy.wait_for_message('/odometry/gps', Odometry)
         rospy.loginfo("Initial Pose from /odometry/gps recieved")
-	while len(self.current_utm) != 3:
+        while len(self.current_utm) != 3:
             time.sleep(1) 
             rospy.loginfo("Stuck?")
-        rospy.loginfo("Establishing initial position wait 10 seconds.")	
-	easts=[]
-	nrths=[]
-	for i in range(1):
-       	    utm_c=self.current_utm
-	    print self.current_utm
-	    easts.append(utm_c[1])
-	    nrths.append(utm_c[2])
-	    rospy.sleep(1.5)
-	easting = sum(easts) / float(len(easts))
-	northing = sum(nrths) / float(len(nrths))
+        rospy.loginfo("Establishing initial position wait 10 seconds.")
+        easts=[]
+        nrths=[]
+        for i in range(1):
+            utm_c=self.current_utm
+        print self.current_utm
+        easts.append(utm_c[1])
+        nrths.append(utm_c[2])
+        rospy.sleep(1.5)
+        easting = sum(easts) / float(len(easts))
+        northing = sum(nrths) / float(len(nrths))
         self.initial_pose = self.current_pose 
         self.initial_utm = [utm_c[0],easting,northing]
         rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))               
-	rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
-	print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
+        rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
+        print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
 
     # Turn list of waypoints into Goals. Goals are coordinates in the robot odom frame.
     # TODO Look into makeing this in the map frame if map and odom frame diverge.
@@ -259,7 +264,7 @@ class NavTest():
             reader = csv.reader(infile)
             for row in reader:
                 if row[0][0] != '#': # ignore commented out waypoints
-                    print row[0],row[1]
+                    #print "RRRROW",row
                     waypoints.append((float(row[0]),float(row[1]),float(row[2]),float(row[3])))
         return waypoints
             

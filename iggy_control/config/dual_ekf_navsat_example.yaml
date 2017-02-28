@@ -113,7 +113,7 @@ ekf_se_map:
                 true,  true,  true]
   imu0_nodelay: true
   imu0_differential: false
-  imu0_relative: true
+  imu0_relative: false
   imu0_queue_size: 10
   imu0_remove_gravitational_acceleration: true
 
