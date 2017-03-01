@@ -1,0 +1,95 @@
+/odom topic published on 17FEB2017 is:
+This is the global odom in world frame. We need this in the Map frame. This topic has no child frame.
+---
+header: 
+  seq: 190
+  stamp: 
+    secs: 1487344370
+    nsecs: 709932088
+  frame_id: base_footprint
+child_frame_id: ''
+pose: 
+  pose: 
+    position: 
+      x: 587359.431914
+      y: 4582622.83283
+      z: 48.7619
+    orientation: 
+      x: 1.0
+      y: 0.0
+      z: 0.0
+      w: 0.0
+  covariance: [0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 999.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 99999.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 99999.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 99999.0]
+twist: 
+  twist: 
+    linear: 
+      x: 0.0
+      y: 0.0
+      z: 0.0
+    angular: 
+      x: 0.0
+      y: 0.0
+      z: 0.0
+  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+---
+=======================================================================================
+=======================================================================================
+/imu_data topic looks like:
+^Cuser1@igvc2:~/catkin_ws/src/iggy$ rostopic info /imu_data 
+Type: sensor_msgs/Imu
+
+Publishers: 
+ * /novatel_CNS5000 (http://192.168.2.200:52245/)
+
+Subscribers: 
+ * /rviz (http://192.168.2.200:47970/)
+
+But is not being published.
+=======================================================================================
+=======================================================================================
+/navsat/fix topic appears to be working correctly
+
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic echo /navsat/fix
+header: 
+  seq: 439
+  stamp: 
+    secs: 1487344618
+    nsecs: 708334922
+  frame_id: gps_frame
+status: 
+  status: 0
+  service: 0
+latitude: 41.3903697314
+longitude: -73.9550615518
+altitude: 51.1059
+position_covariance: [0.01, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 999.0]
+position_covariance_type: 1
+---
+
+=======================================================================================
+=======================================================================================
+/novatel/raw_data topic appears to be working correctly
+
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic echo /novatel/raw_data 
+
+---
+data: $GPGSA,M,3,14,32,24,10,18,,,,,,,,4.0,2.7,2.9*3E
+
+---
+data: $GPGSV,3,1,12,18,75,132,47,10,72,315,49,24,47,055,48,32,47,280,47*7C
+
+---
+data: $GPGSV,3,2,12,14,25,266,41,21,23,193,,12,22,109,35,15,15,077,29*71
+
+---
+data: $GPGSV,3,3,12,25,11,149,,20,07,131,,31,05,212,,11,01,327,*76
+
+---
+data: #PPPPOSA,COM1,0,67.5,FINESTEERING,1936,487101.000,00000000,ec34,13742;INSUFFICIENT_OBS,NONE,0.00000000000,0.00000000000,0.0000,0.0000,WGS84,0.0000,0.0000,0.0000,"",0.000,0.000,7,0,0,0,00,00,00,00*8dee7138
+
+---
+data: #BESTPOSA,COM1,0,67.5,FINESTEERING,1936,487101.000,00000000,b1f6,13742;SOL_COMPUTED,SINGLE,41.39038211371,-73.95519369535,80.1058,-32.2000,WGS84,4.9638,1.6162,3.9572,"",0.000,0.000,7,7,7,0,00,02,00,01*2267c867
+
+
+
+
