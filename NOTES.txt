@@ -5,4 +5,22 @@ rosrun xacro xacro.py -o deleteme.urdf `rospack find iggy_description`/urdf/iggy
 check_urdf deleteme.urdf
 
 
-rosrun igvc_run goal_pub_IGVC.py waypoint_file:="igvc_run/src/waypoints3.csv"s
+rosrun igvc_run goal_pub_IGVC.py waypoint_file:="igvc_run/src/waypoints3.csv"
+
+grep -rl matchstring somedir/ | xargs sed -i 's/string1/string2/g'
+
+egrep -rin 'imu\/data'
+
+egrep -rl 'imu\/data' iggy_control/config | xargs sed -i 's/imu\/data/novatel\/imu_data/g'
+
+egrep -rin 'novatel'
+
+
+egrep -rl 'imu\/data' iggy_control/config | xargs sed -i 's/imu\/data/novatel\/imu_data/g'
+
+
+egrep -rl 'novatel' iggy_control/config | xargs sed -i 's/novatel/cns5000/g'
+
+
+egrep -rl 'novatel\/imu_data' iggy_description/urdf/ | xargs sed -i 's/novatel\/imu_data/cns5000\/imu_data/g'
+

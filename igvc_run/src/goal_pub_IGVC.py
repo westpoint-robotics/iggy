@@ -94,7 +94,7 @@ class NavTest():
         return distance
     def calculateDistFromGoal(self, curGoalLat, curGoalLong, resFile):
         distance= sqrt(pow(self.curLat -curGoalLat,2) + pow(self.curLong - curGoalLong, 2)) *100000
-        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters" )
+        rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters \n" )
         return distance            
     def test(self):
         #curPos=NavSatFix
@@ -206,14 +206,14 @@ class NavTest():
         # Get the initial pose from the robot
         rospy.wait_for_message('/odometry/gps', Odometry)
         rospy.loginfo("Initial Pose from /odometry/gps recieved")
-        while len(self.current_utm) != 3:
-            time.sleep(1) 
-            rospy.loginfo("Stuck?")
-        rospy.loginfo("Establishing initial position wait 10 seconds.")    
+        #while len(self.current_utm) != 3:
+        #    time.sleep(1) 
+        #    rospy.loginfo("Stuck?")
+        rospy.loginfo("Establishing initial position wait 10 seconds.")
         easts=[]
         nrths=[]
         for i in range(1):
-               utm_c=self.current_utm
+            utm_c=self.current_utm
         print self.current_utm
         easts.append(utm_c[1])
         nrths.append(utm_c[2])
@@ -225,7 +225,6 @@ class NavTest():
         rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))               
         rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
         print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
-        print "HERE NOEW\n"
 
     # Turn list of waypoints into Goals. Goals are coordinates in the robot odom frame.
     # TODO Look into makeing this in the map frame if map and odom frame diverge.
@@ -264,9 +263,8 @@ class NavTest():
         with open(filename, mode='r') as infile:
             reader = csv.reader(infile)
             for row in reader:
-                print "ROW",row
                 if row[0][0] != '#': # ignore commented out waypoints
-                    print "RRRROW",row
+                    #print "RRRROW",row
                     waypoints.append((float(row[0]),float(row[1]),float(row[2]),float(row[3])))
         return waypoints
             

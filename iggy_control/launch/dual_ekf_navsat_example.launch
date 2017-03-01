@@ -22,11 +22,11 @@
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true">
     <rosparam command="load" file="$(find iggy_control)/config/navsat_transform_template.yaml" />
-      <remap from="gps/fix" to="/navsat/fix"/>
+      <remap from="gps/fix" to="/cns5000/fix"/>
       <remap from="odometry/filtered" to="odometry/filtered_map"/>
+      <remap from="/imu/data" to="/cns5000/imu_data"/>
 
-      <!-- Placeholders for input remapping. Set your topic names as the "to" values.
-      <remap from="/imu/data" to="/iggy/imu_data"/>
+      <!-- Placeholders for input remapping. Set your topic names as the "to" values.      
       <remap from="odometry/filtered" to=""/>
       <remap from="odometry/filtered" to="odometry/filtered_map"/>
       -->
