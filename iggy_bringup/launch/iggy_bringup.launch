@@ -12,10 +12,10 @@
     <arg name="yaw" default="0"/>
 
     <!-- CNS5000 Bringup -->
-    <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen">
+    <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
         <remap from="gps/fix" to="/cns5000/fix"/>
     </node>  
-    <node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen">
+    <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen">
         <remap from="/imu/raw" to="/cns5000/imu_data"/>   
     </node>
 
