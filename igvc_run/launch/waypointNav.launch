@@ -1,0 +1,14 @@
+<!--igvc_run.launch-->
+<launch>
+
+<!-- Navigatin System CNS5000 -->
+<node name="waypoint_provider" pkg="igvc_run" type="goal_pub_IGVC.py" output="screen">
+	<remap from="navsat/fix" to="/cns5000/fix"/>   <!--Working -->
+    <param name="waypoint_file" value="$(find igvc_run)/src/waypoints3.csv" />
+
+
+</node>  
+
+</launch>
+
+
