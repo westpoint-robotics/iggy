@@ -2,7 +2,6 @@
 <launch>
 
 <!-- =============   TRANSFORMS  ======================= -->
-<!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
 <include file="$(find igvc_run)/launch/tf.launch"></include>
 
   <!-- Robot Pose -->

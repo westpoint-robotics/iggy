@@ -1,16 +1,16 @@
 digraph G {
-"odom" -> "base_link"[label="Broadcaster: /ekf_se_odom\nAverage rate: 30.204 Hz\nMost recent transform: 1487886851.846 ( 0.007 sec old)\nBuffer length: 4.900 sec\n"];
-"map" -> "odom"[label="Broadcaster: /odom_to_map\nAverage rate: 39.324 Hz\nMost recent transform: 1487886851.930 ( -0.078 sec old)\nBuffer length: 4.984 sec\n"];
-"base_link" -> "gps_frame"[label="Broadcaster: /base_link_to_gps_frame\nAverage rate: 10.199 Hz\nMost recent transform: 1487886851.882 ( -0.029 sec old)\nBuffer length: 4.805 sec\n"];
-"base_link" -> "velodyne"[label="Broadcaster: /base_link_to_velodyne\nAverage rate: 10.199 Hz\nMost recent transform: 1487886851.890 ( -0.037 sec old)\nBuffer length: 4.804 sec\n"];
-"base_link" -> "imu_frame"[label="Broadcaster: /base_link_to_imu_frame\nAverage rate: 10.196 Hz\nMost recent transform: 1487886851.897 ( -0.044 sec old)\nBuffer length: 4.806 sec\n"];
-"base_link" -> "bumblebee2"[label="Broadcaster: /base_link_to_bumblebee2\nAverage rate: 10.196 Hz\nMost recent transform: 1487886851.899 ( -0.046 sec old)\nBuffer length: 4.806 sec\n"];
-"bumblebee2" -> "right_camera_frame"[label="Broadcaster: /bumblebee2_to_right_camera_frame\nAverage rate: 10.194 Hz\nMost recent transform: 1487886851.908 ( -0.055 sec old)\nBuffer length: 4.807 sec\n"];
-"bumblebee2" -> "left_camera_frame"[label="Broadcaster: /bumblebee2_to_left_camera_frame\nAverage rate: 10.197 Hz\nMost recent transform: 1487886851.909 ( -0.056 sec old)\nBuffer length: 4.805 sec\n"];
-"base_link" -> "left_wheel_frame"[label="Broadcaster: /base_link_to_left_wheel_frame\nAverage rate: 10.195 Hz\nMost recent transform: 1487886851.917 ( -0.065 sec old)\nBuffer length: 4.806 sec\n"];
-"base_link" -> "right_wheel_frame"[label="Broadcaster: /base_link_to_right_wheel_frame\nAverage rate: 10.196 Hz\nMost recent transform: 1487886851.926 ( -0.074 sec old)\nBuffer length: 4.806 sec\n"];
+"odom" -> "base_link"[label="Broadcaster: /ekf_se_odom\nAverage rate: 30.162 Hz\nMost recent transform: 1488326741.296 ( 0.031 sec old)\nBuffer length: 4.940 sec\n"];
+"map" -> "odom"[label="Broadcaster: /ekf_se_map\nAverage rate: 30.224 Hz\nMost recent transform: 1488326741.296 ( 0.031 sec old)\nBuffer length: 4.930 sec\n"];
+"base_link" -> "velodyne"[label="Broadcaster: /base_link_to_velodyne\nAverage rate: 10.190 Hz\nMost recent transform: 1488326741.386 ( -0.059 sec old)\nBuffer length: 4.907 sec\n"];
+"base_link" -> "gps_frame"[label="Broadcaster: /base_link_to_gps_frame\nAverage rate: 10.189 Hz\nMost recent transform: 1488326741.398 ( -0.071 sec old)\nBuffer length: 4.907 sec\n"];
+"base_link" -> "imu_frame"[label="Broadcaster: /base_link_to_imu_frame\nAverage rate: 10.190 Hz\nMost recent transform: 1488326741.398 ( -0.071 sec old)\nBuffer length: 4.907 sec\n"];
+"base_link" -> "bumblebee2"[label="Broadcaster: /base_link_to_bumblebee2\nAverage rate: 10.192 Hz\nMost recent transform: 1488326741.407 ( -0.080 sec old)\nBuffer length: 4.906 sec\n"];
+"bumblebee2" -> "right_camera_frame"[label="Broadcaster: /bumblebee2_to_right_camera_frame\nAverage rate: 10.191 Hz\nMost recent transform: 1488326741.426 ( -0.099 sec old)\nBuffer length: 4.906 sec\n"];
+"bumblebee2" -> "left_camera_frame"[label="Broadcaster: /bumblebee2_to_left_camera_frame\nAverage rate: 10.195 Hz\nMost recent transform: 1488326741.340 ( -0.013 sec old)\nBuffer length: 4.806 sec\n"];
+"base_link" -> "left_wheel_frame"[label="Broadcaster: /base_link_to_left_wheel_frame\nAverage rate: 10.197 Hz\nMost recent transform: 1488326741.342 ( -0.015 sec old)\nBuffer length: 4.805 sec\n"];
+"base_link" -> "right_wheel_frame"[label="Broadcaster: /base_link_to_right_wheel_frame\nAverage rate: 10.195 Hz\nMost recent transform: 1488326741.347 ( -0.020 sec old)\nBuffer length: 4.806 sec\n"];
 edge [style=invis];
  subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
-"Recorded at time: 1487886851.853"[ shape=plaintext ] ;
+"Recorded at time: 1488326741.327"[ shape=plaintext ] ;
  }->"map";
 }

@@ -11,8 +11,8 @@ from geometry_msgs.msg import TwistWithCovarianceStamped
 #from std_msgs.msg import Int16
 from geometry_msgs.msg import Vector3
 
-global lastSwitchVal
-global switchValue
+#global lastSwitchVal
+#global switchValue
 
 lastSwitchVal = 0
 switchValue = 0
@@ -20,6 +20,8 @@ RCmode = 2
 
 #print("here1")
 # configure the serial connections 
+lastSwitchVal = 0
+switchValue = 0
 try:
     ser = serial.Serial(
         port='/dev/roboteq',
@@ -182,9 +184,9 @@ def moveCallback(data):
                 RCmode = 0
 
 if __name__ == "__main__":
-    global lastSwitchVal 
-    global switchValue 	
 
+    lastSwitchVal = 0
+    switchValue = 0
     rospy.init_node('igvc_roboteq', anonymous=True)
     pub = rospy.Publisher("enc_raw", Vector3, queue_size=1) 
     pub2 = rospy.Publisher("roboteq_driver/cmd_with_covariance", TwistWithCovarianceStamped, queue_size=1) 
@@ -192,14 +194,14 @@ if __name__ == "__main__":
     auto = rospy.Publisher("/autonomous", Bool, queue_size=1)
     rospy.Subscriber("roboteq_driver/cmd", Twist, moveCallback)
    
-    try:
-        #print('try.. try again')
-        rate = rospy.Rate(15)
-        #encodermsg = Vector3()
-        while not rospy.is_shutdown():
+    #print('try.. try again')
+    rate = rospy.Rate(15)
+    #encodermsg = Vector3()
+    while not rospy.is_shutdown():
+        try:
             RCVals = getRCInput()
             estopValue = RCVals[0]
-	    switchValue = RCVals[1]
+            switchValue = RCVals[1]
 
             if (lastSwitchVal != switchValue/100):
                 lastSwitchVal = switchValue/100
@@ -207,24 +209,15 @@ if __name__ == "__main__":
                     lights.publish(False)
                 else:    
                     lights.publish(True) 
-	    else:
-            	if (switchValue > 1500):
+            else:
+                if (switchValue > 1500):
                     auto.publish(False)
-            	else:
+                else:
                     auto.publish(True)             
-            rate.sleep()
-    except KeyboardInterrupt:
-        ser.close()
-        raise
 
-
-
-
-
-
-
-
-
-
-
-			
+        except KeyboardInterrupt:
+            ser.close()
+            raise
+        except: # catch *all* exceptions
+            print( "EEEEEEEEError in roboteq Driver: Some other exception, RESTART THE WHOLE ROBOT IF THIS MESSAGE KEEPS APPEARING" )
+        rate.sleep()

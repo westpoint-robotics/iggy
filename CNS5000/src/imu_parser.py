@@ -149,8 +149,8 @@ if __name__ == '__main__':
     global KVH_IMU
     global SerialData
     rospy.init_node('KVHCG5100IMU')
-    Pos_pub = rospy.Publisher('imu/raw/heading', Pose2D)
-    Imu_pub = rospy.Publisher('imu/raw', Imu)
+    #Pos_pub = rospy.Publisher('imu/raw/heading', Pose2D, queue_size=1)
+    Imu_pub = rospy.Publisher('imu/raw', Imu, queue_size=1)
     #Twist_pub = rospy.Publisher('imu/speed', Twist)
     # TODO add publisher for IMU_Status here
     # TODO add publisher for IMU velocity here
@@ -345,7 +345,7 @@ if __name__ == '__main__':
                                 KVHCG5100Pose2D.x=Sequence # put mSec tick here for debug the speed
                                 KVHCG5100Pose2D.theta = wrapToPI(Z)
 
-                                Pos_pub.publish(KVHCG5100Pose2D)
+                                #Pos_pub.publish(KVHCG5100Pose2D)
                                 
                                 # reset counter once you have good data
                                 CRC_errorcounter=0

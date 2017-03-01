@@ -1,0 +1,47 @@
+<launch>
+
+    <!-- TRANSFORMS  -->
+    <include file="$(find igvc_run)/launch/tf.launch"></include>
+
+    <!-- Robot Pose -->
+    <arg name="x" default="-3.714"/>
+    <arg name="y" default="-21.26"/>
+    <arg name="z" default="0"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+
+    <!-- CNS5000 Bringup -->
+    <node name="novatel_CNS5000" pkg="gps_imu" type="usma_novatel_driver.py" output="screen">
+        <remap from="gps/fix" to="/cns5000/fix"/>
+    </node>  
+    <node name="novatel_CNS5000_imu" pkg="gps_imu" type="imu_parser.py" output="screen">
+        <remap from="/imu/raw" to="/cns5000/imu_data"/>   
+    </node>
+
+    <!-- Use GPS to generate Odometry -->
+    <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+        <remap from="odom" to="/iggy_velocity_controller/odom"/>
+        <remap from="fix" to="/odom/fix" />
+        <param name="frame_id" value="base_footprint" />
+    </node>
+
+    <!-- Laser Range Finder  
+    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> -->
+
+    <!-- Robot Control -->
+    <include file="$(find iggy_control)/launch/control.launch" />
+    <include file="$(find iggy_control)/launch/teleop.launch">
+        <arg name="joystick" value="true"/>
+    </include>
+    <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"></include>  
+    <include file="$(find iggy_navigation)/launch/include/move_base.launch"></include>
+
+
+
+<node pkg="tf" type="static_transform_publisher" name="world_to_map"
+    args="0 0 0 0 0 0 1 world map 100" />
+
+    <!-- Start RVIZ -->
+    <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>  
+</launch>
