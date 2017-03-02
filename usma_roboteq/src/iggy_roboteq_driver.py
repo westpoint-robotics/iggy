@@ -3,7 +3,7 @@
 '''
 The controller uses a simple communication protocol based on ASCII characters. Com-
 mands are not case sensitive. ?a is the same as ?A. Commands are terminated by car-
-riage return (Hex 0x0d, ‘\r’).
+riage return (Hex 0x0d, ‘eschar r’).
 The underscore ‘_’ character is interpreted by the controller as a carriage return. This alter-
 nate character is provided so that multiple commands can be easily concatenated inside a
 single string.
@@ -18,6 +18,11 @@ issue a “plus” character (+) followed by a Carriage Return after every comma
 knowledgment.
 If a command or query has been received, but is not recognized or accepted for any rea-
 son, the controller will issue a “minus” character (-) to indicate the error.
+
+The general format for setting a parameter is the “^” character followed by the command
+name followed by parameter(s) for that command. These will set the parameter in the con-
+troller’s RAM and this parameter becomes immediately active for use. The parameter can
+also be permanently saved in EEPROM by sending the %EESAV maintenance command.
 
 
 '''
@@ -137,6 +142,12 @@ def initalizeController():
     #TODO Set priority to 2 to prefer RC Pulse over serail
     # READ ?FID to get firmware and controller information
     # ^ECHOF nn
+    # ?V GET BATTERY VOLTS  internal:battery:fivevolts
+    # Check if Pulse In 1 to 4 are enabled
+    cmd = '~PMOD\r' 
+    pmod = ser.write(cmd)
+    
+
 
     pass
 
