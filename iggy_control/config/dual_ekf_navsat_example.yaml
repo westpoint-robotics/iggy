@@ -29,7 +29,7 @@ ekf_se_odom:
                 true,  true,  false,
                 false, false, false,
                 true,  true,  true,
-                true,  true,  true]
+                false,  false, false]
   imu0_nodelay: false
   imu0_differential: false
   imu0_relative: false
@@ -110,7 +110,7 @@ ekf_se_map:
                 true,  true,  false,
                 false, false, false,
                 true,  true,  true,
-                true,  true,  true]
+                false,  false, false]
   imu0_nodelay: true
   imu0_differential: false
   imu0_relative: false

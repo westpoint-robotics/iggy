@@ -5,7 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1
         - /TF1/Tree1/world1
         - /TF1/Tree1/world1/map1
         - /TF1/Tree1/world1/map1/odom1
@@ -102,7 +101,7 @@ Visualization Manager:
           Value: false
         world:
           Value: false
-      Marker Scale: 1
+      Marker Scale: 2
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -433,7 +432,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 11.7851
+      Distance: 9.12641
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1

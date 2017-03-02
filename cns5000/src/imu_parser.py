@@ -54,7 +54,7 @@
 #
 # Decode
 # H0~3 Header   : Always 0xFE81FF55; this value will never occur anywhere else
-# 1,2,3,4 : X angle,SPFP(Single-precision floating point) +/-0.66 radians
+# 1,2,3,4       : X angle,SPFP(Single-precision floating point) +/-0.66 radians
 # 5,6,7,8       : Y angle, SPFP( Single-precision floating point) +/-0.66 radians
 # 9,10,11,12    : Z angle, SPFP( Single-precision floating point) +/-0.66 radians
 # 13,14,15,16   : X velocity,  SPFP +/-1 m/sec Assumes 100 Hz TOV
@@ -230,8 +230,7 @@ if __name__ == '__main__':
         Vy_old=0.0
         Vz_old=0.0
         Time_step=0.1
-        while not rospy.is_shutdown():
-  
+        while not rospy.is_shutdown():  
             ### start of loop back test ###
             #testdata="\xfe\x81\xff\x55\x35\x80\x66\xd8\xb5\xe1\xc8\xbe\x35\x91\xdd\x76\x38\xe4\x92\x24\x39\xfc\x05\xd7\x3d\xc8\xfb\x66\x00\x00\x00\x00\x77\x4c\x0e\x34"
             #KVH_IMU.write(testdata)
@@ -294,11 +293,17 @@ if __name__ == '__main__':
                                 Y+=Ey
                                 Z+=Ez
                                 
+                                #print(Z,Y,X,Ex,Ey,Ez,Vx,Vy,Vz,imu_data.orientation.x,imu_data.orientation.y, imu_data.orientation.z, imu_data.orientation.w, imu_data.angular_velocity.x, imu_data.angular_velocity.y, imu_data.angular_velocity.z, imu_data.linear_acceleration.x, imu_data.linear_acceleration.y, imu_data.linear_acceleration.z)
+ 
+
                                 #http://answers.ros.org/question/53688/euler-angle-convention-in-tf/
                                 # ???--> #imu_quaternion=quaternion_from_euler(X,Y,Z) # Euler's roll, pitch and yaw angles
                                 #q = tf.transformations.quaternion_from_euler(yaw, pitch, roll, 'rzyx')
                                 imu_quaternion=tf.transformations.quaternion_from_euler(Z, Y, X, 'rzyx')
                                 #imu_quaternion=quaternion_from_euler(Ex,Ey,Ez) # Euler's roll, pitch and yaw angles
+
+
+
                                 imu_data.orientation.x=imu_quaternion[0]
                                 imu_data.orientation.y=imu_quaternion[1]
                                 imu_data.orientation.z=imu_quaternion[2]
