@@ -24,6 +24,11 @@ name followed by parameter(s) for that command. These will set the parameter in 
 troller's RAM and this parameter becomes immediately active for use. The parameter can
 also be permanently saved in EEPROM by sending the %EESAV maintenance command.
 
+~ Read configuration operation 
+^ Write configuration operation 
+! Run time commands
+? Run time queries
+% Maintenance Commans
 
 '''
 import serial
@@ -36,38 +41,53 @@ switchValue = 0
 RCmode = 2
 estopCount = False
 
-# Set Command Priorities
-cmd = '^CPRI 1 1\r' # Pulse In as first priority
-time.sleep(0.05)
-cmd = '^CPRI 2 0\r' # Serial is second priority
-time.sleep(0.05)
-cmd = '^OVL 350\r' # Set over voltage to 35.0 volts
-time.sleep(0.05)
-cmd = '^UVL 180\r' # Set under voltage to 18.0 volts
-time.sleep(0.05)
-cmd = '^MAC 1 20000\r' # Set acceleration rate for motor 1
-time.sleep(0.05) 
-cmd = '^MAC 2 20000\r' # Set acceleration rate for motor 2
-time.sleep(0.05)
-cmd = '^MXRPM 1 3500\r' # Set maximum rpm for motor 1
-time.sleep(0.05)
-cmd = '^MXRPM 2 3500\r' # Set maximum rpm for motor 2
-time.sleep(0.05)
-cmd = '^MXMD 1\r' # Set mixed to Mode 1
-time.sleep(0.05)
+def getdata():
+    info = ''
+    while ser.inWaiting() > 0: # While data is in the buffer
+        info += str(ser.read())
+    return info
 
-# Check if Pulse In is enabled for PIn 1 to 4
-cmd = '~PMOD\r' 
-pmod = '1:0:1:1:0' #ser.write(cmd)
-pmod = pmod.split(':')
-on =[0,1,2,4]
-for i in on:
-    if pmod[i] == '0':
-        cmd = '^PMOD ' + str(i) + '\r'
-        pmod[i] = '1' 
-if pmod[3] == '1':
-    cmd = '^PMOD 3\r'
-    pmod[3] = '0'
-print pmod
+# configure the serial connections 
+try:
+    ser = serial.Serial(
+        port='/dev/roboteq',
+        baudrate=115200, #8N1
+        parity=serial.PARITY_NONE,
+        stopbits=serial.STOPBITS_ONE,
+        bytesize=serial.EIGHTBITS
+    )
+except:
+    #raise
+    try:
+        ser = serial.Serial(
+            port='/dev/ttyACM0',
+            baudrate=115200, #8N1
+            parity=serial.PARITY_NONE,
+            stopbits=serial.STOPBITS_ONE,
+            bytesize=serial.EIGHTBITS
+        )
+    except:
+        raise
+
+if (ser.isOpen()):
+    ser.close()
+ser.open()
+
+# Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
+configCmds=['^CPRI 1 1\r',      '^CPRI 2 0\r',      '^OVL 350\r',       '^UVL 180\r',
+            '^MAC 1 20000\r',   '^MAC 2 20000\r',   '^MXRPM 1 3500\r',  '^MXRPM 2 3500\r',
+            '^MXMD 1\r',        '^PMOD 0 1\r',      '^PMOD 5 0\r']
+
+# Send commands to Roboteq and exit if any fail
+for cmd in configCmds:
+    ser.write(cmd)
+    time.sleep(.01)
+    result = getdata()
+    if (result != '+\r'):
+        print "ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: ", cmd,"\n"
+        print "ERROR: ROBOTEQ DRIVER CONFIGURATION FAILED. NOW EXITING ROBOTEQ DRIVER\n\n"
+        exit()
+    print "SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n"
+    
 
 
