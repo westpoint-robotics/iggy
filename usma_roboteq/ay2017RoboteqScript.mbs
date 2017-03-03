@@ -1,0 +1,9 @@
+SCRIPT_VER=1.0
+
+top:
+    ch4 = getvalue(_PI, 4)
+    ch5 = getvalue(_PI, 5)
+    tot = ch4 + ch5
+    print("ch4: " + ch4 + "ch5: " + ch5 +"tot: " + tot + "\r\n")
+goto top
+

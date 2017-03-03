@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
 '''
+The Roboteq Controller has a script running on it that will enable and disable the ESTOP with no
+interaction from this code. The ESTOP and manual driving modes are not effected by this script, they
+are independent of Iggy's computer.
+
 
 SYMBOLS USED FOR SERIAL COMMO:
 ~ Read configuration operation 
@@ -13,23 +17,20 @@ _ Carriage return
 + Command acknowledgement
 - Command not recognized or accepted
 
-Commands are terminated by carriage return (Hex 0x0d, ‘eschar r’)
-
 '''
 import serial
 import rospy
 import time
 import os
-from std_msgs.msg import String
+import sys
 from std_msgs.msg import Bool
+from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
-from geometry_msgs.msg import TwistWithCovarianceStamped
+
 from geometry_msgs.msg import Vector3
 
 # global variables
-lastSwitchVal = 0
-switchValue = 0
-RCmode = 2
+controlMode = 1 # Mode 0 = Estop; Mode 1 = Manual; Mode 2 = Autonomous
 
 # Create a log file
 #outFile = open("roboteqLog.txt", "wb")
@@ -38,58 +39,73 @@ RCmode = 2
 def getdata():
     info = ''
     while ser.inWaiting() > 0: 
-        info += str(ser.read())
+        char = ser.read()
+        #if char != '\r':
+        info += str(char)
+    #print "INFO: ",info
+    #if len(info) == 7:
+    #    return info[3:7]
     return info
 
-def getRCInput():
+def getBattVoltage():
     try:
-        getdata()   #clear buffer   
-        # PI - Read Pulse Inputs  
-        ser.write('?PI 4\r') #pulse input of channel 4 (rc4 button) (switch)
-        switch = getdata()
+        ser.write('?V 2\r') #pulse input of pulse-in 5 (switch - down)
+        time.sleep(.005)
+        raw = getdata()
+        if len(raw)==6:
+            battVolts = int(raw[2:5])/10.0
+            return battVolts
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except: # catch *all other* exceptions
+        e = sys.exc_info()[0]
+        print( "<p>ROBOTEQ Error in getBattVoltage: %s</p>" % e )
+    return -999.999 # an error has occured and we return
 
-    except Exception as e: # catch *all* exceptions
-        print e
-        print( "Error: getRCInput" )
-        switch = 1900
-    return switch
+# Updates the global variable for controlMode
+def setControlMode():
+    global controlMode # use the global controlMode
+    try:
+        getdata()   #clear buffer
+        ser.write('?PI 4\r') #pulse input of pulse-in 4 (switch - up)
+        time.sleep(.005)
+        pi4 = getdata()
+        ser.write('?PI 5\r') #pulse input of pulse-in 5 (switch - down)
+        time.sleep(.005)
+        pi5 = getdata()
+        if len(pi4) == len(pi5) == 8: # process only if data is valid
+            tot = int(pi4[3:7]) + int(pi5[3:7])
+            if tot > 3500:
+                controlMode = 0
+            elif tot < 2500:    
+                controlMode = 2
+            else:
+                controlMode = 1
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except: # catch *all other* exceptions
+        e = sys.exc_info()[0]
+        print( "<p>ROBOTEQ Error in setControlMode: %s</p>" % e )
 
 def moveCallback(data):
-
-    global RCmode
-    global lastSwitchVal
-    global switchValue
-
-    # 
-    pub_covariance = TwistWithCovarianceStamped()
-    pub_covariance.twist.twist.linear.x = data.linear.x
-    pub_covariance.twist.twist.angular.z = data.angular.z
-    pub2.publish(pub_covariance)
-
-    #print('im here')
-    if (switchValue > 1500):  #switch in RC mode
-            RCmode = 1
-    else:
-        if (abs(data.linear.x) > 0.001 or abs(data.angular.z) > 0.001):
-            #rospy.loginfo("I heard %f %f",data.linear.x,data.angular.z)
-            speed = data.linear.x *1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
-                                        #1000 would give full speed range, but setting to lower value to better control robot
-            turn = (data.angular.z + 0.009)*500*-1 
-            # G - Go to Speed or to Relative Position
-            cmd = '!G 1 ' + str(speed) + '\r'
-            ser.write(cmd)
-            #print(cmd)
-            cmd = '!G 2 ' + str(turn) + '\r'
-            ser.write(cmd)
-            #print(cmd)
-            RCmode = 0
+    global controlMode
+    if (controlMode == 2):  # robot is in autonomous mode
+        speed = data.linear.x *1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
+                                    #1000 would give full speed range, but setting to lower value to better control robot
+        turn = (data.angular.z + 0.009)*500*-1 
+        # G - Go to Speed or to Relative Position
+        print speed,turn
+        cmd = '!G 1 ' + str(speed) + '\r'
+        ser.write(cmd)
+        cmd = '!G 2 ' + str(turn) + '\r'
+        ser.write(cmd)
 
 # Configures the roboteq motor controller to work with Iggy. Relying on the EEPROM has proven unreliable.
 def initalizeController():
     # Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
     configCmds=['^CPRI 1 1\r',      '^CPRI 2 0\r',      '^OVL 350\r',       '^UVL 180\r',
                 '^MAC 1 20000\r',   '^MAC 2 20000\r',   '^MXRPM 1 3500\r',  '^MXRPM 2 3500\r',
-                '^MXMD 1\r',        '^PMOD 0 1\r',      '^PMOD 5 0\r']
+                '^MXMD 1\r',        '^PMOD 0 1\r']
 
     # Send commands to Roboteq and exit if any fail
     for cmd in configCmds:
@@ -102,14 +118,7 @@ def initalizeController():
             exit()
         print "SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n"
     
-
-
-    pass
-
 if __name__ == "__main__":
-
-    lastSwitchVal = 0
-    switchValue = 0
 
     # configure the serial connections 
     try:
@@ -121,10 +130,9 @@ if __name__ == "__main__":
             bytesize=serial.EIGHTBITS
         )
     except:
-        raise
         try:
             ser = serial.Serial(
-                port='/dev/ttyACM1',
+                port='/dev/ttyACM0',
                 baudrate=115200, #8N1
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
@@ -138,32 +146,22 @@ if __name__ == "__main__":
     ser.open()
 
     #TODO rename to iggy_roboteq and align the namespace
-    rospy.init_node('igvc_roboteq', anonymous=True)
-    pub2 = rospy.Publisher("roboteq_driver/cmd_with_covariance", TwistWithCovarianceStamped, queue_size=1) 
-    lights = rospy.Publisher("/lights", Bool, queue_size=1)
-    auto = rospy.Publisher("/autonomous", Bool, queue_size=1)
-    rospy.Subscriber("roboteq_driver/cmd", Twist, moveCallback)
+    rospy.init_node('iggy_roboteq', anonymous=True)
+    auto_pub = rospy.Publisher("/autonomous", Bool, queue_size=1)
+    volt_pub = rospy.Publisher("/voltage", Float32, queue_size=1)
+    rospy.Subscriber("/cmd_vel", Twist, moveCallback)
 
-    rate = rospy.Rate(15)
+    rate = rospy.Rate(30)
     while not rospy.is_shutdown():
-        try:
-            switchValue = getRCInput()
-
-            if (lastSwitchVal != switchValue/100):
-                lastSwitchVal = switchValue/100
-                if (switchValue > 1500):  #switch in RC mode
-                    lights.publish(False)
-                else:    
-                    lights.publish(True) 
-            else:
-                if (switchValue > 1500):
-                    auto.publish(False)
-                else:
-                    auto.publish(True)             
-
-        except KeyboardInterrupt:
-            ser.close()
-            raise
-        except: # catch *all* exceptions
-            print( "Error in roboteq Driver: Some other exception, RESTART THE WHOLE ROBOT IF THIS MESSAGE KEEPS APPEARING" )
+        setControlMode()
+        battVolt = Float32(getBattVoltage())
+        if battVolt > 0:
+            volt_pub.publish(battVolt)
+        if (controlMode == 2):  #robot is in autonomous mode
+            auto_pub.publish(True) # Turn on autonomous lights
+        else:    
+            auto_pub.publish(False)
         rate.sleep()
+
+    ser.close()
+

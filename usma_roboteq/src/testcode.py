@@ -76,7 +76,7 @@ ser.open()
 # Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
 configCmds=['^CPRI 1 1\r',      '^CPRI 2 0\r',      '^OVL 350\r',       '^UVL 180\r',
             '^MAC 1 20000\r',   '^MAC 2 20000\r',   '^MXRPM 1 3500\r',  '^MXRPM 2 3500\r',
-            '^MXMD 1\r',        '^PMOD 0 1\r',      '^PMOD 5 0\r']
+            '^MXMD 1\r',        '^PMOD 0 1\r']
 
 # Send commands to Roboteq and exit if any fail
 for cmd in configCmds:
