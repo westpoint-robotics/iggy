@@ -6,7 +6,6 @@
   </include>
 
   <node pkg="usma_roboteq" type="iggy_roboteq_driver.py" name="roboteq_driver" output="screen">
-
   </node> 
 
 </launch>

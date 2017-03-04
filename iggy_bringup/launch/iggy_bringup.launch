@@ -31,7 +31,7 @@
 
     <!-- Robot Control -->
     <include file="$(find iggy_control)/launch/control.launch" />
-    <include file="$(find iggy_control)/launch/teleop.launch">
+    <include file="$(find iggy_control)/launch/teleopIRL.launch">
         <arg name="joystick" value="true"/>
     </include>
     <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"></include>  

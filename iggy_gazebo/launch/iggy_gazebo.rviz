@@ -6,11 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1
-        - /TF1/Tree1/world1
-        - /TF1/Tree1/world1/map1
-        - /TF1/Tree1/world1/map1/odom1
-        - /TF1/Tree1/world1/map1/odom1/base_link1
-        - /TF1/Tree1/world1/map1/odom1/base_link1/bumblebee21
         - /RobotModel1/Links1
         - /Vision3D1
       Splitter Ratio: 0.525907
@@ -102,7 +97,7 @@ Visualization Manager:
           Value: false
         world:
           Value: false
-      Marker Scale: 1
+      Marker Scale: 3
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -433,15 +428,15 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 11.7851
+      Distance: 4.23833
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.5166
-        Y: -3.00001
+        X: 0.991525
+        Y: -1.46609
         Z: -2.45049e-05
       Name: Current View
       Near Clip Distance: 0.01
