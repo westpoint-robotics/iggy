@@ -32,3 +32,11 @@ include_directories(
 add_executable(wheel_odom_tf_broadcaster src/wheel_odom_tf_broadcaster.cpp)
 target_link_libraries(wheel_odom_tf_broadcaster ${catkin_LIBRARIES})
 
+
+# *********** Royal additions ****************
+#action package
+find_package(catkin REQUIRED genmsg actionlib_msgs actionlib)
+#add_action_files(DIRECTORY action FILES DoDishes.action)
+#the above addition is for tutorial/testing purposes, will need to be changed
+generate_messages(DEPENDENCIES actionlib_msgs)
+
