@@ -81,7 +81,7 @@ class NavTest():
                        'LOST']       
 
         #rospy.Subscriber('/odom', Odometry, update_current_pose)
-        rospy.Subscriber('/navsat/fix', NavSatFix, update_utm)
+        rospy.Subscriber('/cns5000/fix', NavSatFix, update_utm)
         rospy.Subscriber('/odometry/gps', Odometry, update_current_pose)
     def calculateDist(self, currX, currY, lastX, lastY, isFirst):
         if isFirst!= True:
@@ -212,6 +212,7 @@ class NavTest():
         rospy.loginfo("Establishing initial position wait 10 seconds.")
         easts=[]
         nrths=[]
+        print "LEN CURNT UTM:", len(self.current_utm)
         for i in range(1):
             utm_c=self.current_utm
         print self.current_utm

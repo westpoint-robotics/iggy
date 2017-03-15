@@ -97,7 +97,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -114,7 +114,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -146,7 +146,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -163,7 +163,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -195,7 +195,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -212,7 +212,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -244,7 +244,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -261,7 +261,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -342,7 +342,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -359,7 +359,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -489,7 +489,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -506,7 +506,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -538,7 +538,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -555,7 +555,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -587,7 +587,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -604,7 +604,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -685,7 +685,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -702,7 +702,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -734,7 +734,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -751,7 +751,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -783,7 +783,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -800,7 +800,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -832,7 +832,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -849,7 +849,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -881,7 +881,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -898,7 +898,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -979,7 +979,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -996,7 +996,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1028,7 +1028,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1045,7 +1045,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1126,7 +1126,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1143,7 +1143,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1175,7 +1175,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1192,7 +1192,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1224,7 +1224,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1241,7 +1241,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1273,7 +1273,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1290,7 +1290,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1322,7 +1322,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1339,7 +1339,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1567,7 +1567,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1584,7 +1584,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1616,7 +1616,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1633,7 +1633,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1665,7 +1665,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1682,7 +1682,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1714,7 +1714,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1731,7 +1731,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1861,7 +1861,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1878,7 +1878,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1910,7 +1910,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1927,7 +1927,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -1959,7 +1959,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1976,7 +1976,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2008,7 +2008,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2025,7 +2025,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2057,7 +2057,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2074,7 +2074,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2106,7 +2106,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2123,7 +2123,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2155,7 +2155,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2172,7 +2172,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2204,7 +2204,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2221,7 +2221,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2253,7 +2253,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2270,7 +2270,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2302,7 +2302,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2319,7 +2319,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2351,7 +2351,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2368,7 +2368,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2400,7 +2400,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2417,7 +2417,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2449,7 +2449,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2466,7 +2466,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2498,7 +2498,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2515,7 +2515,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2547,7 +2547,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2564,7 +2564,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2596,7 +2596,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2613,7 +2613,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2645,7 +2645,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2662,7 +2662,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2694,7 +2694,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2711,7 +2711,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2743,7 +2743,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2760,7 +2760,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2792,7 +2792,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2809,7 +2809,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2841,7 +2841,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2858,7 +2858,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2890,7 +2890,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2907,7 +2907,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2939,7 +2939,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2956,7 +2956,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2988,7 +2988,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -3005,7 +3005,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://igvc_construction_barrel/meshes/construction_barrel2.dae</uri>
+              <uri>model://igvc_construction_barrel/meshes/igvc_construction_barrel.dae</uri>
             </mesh>
           </geometry>
         </visual>
