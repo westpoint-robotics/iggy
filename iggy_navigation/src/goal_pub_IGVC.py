@@ -212,11 +212,10 @@ class NavTest():
         rospy.loginfo("Establishing initial position wait 10 seconds.")
         easts=[]
         nrths=[]
-        print "LEN CURNT UTM:", len(self.current_utm)
         for i in range(1):
             utm_c=self.current_utm
         print self.current_utm
-        easts.append(utm_c[1])
+        easts.append(utm_c[1]) #TODO add check for empty array
         nrths.append(utm_c[2])
         rospy.sleep(1.5)
         easting = sum(easts) / float(len(easts))
