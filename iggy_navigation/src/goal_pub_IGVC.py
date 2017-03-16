@@ -81,7 +81,7 @@ class NavTest():
                        'LOST']       
 
         #rospy.Subscriber('/odom', Odometry, update_current_pose)
-        rospy.Subscriber('/navsat/fix', NavSatFix, update_utm)
+        rospy.Subscriber('/cns5000/fix', NavSatFix, update_utm)
         rospy.Subscriber('/odometry/gps', Odometry, update_current_pose)
     def calculateDist(self, currX, currY, lastX, lastY, isFirst):
         if isFirst!= True:
@@ -215,7 +215,7 @@ class NavTest():
         for i in range(1):
             utm_c=self.current_utm
         print self.current_utm
-        easts.append(utm_c[1])
+        easts.append(utm_c[1]) #TODO add check for empty array
         nrths.append(utm_c[2])
         rospy.sleep(1.5)
         easting = sum(easts) / float(len(easts))

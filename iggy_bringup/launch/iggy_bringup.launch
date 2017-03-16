@@ -29,15 +29,12 @@
     <!-- Laser Range Finder  
     <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> -->
 
-    <!-- Robot Control -->
-    <include file="$(find iggy_control)/launch/control.launch" />
-    <include file="$(find iggy_control)/launch/teleop.launch">
+    <!-- Robot Control  -->
+    <include file="$(find iggy_control)/launch/teleopIRL.launch">
         <arg name="joystick" value="true"/>
     </include>
     <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"></include>  
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"></include>
-
-
 
 <node pkg="tf" type="static_transform_publisher" name="world_to_map"
     args="0 0 0 0 0 0 1 world map 100" />

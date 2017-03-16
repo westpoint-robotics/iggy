@@ -52,14 +52,14 @@ def getBattVoltage():
         ser.write('?V 2\r') #pulse input of pulse-in 5 (switch - down)
         time.sleep(.005)
         raw = getdata()
-        if len(raw)==6:
-            battVolts = int(raw[2:5])/10.0
+        if len(raw) > 4:
+            battVolts = int(raw[2:-1])/10.0
             return battVolts
     except (KeyboardInterrupt, SystemExit):
         raise
     except: # catch *all other* exceptions
         e = sys.exc_info()[0]
-        print( "<p>ROBOTEQ Error in getBattVoltage: %s</p>" % e )
+        #rospy.loginfo( "ERROR: ROBOTEQ Error in getBattVoltage: %s", e )
     return -999.999 # an error has occured and we return
 
 # Updates the global variable for controlMode
@@ -85,7 +85,7 @@ def setControlMode():
         raise
     except: # catch *all other* exceptions
         e = sys.exc_info()[0]
-        print( "<p>ROBOTEQ Error in setControlMode: %s</p>" % e )
+        rospy.loginfo( "<p>ROBOTEQ Error in setControlMode: %s</p>", e )
 
 def moveCallback(data):
     global controlMode
@@ -94,29 +94,31 @@ def moveCallback(data):
                                     #1000 would give full speed range, but setting to lower value to better control robot
         turn = (data.angular.z + 0.009)*500*-1 
         # G - Go to Speed or to Relative Position
-        print speed,turn
+        #print speed,turn
         cmd = '!G 1 ' + str(speed) + '\r'
         ser.write(cmd)
         cmd = '!G 2 ' + str(turn) + '\r'
         ser.write(cmd)
 
 # Configures the roboteq motor controller to work with Iggy. Relying on the EEPROM has proven unreliable.
-def initalizeController():
+def initalizeController():    
+    ser.write('^ECHOF 1\r')
+    time.sleep(.01)
+    result = getdata()
     # Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
-    configCmds=['^CPRI 1 1\r',      '^CPRI 2 0\r',      '^OVL 350\r',       '^UVL 180\r',
+    configCmds=['^CPRI 1 0\r',      '^CPRI 2 1\r',      '^OVL 350\r',       '^UVL 180\r',
                 '^MAC 1 20000\r',   '^MAC 2 20000\r',   '^MXRPM 1 3500\r',  '^MXRPM 2 3500\r',
                 '^MXMD 1\r',        '^PMOD 0 1\r']
-
     # Send commands to Roboteq and exit if any fail
     for cmd in configCmds:
         ser.write(cmd)
         time.sleep(.01)
         result = getdata()
         if (result != '+\r'):
-            print "ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: ", cmd,"\n"
-            print "ERROR: ROBOTEQ DRIVER CONFIGURATION FAILED. NOW EXITING ROBOTEQ DRIVER\n\n"
+            rospy.loginfo("ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: ", cmd,"\n")
+            rospy.loginfo("ERROR: ROBOTEQ DRIVER CONFIGURATION FAILED. NOW EXITING ROBOTEQ DRIVER\n\n")
             exit()
-        print "SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n"
+    rospy.loginfo("SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n")
     
 if __name__ == "__main__":
 
@@ -140,7 +142,6 @@ if __name__ == "__main__":
             )
         except:
             raise
-
     if (ser.isOpen()):
         ser.close()
     ser.open()
@@ -151,12 +152,15 @@ if __name__ == "__main__":
     volt_pub = rospy.Publisher("/voltage", Float32, queue_size=1)
     rospy.Subscriber("/cmd_vel", Twist, moveCallback)
 
+    initalizeController()
+
     rate = rospy.Rate(30)
     while not rospy.is_shutdown():
+
         setControlMode()
-        battVolt = Float32(getBattVoltage())
-        if battVolt > 0:
-            volt_pub.publish(battVolt)
+        battVolt = getBattVoltage()
+        if battVolt > 0.01:            
+            volt_pub.publish(Float32(battVolt))
         if (controlMode == 2):  #robot is in autonomous mode
             auto_pub.publish(True) # Turn on autonomous lights
         else:    
