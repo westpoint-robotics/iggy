@@ -1,3 +1,36 @@
+TODO:
+SIMULATION
+==================================================
+TODO: Add the /autonomous topic being published
+TODO: Add the /voltage topic being published
+
+TODO: Stop the publishing of /cns5000/vel and all /cns5000 except /cns5000/fix and /cns5000/imu_data
+
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic info /gps/filtered 
+Type: sensor_msgs/NavSatFix
+
+Publishers: 
+ * /navsat_transform (http://192.168.2.200:39692/)
+
+Subscribers: None
+------------------------------
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic info /iggy_velocity_controller/cmd_vel
+Type: geometry_msgs/Twist
+
+Publishers: 
+ * /cmd_vel_relay (http://192.168.2.200:55316/)
+
+Subscribers: 
+ * /gazebo (http://192.168.2.200:38918/)
+
+
+
+
+
+=====================================================================================================
+=====================================================================================================
+=====================================================================================================
+
 git difftool -d origin/irl 
 
 
