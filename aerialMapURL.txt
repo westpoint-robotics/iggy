@@ -1,0 +1,3 @@
+Object URI for arialmapdisplay:
+
+http://a.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token=pk.eyJ1IjoiZG1sIiwiYSI6ImNpeWl3YjR1eTA1NTEzMnM1NGQzNGMxcncifQ.99XyTOCCVaPji9mL7nmVPA
