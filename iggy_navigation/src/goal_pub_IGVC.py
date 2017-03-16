@@ -32,6 +32,8 @@ from nav_msgs.msg import Odometry
 from random import sample
 from math import pow, sqrt
 from LatLongUTMconversion import LLtoUTM, UTMtoLL
+from marker_pub import make_waypoint_viz
+from visualization_msgs.msg import Marker
 
 global nav
 
@@ -53,7 +55,7 @@ def update_utm(current_latlong):
 
 class NavTest():
     def __init__(self):     
-        rospy.init_node('nav_test', anonymous=True)        
+        rospy.init_node('nav_test2', anonymous=True)        
         rospy.on_shutdown(self.shutdown)    
 
         # Subscribe to the move_base action server
@@ -62,7 +64,9 @@ class NavTest():
         rospy.loginfo("Waiting for move_base action server...")        
         # Wait 60 seconds for the action server to become available
         self.move_base.wait_for_server(rospy.Duration(60))        
-        rospy.loginfo("Connected to move base server")        
+        rospy.loginfo("Connected to move base server")    
+
+        self.vis_pub = rospy.Publisher( "visualization_marker", Marker, queue_size=1 )    
            
         # Publisher to manually control the robot (e.g. to stop it)
         self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1) 
@@ -231,7 +235,7 @@ class NavTest():
     def wayPointLatLongList(self,filename):
         wps = self.loadWaypoints(filename)
         latLongs= []
-        for waypointLat,waypointLong,search_duration,rest_duration in wps:
+        for waypointLat,waypointLong,search_duration,rest_duration,unused1,unused2 in wps:
             latLongs.append((waypointLat, waypointLong))
         return latLongs
 
@@ -240,13 +244,21 @@ class NavTest():
         # Load and parse waypoints from file.
         wps = self.loadWaypoints(filename)
         goals=[]
-        for waypointLat,waypointLong,search_duration,rest_duration in wps:
+        print filename
+        '''
+        for item in wps:
+            print wps,"\n"
+        exit()
+        '''
+        for waypointLat,waypointLong,search_duration,rest_duration,unused,identity in wps:
             goal_pose=Pose()
             (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
             print "Waypoint ll",waypointLat,waypointLong,"east,north", wpEasting,wpNorthing,"init",self.initial_utm
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
             goal_pose.position.y=(wpNorthing - self.initial_utm[2])
             goals.append((goal_pose, search_duration, rest_duration))
+            print 
+            self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
         return goals
         
         '''
@@ -265,7 +277,7 @@ class NavTest():
             for row in reader:
                 if row[0][0] != '#': # ignore commented out waypoints
                     #print "RRRROW",row
-                    waypoints.append((float(row[0]),float(row[1]),float(row[2]),float(row[3])))
+                    waypoints.append((float(row[0]),float(row[1]),float(row[2]),float(row[3]),(row[4]),(row[5])))
         return waypoints
             
     def update_current_pose(self, current_pose):

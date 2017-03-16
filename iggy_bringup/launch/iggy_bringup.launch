@@ -1,7 +1,7 @@
 <launch>
 
     <!-- TRANSFORMS  -->
-    <include file="$(find igvc_run)/launch/tf.launch"></include>
+    <include file="$(find iggy_bringup)/launch/config/tf.launch"></include>
 
     <!-- Robot Pose -->
     <arg name="x" default="-3.714"/>
@@ -26,8 +26,8 @@
         <param name="frame_id" value="base_footprint" />
     </node>
 
-    <!-- Laser Range Finder  
-    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> -->
+    <!-- Laser Range Finder  -->
+    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
 
     <!-- Robot Control  -->
     <include file="$(find iggy_control)/launch/teleopIRL.launch">
