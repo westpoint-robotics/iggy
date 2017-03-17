@@ -26,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -73,28 +73,48 @@ Visualization Manager:
         All Enabled: false
         base_link:
           Value: true
-        bumblebee2:
-          Value: false
-        gps_frame:
-          Value: false
-        imu_frame:
-          Value: false
-        left_camera_frame:
-          Value: false
-        left_wheel_frame:
-          Value: false
+        camera_arm:
+          Value: true
+        camera_center:
+          Value: true
+        chassis_link:
+          Value: true
+        fenders_link:
+          Value: true
+        front_laser:
+          Value: true
+        front_laser_mount:
+          Value: true
+        front_left_wheel_link:
+          Value: true
+        front_mount:
+          Value: true
+        front_right_wheel_link:
+          Value: true
+        imu_link:
+          Value: true
+        left_camera:
+          Value: true
         map:
+          Value: true
+        mid_mount:
+          Value: true
+        navsat_link:
           Value: true
         odom:
           Value: true
-        right_camera_frame:
-          Value: false
-        right_wheel_frame:
-          Value: false
-        velodyne:
-          Value: false
+        rear_left_wheel_link:
+          Value: true
+        rear_mount:
+          Value: true
+        rear_right_wheel_link:
+          Value: true
+        right_camera:
+          Value: true
         world:
           Value: false
+        zed_current_frame:
+          Value: true
       Marker Scale: 5
       Name: TF
       Show Arrows: true
@@ -105,21 +125,36 @@ Visualization Manager:
           map:
             odom:
               base_link:
-                bumblebee2:
-                  left_camera_frame:
+                chassis_link:
+                  fenders_link:
                     {}
-                  right_camera_frame:
+                  front_left_wheel_link:
                     {}
-                gps_frame:
-                  {}
-                imu_frame:
-                  {}
-                left_wheel_frame:
-                  {}
-                right_wheel_frame:
-                  {}
-                velodyne:
-                  {}
+                  front_right_wheel_link:
+                    {}
+                  imu_link:
+                    {}
+                  mid_mount:
+                    camera_arm:
+                      camera_center:
+                        left_camera:
+                          {}
+                        right_camera:
+                          {}
+                        zed_current_frame:
+                          {}
+                    front_mount:
+                      front_laser_mount:
+                        front_laser:
+                          {}
+                    rear_mount:
+                      {}
+                  navsat_link:
+                    {}
+                  rear_left_wheel_link:
+                    {}
+                  rear_right_wheel_link:
+                    {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -172,9 +207,6 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Local Plan
@@ -182,10 +214,6 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/local_plan
       Unreliable: false
       Value: true
@@ -194,9 +222,6 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Global Plan
@@ -204,10 +229,6 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/global_plan
       Unreliable: false
       Value: true
@@ -306,13 +327,13 @@ Visualization Manager:
       Class: rviz_plugins/AerialMapDisplay
       Draw Behind: false
       Dynamically reload: true
-      Enabled: true
+      Enabled: false
       Frame Convention: XYZ -> ENU
       Name: AerialMapDisplay
       Object URI: http://a.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token=pk.eyJ1IjoiZG1sIiwiYSI6ImNpeWl3YjR1eTA1NTEzMnM1NGQzNGMxcncifQ.99XyTOCCVaPji9mL7nmVPA
       Robot frame: map
       Topic: /gps/filtered
-      Value: true
+      Value: false
       Zoom: 16
     - Alpha: 1
       Class: rviz/RobotModel
@@ -402,6 +423,14 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /visualization_marker
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -426,7 +455,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 164.857
+      Distance: 35.4587
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -438,10 +467,10 @@ Visualization Manager:
         Z: -2.45049e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.929797
+      Pitch: 0.924797
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.86455
+      Yaw: 3.85955
     Saved: ~
 Window Geometry:
   Camera:
@@ -461,5 +490,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1598
-  X: 54
-  Y: 188
+  X: 0
+  Y: 204

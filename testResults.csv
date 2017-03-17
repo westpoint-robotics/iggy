@@ -1,194 +1,125 @@
-Going to: (11.9395,0.9740)
-Current lat is: 42.6790414487
+Going to: (13.0970,0.3664)
+Current lat is: 42.679046628
 Goal lat is: 42.6790530228
-Current long is: -83.1956493033
+Current long is: -83.1956636165
 Goal long is: -83.1955039995
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 10.8697891609 metersSuccess so far: 1/1 = 100% 
-Running time: 0.18 min Distance: 10.870
-Going to: (18.3811,5.9239)
-Current lat is: 42.6790624377
+Distance from goal according to the GPS: 13.0546087953 metersSuccess so far: 1/1 = 100% 
+Running time: 0.83 min Distance: 13.055
+Going to: (19.5386,5.3163)
+Current lat is: 42.6790572037
 Goal lat is: 42.6790990738
-Current long is: -83.1955275223
+Current long is: -83.1955130481
 Goal long is: -83.195427004
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 18.4212347997 metersSuccess so far: 2/2 = 100% 
-Running time: 0.45 min Distance: 29.291
-Going to: (21.0713,11.1926)
-Current lat is: 42.6791035511
+Distance from goal according to the GPS: 20.2306641799 metersSuccess so far: 2/2 = 100% 
+Running time: 2.03 min Distance: 33.285
+Going to: (22.2288,10.5850)
+Current lat is: 42.6791047171
 Goal lat is: 42.6791471152
-Current long is: -83.1954505305
+Current long is: -83.1954358129
 Goal long is: -83.1953958634
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 23.1709160485 metersSuccess so far: 3/3 = 100% 
-Running time: 0.62 min Distance: 52.462
-Going to: (20.8701,16.7500)
-Current lat is: 42.6791524458
+Distance from goal according to the GPS: 24.6248160794 metersSuccess so far: 3/3 = 100% 
+Running time: 2.43 min Distance: 57.910
+Going to: (22.0276,16.1424)
+Current lat is: 42.6791458498
 Goal lat is: 42.6791970793
-Current long is: -83.1954034555
+Current long is: -83.1953902346
 Goal long is: -83.1954000787
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 26.3128159587 metersSuccess so far: 4/4 = 100% 
-Running time: 0.77 min Distance: 78.775
-Going to: (22.5795,22.3294)
-Current lat is: 42.6792000902
+Distance from goal according to the GPS: 27.3375072541 metersSuccess so far: 4/4 = 100% 
+Running time: 2.77 min Distance: 85.248
+Going to: (23.7371,21.7218)
+Current lat is: 42.6791930758
 Goal lat is: 42.6792476883
-Current long is: -83.1954100667
+Current long is: -83.1954036164
 Goal long is: -83.1953809983
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 31.4441055148 metersSuccess so far: 5/5 = 100% 
-Running time: 1.73 min Distance: 110.219
-Going to: (22.9478,27.9317)
-Current lat is: 42.6792617327
+Distance from goal according to the GPS: 32.2174964164 metersSuccess so far: 5/5 = 100% 
+Running time: 3.15 min Distance: 117.465
+Going to: (24.1053,27.3242)
+Current lat is: 42.6792439663
 Goal lat is: 42.6792981896
-Current long is: -83.1953956546
+Current long is: -83.1953815074
 Goal long is: -83.1953782826
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 35.9776803796 metersSuccess so far: 6/6 = 100% 
-Running time: 2.33 min Distance: 146.197
-Going to: (23.2227,33.8439)
-Current lat is: 42.6793100572
+Distance from goal according to the GPS: 36.4915792235 metersSuccess so far: 6/6 = 100% 
+Running time: 4.40 min Distance: 153.957
+Going to: (24.3803,33.2363)
+Current lat is: 42.6793062945
 Goal lat is: 42.6793514574
-Current long is: -83.1953890005
+Current long is: -83.1953767996
 Goal long is: -83.1953768025
-Goal failed with error code: ABORTED
-Success so far: 6/7 = 85% 
-Running time: 2.50 min Distance: 146.197
-Going to: (24.1904,41.7910)
-Current lat is: 42.6793090548
+Goal succeeded! 
+State: 3
+Distance from goal according to the GPS: 41.2840621449 metersSuccess so far: 7/7 = 100% 
+Running time: 4.78 min Distance: 195.241
+Going to: (25.3480,41.1834)
+Current lat is: 42.6793482544
 Goal lat is: 42.6794231989
-Current long is: -83.1953889281
+Current long is: -83.1953847189
 Goal long is: -83.1953675194
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 48.3381120691 metersSuccess so far: 7/8 = 87% 
-Running time: 2.70 min Distance: 194.535
-Going to: (13.9677,41.4958)
-Current lat is: 42.679428656
+Distance from goal according to the GPS: 48.4321982967 metersSuccess so far: 8/8 = 100% 
+Running time: 5.38 min Distance: 243.673
+Going to: (15.1253,40.8882)
+Current lat is: 42.6794259126
 Goal lat is: 42.6794181521
-Current long is: -83.1953787342
+Current long is: -83.1953629617
 Goal long is: -83.195492106
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 44.1146822949 metersSuccess so far: 8/9 = 88% 
-Running time: 2.85 min Distance: 238.649
-Going to: (8.0976,40.5225)
-Current lat is: 42.6794262934
+Distance from goal according to the GPS: 43.6885660577 metersSuccess so far: 9/9 = 100% 
+Running time: 6.02 min Distance: 287.361
+Going to: (9.2552,39.9149)
+Current lat is: 42.6794211511
 Goal lat is: 42.6794080204
-Current long is: -83.1955023464
+Current long is: -83.1954880057
 Goal long is: -83.1955633922
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 41.8265947499 metersSuccess so far: 9/10 = 90% 
-Running time: 2.97 min Distance: 280.476
-Going to: (8.0161,31.8666)
-Current lat is: 42.6794139644
+Distance from goal according to the GPS: 41.0767828111 metersSuccess so far: 10/10 = 100% 
+Running time: 6.35 min Distance: 328.438
+Going to: (9.1736,31.2590)
+Current lat is: 42.6794096246
 Goal lat is: 42.6793301068
-Current long is: -83.1955734915
+Current long is: -83.1955589057
 Goal long is: -83.1955616429
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 33.302796247 metersSuccess so far: 10/11 = 90% 
-Running time: 3.10 min Distance: 313.779
-Going to: (-0.8423,30.6435)
-Current lat is: 42.6793393716
+Distance from goal according to the GPS: 32.6756395015 metersSuccess so far: 11/11 = 100% 
+Running time: 6.88 min Distance: 361.114
+Going to: (0.3153,30.0359)
+Current lat is: 42.6793382082
 Goal lat is: 42.6793170287
-Current long is: -83.1955875641
+Current long is: -83.1955664271
 Goal long is: -83.1956692955
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 31.4423611716 metersSuccess so far: 11/12 = 91% 
-Running time: 3.25 min Distance: 345.221
-Going to: (0.9445,39.6615)
-Current lat is: 42.6793183985
+Distance from goal according to the GPS: 30.1545537927 metersSuccess so far: 12/12 = 100% 
+Running time: 7.42 min Distance: 391.268
+Going to: (2.1020,39.0540)
+Current lat is: 42.6793190397
 Goal lat is: 42.6793985997
-Current long is: -83.1956807337
+Current long is: -83.1956640719
 Goal long is: -83.1956503622
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 40.3945541583 metersSuccess so far: 12/13 = 92% 
-Running time: 3.42 min Distance: 385.616
-Going to: (-6.5902,40.4117)
-Current lat is: 42.6794024358
+Distance from goal according to the GPS: 39.2250788773 metersSuccess so far: 13/13 = 100% 
+Running time: 7.95 min Distance: 430.494
+Going to: (-5.4326,39.8041)
+Current lat is: 42.6793931531
 Goal lat is: 42.6794035877
-Current long is: -83.1956772196
+Current long is: -83.1956545688
 Goal long is: -83.1957424955
 Goal succeeded! 
 State: 3
-Distance from goal according to the GPS: 41.875656409 metersSuccess so far: 13/14 = 92% 
-Running time: 3.57 min Distance: 427.491
-Going to: (-13.0448,40.6800)
-Current lat is: 42.6794150714
-Goal lat is: 42.6794044928
-Current long is: -83.1957577877
-Goal long is: -83.1958213045
-Goal succeeded! 
-State: 3
-Distance from goal according to the GPS: 43.7950888957 metersSuccess so far: 14/15 = 93% 
-Running time: 3.70 min Distance: 471.286
-Going to: (-13.8427,34.0188)
-Current lat is: 42.6794041193
-Goal lat is: 42.6793443621
-Current long is: -83.1958355466
-Goal long is: -83.1958289245
-Goal succeeded! 
-State: 3
-Distance from goal according to the GPS: 37.8688109843 metersSuccess so far: 15/16 = 93% 
-Running time: 3.90 min Distance: 509.155
-Going to: (-12.9360,27.7713)
-Current lat is: 42.6793544086
-Goal lat is: 42.6792883533
-Current long is: -83.1958413253
-Goal long is: -83.195815885
-Goal succeeded! 
-State: 3
-Distance from goal according to the GPS: 31.8182400259 metersSuccess so far: 16/17 = 94% 
-Running time: 4.02 min Distance: 540.973
-Going to: (-15.3510,20.8381)
-Current lat is: 42.6792998664
-Goal lat is: 42.679225397
-Current long is: -83.1958355339
-Goal long is: -83.1958431418
-Goal failed with error code: ABORTED
-Success so far: 16/18 = 88% 
-Running time: 4.12 min Distance: 540.973
-Going to: (-16.0945,12.3013)
-Current lat is: 42.6792999882
-Goal lat is: 42.6791484006
-Current long is: -83.1958356516
-Goal long is: -83.1958495032
-Goal failed with error code: ABORTED
-Success so far: 16/19 = 84% 
-Running time: 4.48 min Distance: 540.973
-Going to: (-15.5134,5.7062)
-Current lat is: 42.6791850382
-Goal lat is: 42.6790891867
-Current long is: -83.1958216723
-Goal long is: -83.1958403246
-Goal succeeded! 
-State: 3
-Distance from goal according to the GPS: 17.9146976922 metersSuccess so far: 17/20 = 85% 
-Running time: 4.77 min Distance: 558.888
-Going to: (-10.8513,0.2125)
-Current lat is: 42.6790986817
-Goal lat is: 42.6790408402
-Current long is: -83.1958619131
-Goal long is: -83.1957817221
-Goal failed with error code: ABORTED
-Success so far: 17/21 = 80% 
-Running time: 4.98 min Distance: 558.888
-Going to: (-1.2908,0.7566)
-Current lat is: 42.6790986873
-Goal lat is: 42.6790479727
-Current long is: -83.1958620397
-Goal long is: -83.1956652913
-Goal failed with error code: ABORTED
-Success so far: 17/22 = 77% 
-Running time: 5.20 min Distance: 558.888
-NO MORE GOALS TO ACHIEVE 
+Dis
