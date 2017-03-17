@@ -25,9 +25,9 @@ def make_waypoint_viz(pos,txt,ident):
     #marker.pose.orientation.y = 0.0
     #marker.pose.orientation.z = 0.0
     #marker.pose.orientation.w = 1.0
-    marker.scale.x = 5
-    marker.scale.y = 5
-    marker.scale.z = 5
+    marker.scale.x = 2.0
+    marker.scale.y = 2.0
+    marker.scale.z = 2.0
     marker.color.a = 1.0 # Don't forget to set the alpha!
     marker.color.r = 1.0
     marker.color.g = 0.0
