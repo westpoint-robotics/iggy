@@ -38,6 +38,8 @@
     <param name="range_max" value="50"/>
     
 </node>
+
+
 <!--
 <node name="pointcloud_to_laserscan_lines" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
 

@@ -6,10 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /AerialMapDisplay1/Status1
-        - /TF1
         - /TF1/Frames1
-        - /TF1/Frames1/base_link1
       Splitter Ratio: 0.5
     Tree Height: 539
   - Class: rviz/Selection
@@ -57,13 +54,13 @@ Visualization Manager:
       Class: rviz_plugins/AerialMapDisplay
       Draw Behind: false
       Dynamically reload: true
-      Enabled: true
+      Enabled: false
       Frame Convention: XYZ -> ENU
       Name: AerialMapDisplay
       Object URI: http://a.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token=pk.eyJ1IjoiZG1sIiwiYSI6ImNpeWl3YjR1eTA1NTEzMnM1NGQzNGMxcncifQ.99XyTOCCVaPji9mL7nmVPA
       Robot frame: base_link
       Topic: /cns5000/fix
-      Value: true
+      Value: false
       Zoom: 16
     - Class: rviz/TF
       Enabled: true
@@ -148,10 +145,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.775398
+      Pitch: 0.830398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.780398
+      Yaw: 0.870398
     Saved: ~
 Window Geometry:
   Displays:

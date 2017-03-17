@@ -5,7 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /Status1
         - /TF1
+        - /TF1/Frames1
         - /RobotModel1/Links1
       Splitter Ratio: 0.525907
     Tree Height: 515
@@ -74,47 +76,27 @@ Visualization Manager:
         All Enabled: false
         base_link:
           Value: true
-        camera_arm:
-          Value: false
-        camera_center:
-          Value: false
-        chassis_link:
-          Value: false
-        fenders_link:
-          Value: false
-        front_laser:
-          Value: false
-        front_laser_mount:
-          Value: false
-        front_left_wheel_link:
-          Value: false
-        front_mount:
-          Value: false
-        front_right_wheel_link:
-          Value: false
-        imu_link:
-          Value: false
-        left_camera:
-          Value: false
+        bumblebee2:
+          Value: true
+        gps_frame:
+          Value: true
+        imu_frame:
+          Value: true
+        left_camera_frame:
+          Value: true
+        left_wheel_frame:
+          Value: true
         map:
           Value: true
-        mid_mount:
-          Value: false
-        navsat_link:
-          Value: false
         odom:
           Value: true
-        rear_left_wheel_link:
+        right_camera_frame:
           Value: true
-        rear_mount:
-          Value: false
-        rear_right_wheel_link:
+        right_wheel_frame:
           Value: true
-        right_camera:
+        velodyne:
           Value: false
         world:
-          Value: false
-        zed_current_frame:
           Value: false
       Marker Scale: 5
       Name: TF
@@ -122,41 +104,25 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          odom:
-            base_link:
-              chassis_link:
-                fenders_link:
-                  {}
-                front_left_wheel_link:
-                  {}
-                front_right_wheel_link:
-                  {}
-                imu_link:
-                  {}
-                mid_mount:
-                  camera_arm:
-                    camera_center:
-                      left_camera:
-                        {}
-                      right_camera:
-                        {}
-                      zed_current_frame:
-                        {}
-                  front_mount:
-                    front_laser_mount:
-                      front_laser:
-                        {}
-                  rear_mount:
-                    {}
-                navsat_link:
-                  {}
-                rear_left_wheel_link:
-                  {}
-                rear_right_wheel_link:
-                  {}
         world:
-          {}
+          map:
+            odom:
+              base_link:
+                bumblebee2:
+                  left_camera_frame:
+                    {}
+                  right_camera_frame:
+                    {}
+                gps_frame:
+                  {}
+                imu_frame:
+                  {}
+                left_wheel_frame:
+                  {}
+                right_wheel_frame:
+                  {}
+                velodyne:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -209,6 +175,9 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Local Plan
@@ -216,6 +185,10 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
+      Pose Style: None
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/local_plan
       Unreliable: false
       Value: true
@@ -224,6 +197,9 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
       Line Style: Lines
       Line Width: 0.03
       Name: Global Plan
@@ -231,6 +207,10 @@ Visualization Manager:
         X: 0
         Y: 0
         Z: 0
+      Pose Style: None
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
       Topic: /move_base/TrajectoryPlannerROS/global_plan
       Unreliable: false
       Value: true
@@ -430,7 +410,7 @@ Visualization Manager:
       Marker Topic: /visualization_marker
       Name: Marker
       Namespaces:
-        my_namespace: true
+        {}
       Queue Size: 100
       Value: true
   Enabled: true
@@ -457,7 +437,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 31.7058
+      Distance: 22.5
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -469,10 +449,10 @@ Visualization Manager:
         Z: -2.45049e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.649797
+      Pitch: 1.0598
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 4.61959
+      Yaw: 4.3614
     Saved: ~
 Window Geometry:
   Camera:
@@ -492,5 +472,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1598
-  X: 0
-  Y: 204
+  X: 83
+  Y: 78
