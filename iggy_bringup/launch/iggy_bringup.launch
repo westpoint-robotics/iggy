@@ -13,13 +13,31 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
 
-  <!-- CNS5000 Bringup -->
+  <!-- CNS5000 Bringup
   <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
-    <remap from="gps/fix" to="/cns5000/fix"/>
-  </node>
+    <remap from="gps/fix" to="/cns5000/fix"/>  
+  </node> -->
   <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen">
     <remap from="/imu/raw" to="/cns5000/imu_data"/>
   </node>
+
+  <!-- Phidgets IMU Bringup using nodelets TODO Look into expanding nodelet usage -->
+  <node pkg="nodelet" type="nodelet" name="imu_manager" args="manager" output="screen" ns="phidget"/>
+  <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet" args="load phidgets_imu/PhidgetsImuNodelet imu_manager" 
+        output="screen" ns="phidget">
+    <param name="period" value="40"/>
+  </node>
+  #### IMU Orientation Filter ###############################################
+  <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
+    output="screen" ns="phidget">
+    <param name="use_mag" value="true"/>
+    <param name="publish_tf" value="false"/>
+  </node>
+  <node pkg="iggy_bringup" type="phidgGlobal.py" name="phidgGlobal" 
+    output="screen"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu"
+        args="0.1 0 0 0 0 0 base_link imu 100" />
 
   <!-- Use GPS to generate Odometry -->
   <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
@@ -31,7 +49,7 @@
   <!-- Laser Range Finder 
     <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />    -->
 
-  <!-- Wheel Motor Controller -->
+  <!-- Wheel Motor Controller  -->
   <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>
 
   <!-- Robot Control  -->

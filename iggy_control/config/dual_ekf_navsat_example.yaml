@@ -42,6 +42,20 @@ ekf_se_odom:
   imu0_queue_size: 10
   imu0_remove_gravitational_acceleration: true
 
+
+  imu1: /phidget/imu/data
+  imu1_config: [false, false, false,
+                true,  true,  true,
+                false, false, false,
+                true,  true,  true,
+                false,  false, false]
+  imu1_nodelay: false
+  imu1_differential: false
+  imu1_relative: false
+  imu1_queue_size: 10
+  imu1_remove_gravitational_acceleration: true
+ 
+
   use_control: false
 
   process_noise_covariance: [1e-3, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
@@ -128,6 +142,18 @@ ekf_se_map:
   imu0_relative: false
   imu0_queue_size: 10
   imu0_remove_gravitational_acceleration: true
+
+  imu1: /phidget/imu/data
+  imu1_config: [false, false, false,
+                true,  true,  true,
+                false, false, false,
+                true,  true,  true,
+                false,  false, false]
+  imu1_nodelay: false
+  imu1_differential: false
+  imu1_relative: false
+  imu1_queue_size: 10
+  imu1_remove_gravitational_acceleration: true
 
   use_control: false
 

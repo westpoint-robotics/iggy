@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1
         - /TF1/Frames1
         - /RobotModel1/Links1
       Splitter Ratio: 0.525907
@@ -77,23 +76,25 @@ Visualization Manager:
         base_link:
           Value: true
         bumblebee2:
-          Value: true
+          Value: false
         gps_frame:
+          Value: false
+        imu:
           Value: true
         imu_frame:
           Value: true
         left_camera_frame:
-          Value: true
+          Value: false
         left_wheel_frame:
-          Value: true
+          Value: false
         map:
           Value: true
         odom:
           Value: true
         right_camera_frame:
-          Value: true
+          Value: false
         right_wheel_frame:
-          Value: true
+          Value: false
         velodyne:
           Value: false
         world:
@@ -114,6 +115,8 @@ Visualization Manager:
                   right_camera_frame:
                     {}
                 gps_frame:
+                  {}
+                imu:
                   {}
                 imu_frame:
                   {}
@@ -437,22 +440,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 22.5
+      Distance: 16.6821
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 8.49222
-        Y: -1.01142
+        X: 0.0666118
+        Y: -1.15773
         Z: -2.45049e-05
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.0598
+      Pitch: 0.369801
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 4.3614
+      Yaw: 4.54139
     Saved: ~
 Window Geometry:
   Camera:
