@@ -13,6 +13,12 @@ ekf_se_odom:
   base_link_frame: base_link
   world_frame: odom
 
+  # X,     Y,      Z,
+  # roll,  pitch,  yaw,
+  # X˙,    Y˙,     Z˙,
+  # roll˙, pitch˙, yaw˙,
+  # X¨,    Y¨,     Z¨
+
   odom0: iggy_velocity_controller/odom
   odom0_config: [false, false, false,
                  false, false, false,
@@ -82,6 +88,12 @@ ekf_se_map:
   odom_frame: odom
   base_link_frame: base_link
   world_frame: map
+
+  # X,     Y,      Z,
+  # roll,  pitch,  yaw,
+  # X˙,    Y˙,     Z˙,
+  # roll˙, pitch˙, yaw˙,
+  # X¨,    Y¨,     Z¨
 
   odom0: iggy_velocity_controller/odom
   odom0_config: [false, false, false,

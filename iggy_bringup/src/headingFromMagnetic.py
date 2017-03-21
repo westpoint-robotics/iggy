@@ -32,7 +32,7 @@ class MagHeading():
         self.mXsensG=Imu()
         self.compassBearingFilterX = []
         self.compassBearingFilterP = []
-        self.compassBearingFilterSize = 10
+        self.compassBearingFilterSize = 1 #10
         self.lastAnglesP= []
         self.lastAnglesX= []
 
@@ -167,7 +167,7 @@ class MagHeading():
                 angles =self.calculateCompassBearing(self.mImu,self.mMagnetic,False)
                 print("PHIDG: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))   
                 angles =self.calculateCompassBearing(self.mXsensG,self.mXsensM,True)
-                print("XSENS: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))     
+                #print("XSENS: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))     
             rate.sleep()    
 
 
