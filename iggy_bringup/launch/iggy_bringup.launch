@@ -31,15 +31,15 @@
   <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
     output="screen" ns="phidget">
     <param name="use_mag" value="true"/>
-    <param name="publish_tf" value="false"/>
+    <param name="publish_tf" value="true"/>
   </node>
   <node pkg="iggy_bringup" type="phidgGlobal.py" name="phidgGlobal" 
     output="screen"/>
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu"
+ <!--   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu"
         args="0.1 0 0 0 0 0 base_link imu 100" />
 
-  <!-- Use GPS to generate Odometry -->
+Use GPS to generate Odometry -->
   <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
     <remap from="odom" to="/iggy_velocity_controller/odom"/>
     <remap from="fix" to="/odom/fix"/>
@@ -49,8 +49,8 @@
   <!-- Laser Range Finder    -->
     <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
 
-  <!-- Wheel Motor Controller  -->
-  <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>
+  <!-- Wheel Motor Controller
+  <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>    -->
 
   <!-- Robot Control  -->
   <include file="$(find iggy_control)/launch/control.launch"/>

@@ -30,7 +30,7 @@ from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Vector3
 
 # global variables
-controlMode = 1 # Mode 0 = Estop; Mode 1 = Manual; Mode 2 = Autonomous
+controlMode = 0 # Mode 0 = Estop; Mode 1 = Manual; Mode 2 = Autonomous
 
 # Create a log file
 #outFile = open("roboteqLog.txt", "wb")
@@ -80,7 +80,9 @@ def setControlMode():
             elif tot < 2500:    
                 controlMode = 2
             else:
-                controlMode = 1
+                controlMode = 1 # GOTO MANUAL MODE AND STOP               
+        else:
+            print ("ROBOTEQ DRIVER PWM for Pin 4 an 5 not LEN of 8 4:%d 5:%d\n",len(pi4),len(pi5))
     except (KeyboardInterrupt, SystemExit):
         raise
     except: # catch *all other* exceptions
@@ -102,7 +104,10 @@ def moveCallback(data):
 
 # Configures the roboteq motor controller to work with Iggy. Relying on the EEPROM has proven unreliable.
 def initalizeController():    
-    ser.write('^ECHOF 1\r')
+    ser.write('^ECHOF 1\r') # Turn on the ESTOP while resetting the configuration for the roboteq device
+    time.sleep(.01)
+    result = getdata()   
+    ser.write('!R 0\r') # Stop any scripts running on the roboteq device
     time.sleep(.01)
     result = getdata()
     # Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
@@ -111,16 +116,24 @@ def initalizeController():
                 '^MXMD 1\r',        '^PMOD 0 1\r']
     # Send commands to Roboteq and exit if any fail
     for cmd in configCmds:
+        result = getdata()
         ser.write(cmd)
         time.sleep(.01)
         result = getdata()
-        if (result != '+\r'):
+        if (result != '+\r'): # If setting the configuration fails
+            ser.write('!E 1\r') # Turn on the ESTOP
+            ser.write('!R 0\r') # Stop any scripts
             rospy.loginfo("ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: ", cmd,"\n")
             rospy.loginfo("ERROR: ROBOTEQ DRIVER CONFIGURATION FAILED. NOW EXITING ROBOTEQ DRIVER\n\n")
             exit()
+
+    ser.write('!R 1\r') # Restart any scripts running on the roboteq device 
+    time.sleep(.01)
+    result = getdata()
     rospy.loginfo("SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n")
     
 if __name__ == "__main__":
+    global controlMode
 
     # configure the serial connections 
     try:
@@ -129,7 +142,8 @@ if __name__ == "__main__":
             baudrate=115200, #8N1
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
-            bytesize=serial.EIGHTBITS
+            bytesize=serial.EIGHTBITS,
+            timeout=1
         )
     except:
         try:
@@ -138,7 +152,8 @@ if __name__ == "__main__":
                 baudrate=115200, #8N1
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
-                bytesize=serial.EIGHTBITS
+                bytesize=serial.EIGHTBITS,
+                timeout=1
             )
         except:
             raise

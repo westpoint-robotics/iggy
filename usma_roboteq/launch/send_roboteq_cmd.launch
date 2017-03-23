@@ -1,6 +1,0 @@
-<!--roboteq launch troubleshoot-->
-<launch>
-
- <node name="send_roboteq_cmd" pkg="roboteq" type="send_roboteq_cmd.py" output="screen"/>
-</launch>
-

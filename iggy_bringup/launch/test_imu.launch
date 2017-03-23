@@ -16,23 +16,31 @@
     <param name="period" value="40"/>
   </node>
 
-  #### IMU Orientation Filter ###############################################
+  <node pkg="iggy_bringup" type="phidgGlobal.py" name="phidgGlobal" >
 
+  </node>
+
+  #### IMU Orientation Filter ###############################################
+<!--
   <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" 
     args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
     output="screen" ns="phidget">
     <param name="use_mag" value="true"/>
   </node>
 
-<!--  <node pkg="iggy_bringup" type="headingFromMagnetic.py" name="headingFromMagnetic" 
+  <node pkg="iggy_bringup" type="headingFromMagnetic.py" name="headingFromMagnetic" 
     output="screen"/> -->
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="0.1 0 0.1 0 0 0 imu velodyne 100" />
+        args="0 0 0 0 0 0 odom velodyne 100" /> 
 
-<!-- Start an rviz node with a custom configuration  -->
-<node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_bringup)/launch/test_imu.rviz"/>
+<!-- Start an rviz node with a custom configuration 
+<node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_bringup)/launch/test_imu.rviz"/>   -->
+  <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>  
 
-<!-- <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />   -->
+
+
+  <!-- Laser Range Finder   -->
+    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />   
 
 </launch>
