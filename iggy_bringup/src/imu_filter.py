@@ -15,6 +15,12 @@ from nav_msgs.msg import Odometry
 
 class MagHeading():
     def __init__(self):
+        self.mMagnetic=Vector3Stamped()
+        self.mImu=Imu()
+        self.compassBearingFilter = []
+        self.compassBearingFilterSize = 1 #10 TODO return to a deeper filter
+        self.lastAngles= []
+
         # Give the node a name
         rospy.init_node('imu_filtered', anonymous=False)
 
@@ -24,44 +30,23 @@ class MagHeading():
         self.br = tf.TransformBroadcaster()
 
         # Subscribe to the gps positions
-        rospy.Subscriber('/phidget/imu/mag', Vector3Stamped, self.update_magnetic_callback)
-        rospy.Subscriber('/phidget/imu/data_raw', Imu, self.update_imu_callback)
-        #rospy.Subscriber('/magnetic', Vector3Stamped, self.update_xsensM_callback)
-        #rospy.Subscriber('/imu/raw', Imu, self.update_xsensG_callback)
-        self.mMagnetic=Vector3Stamped()
-        self.mXsensM=Vector3Stamped()
-        self.mImu=Imu()
-        self.mXsensG=Imu()
-        self.compassBearingFilterX = []
-        self.compassBearingFilterP = []
-        self.compassBearingFilterSize = 1 #10
-        self.lastAnglesP= []
-        self.lastAnglesX= []
+        rospy.Subscriber('magnetic', Vector3Stamped, self.update_magnetic_callback)
+        rospy.Subscriber('imu/raw', Imu, self.update_imu_callback)
 
     def update_magnetic_callback(self, msg):
         self.mMagnetic = msg
 
     def update_imu_callback(self, msg):
         self.mImu = msg
-        
-    def update_xsensM_callback(self, msg):
-        self.mXsensM = msg
-        
-    def update_xsensG_callback(self, msg):
-        self.mXsensG = msg
           
-    def calculateCompassBearing(self,sd,md,isXsens):
+    def calculateCompassBearing(self,sd,md):
         gravity=[sd.linear_acceleration.x,sd.linear_acceleration.y,sd.linear_acceleration.z]
         magField=[md.vector.x,md.vector.y,md.vector.z]
         compassBearing = pitchAngleDeg=rollAngleDeg=yawAngle=pitchAngle=rollAngle=0
         
         try:     
-            if isXsens:
-                lastAngles=self.lastAnglesX
-                compassBearingFilter=self.compassBearingFilterX
-            else:
-                lastAngles=self.lastAnglesP
-                compassBearingFilter=self.compassBearingFilterP
+            lastAngles=self.lastAngles
+            compassBearingFilter=self.compassBearingFilter
         
             #Roll Angle - about axis 0
             #  tan(roll angle) = gy/gz
@@ -103,16 +88,13 @@ class MagHeading():
                             else:
                                 stuff[i] -= 360 * math.pi / 180.0
 
-            if isXsens:
-                self.lastAnglesX = angles
-            else:
-                self.lastAnglesP = angles           
+            self.lastAngles = angles           
 
             compassBearingFilter.append(angles)
             if (len(compassBearingFilter) > self.compassBearingFilterSize):
                 compassBearingFilter.pop(0)
 
-            yawAngle = pitchAngle = rollAngle = 0
+            yawAngle = pitchAngle = rollimuAngle = 0
             for stuff in compassBearingFilter:
                 rollAngle += stuff[0]
                 pitchAngle += stuff[1]
@@ -133,23 +115,19 @@ class MagHeading():
     def mainLoop(self):
         worldImu= Imu()
         rate = rospy.Rate(20) # 10hz
-        imu_frame=rospy.get_param('imu_frame','imu')
+        imu_frame=rospy.get_param('~imu_frame','imu')
         world_frame=rospy.get_param('world_frame','odom')
         while not rospy.is_shutdown():
             #print self.mImu
-            if(self.mImu.header.seq!=0): #and self.mXsensG.header.seq!=0):
-                angles =self.calculateCompassBearing(self.mImu,self.mMagnetic,False)
+            if(self.mImu.header.seq!=0):
+                angles =self.calculateCompassBearing(self.mImu,self.mMagnetic)
                 #print("PHIDG: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))   
-                #angles =self.calculateCompassBearing(self.mXsensG,self.mXsensM,True)
                 self.magHdg_pub.publish(angles[0])
                 worldImu= self.mImu
                 worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w = tf.transformations.quaternion_from_euler(angles[5], angles[4], angles[3])
                 self.br.sendTransform((0,0,0),(worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w),rospy.Time.now(),imu_frame, world_frame)
- 
                 self.world_imu_pub.publish(worldImu)
-               # print("XSENS: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))     
             rate.sleep()    
-
 
 if __name__ == '__main__':
         mHead=MagHeading()
