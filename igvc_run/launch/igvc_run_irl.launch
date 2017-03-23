@@ -5,6 +5,8 @@
 <!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
 <include file="$(find igvc_run)/launch/tf.launch"></include>
 
+
+
   <!-- Robot Pose -->
   <arg name="x" default="-3.714"/>
   <arg name="y" default="-21.26"/>
@@ -56,6 +58,7 @@
   <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" 
     args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
     output="screen" ns="phidget">
+    <param name="publish_tf" value="false"/>
     <param name="use_mag" value="true"/>
   </node>
 

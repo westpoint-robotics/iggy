@@ -2,6 +2,14 @@
 
 <launch>
 
+<!--Odom transform -->
+<node pkg="tf" type="static_transform_publisher" name="map_to_odom"
+        args="0 0 0 0 0 0 map odom 100" />
+
+<!--Velodyne transform -->
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
+        args="0 0 0 0 0 0 odom velodyne 100" />
+
   #### Nodelet manager ######################################################
 
   <node pkg="nodelet" type="nodelet" name="imu_manager" 
@@ -18,21 +26,24 @@
 
   #### IMU Orientation Filter ###############################################
 
-  <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" 
+  <!---<node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" 
     args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
     output="screen" ns="phidget">
     <param name="use_mag" value="true"/>
-  </node>
+  </node> -->
 
 <!--  <node pkg="iggy_bringup" type="headingFromMagnetic.py" name="headingFromMagnetic" 
     output="screen"/> -->
 
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
-        args="0.1 0 0.1 0 0 0 imu velodyne 100" />
+<!--<node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
+        args="0.1 0 0.1 0 0 0 imu velodyne 100" /> -->
+
+<node pkg="iggy_bringup" type="phidgGlobal.py" name="phidgGlobal" output="screen" />
+
 
 <!-- Start an rviz node with a custom configuration  -->
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_bringup)/launch/test_imu.rviz"/>
 
-<!-- <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />   -->
+<include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
 
 </launch>

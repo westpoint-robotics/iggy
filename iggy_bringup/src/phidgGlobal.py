@@ -3,6 +3,8 @@
 """ 
 imu_complementary_filter
 source: http://www.phidgets.com/docs/Compass_Primer
+Modified by Royal to publish a world imu topic
+
 """
 import math
 import rospy
@@ -21,7 +23,8 @@ class MagHeading():
         # Publisher of type nav_msgs/Odometry
         self.magHdg_pub = rospy.Publisher('/imu/compass', Float32, queue_size=1)
         self.world_imu_pub = rospy.Publisher ('imu/global', Imu, queue_size=1)
-
+        self.br = tf.TransformBroadcaster()
+        self.magOffset=(81.0/180.0) *math.pi
         # Subscribe to the gps positions
         rospy.Subscriber('/phidget/imu/mag', Vector3Stamped, self.update_magnetic_callback)
         rospy.Subscriber('/phidget/imu/data_raw', Imu, self.update_imu_callback)
@@ -48,7 +51,7 @@ class MagHeading():
         
     def update_xsensG_callback(self, msg):
         self.mXsensG = msg
-                
+
     def update_heading(self):
         heading = Float32()
         compassBearing = 0.0
@@ -107,7 +110,7 @@ class MagHeading():
             #Yaw Angle - about axis 2
             #  tan(yaw angle) = (mz * sin(roll) - my * cos(roll)) / 
             #                   (mx * cos(pitch) + my * sin(pitch) * sin(roll) + mz * sin(pitch) * cos(roll))
-            #  Use atan2 to get our range in (-180 - 180)
+            #  Use atan2 to get our range in (-180 - 180)        imu_frame=rospy.get_param('imu_frame','imu')
             #
             #  Yaw angle == 0 degrees when axis 0 is pointing at magnetic north
             yawAngle = math.atan2(
@@ -117,8 +120,9 @@ class MagHeading():
                    (magField[0] * math.cos(pitchAngle))
                  + (magField[1] * math.sin(pitchAngle) * math.sin(rollAngle))
                  + (magField[2] * math.sin(pitchAngle) * math.cos(rollAngle)))
+            yawAngle -= self.magOffset
             angles = [rollAngle, pitchAngle, yawAngle]
-
+            rospy.loginfo( "current yawAngle is:" + str(yawAngle))
             #we low-pass filter the angle data so that it looks nicer on-screen
         
             #make sure the filter buffer doesn't have values passing the -180<->180 mark
@@ -162,6 +166,8 @@ class MagHeading():
     def mainLoop(self):
         worldImu= Imu()
         rate = rospy.Rate(5) # 10hz
+        imu_frame='imu'
+        world_frame='odom'
         while not rospy.is_shutdown():
             #print self.mImu
             if(self.mImu.header.seq!=0): #and self.mXsensG.header.seq!=0):
@@ -171,7 +177,14 @@ class MagHeading():
                 self.magHdg_pub.publish(angles[0])
                 worldImu= self.mImu
                 quaternion = tf.transformations.quaternion_from_euler(angles[5], angles[4], angles[3])
-                worldImu.orientation = quaternion #TODO map quaternion data structure to orientation
+                worldImu.orientation.x= quaternion[0]
+                worldImu.orientation.y= quaternion[1]
+                worldImu.orientation.z= quaternion[2]
+                worldImu.orientation.w= quaternion[3]
+                #worldImu.orientation = quaternion #TODO map quaternion data structure to orientation
+                self.br.sendTransform((0,0,0),(worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w),rospy.Time.now(),imu_frame, world_frame)
+
+
                 self.world_imu_pub.publish(worldImu)
                # print("XSENS: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))     
             rate.sleep()    
