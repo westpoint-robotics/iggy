@@ -1,10 +1,10 @@
 <!-- roboteq driver -->
 <launch>
-<!--
-  <node pkg="teleop_twist_joy" type="teleop_node" name="teleop">
-  <remap from="cmd_vel" to="/cmd_vel"/>
-  </node>
- -->
+
+  <include file="$(find iggy_control)/launch/teleopIRL.launch">
+    <arg name="joystick" value="true"/>
+  </include>
+
   <node pkg="usma_roboteq" type="iggy_roboteq_driver.py" name="roboteq_driver" output="screen">
   </node> 
 
