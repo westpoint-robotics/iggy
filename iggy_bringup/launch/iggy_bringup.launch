@@ -13,44 +13,66 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
 
-  <!-- CNS5000 Bringup-->
+  #### cns5000 GPS NODES ###############################################
   <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
     <remap from="gps/fix" to="/cns5000/fix"/>  
   </node> 
-  <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen">
-    <remap from="/imu/raw" to="/cns5000/imu_data"/>
-  </node>
 
-  <!-- Phidgets IMU Bringup using nodelets TODO Look into expanding nodelet usage -->
-  <node pkg="nodelet" type="nodelet" name="imu_manager" args="manager" output="screen" ns="phidget"/>
-  <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet" args="load phidgets_imu/PhidgetsImuNodelet imu_manager" 
-        output="screen" ns="phidget">
-    <param name="period" value="40"/>
-  </node>
-  #### IMU Orientation Filter ###############################################
-  <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
-    output="screen" ns="phidget">
-    <param name="use_mag" value="true"/>
-    <param name="publish_tf" value="true"/>
-  </node>
-  <node pkg="iggy_bringup" type="phidgGlobal.py" name="phidgGlobal" 
-    output="screen"/>
-
- <!--   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu"
-        args="0.1 0 0 0 0 0 base_link imu 100" />
-
-Use GPS to generate Odometry -->
+ <!-- Use GPS to generate Odometry -->
   <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
     <remap from="odom" to="/iggy_velocity_controller/odom"/>
     <remap from="fix" to="/odom/fix"/>
     <param name="frame_id" value="base_footprint"/>
   </node>
 
-  <!-- Laser Range Finder    -->
+  #### cns5000 IMU NODES###############################################
+  <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
+    <remap from="imu/raw" to="imu/data"/>        
+  </node>
+
+ <!-- Combine Magnetic from XSens with cns5000 accelerometers to get global orientation -->
+  <node pkg="iggy_bringup" type="imu_filter.py" name="cs5000filter" output="screen" ns="cns5000">        
+    <remap from="imu/raw" to="imu/data"/>        
+    <remap from="magnetic" to="/xsens/magnetic"/> <!-- Use /xsens/ to overwite local namespace -->
+    <param name="imu_frame" value="cnsImu"/>
+    <param name="pub_tf" value="false"/>
+  </node>
+
+  #### Phidgets IMU NODES ######################################################
+  <node pkg="phidgets_imu" type="phidgets_imu_node" name="phidgets_imu" output="screen" ns="phidget">
+    <param name="period" value="40"/>
+  </node>
+
+ <!-- Combine Magnetic and accelerometers to get global orientation -->
+  <node pkg="iggy_bringup" type="imu_filter.py" name="phidgfilter" output="screen" ns="phidget">        
+    <remap from="imu/raw" to="imu/data_raw"/>        
+    <remap from="magnetic" to="imu/mag"/>
+    <param name="imu_frame" value="phidgImu"/>
+    <param name="pub_tf" value="false"/>
+  </node>
+
+  #### XSENS IMU NODES ###############################################
+	<node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
+		<param name="frame_id" value="imu_frame"/>
+		<param name="frame_local" value="ENU"/>
+		<param name="frame_local_imu" value="ENU"/>
+    	<param name="device" value="/dev/mti700"/>
+    	<param name="baudrate" value="115200"/>
+	</node>
+
+  <node pkg="iggy_bringup" type="imu_filter.py" name="xsensfilter" output="screen" ns="xsens">        
+    <remap from="imu/raw" to="imu/data"/>        
+    <remap from="magnetic" to="magnetic"/>
+    <param name="imu_frame" value="xsensImu"/>
+    <param name="pub_tf" value="false"/>
+  </node>
+
+  #### LASER RANGE FINDER NODES #######################################
     <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
 
-  <!-- Wheel Motor Controller
-  <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>    -->
+  #### OTHER STUFF #######################################
+  <!-- Wheel Motor Controller  -->
+  <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
 
   <!-- Robot Control  -->
   <include file="$(find iggy_control)/launch/control.launch"/>

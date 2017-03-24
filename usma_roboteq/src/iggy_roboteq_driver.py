@@ -75,23 +75,32 @@ def setControlMode():
         pi5 = getdata()
         if len(pi4) == len(pi5) == 8: # process only if data is valid
             tot = int(pi4[3:7]) + int(pi5[3:7])
+            #rospy.loginfo("ROBOTEQ Controller in mode:%d tot is:%d",controlMode,tot)  
             if tot > 3500:
                 controlMode = 0
-            elif tot < 2500:    
+            elif tot < 2500:  
                 controlMode = 2
             else:
-                controlMode = 1 # GOTO MANUAL MODE AND STOP               
+                controlMode = 1             
         else:
-            print ("ROBOTEQ DRIVER PWM for Pin 4 an 5 not LEN of 8 4:%d 5:%d\n",len(pi4),len(pi5))
+            #print ("ROBOTEQ DRIVER PWM for Pin 4 an 5 not LEN of 8 4:%d 5:%d\n",len(pi4),len(pi5))
+            pass
     except (KeyboardInterrupt, SystemExit):
         raise
     except: # catch *all other* exceptions
         e = sys.exc_info()[0]
         rospy.loginfo( "<p>ROBOTEQ Error in setControlMode: %s</p>", e )
 
+def sendStop():
+        cmd = '!G 1 0\r'
+        ser.write(cmd)
+        cmd = '!G 2 0\r'
+        ser.write(cmd)
+
 def moveCallback(data):
     global controlMode
     if (controlMode == 2):  # robot is in autonomous mode
+        #rospy.loginfo("ROBOTEQCB Controller inside if mode:%d",controlMode)  
         speed = data.linear.x *1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
                                     #1000 would give full speed range, but setting to lower value to better control robot
         turn = (data.angular.z + 0.009)*500*-1 
@@ -170,16 +179,20 @@ if __name__ == "__main__":
     initalizeController()
 
     rate = rospy.Rate(30)
+    lastControlMode = controlMode
     while not rospy.is_shutdown():
-
         setControlMode()
+        #rospy.loginfo("ROBOTEQ Controller in mode:%d",controlMode)  
         battVolt = getBattVoltage()
         if battVolt > 0.01:            
             volt_pub.publish(Float32(battVolt))
         if (controlMode == 2):  #robot is in autonomous mode
             auto_pub.publish(True) # Turn on autonomous lights
         else:    
+            if(lastControlMode == 2):
+                sendStop()
             auto_pub.publish(False)
+        lastControlMode = controlMode
         rate.sleep()
 
     ser.close()

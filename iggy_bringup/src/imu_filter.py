@@ -115,17 +115,20 @@ class MagHeading():
     def mainLoop(self):
         worldImu= Imu()
         rate = rospy.Rate(20) # 10hz
+        pub_tf=rospy.get_param('~pub_tf',"false")
         imu_frame=rospy.get_param('~imu_frame','imu')
         world_frame=rospy.get_param('world_frame','odom')
         while not rospy.is_shutdown():
-            #print self.mImu
             if(self.mImu.header.seq!=0):
                 angles =self.calculateCompassBearing(self.mImu,self.mMagnetic)
                 #print("PHIDG: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))   
                 self.magHdg_pub.publish(angles[0])
                 worldImu= self.mImu
-                worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w = tf.transformations.quaternion_from_euler(angles[5], angles[4], angles[3])
-                self.br.sendTransform((0,0,0),(worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w),rospy.Time.now(),imu_frame, world_frame)
+                worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w = \
+                                            tf.transformations.quaternion_from_euler(angles[5], angles[4], angles[3])
+                if (pub_tf):
+                    self.br.sendTransform((0,0,0),(worldImu.orientation.x, worldImu.orientation.y, worldImu.orientation.z,
+                                            worldImu.orientation.w), rospy.Time.now(), imu_frame, world_frame)
                 self.world_imu_pub.publish(worldImu)
             rate.sleep()    
 
