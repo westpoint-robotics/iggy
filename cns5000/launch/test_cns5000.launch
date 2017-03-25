@@ -1,0 +1,26 @@
+<!--AY2017 Test Launch file for CNS5000-->
+<launch>
+
+<!-- =============   TRANSFORMS  ======================= -->
+<!-- TODO add transforms as a seperate launch file so when they change here they change in all launch files, like bag and demos -->
+<include file="$(find iggy_bringup)/launch/config/tf.launch"></include>
+
+<!-- Navigatin System CNS5000 -->
+<node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
+	<remap from="gps/fix" to="/cns5000/fix"/>   
+</node>  
+
+<node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen"/>
+
+<!--utm odom converter node for current location
+<node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
+  <remap from="odom" to="/odom"/>
+  <remap from="fix" to="/navsat/fix" />
+  <param name="frame_id" value="base_footprint" />
+</node>
+-->  
+
+<!-- Start an rviz node with a custom configuration  -->
+<node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find cns5000)/launch/test_imu.rviz"/>
+
+</launch>
