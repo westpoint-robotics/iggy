@@ -55,7 +55,7 @@ class NavTest():
         rospy.on_shutdown(self.shutdown)    
 
         # Subscribe to the move_base action server
-	self.goal = MoveBaseGoal()
+        self.goal = MoveBaseGoal()
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)        
         rospy.loginfo("Waiting for move_base action server...")        
         # Wait 60 seconds for the action server to become available
@@ -81,6 +81,7 @@ class NavTest():
         #rospy.Subscriber('/odom', Odometry, update_current_pose)
         rospy.Subscriber('/navsat/fix', NavSatFix, update_utm)
         rospy.Subscriber('/odometry/gps', Odometry, update_current_pose)
+
     def calculateDist(self, currX, currY, lastX, lastY, isFirst):
         if isFirst!= True:
             #rospy.loginfo("CalculateDist: Curr x is:") 
@@ -90,13 +91,16 @@ class NavTest():
             distance =  sqrt(pow(currX - self.initial_pose.pose.pose.position.x, 2) + pow(currY - self.initial_pose.pose.pose.position.y, 2))
             #rospy.loginfo(currX)        
         return distance
+
     def calculateDistFromGoal(self, curGoalLat, curGoalLong, resFile):
         distance= sqrt(pow(self.curLat -curGoalLat,2) + pow(self.curLong - curGoalLong, 2)) *100000
         rospy.loginfo("Distance from goal according to the GPS: " + str(distance) + " meters \n" )
         return distance            
+
     def test(self):
         #curPos=NavSatFix
         rospy.loginfo(curPos)
+
     def navigate(self):
         # Variables to keep track of success rate, running time, and distance traveled
         rospy.loginfo(self) 
@@ -201,25 +205,25 @@ class NavTest():
         # Get the initial pose from the robot
         rospy.wait_for_message('/odometry/gps', Odometry)
         rospy.loginfo("Initial Pose from /odometry/gps recieved")
-	while len(self.current_utm) != 3:
+        while len(self.current_utm) != 3:
             time.sleep(1) 
             rospy.loginfo("Stuck?")
-        rospy.loginfo("Establishing initial position wait 10 seconds.")	
-	easts=[]
-	nrths=[]
-	for i in range(1):
-       	    utm_c=self.current_utm
-	    print self.current_utm
-	    easts.append(utm_c[1])
-	    nrths.append(utm_c[2])
-	    rospy.sleep(1.5)
-	easting = sum(easts) / float(len(easts))
-	northing = sum(nrths) / float(len(nrths))
-        self.initial_pose = self.current_pose 
-        self.initial_utm = [utm_c[0],easting,northing]
-        rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))               
-	rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
-	print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
+            rospy.loginfo("Establishing initial position wait 10 seconds.")    
+        easts=[]
+        nrths=[]
+        for i in range(1):
+            utm_c=self.current_utm
+            print self.current_utm
+            easts.append(utm_c[1])
+            nrths.append(utm_c[2])
+            rospy.sleep(1.5)
+            easting = sum(easts) / float(len(easts))
+            northing = sum(nrths) / float(len(nrths))
+            self.initial_pose = self.current_pose 
+            self.initial_utm = [utm_c[0],easting,northing]
+            rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))               
+        rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
+        print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
 
     # Turn list of waypoints into Goals. Goals are coordinates in the robot odom frame.
     # TODO Look into makeing this in the map frame if map and odom frame diverge.
@@ -253,6 +257,7 @@ class NavTest():
         '''
 
     # Read from file the list of Lat,Long,Duration,Tolerance and put into a list of waypoints
+
     def loadWaypoints(self, filename):
         waypoints=[]
         with open(filename, mode='r') as infile:

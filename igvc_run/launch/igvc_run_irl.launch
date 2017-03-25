@@ -17,7 +17,7 @@
 
 <!-- Navigatin System CNS5000 -->
 <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
-	<remap from="gps/fix" to="/navsat/fix"/>   <!--Working -->
+	<remap from="cns5000/fix" to="/navsat/fix"/>   <!--Working -->
 </node>  
 <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen">
 	<remap from="/imu/raw" to="/imu/data"/>   
