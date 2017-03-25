@@ -24,7 +24,7 @@ class MagHeading():
         self.magHdg_pub = rospy.Publisher('/imu/compass', Float32, queue_size=1)
         self.world_imu_pub = rospy.Publisher ('imu/global', Imu, queue_size=1)
         self.br = tf.TransformBroadcaster()
-        self.magOffset=(81.0/180.0) *math.pi
+        self.magOffset=(1.0/180.0) *math.pi
         # Subscribe to the gps positions
         rospy.Subscriber('/phidget/imu/mag', Vector3Stamped, self.update_magnetic_callback)
         rospy.Subscriber('/phidget/imu/data_raw', Imu, self.update_imu_callback)
@@ -120,9 +120,9 @@ class MagHeading():
                    (magField[0] * math.cos(pitchAngle))
                  + (magField[1] * math.sin(pitchAngle) * math.sin(rollAngle))
                  + (magField[2] * math.sin(pitchAngle) * math.cos(rollAngle)))
-            yawAngle -= self.magOffset
+            yawAngle += self.magOffset
             angles = [rollAngle, pitchAngle, yawAngle]
-            rospy.loginfo( "current yawAngle is:" + str(yawAngle))
+            #rospy.loginfo( "current yawAngle is:" + str(yawAngle))
             #we low-pass filter the angle data so that it looks nicer on-screen
         
             #make sure the filter buffer doesn't have values passing the -180<->180 mark
@@ -172,7 +172,7 @@ class MagHeading():
             #print self.mImu
             if(self.mImu.header.seq!=0): #and self.mXsensG.header.seq!=0):
                 angles =self.calculateCompassBearing(self.mImu,self.mMagnetic,False)
-                print("PHIDG: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))   
+                #print("PHIDG: Compass Heading> compassBearing: %9.6f  pitchAngleDeg: %9.6f  rollAngleDeg: %9.6f" % (angles[0],angles[1],angles[2]))   
                 #angles =self.calculateCompassBearing(self.mXsensG,self.mXsensM,True)
                 self.magHdg_pub.publish(angles[0])
                 worldImu= self.mImu
@@ -182,7 +182,7 @@ class MagHeading():
                 worldImu.orientation.z= quaternion[2]
                 worldImu.orientation.w= quaternion[3]
                 #worldImu.orientation = quaternion #TODO map quaternion data structure to orientation
-                self.br.sendTransform((0,0,0),(worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w),rospy.Time.now(),imu_frame, world_frame)
+                #self.br.sendTransform((0,0,0),(worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w),rospy.Time.now(),imu_frame, world_frame)
 
 
                 self.world_imu_pub.publish(worldImu)

@@ -7,8 +7,8 @@ Panels:
         - /Global Options1
         - /Local Map1
         - /TF1
+        - /TF1/Frames1
         - /AerialMapDisplay1
-        - /AerialMapDisplay1/Status1
       Splitter Ratio: 0.525907
     Tree Height: 695
   - Class: rviz/Selection
@@ -73,30 +73,57 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
         base_link:
           Value: true
+        bumblebee2:
+          Value: false
+        gps_frame:
+          Value: false
+        imu:
+          Value: true
+        imu_frame:
+          Value: false
+        left_camera_frame:
+          Value: false
+        left_wheel_frame:
+          Value: false
         map:
           Value: true
         odom:
           Value: true
-        utm:
-          Value: true
-        world:
-          Value: true
+        right_camera_frame:
+          Value: false
+        right_wheel_frame:
+          Value: false
+        velodyne:
+          Value: false
       Marker Scale: 10
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_link:
-            {}
-        world:
-          map:
-            utm:
-              {}
+        map:
+          odom:
+            base_link:
+              bumblebee2:
+                left_camera_frame:
+                  {}
+                right_camera_frame:
+                  {}
+              gps_frame:
+                {}
+              imu:
+                {}
+              imu_frame:
+                {}
+              left_wheel_frame:
+                {}
+              right_wheel_frame:
+                {}
+              velodyne:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -345,15 +372,15 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 143.885
+      Distance: 5.88955
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 8.57101
-        Y: -36.7467
+        X: 1.45845
+        Y: -0.907409
         Z: -1.89256e-05
       Name: Current View
       Near Clip Distance: 0.01

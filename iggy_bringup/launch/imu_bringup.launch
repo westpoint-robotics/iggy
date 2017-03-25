@@ -1,0 +1,24 @@
+<!-- Phidgets IMU launch file -->
+
+<launch>
+
+  #### Nodelet manager ######################################################
+
+  <node pkg="nodelet" type="nodelet" name="imu_manager" 
+    args="manager" output="screen" ns="phidget"/>
+
+  #### IMU Driver ###########################################################
+
+  <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet" 
+    args="load phidgets_imu/PhidgetsImuNodelet imu_manager" 
+    output="screen" ns="phidget">
+    # supported data rates: 4 8 16 24 32 40 ... 1000 (in ms)
+    <param name="period" value="40"/>
+  </node>
+
+
+<node pkg="iggy_bringup" type="phidgGlobal.py" name="phidgGlobal" output="screen" ns="phidget" />
+
+
+
+</launch>
