@@ -118,8 +118,8 @@ class NavTest():
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
     
         # TODO getGoals in odom frame, make a list in odom frame. 
-        goals=self.makeWaypointsIntoGoals('ThayerRoof.csv')
-        latLongs=self.wayPointLatLongList("ThayerRoof.csv")
+        goals=self.makeWaypointsIntoGoals('SupesBox.csv')
+        latLongs=self.wayPointLatLongList("SupesBox.csv")
         # Begin the main loop and run through a sequence of locations
         i=0        
         firstRun=True
@@ -132,7 +132,7 @@ class NavTest():
                      
             # Set up the next goal location
             self.goal.target_pose.pose = cur_coord
-            self.goal.target_pose.header.frame_id = 'map'
+            self.goal.target_pose.header.frame_id = 'odom'
             self.goal.target_pose.header.stamp = rospy.Time.now()
             self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
             self.goalLat= latLongs[i][0]
