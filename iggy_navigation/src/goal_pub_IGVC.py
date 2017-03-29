@@ -118,6 +118,7 @@ class NavTest():
         
         # DML read the filename from rosparam server
         wp_file = rospy.get_param("~waypoint_file", "waypoint.csv")
+        wp_file = rospy.get_param("SupesBox.csv")
         rospy.loginfo("Waypoing file is: %s",wp_file)
         # TODO set the state variable for current location as start location
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
