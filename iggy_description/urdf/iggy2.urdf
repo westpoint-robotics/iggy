@@ -19,32 +19,6 @@
         </inertial>
     </link>
 
-<!--Wheel Base Front -->
-    <link name="front_wheel_base">
-        <visual>
-            <geometry>
-                <box size="0.11 0.45 0.25"/>
-            </geometry>
-        </visual>
-        <collision>
-            <geometry>
-                <box size="0.11 0.45 0.25"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value="25"/>
-            <inertia ixx="0.433975" ixy="0.0" ixz="0.0" iyy="0.5211" iyz="0.0" izz="0.1244333333"/>
-        </inertial> 
-    </link>
-    <joint name="front_wheel_base_to_base_link" type="fixed">
-        <parent link="base_link"/>
-        <child link="front_wheel_base"/>
-        <origin xyz="0.38 0 -0.275" rpy="0 0 0"/>
-    </joint>
-    <gazebo reference="front_wheel_base">
-        <material>Gazebo/Turquoise</material>
-    </gazebo>
-
 <!--Wheel Base Back -->
     <link name="back_wheel_base">
         <visual>
@@ -129,6 +103,32 @@
         <material>Gazebo/Red</material>
     </gazebo>
 
+<!--Wheel Base Front -->
+    <link name="front_wheel_base">
+        <visual>
+            <geometry>
+                <box size="0.11 0.60 0.25"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.11 0.60 0.25"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="25"/>
+            <inertia ixx="0.433975" ixy="0.0" ixz="0.0" iyy="0.5211" iyz="0.0" izz="0.1244333333"/>
+        </inertial> 
+    </link>
+    <joint name="front_wheel_base_to_base_link" type="fixed">
+        <parent link="base_link"/>
+        <child link="front_wheel_base"/>
+        <origin xyz="0.38 0 -0.265" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="front_wheel_base">
+        <material>Gazebo/Turquoise</material>
+    </gazebo>
+    
 <!--Caster Front Left Wheel -->
     <link name="cflwheel">
         <visual>
@@ -151,7 +151,7 @@
     <joint name="front_left_wheel_joint" type="continuous">
         <parent link="cfl_pivotplate"/>
         <child link="cflwheel"/>
-        <origin xyz="-0.03 0 -0.0925" rpy="0 0 0"/>
+        <origin xyz="-0.03 0 -0.093" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
     </joint>
     <gazebo reference="cflwheel">
@@ -178,10 +178,8 @@
     <joint name="cfl_pivot_joint" type="continuous">
         <parent link="front_wheel_base"/>
         <child link="cfl_pivotplate"/>
-        <origin xyz="0 0.15 -0.1475" rpy="0 0 0"/>
+        <origin xyz="0 0.21 -0.147" rpy="0 0 0"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
-        <joint_properties damping="0.3" friction="0.3"/>
-
     </joint>
     <gazebo reference="pivotplate">
         <material>Gazebo/Orange</material>
@@ -235,7 +233,7 @@
     <joint name="cfr_pivot_joint" type="continuous">
         <parent link="front_wheel_base"/>
         <child link="cfr_pivotplate"/>
-        <origin xyz="0 -0.15 -0.1475" rpy="0 0 0"/>
+        <origin xyz="0 -0.21 -0.1475" rpy="0 0 0"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
     </joint>
     <gazebo reference="pivotplate">
