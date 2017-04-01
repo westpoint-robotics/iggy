@@ -60,8 +60,6 @@ class NavTest():
                        'SUCCEEDED', 'ABORTED', 'REJECTED',
                        'PREEMPTING', 'RECALLING', 'RECALLED',
                        'LOST']      
-        self.curLat=0.0
-        self.curLong=0.0
         # A variable to hold the initial and current pose of the robot
         self.current_pose_map = Odometry()
         self.initial_pose = Odometry()
@@ -83,16 +81,16 @@ class NavTest():
         running_time = 0
         start_time = rospy.Time.now()
 
+
+        self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
         # TODO Use Dynamic reconfig for this
         # How long in seconds should the robot pause at each location?
         rest_time = rospy.get_param("~rest_time", 0)
 
         # DML read the filename from rosparam server
         wp_file = rospy.get_param("~waypoint_file", "waypoint.csv")
+        wp_file = "params/waypoints3.csv"
         rospy.loginfo("Waypoing file is: %s",wp_file)
-
-        self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
-
         # TODO getGoals in odom frame, make a list in odom frame. 
         goals=self.makeWaypointsIntoGoals(wp_file)
 
@@ -102,29 +100,19 @@ class NavTest():
         while not rospy.is_shutdown():                        
             # Keep track of the distance traveled.
             # TODO update the tolerance and pause time.
+             
             cur_coord = goals[i][0]
             last_coord = goals[i-1][0]
             distance = self.calculateDist(cur_coord.position.x, cur_coord.position.y, last_coord.position.x, last_coord.position.x, firstRun)
-
+            print "I:",i,"\ncurCoord:",cur_coord,"\nlastcord",last_coord
             # Set up the next goal location
             self.goal.target_pose.pose = cur_coord
             self.goal.target_pose.header.frame_id = 'map'
             self.goal.target_pose.header.stamp = rospy.Time.now()
             self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
-            self.goalLat= latLongs[i][0]
-            self.goalLong= latLongs[i][1]
             # Let the user know where the robot is going next
-            rospy.loginfo("Going to: (%.4f,%.4f)" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y))
-            results.write("Going to: (%.4f,%.4f)" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y) + "\n")
-            rospy.loginfo("Current lat is: " + str(self.curLat))
-            results.write("Current lat is: " + str(self.curLat) + "\n")
-            rospy.loginfo("Goal lat is: " + str(self.goalLat))            
-            results.write("Goal lat is: " + str(self.goalLat) + "\n")            
-            rospy.loginfo("Current long is: " + str(self.curLong))
-            a = self.curLong            
-            results.write("Current long is: " + str(a) + "\n")
-            rospy.loginfo("Goal long is: " + str(self.goalLong))
-            results.write("Goal long is: " + str(self.goalLong) + "\n")
+            rospy.loginfo("Going to: (%.4f,%.4f) distance: %.4f" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y,distance))
+
 
             # Start the robot toward the next location
             self.move_base.send_goal(self.goal)
@@ -168,24 +156,21 @@ class NavTest():
         rospy.loginfo("Waiting for initial pose")
         # Get the initial pose from the robot
         rospy.loginfo("Initial Pose from /odometry/gps recieved")
-        rospy.loginfo("Establishing initial position wait 10 seconds.")
+        rospy.loginfo("Establishing initial position wait 10 seconds. Do not move the robot.")
         easts=[]
         nrths=[]
         time.sleep(2)
-        for i in range(10):
+        for i in range(5): #TODO move back to 10
             utm_c=self.current_utm_odom
-            print "UTM C",utm_c
             easts.append(utm_c[1]) #TODO add check for empty array
             nrths.append(utm_c[2])
             rospy.sleep(1.0)
-        rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))            
         easting = sum(easts) / float(len(easts))
         northing = sum(nrths) / float(len(nrths))
         self.initial_pose = self.current_pose_map 
         self.initial_utm = [utm_c[0],easting,northing]
-
-        rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
-        print UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
+        (latti,longi)=UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
+        rospy.loginfo("Initial UTM at (%.4f, %.4f), Initial Lat/Long is: (%.7f, %.7f)" % (easting, northing,latti,longi) )
 
     # Read from file the list of Lat,Long,Duration,Tolerance and put into a list of waypoints
     def loadWaypoints(self, filename):
@@ -206,29 +191,18 @@ class NavTest():
         # Load and parse waypoints from file.
         wps = self.loadWaypoints(filename)
         goals=[]
-        print "#########################################################################################################################"
         for waypointLat,waypointLong,search_duration,rest_duration,unused,identity in wps:
             goal_pose=Pose()
             (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
-            print "Waypoint ll",waypointLat,waypointLong,search_duration,rest_duration,unused,identity
-            print "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
-            print "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
-            print "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
-            print "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+
             goal_pose.position=self.initial_pose.pose.pose.position 
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
             goal_pose.position.y=(wpNorthing - self.initial_utm[2])
             goals.append((goal_pose, search_duration, rest_duration))
+            #print "Waypoint ll",waypointLat,waypointLong,search_duration,rest_duration,unused,identity,  wpZone,wpEasting,wpNorthing,goal_pose.position.x,goal_pose.position.y
             self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
         return goals
 
-        '''
-        (initZone,initEasting,initNorthing)=LLtoUTM(23, current_lat,current_long)
-        outString = "lat,long,restTime,tolerance,zone,easting,northing,
-        print outString
-        outString = current_lat+','+current_long+','+rest_time+','+tolerance+','+initZone+','+initEasting+','+initNorthing
-        print outString
-        '''
     def update_current_pose_map(self, current_pose_map):
         #rospy.loginfo("Current Pose is: (%.4f,%.4f)" %((current_pose_map.pose.pose.position.x),(current_pose_map.pose.pose.position.y)))        
         self.current_pose_map = current_pose_map
@@ -248,10 +222,6 @@ if __name__ == '__main__':
     global nav
     try:
         nav = NavTest()
-        nav.setInitialPose()
-        print nav.makeWaypointsIntoGoals("params/waypoints.csv")
-        exit()
-        asdfa
         nav.navigate()        
         rospy.spin()
     except rospy.ROSInterruptException:
@@ -259,6 +229,110 @@ if __name__ == '__main__':
 
 
 '''
+user1:iggy_navigation$ rosmsg show move_base_msgs/MoveBaseGoal 
+geometry_msgs/PoseStamped target_pose
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  geometry_msgs/Pose pose
+    geometry_msgs/Point position
+      float64 x
+      float64 y
+      float64 z
+    geometry_msgs/Quaternion orientation
+      float64 x
+      float64 y
+      float64 z
+      float64 w
+
+user1:iggy_navigation$ rosmsg show move_base_msgs/MoveBaseAction
+move_base_msgs/MoveBaseActionGoal action_goal
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  actionlib_msgs/GoalID goal_id
+    time stamp
+    string id
+  move_base_msgs/MoveBaseGoal goal
+    geometry_msgs/PoseStamped target_pose
+      std_msgs/Header header
+        uint32 seq
+        time stamp
+        string frame_id
+      geometry_msgs/Pose pose
+        geometry_msgs/Point position
+          float64 x
+          float64 y
+          float64 z
+        geometry_msgs/Quaternion orientation
+          float64 x
+          float64 y
+          float64 z
+          float64 w
+move_base_msgs/MoveBaseActionResult action_result
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  actionlib_msgs/GoalStatus status
+    uint8 PENDING=0
+    uint8 ACTIVE=1
+    uint8 PREEMPTED=2
+    uint8 SUCCEEDED=3
+    uint8 ABORTED=4
+    uint8 REJECTED=5
+    uint8 PREEMPTING=6
+    uint8 RECALLING=7
+    uint8 RECALLED=8
+    uint8 LOST=9
+    actionlib_msgs/GoalID goal_id
+      time stamp
+      string id
+    uint8 status
+    string text
+  move_base_msgs/MoveBaseResult result
+move_base_msgs/MoveBaseActionFeedback action_feedback
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  actionlib_msgs/GoalStatus status
+    uint8 PENDING=0
+    uint8 ACTIVE=1
+    uint8 PREEMPTED=2
+    uint8 SUCCEEDED=3
+    uint8 ABORTED=4
+    uint8 REJECTED=5
+    uint8 PREEMPTING=6
+    uint8 RECALLING=7
+    uint8 RECALLED=8
+    uint8 LOST=9
+    actionlib_msgs/GoalID goal_id
+      time stamp
+      string id
+    uint8 status
+    string text
+  move_base_msgs/MoveBaseFeedback feedback
+    geometry_msgs/PoseStamped base_position
+      std_msgs/Header header
+        uint32 seq
+        time stamp
+        string frame_id
+      geometry_msgs/Pose pose
+        geometry_msgs/Point position
+          float64 x
+          float64 y
+          float64 z
+        geometry_msgs/Quaternion orientation
+          float64 x
+          float64 y
+          float64 z
+          float64 w
+
+
+
 user1@ros20:~/catkin_ws/src/iggy/iggy_navigation$ rosmsg show nav_msgs/Odometry 
 std_msgs/Header header
   uint32 seq
