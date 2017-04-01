@@ -1,0 +1,24 @@
+Going to: (-2.9737,1.4983)
+Current lat is: 42.6790471872
+Goal lat is: 42.67906
+Current long is: -83.1956632487
+Goal long is: -83.1957
+Timed out achieving goal 
+Success so far: 0/1 = 0% 
+Running time: 5.03 min Distance: 0.000
+Going to: (-2.9160,3.7193)
+Current lat is: 42.6790701777
+Goal lat is: 42.67908
+Current long is: -83.1957874861
+Goal long is: -83.1957
+Timed out achieving goal 
+Success so far: 0/2 = 0% 
+Running time: 10.08 min Distance: 0.000
+Going to: (-2.8583,5.9402)
+Current lat is: 42.679040531
+Goal lat is: 42.6791
+Current long is: -83.195790755
+Goal long is: -83.1957
+Goal failed with error code: PREEMPTED
+Success so far: 0/3 = 0% 
+Running time: 14.10 min Distance: 0.000
