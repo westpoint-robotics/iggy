@@ -264,7 +264,18 @@
     <gazebo reference="pivotplate">
         <material>Gazebo/Orange</material>
     </gazebo>
+    
+  <xacro:include filename="depth_camera.urdf.xacro" />
 
+  <xacro:depth_camera>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:depth_camera>    
+
+    <joint name="base_link_to_camera" type="fixed">
+        <parent link="base_link" />
+        <child link="camera_center" />
+        <origin xyz="0.125 0 1.1" rpy="0 0.785398 0" />
+    </joint>
 <!--Plugins -->
     <gazebo>
      <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">

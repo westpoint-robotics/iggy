@@ -35,7 +35,7 @@ from LatLongUTMconversion import LLtoUTM, UTMtoLL
 from marker_pub import make_waypoint_viz
 from visualization_msgs.msg import Marker
 
-class NavTest():
+class Navigator():
 
     def __init__(self):     
         rospy.init_node('nav_test2', anonymous=True)        
@@ -81,7 +81,6 @@ class NavTest():
         running_time = 0
         start_time = rospy.Time.now()
 
-
         self.setInitialPose() # In the odom frame. TODO Should this be in map frame?
         # TODO Use Dynamic reconfig for this
         # How long in seconds should the robot pause at each location?
@@ -100,7 +99,7 @@ class NavTest():
         while not rospy.is_shutdown():                        
             # Keep track of the distance traveled.
             # TODO update the tolerance and pause time.
-             
+
             cur_coord = goals[i][0]
             last_coord = goals[i-1][0]
             distance = self.calculateDist(cur_coord.position.x, cur_coord.position.y, last_coord.position.x, last_coord.position.x, firstRun)
@@ -112,7 +111,6 @@ class NavTest():
             self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
             # Let the user know where the robot is going next
             rospy.loginfo("Going to: (%.4f,%.4f) distance: %.4f" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y,distance))
-
 
             # Start the robot toward the next location
             self.move_base.send_goal(self.goal)
@@ -221,7 +219,7 @@ class NavTest():
 if __name__ == '__main__':
     global nav
     try:
-        nav = NavTest()
+        nav = Navigator()
         nav.navigate()        
         rospy.spin()
     except rospy.ROSInterruptException:
