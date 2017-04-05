@@ -52,8 +52,8 @@ class Navigator():
         self.goal = MoveBaseGoal()
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)        
         rospy.loginfo("Waiting for move_base action server...")        
-        # Wait 60 seconds for the action server to become available
-        #self.move_base.wait_for_server(rospy.Duration(60))        
+        # Wait upto 60 seconds for the action server to become available
+        self.move_base.wait_for_server(rospy.Duration(60))        
         rospy.loginfo("Connected to move base server")   
         # Goal state return values
         self.goal_states = ['PENDING', 'ACTIVE', 'PREEMPTED', 
@@ -67,10 +67,12 @@ class Navigator():
         self.initial_utm = [] # return (UTMZone, UTMEasting, UTMNorthing)    
 
     def calculateDist(self, currX, currY, lastX, lastY, isFirst):
+        distance = 0
         if isFirst != True:
             distance = sqrt(pow(currX - lastX, 2) + pow(currY - lastY, 2))             
         else:
             distance =  sqrt(pow(currX - self.initial_pose.pose.pose.position.x, 2) + pow(currY - self.initial_pose.pose.pose.position.y, 2))
+        rospy.loginfo("curr , init (%.4f, %.4f), (%.4f, %.4f)"% (currX,currY,self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))
         return distance
 
     def navigate(self):
@@ -88,7 +90,7 @@ class Navigator():
 
         # DML read the filename from rosparam server
         wp_file = rospy.get_param("~waypoint_file", "waypoint.csv")
-        wp_file = "params/waypoints3.csv"
+        #wp_file = "params/waypoints3.csv"
         rospy.loginfo("Waypoing file is: %s",wp_file)
         # TODO getGoals in odom frame, make a list in odom frame. 
         goals=self.makeWaypointsIntoGoals(wp_file)
@@ -103,7 +105,6 @@ class Navigator():
             cur_coord = goals[i][0]
             last_coord = goals[i-1][0]
             distance = self.calculateDist(cur_coord.position.x, cur_coord.position.y, last_coord.position.x, last_coord.position.x, firstRun)
-            print "I:",i,"\ncurCoord:",cur_coord,"\nlastcord",last_coord
             # Set up the next goal location
             self.goal.target_pose.pose = cur_coord
             self.goal.target_pose.header.frame_id = 'map'
@@ -146,7 +147,8 @@ class Navigator():
             # Increment the counters
             i += 1
             if (i >= len(goals)):
-                rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE")
+                rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE")        
+            firstRun=False
             rospy.sleep(rest_time)
 
     def setInitialPose(self):            
@@ -197,8 +199,8 @@ class Navigator():
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
             goal_pose.position.y=(wpNorthing - self.initial_utm[2])
             goals.append((goal_pose, search_duration, rest_duration))
-            #print "Waypoint ll",waypointLat,waypointLong,search_duration,rest_duration,unused,identity,  wpZone,wpEasting,wpNorthing,goal_pose.position.x,goal_pose.position.y
             self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
+            rospy.loginfo("x,y in odom frame: (%.4f, %.4f)"%(goal_pose.position.x, goal_pose.position.y))
         return goals
 
     def update_current_pose_map(self, current_pose_map):
