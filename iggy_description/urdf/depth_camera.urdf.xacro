@@ -14,7 +14,7 @@
                     </image>
                     <clip>
                         <near>0.01</near>
-                        <far>5</far>
+                        <far>25</far>
                     </clip>
                 </camera>
                  <plugin name="depth_camera_frame_controller" filename="libgazebo_iggy_vision.so"> 
@@ -39,7 +39,8 @@
 
         <link name="left_camera">
             <visual>
-                <origin xyz="0 0 0" rpy="0 1.57 0" />
+                <!-- <origin xyz="0 0 0" rpy="0 1.57 0" /> -->
+                <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
                     <cylinder radius="0.007" length=".031" />
                 </geometry>
@@ -51,7 +52,8 @@
 
         <link name="right_camera">
             <visual>
-                <origin xyz="0 0 0" rpy="0 1.57 0" />
+                <!-- <origin xyz="0 0 0" rpy="0 1.57 0" /> -->
+                <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
                     <cylinder radius="0.007" length=".031" />
                 </geometry>
@@ -73,18 +75,6 @@
             </visual>
         </link>
 
-        <link name="camera_arm">
-            <visual>
-                <origin xyz="0 0 0" rpy="0 0 0" />
-                <geometry>
-                    <cylinder radius="0.007" length=".50" />
-                </geometry>
-                <material name="dark_grey">
-                    <color rgba="0.1 0.1 0.1 1" />
-                </material>
-            </visual>
-        </link>
-
         <joint name="left_camera_joint" type="fixed">
             <parent link="camera_center" />
             <child link="left_camera" />
@@ -102,19 +92,10 @@
         <joint name="zed_current_frame_joint" type="fixed">
             <parent link="camera_center" />
             <child link="zed_current_frame" />
-            <origin rpy="-1.57 0 -1.57" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <!-- <origin rpy="-1.57 0 -1.57" xyz="0 0 0" /> -->
         </joint>
 
-        <joint name="camera_center_joint" type="fixed">
-            <parent link="camera_arm" />
-            <child link="camera_center" />
-            <origin rpy="0 0.30 0" xyz="0 0 0.25" />
-        </joint>
 
-        <joint name="camera_arm_joint" type="fixed">
-            <parent link="mid_mount" />
-            <child link="camera_arm" />
-            <origin rpy="0 0 0" xyz="0 0 0.25" />
-        </joint>
     </xacro:macro>
 </robot>

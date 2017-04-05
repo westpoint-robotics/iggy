@@ -1,0 +1,12 @@
+roslaunch gazebo_ros empty_world.launch paused:=true
+
+roslaunch iggy_description xacrotest.launch 
+
+rosrun gazebo_ros spawn_model -urdf -file `rospack find iggy_description`/urdf/iggy2.urdf -z 1 -model iggy1
+
+rosrun xacro xacro.py -o deleteme.urdf `rospack find iggy_description`/urdf/iggy2.urdf.xacro
+
+check_urdf deleteme.urdf 
+
+rosrun gazebo_ros spawn_model -urdf -file deleteme.urdf -z 1 -model iggy1
+

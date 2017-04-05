@@ -82,7 +82,7 @@
 
   <!-- Navigation -->
   <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
-  <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 1 world map 100"/>
+
 
   <!-- Start RVIZ -->
   <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>

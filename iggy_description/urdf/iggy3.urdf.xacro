@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot name="iggy" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- rosrun gazebo_ros spawn_model -urdf -file `rospack find iggy_description`/urdf/iggy2.urdf -z 1 -model iggy1  -->
+
+    <xacro:property name="PI" value="3.1415926535897931" />
+    <xacro:property name="chassis_length" value="0.920" />
+    <xacro:property name="chassis_width"  value="0.610" />
+    <xacro:property name="chassis_height" value="0.310" />
+    <xacro:property name="chassis_mass" value="25.0" />
+
+    <xacro:include filename="$(find iggy_description)/urdf/inertia.xacro" />
+    <xacro:include filename="$(find iggy_description)/urdf/rear_wheel.xacro" />
+<!--body -->
+
+  <link name="base_link"></link>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="chassis_link" />
+  </joint>
+
+    <link name="chassis_link">
+        <visual>
+            <geometry>
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+            </geometry>
+        </collision>
+        <xacro:box_inertial x="${chassis_length}" y="${chassis_width}" z="${chassis_height}" mass="${chassis_mass}"/>
+    </link>
+    <link name="mast">
+        <visual>
+            <geometry>
+                <box size="0.25 0.25 1.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.25 0.25 1.01"/>
+            </geometry>
+        </collision>
+        <xacro:box_inertial x="0.25" y="0.25" z="1.01" mass="1"/>
+    </link>
+    <joint name="mast_to_base_link" type="fixed">
+        <parent link="base_link"/>
+        <child link="mast"/>
+        <origin xyz="0 0 0.65" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="mast">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+    <!--Wheel Base Back -->
+    <link name="back_wheel_base">
+        <visual>
+            <geometry>
+                <box size="0.11 0.45 0.315"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.11 0.45 0.315"/>
+            </geometry>
+        </collision>
+        <xacro:box_inertial x="0.11" y="0.45" z="0.315" mass="10"/>
+    </link>
+    <joint name="back_wheel_base_to_base_link" type="fixed">
+        <parent link="base_link"/>
+        <child link="back_wheel_base"/>
+        <origin xyz="-0.355 0 -0.30" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="back_wheel_base">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    
+    <xacro:box_inertial x="${chassis_length}" y="${chassis_width}" z="${chassis_height}" mass="${chassis_mass}"/>
+    
+
+</robot> 

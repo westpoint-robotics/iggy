@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="iggy" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+  <xacro:property name="M_PI" value="3.1415926535897931" />
 <!-- rosrun gazebo_ros spawn_model -urdf -file `rospack find iggy_description`/urdf/iggy2.urdf -z 1 -model iggy1  -->
 <!--body -->
     <link name="base_link">
@@ -19,16 +19,19 @@
             <inertia ixx="2.2666833333"  ixy="0"  ixz="0" iyy="5.3094333333" iyz="0" izz="5.3094333333" />
         </inertial>
     </link>
+    <gazebo reference="base_link">
+        <material>Gazebo/Blue</material>
+    </gazebo>
     
     <link name="mast">
         <visual>
             <geometry>
-                <box size="0.25 0.25 1.01"/>
+                <box size="0.25 0.25 0.71"/>
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <box size="0.25 0.25 1.01"/>
+                <box size="0.25 0.25 0.71"/>
             </geometry>
         </collision>
         <inertial>
@@ -39,7 +42,7 @@
     <joint name="mast_to_base_link" type="fixed">
         <parent link="base_link"/>
         <child link="mast"/>
-        <origin xyz="0 0 0.65" rpy="0 0 0"/>
+        <origin xyz="0 0 0.50" rpy="0 0 0"/>
     </joint>
     <gazebo reference="mast">
         <material>Gazebo/Orange</material>
@@ -264,14 +267,191 @@
     <gazebo reference="pivotplate">
         <material>Gazebo/Orange</material>
     </gazebo>
+        
+<!--Sensors -->    
+  <xacro:include filename="depth_camera.urdf.xacro" />
 
+  <xacro:depth_camera>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:depth_camera>    
+
+    <joint name="base_link_to_camera" type="fixed">
+        <parent link="base_link" />
+        <child link="camera_center" />
+        <origin xyz="0.125 0 0.86" rpy="0 0.785398 0" />
+    </joint>
+    
+  <link name="xsens_imu">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-09" ixy="0.0" ixz="0.0" iyy="1e-09" iyz="0.0" izz="1e-09"/>
+    </inertial>
+  </link>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="xsens_imu" />
+  </joint>
+    <gazebo reference="pivotplate">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+  <link name="navsat_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.026" length="0.016" />
+      </geometry>
+      <origin xyz="0 0 0.008" />
+      <material name="black" />
+    </visual>
+  </link>
+  <joint name="navsat_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="navsat_link" />
+    <origin xyz="0 0 0.1815" />
+  </joint>
+    <gazebo reference="pivotplate">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+  
+    <joint name="velodyne_base_mount_joint" type="fixed">
+      <origin xyz="0.47 0 0" />
+      <parent link="base_link"/>
+      <child link="velodyne_base_link"/>
+    </joint>
+
+    <link name="velodyne_base_link">
+      <inertial>
+        <mass value="0.1"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <cylinder radius="0.04267" length="0.14424"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0.07212"/>
+        <geometry>
+          <cylinder radius="0.04267" length="0.14424"/>
+        </geometry>
+      </collision>
+    </link>
+    <gazebo reference="velodyne_base_link">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <joint name="velodyne_base_scan_joint" type="fixed" >
+      <origin xyz="0 0 0.09081" rpy="0 0 0" />
+      <parent link="velodyne_base_link" />
+      <child link="velodyne"/>
+    </joint>
+        
+    <link name="velodyne">
+      <inertial>
+        <mass value="0.1"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.09081" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.04267" length="0.15"/>
+        </geometry>
+      </visual>
+    </link>  
+    <gazebo reference="velodyne">
+        <material>Gazebo/Blue</material>
+    </gazebo>
 <!--Plugins -->
+    <!-- Gazebo requires the velodyne_gazebo_plugins package -->
+ <!-- Use this to simulate the a velodyne 32E. This slows down the simulation considerably.
+   <gazebo reference="velodyne">
+      <sensor type="ray" name="velodyne-HDL32E">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>500</samples> 
+              <resolution>1</resolution>
+              <min_angle>-${M_PI}</min_angle>
+              <max_angle> ${M_PI}</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>32</samples>
+              <resolution>1</resolution>
+              <min_angle>-${10.67*M_PI/180.0}</min_angle> 
+              <max_angle> ${30.67*M_PI/180.0}</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.055</min>
+            <max>140.0</max>
+            <resolution>0.001</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+          <topicName>/velodyne_points</topicName>
+          <frameName>/velodyne</frameName>
+          <min_range>0.9</min_range>
+          <max_range>130.0</max_range>
+          <gaussianNoise>0.008</gaussianNoise>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+-->
+
+
+    <!-- Use this to simlate the results of the laser pipeline only -->
+    <gazebo reference="velodyne">
+      <turnGravityOff>false</turnGravityOff>
+      <sensor type="ray" name="velodyne">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <update_rate>50</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>720</samples>
+              <resolution>1</resolution>
+              <min_angle>-1.5708</min_angle>
+              <max_angle>1.5708</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.10</min>
+            <max>140.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+          <topicName>/scan</topicName>
+          <frameName>velodyne</frameName>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+
     <gazebo>
      <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
           <rosDebugLevel>Debug</rosDebugLevel>
           <publishWheelTF>false</publishWheelTF>
           <robotNamespace>/</robotNamespace>
-          <publishTf>1</publishTf>
+          <publishTf>0</publishTf>
           <publishWheelJointState>false</publishWheelJointState>
           <alwaysOn>true</alwaysOn>
           <updateRate>100.0</updateRate>
@@ -288,5 +468,49 @@
           <robotBaseFrame>base_link</robotBaseFrame>
         </plugin>    
     </gazebo> 
-
+    <gazebo>
+        <plugin filename="libhector_gazebo_ros_gps.so" name="gps_controller">
+            <updateRate>40</updateRate>
+            <robotNamespace>/</robotNamespace>
+            <bodyName>navsat_link</bodyName>
+            <frameId>base_link</frameId>
+            <topicName>/cns5000/fix</topicName>
+            <velocityTopicName>/cns5000/vel</velocityTopicName>
+            <referenceLatitude>42.679239</referenceLatitude>
+            <referenceLongitude>-83.195619</referenceLongitude>
+            <referenceHeading>90</referenceHeading>
+            <referenceAltitude>282</referenceAltitude>
+            <!-- <drift>0.0001 0.0001 0.0001</drift> -->
+        </plugin>
+    </gazebo>
+    <gazebo>
+        <plugin filename="libhector_gazebo_ros_imu.so" name="imu_controller">
+            <robotNamespace>/</robotNamespace>
+            <updateRate>50.0</updateRate>
+            <bodyName>xsens_imu</bodyName>
+            <topicName>xsens/imu/data</topicName>
+            <accelDrift>0.00015 0.00015 0.00015</accelDrift>
+            <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+            <rateDrift>0.00015 0.00015 0.00015 </rateDrift>
+            <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+            <headingDrift>0.00015</headingDrift>
+            <headingGaussianNoise>0.00015</headingGaussianNoise>
+        </plugin>
+    </gazebo>
+    <gazebo>
+        <plugin filename="libhector_gazebo_ros_magnetic.so" name="magnetometer_controller">
+            <robotNamespace>/</robotNamespace>
+            <updateRate>50.0</updateRate>
+            <bodyName>xsens_imu</bodyName>
+            <topicName>xsens/magnetic</topicName>
+            <magnitude>1.0</magnitude>
+            <referenceHeading>0.0</referenceHeading>
+            <declination>0.0</declination>
+            <inclination>0.0</inclination>
+            <offset>0.0 0.0 0.0</offset>
+            <drift>0.00015 0.00015 0.00015 </drift>
+            <driftFrequency>0.00015 0.00015 0.00015 </driftFrequency>
+            <gaussianNoise>0.005 0.005 0.005 </gaussianNoise>
+        </plugin>
+    </gazebo>
 </robot> 
