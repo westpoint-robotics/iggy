@@ -34,6 +34,7 @@ from math import pow, sqrt
 from LatLongUTMconversion import LLtoUTM, UTMtoLL
 from marker_pub import make_waypoint_viz
 from visualization_msgs.msg import Marker
+from copy import deepcopy
 
 class Navigator():
 
@@ -94,7 +95,6 @@ class Navigator():
         rospy.loginfo("Waypoing file is: %s",wp_file)
         # TODO getGoals in odom frame, make a list in odom frame. 
         goals=self.makeWaypointsIntoGoals(wp_file)
-
         i=0        
         firstRun=True
         # Begin the main loop and run through a sequence of locations
@@ -111,7 +111,7 @@ class Navigator():
             self.goal.target_pose.header.stamp = rospy.Time.now()
             self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
             # Let the user know where the robot is going next
-            rospy.loginfo("Going to: (%.4f,%.4f) distance: %.4f" %(self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y,distance))
+            rospy.loginfo("Going to %2d: (%.4f,%.4f) distance: %.4f" %(i,self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y,distance))
 
             # Start the robot toward the next location
             self.move_base.send_goal(self.goal)
@@ -167,7 +167,7 @@ class Navigator():
             rospy.sleep(1.0)
         easting = sum(easts) / float(len(easts))
         northing = sum(nrths) / float(len(nrths))
-        self.initial_pose = self.current_pose_map 
+        self.initial_pose = deepcopy(self.current_pose_map) 
         self.initial_utm = [utm_c[0],easting,northing]
         (latti,longi)=UTMtoLL(23, self.initial_utm[2], self.initial_utm[1], self.initial_utm[0])
         rospy.loginfo("Initial UTM at (%.4f, %.4f), Initial Lat/Long is: (%.7f, %.7f)" % (easting, northing,latti,longi) )
@@ -190,18 +190,17 @@ class Navigator():
         #    rospy.loginfo("Waiting for initial position")
         # Load and parse waypoints from file.
         wps = self.loadWaypoints(filename)
-        goals=[]
+        goalstemp=[]
         for waypointLat,waypointLong,search_duration,rest_duration,unused,identity in wps:
             goal_pose=Pose()
             (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
-
-            goal_pose.position=self.initial_pose.pose.pose.position 
+            goal_pose.position=deepcopy(self.initial_pose.pose.pose.position) 
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
-            goal_pose.position.y=(wpNorthing - self.initial_utm[2])
-            goals.append((goal_pose, search_duration, rest_duration))
+            goal_pose.position.y=(wpNorthing - self.initial_utm[2])            
             self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
-            rospy.loginfo("x,y in odom frame: (%.4f, %.4f)"%(goal_pose.position.x, goal_pose.position.y))
-        return goals
+            rospy.loginfo("x,y for waypoint#: %s in odom frame: (%.4f, %.4f)"%(identity[-2:],goal_pose.position.x, goal_pose.position.y))
+            goalstemp.append((goal_pose, search_duration, rest_duration))
+        return goalstemp
 
     def update_current_pose_map(self, current_pose_map):
         #rospy.loginfo("Current Pose is: (%.4f,%.4f)" %((current_pose_map.pose.pose.position.x),(current_pose_map.pose.pose.position.y)))        
