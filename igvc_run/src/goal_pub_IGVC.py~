@@ -20,6 +20,7 @@ import roslib
 import rospy
 import actionlib
 import time
+from copy import deepcopy
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Pose, PoseWithCovarianceStamped, Point, Quaternion, Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -31,15 +32,6 @@ from LatLongUTMconversion import LLtoUTM, UTMtoLL
 
 
 
-
-def update_utm(current_latlong):
-    #rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))
-    try:
-        nav.current_utm = LLtoUTM(23, current_latlong.latitude,current_latlong.longitude)
-        nav.curLat=current_latlong.latitude        
-        nav.curLong=current_latlong.longitude
-    except NameError:
-        print "Still booting..."
 
 class NavTest():
     def __init__(self):     
@@ -70,16 +62,17 @@ class NavTest():
                        'PREEMPTING', 'RECALLING', 'RECALLED',
                        'LOST']       
 
-        rospy.Subscriber('/navsat/fix', NavSatFix, update_utm)
+        rospy.Subscriber('/navsat/fix', NavSatFix, self.update_utm)
         rospy.Subscriber('/odometry/gps', Odometry, self.update_current_pose)
 
     def calculateDist(self, currX, currY, lastX, lastY, isFirst):
+        distance=0.0        
         if isFirst!= True:
             #rospy.loginfo("CalculateDist: Curr x is:") 
             #rospy.loginfo(currX) 
-            distance = sqrt(pow(currX - lastX, 2) + pow(currY - lastY, 2))             
+            distance = sqrt(pow(currX - lastX, 2.0) + pow(currY - lastY, 2.0))             
         else:        
-            distance =  sqrt(pow(currX - self.initial_pose.pose.pose.position.x, 2) + pow(currY - self.initial_pose.pose.pose.position.y, 2))
+            distance =  sqrt(pow(currX - self.initial_pose.pose.pose.position.x, 2.0) + pow(currY - self.initial_pose.pose.pose.position.y, 2.0))
             #rospy.loginfo(currX)        
         return distance
 
@@ -164,7 +157,7 @@ class NavTest():
                   rospy.loginfo("Goal failed with error code: " + str(self.goal_states[state]))
                   results.write("Goal failed with error code: " + str(self.goal_states[state]) + "\n")
             
-            # How long have we been running?
+            # How long have we been running?self.initial_pose
             running_time = rospy.Time.now() - start_time
             running_time = running_time.secs / 60.0
             
@@ -200,13 +193,12 @@ class NavTest():
         nrths=[]
         for i in range(10):
             utm_c=self.current_utm
-            print self.current_utm
             easts.append(utm_c[1])
             nrths.append(utm_c[2])
             rospy.sleep(1.5)
             easting = sum(easts) / float(len(easts))
             northing = sum(nrths) / float(len(nrths))
-            self.initial_pose = self.current_pose 
+            self.initial_pose = deepcopy(self.current_pose)
             self.initial_utm = [utm_c[0],easting,northing]
         rospy.loginfo("Initial pose found at (%.4f,%.4f)" %(self.initial_pose.pose.pose.position.x,self.initial_pose.pose.pose.position.y))               
         rospy.loginfo("Initial UTM at (%.4f, %.4f)" % (easting, northing) )
@@ -229,6 +221,7 @@ class NavTest():
         for waypointLat,waypointLong,search_duration,rest_duration in wps:
             goal_pose=Pose()
             (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
+            goal_pose.position=deepcopy(self.initial_pose.pose.pose.position)            
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
             goal_pose.position.y=(wpNorthing - self.initial_utm[2])
             goals.append((goal_pose, search_duration, rest_duration))
@@ -259,7 +252,10 @@ class NavTest():
 
     def update_utm(self, current_latlong):
         #rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))        
+        
         self.current_utm = LLtoUTM(23, current_latlong.latitude,current_latlong.longitude)
+        self.curLat=current_latlong.latitude        
+        self.curLong=current_latlong.longitude
 
     def shutdown(self):
         rospy.loginfo("Stopping the robot...")

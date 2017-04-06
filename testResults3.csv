@@ -1,8 +1,8 @@
-Going to: (267395.4656,-144892.3208)
-Current lat is: 42.6790472692
+Going to: (267395.5533,-144892.3575)
+Current lat is: 42.6790476035
 Goal lat is: 41.39035
-Current long is: -83.1956632728
+Current long is: -83.1956643704
 Goal long is: -73.95342
-Goal failed with error code: PREEMPTED
+Goal failed with error code: ABORTED
 Success so far: 0/1 = 0% 
-Running time: 0.08 min Distance: 0.000
+Running time: 0.50 min Distance: 0.000
