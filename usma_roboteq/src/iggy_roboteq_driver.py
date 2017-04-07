@@ -101,9 +101,9 @@ def moveCallback(data):
     global controlMode
     if (controlMode == 2):  # robot is in autonomous mode
         #rospy.loginfo("ROBOTEQCB Controller inside if mode:%d",controlMode)  
-        speed = data.linear.x *1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
+        speed = data.linear.x *-1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
                                     #1000 would give full speed range, but setting to lower value to better control robot
-        turn = (data.angular.z + 0.009)*500*-1 
+        turn = (data.angular.z + 0.009)*500 
         # G - Go to Speed or to Relative Position
         #print speed,turn
         cmd = '!G 1 ' + str(speed) + '\r'
