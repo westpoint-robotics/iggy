@@ -70,7 +70,7 @@
   #### LASER RANGE FINDER NODES #######################################
     <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
 
-<!-- FOR INDOOR NAVIGATION USE-->
+<!-- FOR INDOOR NAVIGATION USE
 <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node" output="screen"> 
 	<remap from="/imu_data" to="/imu/data"/>   
 	<param name="cloud" value="/velodyne_points"/>
@@ -81,8 +81,8 @@
 	<param name="fixed_frame" type="string" value="/odom" />    
 	<param name="base_frame" type="string" value="/base_link" />
 	<param name="publish_tf" type="bool" value="true" />  
- 
-</node> <!-- -->  
+</node> -->  
+    <include file="$(find laser_scan_matcher)/demo/iggy_laser_scan_matcher.launch"/> 
 
   #### OTHER STUFF #######################################
   <!-- Wheel Motor Controller  -->

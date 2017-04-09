@@ -61,7 +61,6 @@
 <!-- FOR INDOOR NAVIGATION USE-->
     <include file="$(find laser_scan_matcher)/demo/iggy_laser_scan_matcher.launch"/> 
 
-
   #### OTHER STUFF #######################################
   <!-- Wheel Motor Controller  -->
   <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
