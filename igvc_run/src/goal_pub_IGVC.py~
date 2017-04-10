@@ -226,14 +226,6 @@ class NavTest():
             goal_pose.position.y=(wpNorthing - self.initial_utm[2])
             goals.append((goal_pose, search_duration, rest_duration))
         return goals
-        
-        '''
-        (initZone,initEasting,initNorthing)=LLtoUTM(23, current_lat,current_long)
-        outString = "lat,long,restTime,tolerance,zone,easting,northing,
-        print outString
-        outString = current_lat+','+current_long+','+rest_time+','+tolerance+','+initZone+','+initEasting+','+initNorthing
-        print outString
-        '''
 
     # Read from file the list of Lat,Long,Duration,Tolerance and put into a list of waypoints
 
@@ -269,9 +261,7 @@ if __name__ == '__main__':
     global nav
     try:
         nav = NavTest()
-        #rospy.loginfo(nav.calculateDist(2,2,1,1,False))
         nav.navigate()
-        #nav.calculateDistFromGoal(3,3)
         
         rospy.spin()
     except rospy.ROSInterruptException:
