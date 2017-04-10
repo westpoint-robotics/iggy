@@ -14,24 +14,24 @@
   <arg name="yaw" default="0"/>
 
   #### cns5000 GPS NODES ###############################################
-  <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
+  <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
     <remap from="gps/fix" to="/cns5000/fix"/>  
   </node> 
 
  <!-- Use GPS to generate Odometry -->
-  <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
-    <remap from="odom" to="/iggy_velocity_controller/odom"/>
-    <remap from="fix" to="/odom/fix"/>
-    <param name="frame_id" value="base_footprint"/>
+  <node name="gps_conv" pkg="gps_common" type="utm_odometry_node" ns="cns5000">
+    <remap from="odom" to="gps_odom"/>
+    <!--<remap from="fix" to="fix"/> -->
+    <param name="frame_id" value="base_link"/>
   </node>
 
-  #### cns5000 IMU NODES###############################################
-  <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
+  #### cns5000 IMU NODES ###############################################
+  <node name="kvh_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
     <remap from="imu/raw" to="imu/data"/>        
   </node>
 
  <!-- Combine Magnetic from XSens with cns5000 accelerometers to get global orientation -->
-  <node pkg="iggy_bringup" type="imu_filter.py" name="cs5000filter" output="screen" ns="cns5000">        
+  <node pkg="iggy_bringup" type="imu_filter.py" name="cs5000_imu_filter" output="screen" ns="cns5000">        
     <remap from="imu/raw" to="imu/data"/>        
     <remap from="magnetic" to="/xsens/magnetic"/> <!-- Use /xsens/ to overwite local namespace -->
     <param name="imu_frame" value="cnsImu"/>
@@ -80,7 +80,7 @@
 	<param name="use_odom" type="bool" value="false" />    
 	<param name="fixed_frame" type="string" value="/odom" />    
 	<param name="base_frame" type="string" value="/base_link" />
-	<param name="publish_tf" type="bool" value="true" />  
+	<param name="publish_tf" type="bool" value="true" />
 </node> -->  
     <include file="$(find laser_scan_matcher)/demo/iggy_laser_scan_matcher.launch"/> 
 
@@ -89,7 +89,8 @@
   <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
 
   <!-- Robot Control  -->
-  <include file="$(find iggy_control)/launch/control.launch"/>
+ <!-- <include file="$(find iggy_control)/launch/control.launch"/> -->
+<include file="$(find iggy_control)/launch/dual_ekf_navsat_example.launch"></include>
   <include file="$(find iggy_control)/launch/teleopIRL.launch">
     <arg name="joystick" value="true"/>
   </include>

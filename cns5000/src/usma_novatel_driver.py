@@ -61,10 +61,10 @@ time.sleep(0.03)
 #  ser.write(command)
 
 # Start the ROS node and create the ROS publisher    
-gpsPub = rospy.Publisher('cns5000/fix', NavSatFix, queue_size=1)
+gpsPub = rospy.Publisher('fix', NavSatFix, queue_size=1)
 # The below line is not needed in current config. We are using raw imu from another serial connection.
 # imuPub = rospy.Publisher('imu_data', Imu, queue_size=1)
-novaPub = rospy.Publisher('cns5000/raw_data', String, queue_size=1)
+novaPub = rospy.Publisher('raw_data', String, queue_size=1)
 rospy.init_node('kvh_cns5000', anonymous=True)
 rate = rospy.Rate(2) 
 try:
