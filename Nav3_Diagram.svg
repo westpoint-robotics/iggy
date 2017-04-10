@@ -1,0 +1,1690 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1600px"
+   height="1200px"
+   id="svg4119"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Nav3_Diagram.svg">
+  <defs
+     id="defs4121" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.84852814"
+     inkscape:cx="954.2967"
+     inkscape:cy="841.81802"
+     inkscape:current-layer="edge53-36-4-4"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:window-width="1902"
+     inkscape:window-height="846"
+     inkscape:window-x="16"
+     inkscape:window-y="35"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4124">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <polygon
+       points="1589,-1165 1589,-982 651,-982 651,-982 651,-1165 "
+       id="polygon9224"
+       style="fill:none;stroke:#000000;stroke-width:2"
+       transform="matrix(0.96655925,0,0,1.0594034,-614.99067,1286.1367)" />
+    <text
+       x="531.19537"
+       y="68.812653"
+       font-size="14.00"
+       id="text9226"
+       style="font-size:17.5px;text-anchor:middle;font-family:'Times,serif'">cns5000</text>
+    <g
+       class="node"
+       id="node32"
+       transform="matrix(1.25,0,0,1.25,-894.27249,1472.2311)">
+      <title
+         id="title9941">t__cns5000_imu_data</title>
+      <g
+         id="a_node32">
+        <a
+           xlink:title="topic:/cns5000/imu/data"
+           id="a9944"
+           xlink:href="/home/user1/topic_3A_cns5000_imu_data">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon9946"
+             points="1041.5,-1026 1041.5,-1026 924.5,-1026 924.5,-990 1041.5,-990 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text9948"
+             font-size="14.00"
+             y="-1004.3"
+             x="983">/cns5000/imu/data</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node33"
+       transform="matrix(1.25,0,0,1.25,-971.27249,1473.0644)">
+      <title
+         id="title9951">n__cns5000_cs5000_imu_filter</title>
+      <g
+         id="a_node33">
+        <a
+           xlink:title="/cns5000/cs5000_imu_filter"
+           id="a9954"
+           xlink:href="/home/user1/_cns5000_cs5000_imu_filter">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="110"
+             sodipodi:cy="-1008"
+             sodipodi:cx="1236"
+             id="ellipse9956"
+             ry="18"
+             rx="110"
+             cy="-1008"
+             cx="1236"
+             d="m 1346,-1008 c 0,9.94113 -49.2487,18 -110,18 -60.7513,0 -110,-8.05887 -110,-18 0,-9.9411 49.2487,-18 110,-18 60.7513,0 110,8.0589 110,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text9958"
+             font-size="14.00"
+             y="-1004.3"
+             x="1236">/cns5000/cs5000_imu_filter</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge34"
+       transform="matrix(1.25,0,0,1.25,-971.27249,1473.0644)">
+      <title
+         id="title9961">t__cns5000_imu_data-&gt;n__cns5000_cs5000_imu_filter</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path9963"
+         d="m 1103.2568,-1008 c 22.11,0 -13.4368,0 12.3432,0"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon9965"
+         points="1115.84,-1004.5 1115.84,-1011.5 1115.84,-1011.5 1125.84,-1008 " />
+    </g>
+    <g
+       class="node"
+       id="node36"
+       transform="matrix(1.25,0,0,1.25,-1065.2725,1491.0644)">
+      <title
+         id="title9968">t__cns5000_imu_global</title>
+      <g
+         id="a_node36">
+        <a
+           xlink:title="topic:/cns5000/imu/global"
+           id="a9971"
+           xlink:href="/home/user1/topic_3A_cns5000_imu_global">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon9973"
+             points="1574,-1044 1574,-1080 1574,-1080 1446,-1080 1446,-1044 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text9975"
+             font-size="14.00"
+             y="-1058.3"
+             x="1510">/cns5000/imu/global</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge38"
+       transform="matrix(1.25,0,0,1.25,-1067.2725,1477.0644)">
+      <title
+         id="title9978">n__cns5000_cs5000_imu_filter-&gt;t__cns5000_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path9980"
+         d="m 1342.7524,-1028.6754 c 39.62,-7.86 53.1076,-10.8646 93.2576,-18.8346"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon9982"
+         points="1436.87,-1044.11 1435.51,-1050.98 1435.51,-1050.98 1446,-1049.49 " />
+    </g>
+    <g
+       class="node"
+       id="node39"
+       transform="matrix(1.25,0,0,1.25,-1063.2725,1473.0644)">
+      <title
+         id="title9985">t__cns5000_imu_compass</title>
+      <g
+         id="a_node39">
+        <a
+           xlink:title="topic:/cns5000/imu/compass"
+           id="a9988"
+           xlink:href="/home/user1/topic_3A_cns5000_imu_compass">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon9990"
+             points="1439,-1026 1439,-990 1581,-990 1581,-1026 1581,-1026 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text9992"
+             font-size="14.00"
+             y="-1004.3"
+             x="1510">/cns5000/imu/compass</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge39"
+       transform="matrix(1.25,0,0,1.25,-1063.2725,1473.0644)">
+      <title
+         id="title9995">n__cns5000_cs5000_imu_filter-&gt;t__cns5000_imu_compass</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path9997"
+         d="m 1419.2367,-1007.8333 c 27.53,0 -16.5767,-0.1667 9.2633,-0.1667"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon9999"
+         points="1428.61,-1004.5 1428.61,-1011.5 1428.61,-1011.5 1438.61,-1008 " />
+    </g>
+    <g
+       class="node"
+       id="node34"
+       transform="matrix(1.25,0,0,1.25,-894.27249,1486.2311)">
+      <title
+         id="title10019">t__cns5000_raw_data</title>
+      <g
+         id="a_node34">
+        <a
+           xlink:title="topic:/cns5000/raw_data"
+           id="a10022"
+           xlink:href="/home/user1/topic_3A_cns5000_raw_data">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10024"
+             points="923.5,-1080 923.5,-1044 1042.5,-1044 1042.5,-1080 1042.5,-1080 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10026"
+             font-size="14.00"
+             y="-1058.3"
+             x="983">/cns5000/raw_data</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node35"
+       transform="matrix(1.25,0,0,1.25,-1067.2725,1503.0644)">
+      <title
+         id="title10029">t__cns5000_gps_odom</title>
+      <g
+         id="a_node35">
+        <a
+           xlink:title="topic:/cns5000/gps_odom"
+           id="a10032"
+           xlink:href="/home/user1/topic_3A_cns5000_gps_odom">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10034"
+             points="1447,-1098 1573,-1098 1573,-1134 1573,-1134 1447,-1134 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10036"
+             font-size="14.00"
+             y="-1112.3"
+             x="1510">/cns5000/gps_odom</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node37"
+       transform="matrix(1.25,0,0,1.25,-894.27249,1500.2311)">
+      <title
+         id="title10087">t__cns5000_fix</title>
+      <g
+         id="a_node37">
+        <a
+           xlink:title="topic:/cns5000/fix"
+           id="a10090"
+           xlink:href="/home/user1/topic_3A_cns5000_fix">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10092"
+             points="1025,-1098 1025,-1134 1025,-1134 941,-1134 941,-1098 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10094"
+             font-size="14.00"
+             y="-1112.3"
+             x="983">/cns5000/fix</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node38"
+       transform="matrix(1.25,0,0,1.25,-1017.2725,1501.0644)">
+      <title
+         id="title10097">n__cns5000_gps_conv</title>
+      <g
+         id="a_node38">
+        <a
+           xlink:title="/cns5000/gps_conv"
+           id="a10100"
+           xlink:href="/home/user1/_cns5000_gps_conv">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="78.786301"
+             sodipodi:cy="-1116"
+             sodipodi:cx="1236"
+             id="ellipse10102"
+             ry="18"
+             rx="78.786301"
+             cy="-1116"
+             cx="1236"
+             d="m 1314.7863,-1116 c 0,9.9411 -35.2738,18 -78.7863,18 -43.5125,0 -78.7863,-8.0589 -78.7863,-18 0,-9.9411 35.2738,-18 78.7863,-18 43.5125,0 78.7863,8.0589 78.7863,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10104"
+             font-size="14.00"
+             y="-1112.3"
+             x="1236">/cns5000/gps_conv</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge35"
+       transform="matrix(1.25,0,0,1.25,-1017.2725,1501.0644)">
+      <title
+         id="title10107">t__cns5000_fix-&gt;n__cns5000_gps_conv</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10109"
+         d="m 1123.3366,-1115.8333 c 33.02,0 -17.6366,-0.1667 23.8334,-0.1667"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10111"
+         points="1147.3,-1119.5 1147.3,-1119.5 1157.3,-1116 1147.3,-1112.5 " />
+    </g>
+    <g
+       class="edge"
+       id="edge37"
+       transform="matrix(1.25,0,0,1.25,-1067.2725,1503.0644)">
+      <title
+         id="title10131">n__cns5000_gps_conv-&gt;t__cns5000_gps_odom</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10133"
+         d="m 1354.2733,-1116 c 38.17,0 44.5167,0 81.9667,0"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10135"
+         points="1446.57,-1116 1436.57,-1112.5 1436.57,-1119.5 1436.57,-1119.5 " />
+    </g>
+    <g
+       class="node"
+       id="node40"
+       transform="matrix(1.25,0,0,1.25,-799.27249,1473.0644)">
+      <title
+         id="title10138">n__cns5000_kvh_imu</title>
+      <g
+         id="a_node40">
+        <a
+           xlink:title="/cns5000/kvh_imu"
+           id="a10141"
+           xlink:href="/home/user1/_cns5000_kvh_imu">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="76.886902"
+             sodipodi:cy="-1008"
+             sodipodi:cx="746"
+             id="ellipse10143"
+             ry="18"
+             rx="76.886902"
+             cy="-1008"
+             cx="746"
+             d="m 822.8869,-1008 c 0,9.94113 -34.42344,18 -76.8869,18 -42.46346,0 -76.8869,-8.05887 -76.8869,-18 0,-9.9411 34.42344,-18 76.8869,-18 42.46346,0 76.8869,8.0589 76.8869,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10145"
+             font-size="14.00"
+             y="-1004.3"
+             x="746">/cns5000/kvh_imu</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge36"
+       transform="matrix(1.25,0,0,1.25,-894.27249,1472.2311)">
+      <title
+         id="title10148">n__cns5000_kvh_imu-&gt;t__cns5000_imu_data</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10150"
+         d="m 899.17,-1007.9411 c 29.261,0 -13.732,-0.059 14.739,-0.059"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10152"
+         points="924.169,-1008 914.169,-1004.5 914.169,-1011.5 914.169,-1011.5 " />
+    </g>
+    <g
+       class="node"
+       id="node41"
+       transform="matrix(1.25,0,0,1.25,-799.27249,1487.0644)">
+      <title
+         id="title10155">n__cns5000_novatel_gps</title>
+      <g
+         id="a_node41">
+        <a
+           xlink:title="/cns5000/novatel_gps"
+           id="a10158"
+           xlink:href="/home/user1/_cns5000_novatel_gps">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="87.184601"
+             sodipodi:cy="-1089"
+             sodipodi:cx="746"
+             id="ellipse10160"
+             ry="18"
+             rx="87.184601"
+             cy="-1089"
+             cx="746"
+             d="m 833.1846,-1089 c 0,9.9411 -39.03387,18 -87.1846,18 -48.15073,0 -87.1846,-8.0589 -87.1846,-18 0,-9.9411 39.03387,-18 87.1846,-18 48.15073,0 87.1846,8.0589 87.1846,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10162"
+             font-size="14.00"
+             y="-1085.3"
+             x="746">/cns5000/novatel_gps</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge40"
+       transform="matrix(1.25,0,0,1.25,-894.27249,1486.2311)">
+      <title
+         id="title10165">n__cns5000_novatel_gps-&gt;t__cns5000_raw_data</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10167"
+         d="m 876.80159,-1074.2996 c 29.039,3.34 7.84741,1.1096 36.22641,4.3796"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10169"
+         points="913.726,-1073.37 923.261,-1068.75 912.927,-1066.41 913.726,-1073.37 " />
+    </g>
+    <g
+       class="edge"
+       id="edge41"
+       transform="matrix(1.25,0,0,1.25,-894.27249,1500.2311)">
+      <title
+         id="title10172">n__cns5000_novatel_gps-&gt;t__cns5000_fix</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10174"
+         d="m 901.90904,-1106.8712 c 35.2,-4.05 -3.09504,0.4312 28.48396,-3.1988"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10176"
+         points="930.387,-1113.59 940.721,-1111.26 931.186,-1106.64 930.387,-1113.59 "
+         transform="translate(-1.4999998,0.24999999)" />
+    </g>
+    <text
+       x="532.43414"
+       y="269.58392"
+       font-size="14.00"
+       id="text9261"
+       style="font-size:17.5px;text-anchor:middle;font-family:'Times,serif'">xsens</text>
+    <g
+       class="node"
+       id="node61"
+       transform="matrix(1.25,0,0,1.25,-903.56584,975.0839)">
+      <title
+         id="title10529">t__xsens_fix</title>
+      <g
+         id="a_node61">
+        <a
+           xlink:title="topic:/xsens/fix"
+           id="a10532"
+           xlink:href="/home/user1/topic_3A_xsens_fix">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10534"
+             points="1017.5,-481 1017.5,-481 948.5,-481 948.5,-445 1017.5,-445 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10536"
+             font-size="14.00"
+             y="-459.29999"
+             x="983">/xsens/fix</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node62"
+       transform="matrix(1.25,0,0,1.25,-903.56584,1003.0839)">
+      <title
+         id="title10539">t__xsens_magnetic</title>
+      <g
+         id="a_node62">
+        <a
+           xlink:title="topic:/xsens/magnetic"
+           id="a10542"
+           xlink:href="/home/user1/topic_3A_xsens_magnetic">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10544"
+             points="1035,-589 931,-589 931,-553 1035,-553 1035,-589 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10546"
+             font-size="14.00"
+             y="-567.29999"
+             x="983">/xsens/magnetic</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node63"
+       transform="matrix(1.25,0,0,1.25,-993.5658,1029.0839)">
+      <title
+         id="title10556">n__xsens_xsensfilter</title>
+      <g
+         id="a_node63">
+        <a
+           xlink:title="/xsens/xsensfilter"
+           id="a10559"
+           xlink:href="/home/user1/_xsens_xsensfilter">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="71.5"
+             sodipodi:cy="-571"
+             sodipodi:cx="1236"
+             id="ellipse10561"
+             ry="18"
+             rx="71.5"
+             cy="-571"
+             cx="1236"
+             d="m 1307.5,-571 c 0,9.94113 -32.0116,18 -71.5,18 -39.4884,0 -71.5,-8.05887 -71.5,-18 0,-9.94113 32.0116,-18 71.5,-18 39.4884,0 71.5,8.05887 71.5,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10563"
+             font-size="14.00"
+             y="-567.29999"
+             x="1236">/xsens/xsensfilter</text>
+        </a>
+      </g>
+    </g>
+    <path
+       d="m 389.89254,290.29227 c 26.5125,0 35.99166,-0.41667 70.90833,9.375"
+       id="path10568"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.25"
+       sodipodi:nodetypes="cc" />
+    <polygon
+       points="1164.47,-571 1154.47,-567.5 1154.47,-574.5 1154.47,-574.5 "
+       id="polygon10570"
+       style="fill:#000000;stroke:#000000"
+       transform="matrix(1.0943058,0.604148,-0.604148,1.0943058,-1150.0949,226.31607)" />
+    <g
+       class="node"
+       id="node66"
+       transform="matrix(1.25,0,0,1.25,-1061.5658,1025.0839)">
+      <title
+         id="title10573">t__xsens_imu_global</title>
+      <g
+         id="a_node66">
+        <a
+           xlink:title="topic:/xsens/imu/global"
+           id="a10576"
+           xlink:href="/home/user1/topic_3A_xsens_imu_global">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10578"
+             points="1566.5,-526 1566.5,-562 1566.5,-562 1453.5,-562 1453.5,-526 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10580"
+             font-size="14.00"
+             y="-540.29999"
+             x="1510">/xsens/imu/global</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge53"
+       transform="matrix(1.25,0,0,1.25,-1061.5658,1037.0839)">
+      <title
+         id="title10583">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585"
+         d="m 1328.0067,-561.964 c 16.4932,1.63264 80.6654,8.00526 115.4033,11.453"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587"
+         points="1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 " />
+    </g>
+    <g
+       class="node"
+       id="node71"
+       transform="matrix(1.25,0,0,1.25,-1061.5658,1037.0839)">
+      <title
+         id="title10590">t__xsens_imu_compass</title>
+      <g
+         id="a_node71">
+        <a
+           xlink:title="topic:/xsens/imu/compass"
+           id="a10593"
+           xlink:href="/home/user1/topic_3A_xsens_imu_compass">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10595"
+             points="1446.5,-580 1573.5,-580 1573.5,-616 1573.5,-616 1446.5,-616 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10597"
+             font-size="14.00"
+             y="-594.29999"
+             x="1510">/xsens/imu/compass</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge54"
+       transform="matrix(1.25,0,0,1.25,-1061.5658,1037.0839)">
+      <title
+         id="title10600">n__xsens_xsensfilter-&gt;t__xsens_imu_compass</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10602"
+         d="m 1358.4233,-582.95267 c 40.24,-3.994 36.1667,-3.69033 77.6367,-7.80733"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10604"
+         points="1435.8,-594.251 1446.1,-591.756 1436.5,-587.286 1435.8,-594.251 " />
+    </g>
+    <g
+       class="node"
+       id="node65"
+       transform="matrix(1.25,0,0,1.25,-903.56584,993.0839)">
+      <title
+         id="title10638">t__xsens_imu_data</title>
+      <g
+         id="a_node65">
+        <a
+           xlink:title="topic:/xsens/imu/data"
+           id="a10641"
+           xlink:href="/home/user1/topic_3A_xsens_imu_data">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10643"
+             points="1034,-535 932,-535 932,-499 1034,-499 1034,-535 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10645"
+             font-size="14.00"
+             y="-513.29999"
+             x="983">/xsens/imu/data</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge52"
+       transform="matrix(1.25,0,0,1.25,-1005.5658,1025.0839)">
+      <title
+         id="title10648">t__xsens_imu_data-&gt;n__xsens_xsensfilter</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10650"
+         d="m 1115.69,-545.13133 c 39.34,-8.463 12.84,-2.96167 55.33,-12.10467"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10652"
+         points="1170.47,-560.698 1180.99,-559.38 1171.95,-553.855 1170.47,-560.698 " />
+    </g>
+    <g
+       class="node"
+       id="node75"
+       transform="matrix(1.25,0,0,1.25,-809.56584,1037.0839)">
+      <title
+         id="title10725">n__xsens_xsens_driver</title>
+      <g
+         id="a_node75">
+        <a
+           xlink:title="/xsens/xsens_driver"
+           id="a10728"
+           xlink:href="/home/user1/_xsens_xsens_driver">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="80"
+             sodipodi:cy="-571"
+             sodipodi:cx="746"
+             id="ellipse10730"
+             ry="18"
+             rx="80"
+             cy="-571"
+             cx="746"
+             d="m 826,-571 c 0,9.94113 -35.81722,18 -80,18 -44.18278,0 -80,-8.05887 -80,-18 0,-9.94113 35.81722,-18 80,-18 44.18278,0 80,8.05887 80,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10732"
+             font-size="14.00"
+             y="-567.29999"
+             x="746">/xsens/xsens_driver</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge55"
+       transform="matrix(1.25,0,0,1.25,-904.97658,983.37853)">
+      <title
+         id="title10735">n__xsens_xsens_driver-&gt;t__xsens_fix</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10737"
+         d="m 836.87342,-510.03469 c 19.768,8.476 81.91858,34.77069 101.44858,39.11769"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10739"
+         points="939.129,-474.323 948.18,-468.816 937.671,-467.477 939.129,-474.323 " />
+    </g>
+    <g
+       class="edge"
+       id="edge56"
+       transform="matrix(1.25,0,0,1.25,-904.44973,1003.9677)">
+      <title
+         id="title10742">n__xsens_xsens_driver-&gt;t__xsens_magnetic</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10744"
+         d="M 834.71828,-562.04331 C 844.00538,-568.17157 891.628,-571 920.435,-571"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10746"
+         points="920.766,-574.5 930.766,-571 920.766,-567.5 920.766,-574.5 " />
+    </g>
+    <g
+       class="edge"
+       id="edge57"
+       transform="matrix(1.25,0,0,1.25,-904.68195,1007.0839)">
+      <title
+         id="title10749">n__xsens_xsens_driver-&gt;t__xsens_imu_data</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10751"
+         d="m 890.84465,-537.93261 c 35.854,8.239 -5.70965,-1.32539 30.99135,7.10761"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10753"
+         points="921.379,-527.339 922.946,-534.161 922.946,-534.161 931.909,-528.51 " />
+    </g>
+    <path
+       d="m 389.9625,288.02211 c 44.9876,-1.90343 56.434,-23.99352 71.4261,-49.58556"
+       id="path10568-3"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke:#000000;stroke-width:1.25"
+       sodipodi:nodetypes="cc" />
+    <polygon
+       points="1164.47,-571 1154.47,-567.5 1154.47,-574.5 1154.47,-574.5 "
+       id="polygon10570-6"
+       style="fill:#000000;stroke:#000000"
+       transform="matrix(0.60666135,-1.0929145,1.0929145,0.60666135,384.68975,1848.0881)" />
+    <polygon
+       points="651,-982 651,-982 651,-1165 1589,-1165 1589,-982 "
+       id="polygon9224-7"
+       style="fill:none;stroke:#000000;stroke-width:2"
+       transform="matrix(0.96667992,0,0,0.94410275,-615.99103,1353.1811)" />
+    <g
+       class="cluster"
+       id="clust16"
+       transform="matrix(1.25,0,0,1.25,-1097.1626,2213.5025)">
+      <title
+         id="title9320">cluster_navsat_transform</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="polygon9322"
+         points="1830,-1652 1664,-1652 1664,-1652 1664,-1727 1830,-1727 " />
+      <text
+         style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+         id="text9324"
+         font-size="14.00"
+         y="-1711.8"
+         x="1747">navsat_transform</text>
+    </g>
+    <g
+       class="node"
+       id="node88"
+       transform="matrix(1.25,0,0,1.25,-1097.1626,2213.5025)">
+      <title
+         id="title10114">n__navsat_transform</title>
+      <g
+         id="a_node88">
+        <a
+           xlink:title="/navsat_transform"
+           id="a10117"
+           xlink:href="/home/user1/_navsat_transform">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="74.987503"
+             sodipodi:cy="-1678"
+             sodipodi:cx="1747"
+             id="ellipse10119"
+             ry="18"
+             rx="74.987503"
+             cy="-1678"
+             cx="1747"
+             d="m 1821.9875,-1678 c 0,9.9411 -33.573,18 -74.9875,18 -41.4145,0 -74.9875,-8.0589 -74.9875,-18 0,-9.9411 33.573,-18 74.9875,-18 41.4145,0 74.9875,8.0589 74.9875,18 z"
+             transform="matrix(0.96455615,0,0,1.00049,64.587078,0.82227595)" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10121"
+             font-size="14.00"
+             y="-1674.3"
+             x="1747">/navsat_transform</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="cluster"
+       id="clust19"
+       transform="matrix(1.25,0,0,1.25,-1094.8056,1747.9037)">
+      <title
+         id="title9341">cluster_ekf_se_odom</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="polygon9343"
+         points="1816,-1090 1678,-1090 1678,-1090 1678,-1165 1816,-1165 " />
+      <text
+         style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+         id="text9345"
+         font-size="14.00"
+         y="-1149.8"
+         x="1747">ekf_se_odom</text>
+    </g>
+    <g
+       class="cluster"
+       id="clust24"
+       transform="matrix(1.25,0,0,1.25,-1094.8056,1747.9037)">
+      <title
+         id="title9376">cluster_ekf_se_map</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="polygon9378"
+         points="1811,-1173 1683,-1173 1683,-1173 1683,-1248 1811,-1248 " />
+      <text
+         style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+         id="text9380"
+         font-size="14.00"
+         y="-1232.8"
+         x="1747">ekf_se_map</text>
+    </g>
+    <g
+       class="node"
+       id="node91"
+       transform="matrix(1.1732719,0,0,1.25,-956.0666,1747.9037)">
+      <title
+         id="title10039">n__ekf_se_odom</title>
+      <g
+         id="a_node91">
+        <a
+           xlink:title="/ekf_se_odom"
+           id="a10042"
+           xlink:href="/home/user1/_ekf_se_odom">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="61.189301"
+             sodipodi:cy="-1116"
+             sodipodi:cx="1747"
+             id="ellipse10044"
+             ry="18"
+             rx="61.189301"
+             cy="-1116"
+             cx="1747"
+             d="m 1808.1893,-1116 c 0,9.9411 -27.3954,18 -61.1893,18 -33.7939,0 -61.1893,-8.0589 -61.1893,-18 0,-9.9411 27.3954,-18 61.1893,-18 33.7939,0 61.1893,8.0589 61.1893,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10046"
+             font-size="14.00"
+             y="-1112.3"
+             x="1747">/ekf_se_odom</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node96"
+       transform="matrix(1.25,0,0,1.25,-1094.8056,1747.9037)">
+      <title
+         id="title10056">n__ekf_se_map</title>
+      <g
+         id="a_node96">
+        <a
+           xlink:title="/ekf_se_map"
+           id="a10059"
+           xlink:href="/home/user1/_ekf_se_map">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="56"
+             sodipodi:cy="-1199"
+             sodipodi:cx="1747"
+             id="ellipse10061"
+             ry="18"
+             rx="56"
+             cy="-1199"
+             cx="1747"
+             d="m 1803,-1199 c 0,9.9411 -25.0721,18 -56,18 -30.9279,0 -56,-8.0589 -56,-18 0,-9.9411 25.0721,-18 56,-18 30.9279,0 56,8.0589 56,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10063"
+             font-size="14.00"
+             y="-1195.3"
+             x="1747">/ekf_se_map</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="cluster"
+       id="clust5"
+       transform="matrix(1.25,0,0,1.25,-1064.1769,2412.6709)">
+      <title
+         id="title9243">cluster_odometry</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="polygon9245"
+         points="2026,-1598 1864,-1598 1864,-1598 1864,-1781 2026,-1781 " />
+      <text
+         style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+         id="text9247"
+         font-size="14.00"
+         y="-1765.8"
+         x="1945">odometry</text>
+    </g>
+    <g
+       class="node"
+       id="node55"
+       transform="matrix(1.25,0,0,1.25,-1062.9984,2479.2568)">
+      <title
+         id="title10431">t__odometry_gps</title>
+      <g
+         id="a_node55">
+        <a
+           xlink:title="topic:/odometry/gps"
+           id="a10434"
+           xlink:href="/home/user1/topic_3A_odometry_gps">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10436"
+             points="1992.5,-1750 1992.5,-1750 1897.5,-1750 1897.5,-1714 1992.5,-1714 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10438"
+             font-size="14.00"
+             y="-1728.3"
+             x="1945">/odometry/gps</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node56"
+       transform="matrix(1.25,0,0,1.25,-1065.9447,2345.4958)">
+      <title
+         id="title10448">t__odometry_filtered_map</title>
+      <g
+         id="a_node56">
+        <a
+           xlink:title="topic:/odometry/filtered_map"
+           id="a10451"
+           xlink:href="/home/user1/topic_3A_odometry_filtered_map">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10453"
+             points="2018,-1696 2018,-1696 1872,-1696 1872,-1660 2018,-1660 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10455"
+             font-size="14.00"
+             y="-1674.3"
+             x="1945">/odometry/filtered_map</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node57"
+       transform="matrix(1.25,0,0,1.25,-1064.1769,2412.6709)">
+      <title
+         id="title10472">t__odometry_filtered</title>
+      <g
+         id="a_node57">
+        <a
+           xlink:title="topic:/odometry/filtered"
+           id="a10475"
+           xlink:href="/home/user1/topic_3A_odometry_filtered">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10477"
+             points="2003,-1606 2003,-1642 2003,-1642 1887,-1642 1887,-1606 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10479"
+             font-size="14.00"
+             y="-1620.3"
+             x="1945">/odometry/filtered</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="cluster"
+       id="clust10"
+       transform="matrix(1.25,0,0,1.25,-1070.0694,1779.6095)">
+      <title
+         id="title9278">cluster_gps</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="polygon9280"
+         points="1994,-1303 1896,-1303 1896,-1303 1896,-1378 1994,-1378 " />
+      <text
+         style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+         id="text9282"
+         font-size="14.00"
+         y="-1362.8"
+         x="1945">gps</text>
+    </g>
+    <g
+       class="node"
+       id="node82"
+       transform="matrix(1.25,0,0,1.25,-1070.0694,1779.6095)">
+      <title
+         id="title11017">t__gps_filtered</title>
+      <g
+         id="a_node82">
+        <a
+           xlink:title="topic:/gps/filtered"
+           id="a11020"
+           xlink:href="/home/user1/topic_3A_gps_filtered">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon11022"
+             points="1986,-1311 1986,-1347 1986,-1347 1904,-1347 1904,-1311 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text11024"
+             font-size="14.00"
+             y="-1325.3"
+             x="1945">/gps/filtered</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge53-3"
+       transform="matrix(1.25,0,0,1.25,-523.33403,1071.6952)">
+      <title
+         id="title10583-6">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-7"
+         d="m 1336.0067,-562.964 c 16.4932,1.63264 72.6654,9.00526 107.4033,12.453"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-5"
+         points="1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 " />
+    </g>
+    <g
+       class="edge"
+       id="edge53-35"
+       transform="matrix(1.25,0,0,1.25,-509.34504,992.0199)">
+      <title
+         id="title10583-62">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-9"
+         d="m 1325.1817,-686.94725 c 14.2541,21.31378 83.4904,132.98851 118.2283,136.43625"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-1"
+         points="1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 " />
+    </g>
+    <g
+       class="edge"
+       id="edge53-2"
+       transform="matrix(-1.25,0,0,1.25,2984.6549,820.08293)">
+      <title
+         id="title10583-7">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-0"
+         d="m 1325.6734,-475.29733 c -0.5068,-42.7007 80.332,-58.99474 120.0699,-73.547"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-9"
+         points="1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 "
+         transform="matrix(0.8480108,-0.52997894,0.52997894,0.8480108,510.78669,683.97008)" />
+    </g>
+    <g
+       class="edge"
+       id="edge53-36"
+       transform="matrix(1.25,0,0,1.25,-506.83488,802.99455)">
+      <title
+         id="title10583-0">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-6"
+         d="m 1328.0067,-561.964 c 16.4932,1.63264 80.6654,8.00526 115.4033,11.453"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-2"
+         points="1443.1,-547.024 1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 " />
+    </g>
+    <g
+       class="edge"
+       id="edge53-6"
+       transform="matrix(1.25,0,0,1.25,-796.1594,784.13836)">
+      <title
+         id="title10583-1">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-8"
+         d="m 946.16904,-553.00731 c 11.9322,-4.80235 88.72386,-14.77979 112.66546,-14.51737 336.7405,3.69089 334.0779,-4.89994 384.5755,17.01368"
+         sodipodi:nodetypes="csc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-7"
+         points="1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 "
+         transform="matrix(0.86334789,0.50460918,-0.50460918,0.86334789,-82.241488,-804.61398)" />
+    </g>
+    <g
+       class="edge"
+       id="edge53-9"
+       transform="matrix(1.25,0,0,1.25,-780.73766,919.36895)">
+      <title
+         id="title10583-2">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-02"
+         d="m 1346.0067,-602.63067 c 16.4932,1.63264 87.6654,43.33859 98.07,49.453"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-3"
+         points="1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 "
+         transform="matrix(0.87779258,0.4790409,-0.4790409,0.87779258,-87.395141,-761.38036)" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1"
+         inkscape:connector-curvature="0"
+         id="path10585-02-1"
+         d="m 1345.7781,-599.72415 c 44.1599,29.96597 85.6654,106.67192 98.4034,127.453"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-3-0"
+         points="1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 "
+         transform="matrix(0.64750197,0.76206375,-0.76206375,0.64750197,89.017085,-1217.1493)" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1"
+         inkscape:connector-curvature="0"
+         id="path10585-02-6"
+         d="m 1343.2258,-645.78691 c 16.4932,1.63264 108.9987,81.33859 119.4033,87.453"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-3-3"
+         points="1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 "
+         transform="matrix(0.87779256,0.4790409,-0.4790409,0.87779256,-68.84274,-766.5366)" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1"
+         inkscape:connector-curvature="0"
+         id="path10585-02-1-2"
+         d="m 1343.3305,-639.54706 c 44.1599,29.96597 98.9987,143.33859 111.7367,164.11967"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-3-0-0"
+         points="1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 "
+         transform="matrix(0.64750197,0.76206375,-0.76206375,0.64750197,99.902834,-1220.3056)" />
+    </g>
+    <g
+       class="edge"
+       id="edge53-97"
+       transform="matrix(1.25,0,0,1.25,-783.78503,953.844)">
+      <title
+         id="title10583-3">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-61"
+         d="m 1343.563,-491.72473 c 24.0357,-0.25297 67.4661,-42.90642 99.847,-60.20048"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-29"
+         points="1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 1443.79,-553.99 "
+         transform="matrix(0.89955923,-0.4367988,0.4367988,0.89955923,383.56712,574.94349)" />
+    </g>
+    <g
+       class="edge"
+       id="edge53-31"
+       transform="matrix(1.25,0,0,1.25,-799.10568,1048.1249)">
+      <title
+         id="title10583-9">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-4"
+         d="m 1356.291,-564.79242 c 16.4932,1.63264 53.7953,5.17683 88.5332,8.62457"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-78"
+         points="1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 "
+         transform="translate(1.4142136,-5.6568542)" />
+    </g>
+    <g
+       class="edge"
+       id="edge53-4"
+       transform="matrix(-1.25,0,0,1.25,2948.121,1166.5653)">
+      <title
+         id="title10583-50">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-3"
+         d="m 1310.8004,-550.88599 c 18.8503,-1.6672 97.8717,-3.07275 132.6096,0.37499"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-6"
+         points="1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 1443.79,-553.99 " />
+    </g>
+    <g
+       class="edge"
+       id="edge53-3-6"
+       transform="matrix(1.25,0,0,1.25,-514.17932,1027.4358)">
+      <title
+         id="title10583-6-1">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-7-5"
+         d="m 1458.4,-567.464 c -16.4932,1.63264 -82.1487,-21.3581 -120.7199,-39.07703"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-5-5"
+         points="1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 "
+         transform="matrix(-0.68825287,-0.72547087,-0.72547087,0.68825287,1933.2896,820.42146)" />
+    </g>
+    <g
+       class="edge"
+       id="edge53-36-4"
+       transform="matrix(1.25,0,0,1.25,-543.37919,932.28416)">
+      <title
+         id="title10583-0-7">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-6-6"
+         d="m 1359.6734,-551.214 c 26.0765,-6.70069 60.582,-6.07807 85.0699,0.36967"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-2-5"
+         points="1443.1,-547.024 1443.79,-553.99 1443.79,-553.99 1453.4,-549.519 "
+         transform="matrix(0.99296908,0.118374,-0.118374,0.99296908,-54.983188,-175.30572)" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="765.83331"
+       y="20.000004"
+       id="text3546"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3548"
+         x="765.83331"
+         y="20.000004"
+         style="font-size:12px">NOTE: gps_odom should not be going to ekf_se_odom, find another source of odom for ekf_se_odom.</tspan><tspan
+         sodipodi:role="line"
+         x="765.83331"
+         y="35.000004"
+         style="font-size:12px"
+         id="tspan3550" /></text>
+    <g
+       class="node"
+       id="node3"
+       transform="matrix(1.25,0,0,1.25,-1333.4988,2490.5903)">
+      <title
+         id="title9403">n__move_base</title>
+      <g
+         id="a_node3">
+        <a
+           xlink:title="/move_base"
+           id="a9406"
+           xlink:href="/home/user1/_move_base">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="53.5"
+             sodipodi:cy="-1609"
+             sodipodi:cx="2168"
+             id="ellipse9408"
+             ry="18"
+             rx="53.5"
+             cy="-1609"
+             cx="2168"
+             d="m 2221.5,-1609 c 0,9.9411 -23.9528,18 -53.5,18 -29.5472,0 -53.5,-8.0589 -53.5,-18 0,-9.9411 23.9528,-18 53.5,-18 29.5472,0 53.5,8.0589 53.5,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text9410"
+             font-size="14.00"
+             y="-1605.3"
+             x="2168">/move_base</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node97"
+       transform="matrix(1.25,0,0,1.25,-2044.1439,3394.6191)">
+      <title
+         id="title9910">t__cmd_vel</title>
+      <g
+         id="a_node97">
+        <a
+           xlink:title="topic:/cmd_vel"
+           id="a9913"
+           xlink:href="/home/user1/topic_3A_cmd_vel">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon9915"
+             points="2539,-2350 2539,-2350 2471,-2350 2471,-2314 2539,-2314 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text9917"
+             font-size="14.00"
+             y="-2328.3"
+             x="2505">/cmd_vel</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="cluster"
+       id="clust9"
+       transform="matrix(1.25,0,0,1.25,-1987.5599,3661.6206)">
+      <title
+         id="title9271">cluster_roboteq_driver</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="polygon9273"
+         points="2302,-2396 1638,-2396 1638,-2396 1638,-2525 2302,-2525 " />
+      <text
+         style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+         id="text9275"
+         font-size="14.00"
+         y="-2509.8"
+         x="1970">roboteq_driver</text>
+    </g>
+    <g
+       class="node"
+       id="node78"
+       transform="matrix(1.25,0,0,1.25,-1987.5599,3661.6206)">
+      <title
+         id="title10915">t__roboteq_driver_joy</title>
+      <g
+         id="a_node78">
+        <a
+           xlink:title="topic:/roboteq_driver/joy"
+           id="a10918"
+           xlink:href="/home/user1/topic_3A_roboteq_driver_joy">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10920"
+             points="2006,-2406 2006,-2442 2006,-2442 1884,-2442 1884,-2406 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10922"
+             font-size="14.00"
+             y="-2420.3"
+             x="1945">/roboteq_driver/joy</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node79"
+       transform="matrix(1.25,0,0,1.25,-1987.5599,3661.6206)">
+      <title
+         id="title10925">n__roboteq_driver_teleop_twist_joy</title>
+      <g
+         id="a_node79">
+        <a
+           xlink:title="/roboteq_driver/teleop_twist_joy"
+           id="a10928"
+           xlink:href="/home/user1/_roboteq_driver_teleop_twist_joy">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="126.178"
+             sodipodi:cy="-2423"
+             sodipodi:cx="2168"
+             id="ellipse10930"
+             ry="18"
+             rx="126.178"
+             cy="-2423"
+             cx="2168"
+             d="m 2294.178,-2423 c 0,9.9411 -56.4918,18 -126.178,18 -69.6862,0 -126.178,-8.0589 -126.178,-18 0,-9.9411 56.4918,-18 126.178,-18 69.6862,0 126.178,8.0589 126.178,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10932"
+             font-size="14.00"
+             y="-2419.3"
+             x="2168">/roboteq_driver/teleop_twist_joy</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge67"
+       transform="matrix(1.25,0,0,1.25,-1987.5599,3661.6206)">
+      <title
+         id="title10935">t__roboteq_driver_joy-&gt;n__roboteq_driver_teleop_twist_joy</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10937"
+         d="m 2006.1,-2423.73 c 8.17,0.04 16.81,0.08 25.67,0.12" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10939"
+         points="2031.88,-2427.11 2041.86,-2423.57 2031.85,-2420.11 2031.88,-2427.11 " />
+    </g>
+    <g
+       class="node"
+       id="node80"
+       transform="matrix(1.25,0,0,1.25,-1987.5599,3661.6206)">
+      <title
+         id="title10949">n__roboteq_driver_joy_node</title>
+      <g
+         id="a_node80">
+        <a
+           xlink:title="/roboteq_driver/joy_node"
+           id="a10952"
+           xlink:href="/home/user1/_roboteq_driver_joy_node">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="100.983"
+             sodipodi:cy="-2422"
+             sodipodi:cx="1747"
+             id="ellipse10954"
+             ry="18"
+             rx="100.983"
+             cy="-2422"
+             cx="1747"
+             d="m 1847.983,-2422 c 0,9.9411 -45.2116,18 -100.983,18 -55.7714,0 -100.983,-8.0589 -100.983,-18 0,-9.9411 45.2116,-18 100.983,-18 55.7714,0 100.983,8.0589 100.983,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10956"
+             font-size="14.00"
+             y="-2418.3"
+             x="1747">/roboteq_driver/joy_node</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge68"
+       transform="matrix(1.25,0,0,1.25,-1987.5599,3661.6206)">
+      <title
+         id="title10959">n__roboteq_driver_joy_node-&gt;t__roboteq_driver_joy</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10961"
+         d="m 1847.72,-2423.02 c 8.81,-0.09 17.6,-0.18 26.08,-0.26" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10963"
+         points="1873.95,-2426.79 1883.99,-2423.39 1874.02,-2419.79 1873.95,-2426.79 " />
+    </g>
+    <g
+       class="node"
+       id="node81"
+       transform="matrix(1.25,0,0,1.25,-1708.2527,3659.2636)">
+      <title
+         id="title10973">n__roboteq_driver</title>
+      <g
+         id="a_node81">
+        <a
+           xlink:title="/roboteq_driver"
+           id="a10976"
+           xlink:href="/home/user1/_roboteq_driver">
+          <ellipse
+             style="fill:none;stroke:#000000"
+             sodipodi:ry="18"
+             sodipodi:rx="65.788696"
+             sodipodi:cy="-2476"
+             sodipodi:cx="1747"
+             id="ellipse10978"
+             ry="18"
+             rx="65.788696"
+             cy="-2476"
+             cx="1747"
+             d="m 1812.7887,-2476 c 0,9.9411 -29.4546,18 -65.7887,18 -36.3341,0 -65.7887,-8.0589 -65.7887,-18 0,-9.9411 29.4546,-18 65.7887,-18 36.3341,0 65.7887,8.0589 65.7887,18 z" />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10980"
+             font-size="14.00"
+             y="-2472.3"
+             x="1747">/roboteq_driver</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node101"
+       transform="matrix(1.25,0,0,1.25,-1749.5006,3523.7348)">
+      <title
+         id="title10983">t__autonomous</title>
+      <g
+         id="a_node101">
+        <a
+           xlink:title="topic:/autonomous"
+           id="a10986"
+           xlink:href="/home/user1/topic_3A_autonomous">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon10988"
+             points="1988.5,-2388 1988.5,-2388 1901.5,-2388 1901.5,-2352 1988.5,-2352 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text10990"
+             font-size="14.00"
+             y="-2366.3"
+             x="1945">/autonomous</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="node"
+       id="node104"
+       transform="matrix(1.25,0,0,1.25,-2149.0159,3751.6519)">
+      <title
+         id="title11000">t__voltage</title>
+      <g
+         id="a_node104">
+        <a
+           xlink:title="topic:/voltage"
+           id="a11003"
+           xlink:href="/home/user1/topic_3A_voltage">
+          <polygon
+             style="fill:none;stroke:#000000"
+             id="polygon11005"
+             points="1915,-2569 1915,-2533 1975,-2533 1975,-2569 1975,-2569 " />
+          <text
+             style="font-size:14px;text-anchor:middle;font-family:'Times,serif'"
+             id="text11007"
+             font-size="14.00"
+             y="-2547.3"
+             x="1945">/voltage</text>
+        </a>
+      </g>
+    </g>
+    <g
+       class="edge"
+       id="edge67-6"
+       transform="matrix(1.25,0,0,1.25,-1926.904,3592.2116)">
+      <title
+         id="title10935-9">t__roboteq_driver_joy-&gt;n__roboteq_driver_teleop_twist_joy</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10937-3"
+         d="m 1987.6,-2423.23 c 8.17,0.04 35.31,-0.42 44.17,-0.38"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10939-7"
+         points="2031.85,-2420.11 2031.88,-2427.11 2031.88,-2427.11 2041.86,-2423.57 " />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1"
+         inkscape:connector-curvature="0"
+         id="path10937-3-4"
+         d="m 1855.6531,-2422.3893 c -8.17,0.04 -37.6433,-0.42 -46.5033,-0.38"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         transform="matrix(-1,0,0,1,3840.9198,0.84072039)"
+         style="fill:#000000;stroke:#000000"
+         id="polygon10939-7-5"
+         points="2041.86,-2423.57 2031.85,-2420.11 2031.88,-2427.11 2031.88,-2427.11 " />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1"
+         inkscape:connector-curvature="0"
+         id="path10937-3-2"
+         d="m 2377.2727,-2489.9607 c -360.7806,-0.1958 -398.7629,46.4847 -407.6229,46.5247"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         transform="matrix(-0.8224289,0.56886792,0.56886792,0.8224289,5020.6139,-1606.5572)"
+         style="fill:#000000;stroke:#000000"
+         id="polygon10939-7-54"
+         points="2031.88,-2427.11 2031.88,-2427.11 2041.86,-2423.57 2031.85,-2420.11 " />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1"
+         inkscape:connector-curvature="0"
+         id="path10937-3-7"
+         d="m 2245.4539,-2368.0855 c 8.17,0.04 160.916,0.6095 160.1093,-94.6838"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         transform="matrix(0.07707842,-0.99702503,0.99702503,0.07707842,4665.1649,-248.00753)"
+         style="fill:#000000;stroke:#000000"
+         id="polygon10939-7-4"
+         points="2031.88,-2427.11 2031.88,-2427.11 2041.86,-2423.57 2031.85,-2420.11 " />
+    </g>
+    <g
+       class="edge"
+       id="edge53-36-4-4"
+       transform="matrix(0,1.25,-1.25,0,760.02607,-1340.3668)">
+      <title
+         id="title10583-0-7-3">n__xsens_xsensfilter-&gt;t__xsens_imu_global</title>
+      <path
+         style="fill:none;stroke:#000000"
+         inkscape:connector-curvature="0"
+         id="path10585-6-6-0"
+         d="m 1269.1637,-557.81366 c -0.3221,-84.01103 132.5811,-40.47266 176.4962,5.46933"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         style="fill:#000000;stroke:#000000"
+         id="polygon10587-2-5-7"
+         points="1443.79,-553.99 1453.4,-549.519 1443.1,-547.024 1443.79,-553.99 "
+         transform="matrix(0.80401463,0.59460952,-0.59460952,0.80401463,-43.86633,-969.36891)" />
+    </g>
+  </g>
+</svg>
