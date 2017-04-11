@@ -13,17 +13,10 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
 
-  #### cns5000 GPS NODES ###############################################
+  #### cns5000 GPS NODE ###############################################
   <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
     <remap from="gps/fix" to="/cns5000/fix"/>  
   </node> 
-
- <!-- Use GPS to generate Odometry -->
-  <node name="gps_conv" pkg="gps_common" type="utm_odometry_node" ns="cns5000">
-    <remap from="odom" to="gps_odom"/>
-    <!--<remap from="fix" to="fix"/> -->
-    <param name="frame_id" value="base_link"/>
-  </node>
 
   #### cns5000 IMU NODES ###############################################
   <node name="kvh_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
