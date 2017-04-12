@@ -5,11 +5,9 @@
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
     args="0.21 0 1.58 0 0 0 base_link velodyne 100" />
 
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_frame"
-    args="-0.28 0 1.18 0 0 0 base_link gps_frame 100" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_cns_frame"
+    args="-0.28 0 1.18 -1.5708 0 0 base_link cns5000_frame 100" />
 
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
-    args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
     args="0.0 -0.29 0.0 0 0 0 base_link left_wheel_frame 100" />
@@ -22,6 +20,10 @@
 
 <!--<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
     args="0 0 0.11 0 0 0 1 base_footprint base_link 100" /> 
+
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
+    args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
 
 <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
     args="0 0 0 0 0 0 1 map odom 100" />-->

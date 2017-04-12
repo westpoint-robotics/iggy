@@ -12,7 +12,7 @@
 
 <launch>
 
-  <rosparam command="load" file="$(find iggy_control)/config/dual_ekf_navsat_example.yaml" />
+  <rosparam command="load" file="$(find iggy_control)/config/dual_ekf_navsat_iggy.yaml" />
 
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true"/>
 
@@ -24,7 +24,7 @@
     <rosparam command="load" file="$(find iggy_control)/config/navsat_transform_template.yaml" />
       <remap from="gps/fix" to="/cns5000/fix"/>
       <remap from="odometry/filtered" to="odometry/filtered_map"/>
-      <remap from="/imu/data" to="/cns5000/imu/global1"/>
+      <remap from="/imu/data" to="/cns5000/imu/global"/>
   </node>
 
 </launch>
