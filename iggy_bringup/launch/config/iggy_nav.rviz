@@ -72,44 +72,13 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_link:
-          Value: true
-        gps_frame:
-          Value: false
-        imu_frame:
-          Value: false
-        left_wheel_frame:
-          Value: false
-        map:
-          Value: false
-        odom:
-          Value: false
-        right_wheel_frame:
-          Value: false
-        velodyne:
-          Value: false
-        world:
-          Value: true
       Marker Scale: 5
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        world:
-          map:
-            odom:
-              base_link:
-                gps_frame:
-                  {}
-                imu_frame:
-                  {}
-                left_wheel_frame:
-                  {}
-                right_wheel_frame:
-                  {}
-                velodyne:
-                  {}
+        {}
       Update Interval: 0
       Value: true
     - Alpha: 1

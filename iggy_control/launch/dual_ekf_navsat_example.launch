@@ -24,7 +24,7 @@
     <rosparam command="load" file="$(find iggy_control)/config/navsat_transform_template.yaml" />
       <remap from="gps/fix" to="/cns5000/fix"/>
       <remap from="odometry/filtered" to="odometry/filtered_map"/>
-      <remap from="/imu/data" to="/cns5000/imu/global"/>
+      <remap from="/imu/data" to="/cns5000/imu/global1"/>
 
       <!-- Placeholders for input remapping. Set your topic names as the "to" values.      
       <remap from="odometry/filtered" to=""/>

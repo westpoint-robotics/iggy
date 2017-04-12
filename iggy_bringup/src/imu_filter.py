@@ -27,7 +27,7 @@ class MagHeading():
         # Publisher of type nav_msgs/Odometry
         self.magHdg_pub = rospy.Publisher('imu/compass', Float32, queue_size=1)
         self.world_imu_pub = rospy.Publisher ('imu/global', Imu, queue_size=1)
-        self.br = tf.TransformBroadcaster()
+        #self.br = tf.TransformBroadcaster()
 
         # Subscribe to the gps positions
         rospy.Subscriber('magnetic', Vector3Stamped, self.update_magnetic_callback)
@@ -126,9 +126,9 @@ class MagHeading():
                 worldImu= self.mImu
                 worldImu.orientation.x,worldImu.orientation.y,worldImu.orientation.z,worldImu.orientation.w = \
                                             tf.transformations.quaternion_from_euler(angles[5], angles[4], angles[3])
-                if (pub_tf):
-                    self.br.sendTransform((0,0,0),(worldImu.orientation.x, worldImu.orientation.y, worldImu.orientation.z,
-                                            worldImu.orientation.w), rospy.Time.now(), imu_frame, world_frame)
+                #if (pub_tf):
+                    #self.br.sendTransform((0,0,0),(worldImu.orientation.x, worldImu.orientation.y, worldImu.orientation.z,
+                                            #worldImu.orientation.w), rospy.Time.now(), imu_frame, world_frame)
                 self.world_imu_pub.publish(worldImu)
             rate.sleep()    
 
