@@ -6,7 +6,7 @@ from sensor_msgs.msg import Imu
 
 def callbackIMU(data):
     br = tf.TransformBroadcaster()
-    br.sendTransform((0, 0, 2), (data.orientation.x,data.orientation.y,data.orientation.z,data.orientation.w), rospy.Time.now(), "imu_frame", "map")
+    br.sendTransform((0, 0, 2), (data.orientation.x,data.orientation.y,data.orientation.z,data.orientation.w), rospy.Time.now(), "cns5000_frame", "map")
 
     
     '''

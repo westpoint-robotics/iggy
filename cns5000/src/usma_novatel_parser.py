@@ -49,7 +49,7 @@ def parse_novatelGPS(gpsString):
     # ----- Format the gps data into ros msg -----
     fix_msg = NavSatFix()
     fix_msg.header.stamp = rospy.get_rostime()
-    fix_msg.header.frame_id = 'gps_frame'
+    fix_msg.header.frame_id = 'cns5000_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
@@ -140,7 +140,7 @@ def parse_novatelIMU(imuString):
 
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
-    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.header.frame_id = 'cns5000_frame'
     #TODO linear acceleration is completely off but is being ignored, fix it for more accuracy
     imu_msg.linear_acceleration.x = float(deltaAccelY)/1000#*.05/pow(2,15)
     imu_msg.linear_acceleration.y = float(deltaAccelX)/1000#*-1#*.05/pow(2,15)
@@ -181,7 +181,7 @@ def parse_novatelINSPVA(insHeader, insString):
     #print "inertialStatus",inertialStatus
     fix_msg = NavSatFix()
     fix_msg.header.stamp = rospy.get_rostime()
-    fix_msg.header.frame_id = 'gps_frame'
+    fix_msg.header.frame_id = 'cns5000_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
@@ -240,7 +240,7 @@ def parse_novatelINSPVA(insHeader, insString):
 
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
-    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.header.frame_id = 'cns5000_frame'
     imu_msg.linear_acceleration.x = (curvelcnsY-lastvelcnsY)/deltime #*.05/pow(2,15)
     imu_msg.linear_acceleration.y = (curvelcnsY-lastvelcnsY)/deltime #*-1#*.05/pow(2,15)
     imu_msg.linear_acceleration.z = (curvelcnsY-lastvelcnsY)/deltime #*.05/pow(2,15)

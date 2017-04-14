@@ -1,7 +1,0 @@
-<!--roboteq launch troubleshoot-->
-<launch>
-
- <node name="direct_input_goal" pkg="simple_navigation_goals" type="4Testing_direct_input_goal" output="screen"/>
-
-</launch>
-

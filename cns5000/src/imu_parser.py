@@ -171,7 +171,7 @@ if __name__ == '__main__':
 
 
     imu_data = Imu()
-    imu_data = Imu(header=rospy.Header(frame_id="imu_frame"))
+    imu_data = Imu(header=rospy.Header(frame_id="cns5000_frame"))
     
     #TODO find a right way to convert imu acceleration/angularvel./orientation accuracy to covariance
     imu_data.orientation_covariance = [1e-6, 0, 0, 
