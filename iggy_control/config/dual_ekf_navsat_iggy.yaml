@@ -1,10 +1,7 @@
 # For parameter descriptions, please refer to the template parameter files for each node.
 
 ekf_se_odom:
-<<<<<<< HEAD
   two_d_mode: true
-=======
->>>>>>> 69201a7e29df5f1d70a5de71c8780398904c5328
   frequency: 30
   sensor_timeout: 0.1
   two_d_mode: true
@@ -25,19 +22,11 @@ ekf_se_odom:
 
 
   imu0: /cns5000/imu/global
-<<<<<<< HEAD
   imu0_config: [   false, false, false,
                    false, false, true,
                    false, false, false,
                    false, false, true,
                    true,  false, false]
-=======
-  imu0_config: [false, false, false,
-               false, false, true,
-               true, false, false,
-               false, false, true,
-               false, false, false]
->>>>>>> 69201a7e29df5f1d70a5de71c8780398904c5328
   imu0_nodelay: false
   imu0_differential: false
   imu0_relative: false
@@ -79,10 +68,8 @@ ekf_se_odom:
                                 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1.0]
 
 ekf_se_map:
-<<<<<<< HEAD
+
   two_d_mode: true
-=======
->>>>>>> 69201a7e29df5f1d70a5de71c8780398904c5328
   frequency: 30
   sensor_timeout: 0.1
   two_d_mode: true
@@ -113,19 +100,12 @@ ekf_se_map:
   odom0_relative: false
 
   imu0: /cns5000/imu/global
-<<<<<<< HEAD
   imu0_config: [   false, false, false,
                    false, false, true,
                    false, false, false,
                    false, false, true,
                    true,  false, false]
-=======
-  imu0_config: [false, false, false,
-               false, false, true,
-               true, false, false,
-               false, false, true,
-               false, false, false]
->>>>>>> 69201a7e29df5f1d70a5de71c8780398904c5328
+
   imu0_nodelay: false
   imu0_differential: false
   imu0_relative: false
