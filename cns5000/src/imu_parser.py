@@ -118,6 +118,8 @@ from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from tf.transformations import quaternion_from_euler
 
+cov = 1000#1e-6
+
 def wrapTo2PI(theta):
     '''Normalize an angle in radians to [0, 2*pi]
     '''
@@ -174,17 +176,17 @@ if __name__ == '__main__':
     imu_data = Imu(header=rospy.Header(frame_id="cns5000_frame"))
     
     #TODO find a right way to convert imu acceleration/angularvel./orientation accuracy to covariance
-    imu_data.orientation_covariance = [1e-6, 0, 0, 
-                                       0, 1e-6, 0, 
-                                       0, 0, 1e-6]
+    imu_data.orientation_covariance = [cov, 0, 0, 
+                                       0, cov, 0, 
+                                       0, 0, cov]
     
-    imu_data.angular_velocity_covariance = [1e-6, 0, 0,
-                                            0, 1e-6, 0, 
-                                            0, 0, 1e-6]
+    imu_data.angular_velocity_covariance = [cov, 0, 0,
+                                            0, cov, 0, 
+                                            0, 0, cov]
     
-    imu_data.linear_acceleration_covariance = [1e-6, 0, 0, 
-                                               0, 1e-6, 0, 
-                                               0, 0, 1e-6]
+    imu_data.linear_acceleration_covariance = [cov, 0, 0, 
+                                               0, cov, 0, 
+                                               0, 0, cov]
 
     #twist_data = Twist()
     #twist_data = Twist(header=rospy.Header(frame_id="KVH_CG5100_IMU"))
