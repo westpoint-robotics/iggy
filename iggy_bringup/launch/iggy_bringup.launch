@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="use_laser" default="false" />
+    <arg name="use_laser" default="true" />
     <arg name="use_phidgets" default="false" />
     <arg name="use_xsens" default="true" />
     <arg name="use_cns5000" default="true" />
@@ -20,7 +20,7 @@
     <!-- TRANSFORMS  -->
     <include file="$(find iggy_bringup)/launch/config/tf.launch"/>
 
-    <group ns="cns5000_nodes" if="$(arg use_cns5000)">        
+    <group if="$(arg use_cns5000)">        
     #### cns5000 GPS NODE ###############################################
         <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
             <remap from="gps/fix" to="/cns5000/fix"/>  
@@ -40,7 +40,7 @@
         </node>
     </group>
     
-    <group ns="phidgets_nodes" if="$(arg use_phidgets)">      
+    <group if="$(arg use_phidgets)">      
     #### Phidgets IMU NODES ######################################################
         <node pkg="phidgets_imu" type="phidgets_imu_node" name="phidgets_imu" output="screen" ns="phidget">
             <param name="period" value="40"/>
@@ -54,7 +54,7 @@
         </node> 
     </group>
     
-    <group ns="xsens_nodes" if="$(arg use_xsens)">        
+    <group if="$(arg use_xsens)">        
     #### XSENS IMU NODES ###############################################
         <node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
             <param name="frame_id" value="imu_frame"/>
@@ -73,7 +73,7 @@
     </group>
     
     #### LASER RANGE FINDER NODES #######################################
-    <group ns="laser_nodes" if="$(arg use_laser)">    
+    <group if="$(arg use_laser)">    
         <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />
 
         <!-- FOR INDOOR NAVIGATION USE  -->   
@@ -81,7 +81,7 @@
     </group>
     
     #### Controllers #######################################
-    <group ns="joystick_nodes" if="$(arg use_joystick)">        
+    <group if="$(arg use_joystick)">        
         <include file="$(find iggy_control)/launch/teleopIRL.launch">
             <arg name="joystick" value="true"/>
         </include>
@@ -91,7 +91,8 @@
     <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
 
     #### Navigation #######################################
-    <!-- Localization  -->
+    <!-- Localization
+    <include file="$(find iggy_control)/launch/single_ekf_navsat_iggy.launch"></include>-->
     <include file="$(find iggy_control)/launch/dual_ekf_navsat_iggy.launch"></include>
     
     <!-- Navigation -->

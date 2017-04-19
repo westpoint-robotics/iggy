@@ -1,0 +1,14 @@
+digraph G {
+"map" -> "odom"[label="Broadcaster: /ekf_se_map\nAverage rate: 30.204 Hz\nMost recent transform: 1492560691.292 ( 0.051 sec old)\nBuffer length: 4.900 sec\n"];
+"world" -> "map"[label="Broadcaster: /world_to_map\nAverage rate: 10.195 Hz\nMost recent transform: 1492560691.403 ( -0.060 sec old)\nBuffer length: 4.806 sec\n"];
+"odom" -> "base_link"[label="Broadcaster: /ekf_se_odom\nAverage rate: 30.309 Hz\nMost recent transform: 1492560691.262 ( 0.081 sec old)\nBuffer length: 4.850 sec\n"];
+"base_link" -> "velodyne"[label="Broadcaster: /base_link_to_velodyne\nAverage rate: 10.194 Hz\nMost recent transform: 1492560691.372 ( -0.029 sec old)\nBuffer length: 4.807 sec\n"];
+"base_link" -> "left_wheel_frame"[label="Broadcaster: /base_link_to_left_wheel_frame\nAverage rate: 10.196 Hz\nMost recent transform: 1492560691.378 ( -0.035 sec old)\nBuffer length: 4.806 sec\n"];
+"base_link" -> "cns5000_frame"[label="Broadcaster: /base_link_to_cns_frame\nAverage rate: 10.196 Hz\nMost recent transform: 1492560691.390 ( -0.047 sec old)\nBuffer length: 4.806 sec\n"];
+"base_link" -> "right_wheel_frame"[label="Broadcaster: /base_link_to_right_wheel_frame\nAverage rate: 10.196 Hz\nMost recent transform: 1492560691.399 ( -0.056 sec old)\nBuffer length: 4.806 sec\n"];
+"base_link" -> "imu_frame"[label="Broadcaster: /base_link_to_imu_frame\nAverage rate: 10.195 Hz\nMost recent transform: 1492560691.404 ( -0.061 sec old)\nBuffer length: 4.806 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1492560691.343"[ shape=plaintext ] ;
+ }->"world";
+}
