@@ -35,10 +35,10 @@ class MagHeading():
     # Receive the updated magnetic Vector3Stamped to calculate world_yaw and publish a compass heading
     def update_magnetic_callback(self, msg):
         self.magnetic_filter_data.append(math.atan2(msg.vector.x,msg.vector.y)) # add heading in radians to filter
-        if (len(magnetic_filter_data) > self.magnetic_filter_data):
-            magnetic_filter_data.pop(0)
+        if (len(self.magnetic_filter_data) > self.magnetic_filter_data):
+            self.magnetic_filter_data.pop(0)
         # Set the world yaw based on magnetic field
-        self.world_yaw = sum(magnetic_filter_data)/len(magnetic_filter_data)
+        self.world_yaw = sum(self.magnetic_filter_data)/len(self.magnetic_filter_data)
         # publish the compass direction of the robot is facing for human usage only
         self.magHdg_pub.publish(self.calcBasicHeading(msg.vector.x,msg.vector.y))        
         
@@ -74,7 +74,6 @@ class MagHeading():
         pub_tf=rospy.get_param('~pub_tf',"false")
         imu_frame=rospy.get_param('~imu_frame','imu')
         world_frame=rospy.get_param('world_frame','odom')
-        self.yaw_offset = self.calculateGlobalOffset()
         rospy.spin()
 
 if __name__ == '__main__':
