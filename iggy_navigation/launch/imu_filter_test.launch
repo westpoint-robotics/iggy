@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+ <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen">
+
+
+  <remap from="cns5000/imu/data" to="imu/data_raw" />
+  <remap from="xsens/imu/magnetic" to="imu/mag" />
+ </node>
+
+</launch>
