@@ -24,8 +24,8 @@ class MagHeading():
         rospy.init_node('imu_filtered', anonymous=False)
 
         # Publisher of type nav_msgs/Odometry
-        self.magHdg_pub = rospy.Publisher('simple/compass', Float32, queue_size=1)
-        self.world_imu_pub = rospy.Publisher ('simple/global', Imu, queue_size=1)
+        self.magHdg_pub = rospy.Publisher('simpleup/compass', Float32, queue_size=1)
+        self.world_imu_pub = rospy.Publisher ('simpleup/global', Imu, queue_size=1)
         #self.br = tf.TransformBroadcaster()
 
         # Subscribe to the gps positions
