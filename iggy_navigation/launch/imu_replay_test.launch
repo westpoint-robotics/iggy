@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <launch>
 
-    <node pkg="rosbag" type="play" name="rosbag" output="screen" args="--clock /home/user1/Data/imus/2017-04-21-15-54-05.bag"/>
+    <param name="use_sim_time" value="true" /> 
+    <node pkg="rosbag" type="play" name="rosbag" output="screen" args="--clock -r 0.4 /home/user1/Data/imus/2017-04-21-15-54-05_new.bag"/>
 
     #### cns5000 IMU NODES ###############################################
 
-        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
-            <remap from="imu/data_raw" to="imu/data_raw" />
+        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000replay">
+            <remap from="imu/data_raw" to="/cns5000/imu/data_raw" />
             <remap from="imu/mag" to="/xsens/magnetic" />
             <param name="pub_tf" value="false"/>
         </node>
 
     #### XSENS IMU NODES ###############################################
 
-
-        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="xsens">
-            <remap from="imu/data_raw" to="imu/data_raw" />
-            <remap from="imu/mag" to="magnetic" />
+        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="xsensreplay">
+            <remap from="imu/data_raw" to="/xsens/imu/data_raw" />
+            <remap from="imu/mag" to="/xsens/magnetic" />
             <param name="pub_tf" value="false"/>
         </node>
 
