@@ -1,6 +1,10 @@
 Command LIne method for removing gedit backup files recursively:
 find . -type f -name '*~' -delete
 
+Command line find and replace string in all files recursively
+egrep -rl 'novatel' iggy_control/config | xargs sed -i 's/novatel/cns5000/g'
+
+
 20170417 - TODO 
 =================================
 Analyze INSPVAA usage.

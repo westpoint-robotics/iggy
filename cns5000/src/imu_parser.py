@@ -118,7 +118,7 @@ from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from tf.transformations import quaternion_from_euler
 
-cov = 1000#1e-6
+cov = 0.0001#1e-6
 
 def wrapTo2PI(theta):
     '''Normalize an angle in radians to [0, 2*pi]
