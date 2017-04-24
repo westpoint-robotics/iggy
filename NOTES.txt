@@ -1,16 +1,14 @@
+Command LIne method for removing gedit backup files recursively:
+find . -type f -name '*~' -delete
+
 20170417 - TODO 
 =================================
-Move waypoints from odom frame to map frame.
 Analyze INSPVAA usage.
 
 
 
 20170409 - TODO branch larkinIRL
 ==================================
-
-
-
-
 node novatel_CNS5000 renamed to ns=cns5000 and node novatelgps
 /cmd_vel_relay should publish /iggy_velocity_controller/cmd_vel and generate /iggy_velocity_controller/odom
 IRL uses gps_conv to get /iggy_velocity_controller/odom. Check if being published.
