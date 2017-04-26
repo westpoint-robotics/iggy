@@ -26,7 +26,6 @@ lastvelcnsX = float(0.0)
 lastvelcnsY = float(0.0)
 lastvelcnsZ = float(0.0)
 
-
 def parse_novatelGPS(gpsString):    
     # ----- parse the data string from fields to variables -----
     solutionStatus = gpsString[0] # Solution status

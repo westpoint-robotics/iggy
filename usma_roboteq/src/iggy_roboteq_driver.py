@@ -173,6 +173,7 @@ if __name__ == "__main__":
     #TODO rename to iggy_roboteq and align the namespace
     rospy.init_node('iggy_roboteq', anonymous=True)
     auto_pub = rospy.Publisher("/autonomous", Bool, queue_size=1)
+    #29.2 volts when batteries are below 2 bars but still above 1 bar.
     volt_pub = rospy.Publisher("/voltage", Float32, queue_size=1)
     rospy.Subscriber("/cmd_vel", Twist, moveCallback)
 
