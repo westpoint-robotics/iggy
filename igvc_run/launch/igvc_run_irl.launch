@@ -15,6 +15,18 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
 
+
+<!-- Vision -->
+<machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
+	env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
+	default="false" />
+
+<node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
+
+<node pkg="tf" type="static_transform_publisher" name="zed_to_map"
+	args="0.44 0.0 1.18 0 0.52 0 odom zed_current_frame 100" machine="igvc-stereo"/>
+
+
 <!-- Navigatin System CNS5000 -->
 <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
 	<remap from="cns5000/fix" to="/navsat/fix"/>   <!--Working -->
