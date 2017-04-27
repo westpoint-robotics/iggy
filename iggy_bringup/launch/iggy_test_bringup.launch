@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="use_laser" default="false" />
+    <arg name="use_phidgets" default="false" />
+    <arg name="use_xsens" default="true" />
+    <arg name="use_cns5000" default="true" />
+    <arg name="use_joystick" default="false" />
+
+    <!-- Robot Pose 
+    <arg name="x" default="-3.714"/>
+    <arg name="y" default="-21.26"/>  -->
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+
+    <!-- TRANSFORMS  -->
+    <include file="$(find iggy_bringup)/launch/config/tf.launch"/>
+
+    <group if="$(arg use_cns5000)">        
+    #### cns5000 GPS NODE ###############################################
+        <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
+            <remap from="gps/fix" to="/cns5000/fix"/>  
+        </node> 
+
+    #### cns5000 IMU NODES ###############################################
+        <node name="kvh_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
+            <remap from="imu/raw" to="imu/data"/>        
+        </node>
+
+        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
+            <remap from="imu/data_raw" to="/cns5000/imu/data" />
+            <remap from="imu/data" to="/cns5000bag/imu/data" />
+            <remap from="imu/mag" to="/xsens/magnetic" />
+            <param name="pub_tf" value="false"/>
+            <param name="fixed_frame" value="odom22"/>
+            <param name="stateless" value="false"/>
+            <param name="reverse_tf" value="true"/>
+            <param name="world_frame" value="enu"/>
+        </node>    
+
+        <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="cns5000"/>
+    </group>
+    
+    <group if="$(arg use_phidgets)">      
+    #### Phidgets IMU NODES ######################################################
+        <node pkg="phidgets_imu" type="phidgets_imu_node" name="phidgets_imu" output="screen" ns="phidget">
+            <param name="period" value="40"/>
+        </node>
+        <!-- Combine Magnetic and accelerometers to get global orientation   -->
+        <node pkg="iggy_bringup" type="imu_filter.py" name="phidgfilter" output="screen" ns="phidget">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="imu/mag"/>
+            <param name="imu_frame" value="phidgImu"/>
+            <param name="pub_tf" value="false"/>
+        </node> 
+    </group>
+    
+    <group if="$(arg use_xsens)">        
+    #### XSENS IMU NODES ###############################################
+        <node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
+            <param name="frame_id" value="imu_frame"/>
+            <param name="frame_local" value="ENU"/>
+            <param name="frame_local_imu" value="ENU"/>
+            <param name="device" value="/dev/mti700"/>
+            <param name="baudrate" value="115200"/>
+        </node>
+
+        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="xsensreplay">
+            <remap from="imu/mag" to="/xsens/magnetic" />
+            <remap from="imu/data_raw" to="/xsens/imu/data_raw" />
+            <param name="pub_tf" value="false"/>
+            <param name="fixed_frame" value="odom3"/>
+            <param name="stateless" value="false"/>
+            <param name="reverse_tf" value="true"/>
+            <param name="world_frame" value="enu"/>
+        </node>
+
+        <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="xsens"/>
+    </group>
+    
+    #### LASER RANGE FINDER NODES #######################################
+    <group if="$(arg use_laser)">    
+        <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />
+
+        <!-- FOR INDOOR NAVIGATION USE  -->   
+        <include file="$(find laser_scan_matcher)/demo/iggy_laser_scan_matcher.launch"/> 
+    </group>
+    
+    #### Controllers #######################################
+    <group if="$(arg use_joystick)">        
+        <include file="$(find iggy_control)/launch/teleopIRL.launch">
+            <arg name="joystick" value="true"/>
+        </include>
+    </group>
+        
+    <!-- Wheel Motor Controller  -->
+    <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
+
+   #### LOCALIZATION  ###############################################
+   <rosparam command="load" file="$(find iggy_control)/config/test_single_ekf_iggy.yaml" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_cns" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_cns"/>
+    </node>
+    
+    <!-- Navigation -->
+    <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
+
+
+
+    <!-- Start RVIZ -->
+    <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>
+</launch>
