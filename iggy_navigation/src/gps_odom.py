@@ -74,8 +74,8 @@ class Odom_gps():
                 odom_msg.pose.pose.orientation.y=0
                 odom_msg.pose.pose.orientation.z=0
                 odom_msg.pose.pose.orientation.w=1.0
-                odom_msg.pose.covariance=[  10,        0,       0,       0,       0,       0,
-                                             0,       10,       0,       0,       0,       0,
+                odom_msg.pose.covariance=[1e-10,       0,       0,       0,       0,       0,
+                                             0,    1e-10,       0,       0,       0,       0,
                                              0,        0,   99999,       0,       0,       0,
                                              0,        0,       0,   99999,       0,       0,
                                              0,        0,       0,       0,   99999,       0,

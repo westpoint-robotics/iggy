@@ -9,7 +9,7 @@
 
     <param name="use_sim_time" value="true" /> 
 
-    <node pkg="rosbag" type="play" name="rosbagplay" output="screen" args="--clock /home/user1/Data/imus/2017-04-24-17-32-04_new.bag"/>
+    <node pkg="rosbag" type="play" name="rosbagplay" output="screen" args="--clock /home/user1/Data/imus/2017-04-26-18-00-51.bag"/>
 <!--  -->
     <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="cns5000"/>
 
@@ -44,8 +44,16 @@
     #### LOCALIZATION  ###############################################
    <rosparam command="load" file="$(find iggy_control)/config/test_single_ekf_iggy.yaml" />
 
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
-        <remap from="odometry/filtered" to="odometry/filtered_map"/>
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_cns" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_cns"/>
+    </node>
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_xsens" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_xsens"/>
+    </node>
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_comb" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_comb"/>
     </node>
 
 
