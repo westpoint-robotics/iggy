@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!--     <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 map odom 100" />
+    <!--   -->  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 map odom 100" />
 
     <node pkg="tf" type="static_transform_publisher" name="base_link_to_cns_frame" args="-0.28 0 1.18 0 0 0 base_link cns5000_frame 100" />
 
     <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame" args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
--->
+
     #### cns5000 GPS NODE ###############################################
     <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
         <remap from="gps/fix" to="/cns5000/fix"/>  
@@ -36,6 +36,17 @@
         <param name="frame_local_imu" value="ENU"/>
         <param name="device" value="/dev/mti700"/>
         <param name="baudrate" value="115200"/>
+    </node>
+
+    #### Clearpath IMU_COMPASS ###############################################
+    <node name="xsens_imu_compass" pkg="imu_compass" type="imu_compass" output="screen" ns="xsenscompass">
+        <remap from="imu/data" to="/xsens/imu/data_raw"/>        
+        <remap from="imu/mag" to="/xsens/magnetic" />
+    </node>
+
+    <node name="cns_imu_compass" pkg="imu_compass" type="imu_compass" output="screen" ns="cnscompass">
+        <remap from="imu/data" to="/cns5000/imu/data"/>        
+        <remap from="imu/mag" to="/xsens/magnetic" />
     </node>
 <!--
     <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" ns="xsens">
