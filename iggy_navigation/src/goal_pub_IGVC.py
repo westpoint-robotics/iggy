@@ -109,7 +109,7 @@ class Navigator():
             self.goal.target_pose.pose = cur_coord
             self.goal.target_pose.header.frame_id = 'map'
             self.goal.target_pose.header.stamp = rospy.Time.now()
-            self.goal.target_pose.pose.orientation = self.initial_pose.pose.pose.orientation
+            self.goal.target_pose.pose.orientation.x,self.goal.target_pose.pose.orientation.y,self.goal.target_pose.pose.orientation.z,self.goal.target_pose.pose.orientation.w = [0,0,0,1]  #self.initial_pose.pose.pose.orientation
             # Let the user know where the robot is going next
             rospy.loginfo("Going to %2d: (%.4f,%.4f) distance: %.4f" %(i,self.goal.target_pose.pose.position.x,self.goal.target_pose.pose.position.y,distance))
 
@@ -196,7 +196,8 @@ class Navigator():
             (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
             goal_pose.position=deepcopy(self.initial_pose.pose.pose.position) 
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
-            goal_pose.position.y=(wpNorthing - self.initial_utm[2])            
+            goal_pose.position.y=(wpNorthing - self.initial_utm[2])  
+            goal_pose.orientation.x,goal_pose.orientation.y,goal_pose.orientation.z,goal_pose.orientation.w=[0,0,0,1] #(wpNorthing - self.initial_utm[2])  
             self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
             rospy.loginfo("x,y for waypoint#: %s in odom frame: (%.4f, %.4f)"%(identity[-2:],goal_pose.position.x, goal_pose.position.y))
             goalstemp.append((goal_pose, search_duration, rest_duration))

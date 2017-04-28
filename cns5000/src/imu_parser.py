@@ -117,6 +117,8 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from tf.transformations import quaternion_from_euler
+import numpy
+
 
 cov = 0.0001#1e-6
 
@@ -150,7 +152,7 @@ def CehckCRC(data):
 if __name__ == '__main__':
     global KVH_IMU
     global SerialData
-    rospy.init_node('KVHCG5100IMU')
+    rospy.init_node('kvhCG5100imu')
     #Pos_pub = rospy.Publisher('imu/raw/heading', Pose2D, queue_size=1)
     Imu_pub = rospy.Publisher('imu/raw', Imu, queue_size=1)
     #Twist_pub = rospy.Publisher('imu/speed', Twist)
@@ -304,7 +306,9 @@ if __name__ == '__main__':
                                 imu_quaternion=tf.transformations.quaternion_from_euler(Z, Y, X, 'rzyx')
                                 #imu_quaternion=quaternion_from_euler(Ex,Ey,Ez) # Euler's roll, pitch and yaw angles
 
-
+                                # DML Next two lines additions to normalize the quaternion
+                                quat = numpy.array([imu_quaternion[0],imu_quaternion[1],imu_quaternion[2],imu_quaternion[3]])                    
+                                imu_quaternion[0],imu_quaternion[1],imu_quaternion[2],imu_quaternion[3] = quat / numpy.sqrt(numpy.dot(quat, quat))
 
                                 imu_data.orientation.x=imu_quaternion[0]
                                 imu_data.orientation.y=imu_quaternion[1]

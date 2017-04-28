@@ -150,6 +150,11 @@ def parse_novatelIMU(imuString):
     #euler = vector_norm(euler)
     quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
+
+    # DML Next two lines additions to normalize the quaternion
+    quat = numpy.array([quaternion[0],quaternion[1],quaternion[2],quaternion[3]])                    
+    quaternion[0],quaternion[1],quaternion[2],quaternion[3] = quat / numpy.sqrt(numpy.dot(quat, quat))
+
     imu_msg.orientation.x = quaternion[0]
     imu_msg.orientation.y = quaternion[1]
     imu_msg.orientation.z = quaternion[2]
@@ -250,6 +255,11 @@ def parse_novatelINSPVA(insHeader, insString):
     quaternion = tf.transformations.quaternion_from_euler(0, 0, curYaw)
     #print(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
+
+    # DML Next two lines additions to normalize the quaternion
+    quat = numpy.array([quaternion[0],quaternion[1],quaternion[2],quaternion[3]])                    
+    quaternion[0],quaternion[1],quaternion[2],quaternion[3] = quat / numpy.sqrt(numpy.dot(quat, quat))
+
     imu_msg.orientation.x = quaternion[0]
     imu_msg.orientation.y = quaternion[1]
     imu_msg.orientation.z = quaternion[2]
