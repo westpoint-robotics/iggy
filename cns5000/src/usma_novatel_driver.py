@@ -102,7 +102,7 @@ try:
                 nova_Data = nova_Data.split(',') # split the message body into fields
                 inspva_out = parse_novatelINSPVA(nova_Header, nova_Data) 
                 inspva_gpsPub.publish(inspva_out[1])
-                imuPub.publish(inspva_out[0])
+                #imuPub.publish(inspva_out[0])
 
 	rate.sleep()
                      

@@ -34,7 +34,7 @@ class Odom_gps():
 
     def setInitialPose(self):
         # Get the initial pose from the robot
-        rospy.loginfo("Establishing initial position wait 10 seconds. Do not move the robot.")
+        #rospy.loginfo("Establishing initial position wait 10 seconds. Do not move the robot.")
         easts=[]
         nrths=[]
         i=0
@@ -45,12 +45,14 @@ class Odom_gps():
                 easts.append(utm_c[1]) #TODO add check for empty array
                 nrths.append(utm_c[2])
                 rospy.sleep(1.0)
+                print "UTM_C IS:",utm_c
             easting = sum(easts) / float(len(easts))
             northing = sum(nrths) / float(len(nrths))
             self.initial_utm = [utm_c[0],easting,northing]
-            rospy.loginfo("done establishing initial position.It is: %f, %f",self.initial_utm[1],self.initial_utm[2])
+            rospy.loginfo("%s is done establishing initial position.It is: %f, %f",rospy.get_name(), self.initial_utm[1],self.initial_utm[2])
         else: 
-            print "WAITING FOR INITIAL LOCATION"
+            #rospy.loginfo( "WAITING FOR INITIAL LOCATION, NODE: %s",rospy.get_name())
+            pass
 
     def mainloop(self):
 
@@ -83,9 +85,9 @@ class Odom_gps():
                 self.odom_pub.publish(odom_msg)
             rate.sleep()
 
-    def update_utm_cb(self, current_latlong):
-        #rospy.loginfo("Current Lat, Long is: (%f,%f)" %((current_latlong.latitude),(current_latlong.longitude)))        
-        self.current_utm = LLtoUTM(23, current_latlong.latitude,current_latlong.longitude)
+    def update_utm_cb(self, msg):
+        #rospy.loginfo("Current Lat, Long is: (%f,%f)" %((msg.latitude),(msg.longitude)))    
+        self.current_utm = LLtoUTM(23, msg.latitude,msg.longitude)
 
 if __name__ == '__main__':
         od_gps = Odom_gps()
