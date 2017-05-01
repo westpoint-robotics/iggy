@@ -17,15 +17,15 @@ ser.open()
 
 # Send commands to CNS-5000 to start the logs
 ser.write('UNLOGALL\r\n')
-time.sleep(0.05)
+time.sleep(1.05)
 ser.write('RESET\r\n')
-time.sleep(0.05)
+time.sleep(1.05)
 ser.write('FRESET\r\n')
-time.sleep(0.05)
+time.sleep(1.05)
 ser.write('FRESET BASE_WEEK\r\n')
-time.sleep(0.05)
+time.sleep(1.05)
 ser.write('UNLOGALL\r\n')
-time.sleep(0.05)
+time.sleep(1.05)
 
 print("Just ran the RESET, FRESET, and FRESET BASE_WEEK commands. Power cycle the unit to complete the reset.")
 

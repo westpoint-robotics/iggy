@@ -11,6 +11,8 @@ from os.path import expanduser
 from std_msgs.msg import String
 
 '''
+WARNING: Watch the base_week. The base week can get corrupted on MAY 1 2017 it was 3995 and it should have been 1947. To force the reset of the base week run FRESET BASE_WEEK
+
 udev rule settings for the CNS 5000 and flexpak6
 SUBSYSTEM=="tty", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ATTRS{product}=="USB-Serial Controller", SYMLINK+="raw_imu"
 SUBSYSTEM=="tty", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ATTRS{product}=="USB-Serial Controller D", SYMLINK+="raw_gps"
