@@ -3,7 +3,7 @@
 
     <arg name="use_laser" default="true" />
     <arg name="use_phidgets" default="false" />
-    <arg name="use_xsens" default="true" />
+    <arg name="use_xsens" default="false" />
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
     <arg name="use_stereo" default="false" />
@@ -58,7 +58,7 @@
 			default="false" />
 		<node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
     </group>
-
+<!--
     <group if="$(arg use_xsens)">        
     #### XSENS IMU NODES ###############################################
         <node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
@@ -70,7 +70,7 @@
         </node>
 
         <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="xsens"/>
-    </group>
+    </group>-->
     
     #### LASER RANGE FINDER NODES #######################################
     <group if="$(arg use_laser)">    
