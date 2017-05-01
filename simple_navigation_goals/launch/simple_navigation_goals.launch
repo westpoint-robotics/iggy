@@ -1,7 +1,0 @@
-<!--roboteq launch troubleshoot-->
-<launch>
-
- <node name="simple_navi_goals" pkg="simple_navigation_goals" type="simple_navigation_goal" output="screen"/>
-
-</launch>
-

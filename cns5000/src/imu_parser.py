@@ -117,6 +117,10 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from tf.transformations import quaternion_from_euler
+import numpy
+
+
+cov = 0.0001#1e-6
 
 def wrapTo2PI(theta):
     '''Normalize an angle in radians to [0, 2*pi]
@@ -148,7 +152,7 @@ def CehckCRC(data):
 if __name__ == '__main__':
     global KVH_IMU
     global SerialData
-    rospy.init_node('KVHCG5100IMU')
+    rospy.init_node('kvhCG5100imu')
     #Pos_pub = rospy.Publisher('imu/raw/heading', Pose2D, queue_size=1)
     Imu_pub = rospy.Publisher('imu/raw', Imu, queue_size=1)
     #Twist_pub = rospy.Publisher('imu/speed', Twist)
@@ -171,20 +175,20 @@ if __name__ == '__main__':
 
 
     imu_data = Imu()
-    imu_data = Imu(header=rospy.Header(frame_id="imu_frame"))
+    imu_data = Imu(header=rospy.Header(frame_id="cns5000_frame"))
     
     #TODO find a right way to convert imu acceleration/angularvel./orientation accuracy to covariance
-    imu_data.orientation_covariance = [1e-6, 0, 0, 
-                                       0, 1e-6, 0, 
-                                       0, 0, 1e-6]
+    imu_data.orientation_covariance = [cov, 0, 0, 
+                                       0, cov, 0, 
+                                       0, 0, cov]
     
-    imu_data.angular_velocity_covariance = [1e-6, 0, 0,
-                                            0, 1e-6, 0, 
-                                            0, 0, 1e-6]
+    imu_data.angular_velocity_covariance = [cov, 0, 0,
+                                            0, cov, 0, 
+                                            0, 0, cov]
     
-    imu_data.linear_acceleration_covariance = [1e-6, 0, 0, 
-                                               0, 1e-6, 0, 
-                                               0, 0, 1e-6]
+    imu_data.linear_acceleration_covariance = [cov, 0, 0, 
+                                               0, cov, 0, 
+                                               0, 0, cov]
 
     #twist_data = Twist()
     #twist_data = Twist(header=rospy.Header(frame_id="KVH_CG5100_IMU"))
@@ -302,7 +306,9 @@ if __name__ == '__main__':
                                 imu_quaternion=tf.transformations.quaternion_from_euler(Z, Y, X, 'rzyx')
                                 #imu_quaternion=quaternion_from_euler(Ex,Ey,Ez) # Euler's roll, pitch and yaw angles
 
-
+                                # DML Next two lines additions to normalize the quaternion
+                                quat = numpy.array([imu_quaternion[0],imu_quaternion[1],imu_quaternion[2],imu_quaternion[3]])                    
+                                imu_quaternion[0],imu_quaternion[1],imu_quaternion[2],imu_quaternion[3] = quat / numpy.sqrt(numpy.dot(quat, quat))
 
                                 imu_data.orientation.x=imu_quaternion[0]
                                 imu_data.orientation.y=imu_quaternion[1]

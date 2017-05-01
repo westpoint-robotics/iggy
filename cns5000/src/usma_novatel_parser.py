@@ -26,7 +26,6 @@ lastvelcnsX = float(0.0)
 lastvelcnsY = float(0.0)
 lastvelcnsZ = float(0.0)
 
-
 def parse_novatelGPS(gpsString):    
     # ----- parse the data string from fields to variables -----
     solutionStatus = gpsString[0] # Solution status
@@ -49,7 +48,7 @@ def parse_novatelGPS(gpsString):
     # ----- Format the gps data into ros msg -----
     fix_msg = NavSatFix()
     fix_msg.header.stamp = rospy.get_rostime()
-    fix_msg.header.frame_id = 'gps_frame'
+    fix_msg.header.frame_id = 'cns5000_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
@@ -140,7 +139,7 @@ def parse_novatelIMU(imuString):
 
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
-    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.header.frame_id = 'cns5000_frame'
     #TODO linear acceleration is completely off but is being ignored, fix it for more accuracy
     imu_msg.linear_acceleration.x = float(deltaAccelY)/1000#*.05/pow(2,15)
     imu_msg.linear_acceleration.y = float(deltaAccelX)/1000#*-1#*.05/pow(2,15)
@@ -151,6 +150,11 @@ def parse_novatelIMU(imuString):
     #euler = vector_norm(euler)
     quaternion = tf.transformations.quaternion_from_euler(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
+
+    # DML Next two lines additions to normalize the quaternion
+    quat = numpy.array([quaternion[0],quaternion[1],quaternion[2],quaternion[3]])                    
+    quaternion[0],quaternion[1],quaternion[2],quaternion[3] = quat / numpy.sqrt(numpy.dot(quat, quat))
+
     imu_msg.orientation.x = quaternion[0]
     imu_msg.orientation.y = quaternion[1]
     imu_msg.orientation.z = quaternion[2]
@@ -181,7 +185,7 @@ def parse_novatelINSPVA(insHeader, insString):
     #print "inertialStatus",inertialStatus
     fix_msg = NavSatFix()
     fix_msg.header.stamp = rospy.get_rostime()
-    fix_msg.header.frame_id = 'gps_frame'
+    fix_msg.header.frame_id = 'cns5000_frame'
     fix_msg.latitude = float(latitude)
     fix_msg.longitude = float(longitude)
     fix_msg.altitude = float(heightMSL)
@@ -240,7 +244,7 @@ def parse_novatelINSPVA(insHeader, insString):
 
     imu_msg = Imu()
     imu_msg.header.stamp = curTime
-    imu_msg.header.frame_id = 'imu_frame'
+    imu_msg.header.frame_id = 'cns5000_frame'
     imu_msg.linear_acceleration.x = (curvelcnsY-lastvelcnsY)/deltime #*.05/pow(2,15)
     imu_msg.linear_acceleration.y = (curvelcnsY-lastvelcnsY)/deltime #*-1#*.05/pow(2,15)
     imu_msg.linear_acceleration.z = (curvelcnsY-lastvelcnsY)/deltime #*.05/pow(2,15)
@@ -251,6 +255,11 @@ def parse_novatelINSPVA(insHeader, insString):
     quaternion = tf.transformations.quaternion_from_euler(0, 0, curYaw)
     #print(curRoll, curPitch, curYaw)
     #type(pose) = geometry_msgs.msg.Pose
+
+    # DML Next two lines additions to normalize the quaternion
+    quat = numpy.array([quaternion[0],quaternion[1],quaternion[2],quaternion[3]])                    
+    quaternion[0],quaternion[1],quaternion[2],quaternion[3] = quat / numpy.sqrt(numpy.dot(quat, quat))
+
     imu_msg.orientation.x = quaternion[0]
     imu_msg.orientation.y = quaternion[1]
     imu_msg.orientation.z = quaternion[2]

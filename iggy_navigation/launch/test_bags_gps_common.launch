@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 map odom 100" />
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_cns_frame" args="-0.28 0 1.18 0 0 0 base_link cns5000_frame 100" />
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame" args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
+
+    <param name="use_sim_time" value="true" /> 
+
+    <node pkg="rosbag" type="play" name="rosbagplay" output="screen" args="--clock /home/user1/Data/sensorsOnly/2017-04-27-13-21-51_online.bag"/>
+<!--  -->
+    <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="cns5000"/>
+
+    #### cns5000 IMU NODES ###############################################
+    <!-- output topic is imu/data  -->
+
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
+        <remap from="imu/data_raw" to="/cns5000/imu/data" />
+        <remap from="imu/data" to="/cns5000bag/imu/data" />
+        <remap from="imu/mag" to="/xsens/magnetic" />
+        <param name="pub_tf" value="false"/>
+        <param name="fixed_frame" value="odom22"/>
+        <param name="stateless" value="false"/>
+        <param name="reverse_tf" value="true"/>
+        <param name="world_frame" value="enu"/>
+    </node>
+    
+    #### XSENS IMU NODES ###############################################
+    <!--   -->
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="xsensreplay">
+        <remap from="imu/mag" to="/xsens/magnetic" />
+        <remap from="imu/data_raw" to="/xsens/imu/data_raw" />
+        <param name="pub_tf" value="false"/>
+        <param name="fixed_frame" value="odom3"/>
+        <param name="stateless" value="false"/>
+        <param name="reverse_tf" value="true"/>
+        <param name="world_frame" value="enu"/>
+    </node>
+
+    <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="xsens"/>
+   
+    #### LOCALIZATION  ###############################################
+   <rosparam command="load" file="$(find iggy_control)/config/test_single_ekf_iggy.yaml" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_cns" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_cns"/>
+    </node>
+<!--
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_xsens" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_xsens"/>
+    </node> 
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_comb" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_comb"/>
+    </node>
+
+-->
+ <!--
+    <node pkg="rosbag" type="record" name="rosbagrecord" args="-a -o /home/user1/Data/"/>
+ 
+<param name="child_frame_id" value="base_link"/>
+
+Publications: 
+ * /cns5000/imu_filter_node/parameter_updates [dynamic_reconfigure/Config]
+ * /rosout [rosgraph_msgs/Log]
+ * /cns5000/imu_filter_node/parameter_descriptions [dynamic_reconfigure/ConfigDescription]
+ * /tf [tf2_msgs/TFMessage]
+ * /cns5000/imu/magnetic_field [sensor_msgs/MagneticField]
+ * /cns5000bag/imu/data [sensor_msgs/Imu]
+
+Subscriptions: 
+ * /clock [rosgraph_msgs/Clock]
+ * /cns5000/imu/magnetic_field [sensor_msgs/MagneticField]
+ * /xsens/magnetic [geometry_msgs/Vector3Stamped]
+ * /cns5000/imu/data_raw [unknown type]
+
+
+
+user1@ros20:~$ rostopic list
+/clock
+/cns5000/fix
+/cns5000/imu/data
+/cns5000/raw_data
+/diagnostics
+/rosout
+/rosout_agg
+/xsens/fix
+/xsens/fix_extended
+/xsens/imu/data_raw
+/xsens/imu_data_str
+/xsens/magnetic
+/xsens/temperature
+/xsens/velocity
+
+
+
+ -->
+
+</launch>

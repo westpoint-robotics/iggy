@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- TRANSFORMS  
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
+    args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
+
+
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_cns_frame"
+    args="-0.28 0 1.18 -1.5708 0 0 base_link cns5000_frame 100" />   -->
+
+    #### cns5000 GPS NODE ###############################################
+        <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
+            <remap from="gps/fix" to="/cns5000/fix"/>  
+        </node> 
+
+    #### cns5000 IMU NODES ###############################################
+        <node name="kvh_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
+            <remap from="imu/raw" to="imu/data_raw"/>        
+        </node>
+
+        <!-- Combine Magnetic from XSens with cns5000 accelerometers to get global orientation -->
+        <node pkg="iggy_bringup" type="imu_filter.py" name="cs5000_imu_filter" output="screen" ns="cns5000">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="/xsens/magnetic"/> <!-- Use /xsens/ to overwite local namespace -->
+            <param name="imu_frame" value="cnsImu"/>
+        </node>
+
+        <!-- Combine Magnetic from XSens with cns5000 accelerometers to get global orientation -->
+        <node pkg="iggy_bringup" type="imu_filter_simple.py" name="cs5000_imu_filter_s" output="screen" ns="cns5000">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="/xsens/magnetic"/> <!-- Use /xsens/ to overwite local namespace -->
+            <param name="imu_frame" value="cnsImu"/>
+        </node>
+
+        <!-- Combine Magnetic from XSens with cns5000 accelerometers to get global orientation -->
+        <node pkg="iggy_bringup" type="imu_filter_simple_updater.py" name="cs5000_imu_filter_su" output="screen" ns="cns5000">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="/xsens/magnetic"/> <!-- Use /xsens/ to overwite local namespace -->
+            <param name="imu_frame" value="cnsImu"/>
+        </node>
+
+        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
+            <remap from="imu/data_raw" to="imu/data_raw" />
+            <remap from="imu/mag" to="/xsens/magnetic" />
+            <param name="pub_tf" value="true"/>
+        </node>
+    #### XSENS IMU NODES ###############################################
+        <node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
+            <param name="frame_id" value="imu_frame"/>
+            <param name="frame_local" value="ENU"/>
+            <param name="frame_local_imu" value="ENU"/>
+            <param name="device" value="/dev/mti700"/>
+            <param name="baudrate" value="115200"/>
+            <remap from="imu/data" to="imu/data_raw"/> 
+        </node>
+
+        <node pkg="iggy_bringup" type="imu_filter.py" name="xsensfilter" output="screen" ns="xsens">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="magnetic"/>
+            <param name="imu_frame" value="xsensImu"/>
+        </node>
+
+        <node pkg="iggy_bringup" type="imu_filter_simple.py" name="xsensfilter_s" output="screen" ns="xsens">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="magnetic"/>
+            <param name="imu_frame" value="xsensImu"/>
+        </node>
+
+        <node pkg="iggy_bringup" type="imu_filter_simple_updater.py" name="xsensfilter_su" output="screen" ns="xsens">        
+            <remap from="imu/raw" to="imu/data_raw"/>        
+            <remap from="magnetic" to="magnetic"/>
+            <param name="imu_frame" value="xsensImu"/>
+        </node>
+
+        <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="xsens">
+            <remap from="imu/data_raw" to="imu/data_raw" />
+            <remap from="imu/mag" to="magnetic" />
+            <param name="pub_tf" value="true"/>
+        </node>
+
+</launch>

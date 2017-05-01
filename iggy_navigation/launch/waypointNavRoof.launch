@@ -1,0 +1,21 @@
+<!--igvc_run.launch-->
+<launch>
+
+<!-- Navigatin System CNS5000 -->
+<node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+	<remap from="navsat/fix" to="/cns5000/fix"/>   <!--Working 
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/waypoints.csv" />
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/ThayerRoof2.csv" />
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/waypoints3.csv" />
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/ThayerRoof.csv" />  -->
+
+
+
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/ThayerRoof.csv" /> 
+
+
+</node>  
+
+</launch>
+
+

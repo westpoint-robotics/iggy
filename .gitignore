@@ -10,3 +10,5 @@ __init__.py
 __init__.pyc
 *.user*
 *.pyc
+Documentation/Navigation/GazeboNavigationPipeline.png
+iggy_bringup/launch/config/iggy_nav.rviz

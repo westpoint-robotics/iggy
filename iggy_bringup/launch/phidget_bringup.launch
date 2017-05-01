@@ -1,0 +1,25 @@
+<!-- Phidgets, XSens, and CNS500 IMU launch file. Starts all three systems
+and an imu filter node for each. 
+Provides:  a unique namespace and a unique transform frame for each.
+Requires: a transform from base_link to each imu frame. -->
+
+<launch>
+
+  #### Phidgets ######################################################
+  <node pkg="nodelet" type="nodelet" name="imu_manager" 
+    args="manager" output="screen" ns="phidget"/>
+
+  <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet" 
+    args="load phidgets_imu/PhidgetsImuNodelet imu_manager" output="screen" ns="phidget">
+    <param name="period" value="40"/>
+  </node>
+
+  <node pkg="iggy_bringup" type="imu_filter.py" name="phidgfilter" output="screen" ns="phidget">        
+    <remap from="imu/raw" to="imu/data_raw"/>        
+    <remap from="magnetic" to="imu/mag"/>
+    <param name="imu_frame" value="phidgImu"/>
+    <param name="pub_tf" value="true" />
+  </node>
+
+
+</launch>

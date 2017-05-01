@@ -1,0 +1,889 @@
+user1:iggy_navigation$ src/goal_pub_IGVC.py
+[INFO] [WallTime: 1491014317.060042] [553.041000] Waiting for move_base action server...
+[INFO] [WallTime: 1491014317.060571] [553.043000] Connected to move base server
+[INFO] [WallTime: 1491014317.060810] [553.043000] Waiting for initial pose
+[INFO] [WallTime: 1491014317.061025] [553.043000] Initial Pose from /odometry/gps recieved
+[INFO] [WallTime: 1491014317.061215] [553.043000] Establishing initial position wait 10 seconds.
+UTM C ('17T', 320102.75952111953, 4727511.419149046)
+UTM C ('17T', 320102.75923047937, 4727511.416592691)
+UTM C ('17T', 320102.7589368005, 4727511.414036655)
+UTM C ('17T', 320102.7586400822, 4727511.411480945)
+UTM C ('17T', 320102.75834032445, 4727511.408925565)
+UTM C ('17T', 320102.7580375284, 4727511.406370515)
+UTM C ('17T', 320102.7577316931, 4727511.403815802)
+UTM C ('17T', 320102.7574228196, 4727511.401261428)
+UTM C ('17T', 320102.7571109071, 4727511.398707395)
+UTM C ('17T', 320102.7567959577, 4727511.396153711)
+[INFO] [WallTime: 1491014332.787637] [564.524000] Initial pose found at (0.0000,0.0000)
+[INFO] [WallTime: 1491014332.788619] [564.524000] Initial UTM at (320102.7582, 4727511.4076)
+(42.679043613589386, -83.19566367692596)
+[INFO] [WallTime: 1491014332.792753] [564.526000] Waypoing file is: params/waypoints3.csv
+[INFO] [WallTime: 1491014332.793313] [564.527000] Waiting for initial pose
+[INFO] [WallTime: 1491014332.793570] [564.527000] Initial Pose from /odometry/gps recieved
+[INFO] [WallTime: 1491014332.793833] [564.528000] Establishing initial position wait 10 seconds.
+UTM C ('17T', 320102.7560114912, 4727511.389898664)
+UTM C ('17T', 320102.7556860599, 4727511.387346198)
+UTM C ('17T', 320102.75535759307, 4727511.384794095)
+UTM C ('17T', 320102.7550260889, 4727511.382242355)
+UTM C ('17T', 320102.75469154835, 4727511.379690982)
+UTM C ('17T', 320102.75435397157, 4727511.377139984)
+UTM C ('17T', 320102.7540133586, 4727511.37458936)
+UTM C ('17T', 320102.7536697087, 4727511.372039115)
+UTM C ('17T', 320102.7533143222, 4727511.369425522)
+UTM C ('17T', 320102.7529645255, 4727511.3668760555)
+[INFO] [WallTime: 1491014348.490565] [575.975000] Initial pose found at (0.0166,-0.4747)
+[INFO] [WallTime: 1491014348.491132] [575.975000] Initial UTM at (320102.7545, 4727511.3784)
+(42.67904334955527, -83.19566371239061)
+Waypoint ll 42.6790530228 -83.1955039995 282.063512742 0.001  2  waypoint01
+Waypoint ll 42.6790990738 -83.195427004 282.063485316 0.001  2  waypoint02
+Waypoint ll 42.6791471152 -83.1953958634 282.063480792 0.001  2  waypoint03
+Waypoint ll 42.6791970793 -83.1954000787 282.063485385 0.001  2  waypoint04
+Waypoint ll 42.6792476883 -83.1953809983 282.063485938 0.001  2  waypoint05
+Waypoint ll 42.6792981896 -83.1953782826 282.06348383 0.001  2  waypoint06
+Waypoint ll 42.6793514574 -83.1953768025 282.063485704 0.001  2  waypoint07
+Waypoint ll 42.6794231989 -83.1953675194 282.063479762 0.001  2  waypoint08
+Waypoint ll 42.6794181521 -83.195492106 282.063478194 0.001  2  waypoint09
+Waypoint ll 42.6794080204 -83.1955633922 282.063485327 0.001  2  waypoint10
+Waypoint ll 42.6793301068 -83.1955616429 282.063485328 0.001  2  waypoint11
+Waypoint ll 42.6793170287 -83.1956692955 282.063483832 0.001  2  waypoint12
+Waypoint ll 42.6793985997 -83.1956503622 282.06348081 0.001  2  waypoint13
+Waypoint ll 42.6794035877 -83.1957424955 282.063480811 0.001  2  waypoint14
+Waypoint ll 42.6794044928 -83.1958213045 282.063477428 0.001  2  waypoint15
+Waypoint ll 42.6793443621 -83.1958289245 282.063482985 0.001  2  waypoint16
+Waypoint ll 42.6792883533 -83.195815885 282.063482953 0.001  2  waypoint17
+Waypoint ll 42.679225397 -83.1958431418 282.063486129 0.001  2  waypoint18
+Waypoint ll 42.6791484006 -83.1958495032 282.063480828 0.001  2  waypoint19
+Waypoint ll 42.6790891867 -83.1958403246 282.063480683 0.001  2  waypoint20
+Waypoint ll 42.6790408402 -83.1957817221 282.063475556 0.001  2  waypoint21
+Waypoint ll 42.6790479727 -83.1956652913 282.063477456 0.001  2  waypoint22
+[(position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063512742, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063485316, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063480792, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063485385, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063485938, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.06348383, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063485704, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063479762, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063478194, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063485327, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063485328, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063483832, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.06348081, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063480811, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063477428, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063482985, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063482953, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063486129, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063480828, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063480683, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063475556, 0.001), (position: 
+  x: -0.116067165742
+  y: 0.516886423342
+  z: -0.151844370075
+orientation: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  w: 0.0, 282.063477456, 0.001)]
+
+======================================================================
+user1:iggy_navigation$ rostopic echo /move_base/goal
+WARNING: no messages received and simulated time is active.
+Is /clock being published?
+header: 
+  seq: 1
+  stamp: 
+    secs: 442
+    nsecs: 352000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 442
+    nsecs: 352000000
+  id: /nav_test2_10695_1491012729619-1-442.352
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 442
+        nsecs: 352000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 2
+  stamp: 
+    secs: 443
+    nsecs: 457000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 443
+    nsecs: 457000000
+  id: /nav_test2_10695_1491012729619-2-443.457
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 443
+        nsecs: 457000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 3
+  stamp: 
+    secs: 444
+    nsecs: 269000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 444
+    nsecs: 269000000
+  id: /nav_test2_10695_1491012729619-3-444.269
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 444
+        nsecs: 269000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 4
+  stamp: 
+    secs: 445
+    nsecs: 994000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 445
+    nsecs: 994000000
+  id: /nav_test2_10695_1491012729619-4-445.994
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 445
+        nsecs: 993000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 5
+  stamp: 
+    secs: 447
+    nsecs: 496000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 447
+    nsecs: 496000000
+  id: /nav_test2_10695_1491012729619-5-447.496
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 447
+        nsecs: 496000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 6
+  stamp: 
+    secs: 448
+    nsecs: 318000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 448
+    nsecs: 318000000
+  id: /nav_test2_10695_1491012729619-6-448.318
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 448
+        nsecs: 318000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 7
+  stamp: 
+    secs: 450
+    nsecs: 527000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 450
+    nsecs: 527000000
+  id: /nav_test2_10695_1491012729619-7-450.527
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 450
+        nsecs: 527000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 8
+  stamp: 
+    secs: 452
+    nsecs:  40000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 452
+    nsecs:  40000000
+  id: /nav_test2_10695_1491012729619-8-452.040
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 452
+        nsecs:  40000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+header: 
+  seq: 9
+  stamp: 
+    secs: 453
+    nsecs: 655000000
+  frame_id: ''
+goal_id: 
+  stamp: 
+    secs: 453
+    nsecs: 655000000
+  id: /nav_test2_10695_1491012729619-9-453.655
+goal: 
+  target_pose: 
+    header: 
+      seq: 0
+      stamp: 
+        secs: 453
+        nsecs: 655000000
+      frame_id: map
+    pose: 
+      position: 
+        x: -0.133957017562
+        y: 0.17229825072
+        z: -0.145493790291
+      orientation: 
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+---
+
+
+user1:iggy_navigation$ rostopic echo /move_base/current_goal
+WARNING: no messages received and simulated time is active.
+Is /clock being published?
+header: 
+  seq: 0
+  stamp: 
+    secs: 442
+    nsecs: 387000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 1
+  stamp: 
+    secs: 443
+    nsecs: 487000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 2
+  stamp: 
+    secs: 444
+    nsecs: 293000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 3
+  stamp: 
+    secs: 445
+    nsecs: 997000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 4
+  stamp: 
+    secs: 447
+    nsecs: 504000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 5
+  stamp: 
+    secs: 448
+    nsecs: 406000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 6
+  stamp: 
+    secs: 450
+    nsecs: 617000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 7
+  stamp: 
+    secs: 452
+    nsecs: 122000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 8
+  stamp: 
+    secs: 453
+    nsecs: 723000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 9
+  stamp: 
+    secs: 455
+    nsecs: 123000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 10
+  stamp: 
+    secs: 456
+    nsecs: 626000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 11
+  stamp: 
+    secs: 457
+    nsecs: 940000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 12
+  stamp: 
+    secs: 459
+    nsecs: 843000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 13
+  stamp: 
+    secs: 460
+    nsecs: 743000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 14
+  stamp: 
+    secs: 461
+    nsecs: 948000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 15
+  stamp: 
+    secs: 463
+    nsecs: 959000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 16
+  stamp: 
+    secs: 465
+    nsecs:  66000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 17
+  stamp: 
+    secs: 467
+    nsecs: 375000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 18
+  stamp: 
+    secs: 469
+    nsecs: 597000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 19
+  stamp: 
+    secs: 471
+    nsecs: 599000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 20
+  stamp: 
+    secs: 473
+    nsecs:   1000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+header: 
+  seq: 21
+  stamp: 
+    secs: 475
+    nsecs: 609000000
+  frame_id: world
+pose: 
+  position: 
+    x: -0.133957017562
+    y: 0.17229825072
+    z: -0.145493790291
+  orientation: 
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+

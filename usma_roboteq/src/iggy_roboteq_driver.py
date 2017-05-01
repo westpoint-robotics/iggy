@@ -30,7 +30,7 @@ from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Vector3
 
 # global variables
-controlMode = 1 # Mode 0 = Estop; Mode 1 = Manual; Mode 2 = Autonomous
+controlMode = 0 # Mode 0 = Estop; Mode 1 = Manual; Mode 2 = Autonomous
 
 # Create a log file
 #outFile = open("roboteqLog.txt", "wb")
@@ -75,24 +75,35 @@ def setControlMode():
         pi5 = getdata()
         if len(pi4) == len(pi5) == 8: # process only if data is valid
             tot = int(pi4[3:7]) + int(pi5[3:7])
+            #rospy.loginfo("ROBOTEQ Controller in mode:%d tot is:%d",controlMode,tot)  
             if tot > 3500:
                 controlMode = 0
-            elif tot < 2500:    
+            elif tot < 2500:  
                 controlMode = 2
             else:
-                controlMode = 1
+                controlMode = 1             
+        else:
+            #print ("ROBOTEQ DRIVER PWM for Pin 4 an 5 not LEN of 8 4:%d 5:%d\n",len(pi4),len(pi5))
+            pass
     except (KeyboardInterrupt, SystemExit):
         raise
     except: # catch *all other* exceptions
         e = sys.exc_info()[0]
         rospy.loginfo( "<p>ROBOTEQ Error in setControlMode: %s</p>", e )
 
+def sendStop():
+        cmd = '!G 1 0\r'
+        ser.write(cmd)
+        cmd = '!G 2 0\r'
+        ser.write(cmd)
+
 def moveCallback(data):
     global controlMode
     if (controlMode == 2):  # robot is in autonomous mode
-        speed = data.linear.x *1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
+        #rospy.loginfo("ROBOTEQCB Controller inside if mode:%d",controlMode)  
+        speed = data.linear.x *-1000 #linear.x is value between -1 and 1 and input to wheels is between -1000 and 1000
                                     #1000 would give full speed range, but setting to lower value to better control robot
-        turn = (data.angular.z + 0.009)*500*-1 
+        turn = (data.angular.z + 0.009)*500 
         # G - Go to Speed or to Relative Position
         #print speed,turn
         cmd = '!G 1 ' + str(speed) + '\r'
@@ -102,7 +113,10 @@ def moveCallback(data):
 
 # Configures the roboteq motor controller to work with Iggy. Relying on the EEPROM has proven unreliable.
 def initalizeController():    
-    ser.write('^ECHOF 1\r')
+    ser.write('^ECHOF 1\r') # Turn on the ESTOP while resetting the configuration for the roboteq device
+    time.sleep(.01)
+    result = getdata()   
+    ser.write('!R 0\r') # Stop any scripts running on the roboteq device
     time.sleep(.01)
     result = getdata()
     # Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
@@ -111,16 +125,24 @@ def initalizeController():
                 '^MXMD 1\r',        '^PMOD 0 1\r']
     # Send commands to Roboteq and exit if any fail
     for cmd in configCmds:
+        result = getdata()
         ser.write(cmd)
         time.sleep(.01)
         result = getdata()
-        if (result != '+\r'):
+        if (result != '+\r'): # If setting the configuration fails
+            ser.write('!E 1\r') # Turn on the ESTOP
+            ser.write('!R 0\r') # Stop any scripts
             rospy.loginfo("ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: ", cmd,"\n")
             rospy.loginfo("ERROR: ROBOTEQ DRIVER CONFIGURATION FAILED. NOW EXITING ROBOTEQ DRIVER\n\n")
             exit()
+
+    ser.write('!R 1\r') # Restart any scripts running on the roboteq device 
+    time.sleep(.01)
+    result = getdata()
     rospy.loginfo("SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n")
     
 if __name__ == "__main__":
+    global controlMode
 
     # configure the serial connections 
     try:
@@ -129,7 +151,8 @@ if __name__ == "__main__":
             baudrate=115200, #8N1
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
-            bytesize=serial.EIGHTBITS
+            bytesize=serial.EIGHTBITS,
+            timeout=1
         )
     except:
         try:
@@ -138,7 +161,8 @@ if __name__ == "__main__":
                 baudrate=115200, #8N1
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
-                bytesize=serial.EIGHTBITS
+                bytesize=serial.EIGHTBITS,
+                timeout=1
             )
         except:
             raise
@@ -149,22 +173,27 @@ if __name__ == "__main__":
     #TODO rename to iggy_roboteq and align the namespace
     rospy.init_node('iggy_roboteq', anonymous=True)
     auto_pub = rospy.Publisher("/autonomous", Bool, queue_size=1)
+    #29.2 volts when batteries are below 2 bars but still above 1 bar.
     volt_pub = rospy.Publisher("/voltage", Float32, queue_size=1)
     rospy.Subscriber("/cmd_vel", Twist, moveCallback)
 
     initalizeController()
 
     rate = rospy.Rate(30)
+    lastControlMode = controlMode
     while not rospy.is_shutdown():
-
         setControlMode()
+        #rospy.loginfo("ROBOTEQ Controller in mode:%d",controlMode)  
         battVolt = getBattVoltage()
         if battVolt > 0.01:            
             volt_pub.publish(Float32(battVolt))
         if (controlMode == 2):  #robot is in autonomous mode
             auto_pub.publish(True) # Turn on autonomous lights
         else:    
+            if(lastControlMode == 2):
+                sendStop()
             auto_pub.publish(False)
+        lastControlMode = controlMode
         rate.sleep()
 
     ser.close()

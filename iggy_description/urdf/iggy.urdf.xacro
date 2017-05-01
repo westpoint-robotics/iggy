@@ -205,4 +205,28 @@
     <origin xyz="0 0 ${chassis_height}" rpy="0 0 0" />
   </xacro:depth_camera>
 
+        <link name="camera_arm">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder radius="0.007" length=".50" />
+                </geometry>
+                <material name="dark_grey">
+                    <color rgba="0.1 0.1 0.1 1" />
+                </material>
+            </visual>
+        </link> 
+
+        <joint name="camera_center_joint" type="fixed">
+            <parent link="camera_arm" />
+            <child link="camera_center" />
+            <origin rpy="0 0.30 0" xyz="0 0 0.25" />
+        </joint>
+
+        <joint name="camera_arm_joint" type="fixed">
+            <parent link="mid_mount" />
+            <child link="camera_arm" />
+            <origin rpy="0 0 0" xyz="0 0 0.25" />
+        </joint> 
+
 </robot>

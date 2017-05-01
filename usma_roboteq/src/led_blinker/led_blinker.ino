@@ -46,7 +46,7 @@ void loop() {
   // Send a simple pixel chase in...
   colorSolid(strip.Color(127,   0,   0), 50); // Red
   delay(3000);
-  for (int i=0; i<10; i++) {
+ for (int i=0; i<10; i++) {
     
   colorBlink(strip.Color(127,   0,   0), 1000); // Red
   }

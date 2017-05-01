@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<robot name="iggy" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- rosrun gazebo_ros spawn_model -urdf -file `rospack find iggy_description`/urdf/iggy2.urdf -z 1 -model iggy1  -->
+<!--body -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.92 0.61 0.31"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.92 0.61 0.31"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="25.0"/>
+            <inertia ixx="2.2666833333"  ixy="0"  ixz="0" iyy="5.3094333333" iyz="0" izz="5.3094333333" />
+        </inertial>
+    </link>
+    
+    <link name="mast">
+        <visual>
+            <geometry>
+                <box size="0.25 0.25 1.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.25 0.25 1.01"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.0108333333"  ixy="0"  ixz="0" iyy="1.0209333333" iyz="0" izz="1.0209333333" />
+        </inertial>
+    </link>
+    <joint name="mast_to_base_link" type="fixed">
+        <parent link="base_link"/>
+        <child link="mast"/>
+        <origin xyz="0 0 0.65" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="mast">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+<!--Wheel Base Back -->
+    <link name="back_wheel_base">
+        <visual>
+            <geometry>
+                <box size="0.11 0.45 0.315"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.11 0.45 0.315"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="25"/>
+            <inertia ixx="0.433975" ixy="0.0" ixz="0.0" iyy="0.5211" iyz="0.0" izz="0.1244333333"/>
+        </inertial> 
+    </link>
+    <joint name="back_wheel_base_to_base_link" type="fixed">
+        <parent link="base_link"/>
+        <child link="back_wheel_base"/>
+        <origin xyz="-0.355 0 -0.30" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="back_wheel_base">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+<!--back left wheels -->
+    <link name="blwheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.570796 0 0" />
+            <geometry>
+                <cylinder length="0.08" radius="0.125"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="1.570796 0 0" />
+            <geometry>
+                <cylinder length="0.08" radius="0.125"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.00550625" ixy="0.0" ixz="0.0" iyy="0.00550625" iyz="0.0" izz="0.0078125"/>
+        </inertial>
+    </link>
+    <joint name="back_wheel_base_to_blwheel" type="continuous">
+        <parent link="back_wheel_base"/>
+        <child link="blwheel"/>
+        <axis xyz="0 1 0" />
+        <origin xyz="0 0.26 -0.15" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="blwheel">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+<!--back right wheels -->
+    <link name="brwheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.570796 0 0" />
+            <geometry>
+                <cylinder length="0.08" radius="0.125"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="1.570796 0 0" />
+            <geometry>
+                <cylinder length="0.08" radius="0.125"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.00550625" ixy="0.0" ixz="0.0" iyy="0.00550625" iyz="0.0" izz="0.0078125"/>
+        </inertial>
+    </link>
+    <joint name="back_wheel_base_to_brwheel" type="continuous">
+        <parent link="back_wheel_base"/>
+        <child link="brwheel"/>
+        <axis xyz="0 1 0" />
+        <origin xyz="0 -0.26 -0.15" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="brwheel">
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+<!--Wheel Base Front -->
+    <link name="front_wheel_base">
+        <visual>
+            <geometry>
+                <box size="0.11 0.60 0.25"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.11 0.60 0.25"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="25"/>
+            <inertia ixx="0.433975" ixy="0.0" ixz="0.0" iyy="0.5211" iyz="0.0" izz="0.1244333333"/>
+        </inertial> 
+    </link>
+    <joint name="front_wheel_base_to_base_link" type="fixed">
+        <parent link="base_link"/>
+        <child link="front_wheel_base"/>
+        <origin xyz="0.38 0 -0.265" rpy="0 0 0"/>
+    </joint>
+    <gazebo reference="front_wheel_base">
+        <material>Gazebo/Turquoise</material>
+    </gazebo>
+    
+<!--Caster Front Left Wheel -->
+    <link name="cflwheel">
+        <visual>
+            <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.04" radius="0.07"/>
+            </geometry>      
+        </visual>
+        <collision>
+            <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.04" radius="0.07"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia ixx="0.0008125" ixy="0.0" ixz="0.0" iyy="0.0008125" iyz="0.0" izz="0.001225"/>
+        </inertial>
+    </link>  
+    <joint name="front_left_wheel_joint" type="continuous">
+        <parent link="cfl_pivotplate"/>
+        <child link="cflwheel"/>
+        <origin xyz="-0.03 0 -0.093" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+    <gazebo reference="cflwheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+<!--Caster Front Left Pivot Plate -->
+    <link name="cfl_pivotplate">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.05"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia ixx="0.0104166667" ixy="0.0" ixz="0.0" iyy="0.0029166667" iyz="0.0" izz="0.0029166667"/>
+        </inertial>
+    </link>
+    <joint name="cfl_pivot_joint" type="continuous">
+        <parent link="front_wheel_base"/>
+        <child link="cfl_pivotplate"/>
+        <origin xyz="0 0.21 -0.147" rpy="0 0 0"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+    </joint>
+    <gazebo reference="pivotplate">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+<!--Caster Front Right Wheel -->
+    <link name="cfrwheel">
+        <visual>
+            <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.04" radius="0.07"/>
+            </geometry>      
+        </visual>
+        <collision>
+            <origin rpy="1.57079632679 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.04" radius="0.07"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia ixx="0.0008125" ixy="0.0" ixz="0.0" iyy="0.0008125" iyz="0.0" izz="0.001225"/>
+        </inertial>
+    </link>
+    <joint name="front_right_wheel_joint" type="continuous">
+        <parent link="cfr_pivotplate"/>
+        <child link="cfrwheel"/>
+        <origin xyz="-0.03 0 -0.0925" rpy="0 0 0"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+    </joint>
+    <gazebo reference="cfrwheel">
+        <material>Gazebo/Red</material>
+    </gazebo>
+<!--Caster Front Left Pivot Plate -->
+    <link name="cfr_pivotplate">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.05"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia ixx="0.0104166667" ixy="0.0" ixz="0.0" iyy="0.0029166667" iyz="0.0" izz="0.0029166667"/>
+        </inertial>
+    </link>
+    <joint name="cfr_pivot_joint" type="continuous">
+        <parent link="front_wheel_base"/>
+        <child link="cfr_pivotplate"/>
+        <origin xyz="0 -0.21 -0.1475" rpy="0 0 0"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+    </joint>
+    <gazebo reference="pivotplate">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+<!--Plugins -->
+    <gazebo>
+     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+          <rosDebugLevel>Debug</rosDebugLevel>
+          <publishWheelTF>false</publishWheelTF>
+          <robotNamespace>/</robotNamespace>
+          <publishTf>1</publishTf>
+          <publishWheelJointState>false</publishWheelJointState>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>100.0</updateRate>
+          <rightJoint>back_wheel_base_to_brwheel</rightJoint>
+          <leftJoint>back_wheel_base_to_blwheel</leftJoint>
+          <wheelSeparation>1.6</wheelSeparation>
+          <wheelDiameter>1.6</wheelDiameter>
+          <broadcastTF>1</broadcastTF>
+          <wheelTorque>30</wheelTorque>
+          <wheelAcceleration>1.8</wheelAcceleration>
+          <commandTopic>cmd_vel</commandTopic>
+          <odometryFrame>odom</odometryFrame> 
+          <odometryTopic>odom</odometryTopic> 
+          <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>    
+    </gazebo> 
+
+</robot> 

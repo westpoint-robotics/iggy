@@ -1,0 +1,12 @@
+DML notes 28APR2017:
+Testing robot navigation by running:
+roslaunch iggy_bringup iggy_test_bringup 
+This brings up just the nodes needed for waypoint navigation.
+
+Next launch the waypoint publisher nodes with:
+roslaucn iggy_navigation waypointNavTest
+This node publishes the waypoints in the csv file it also provides a visualization of the waypoints in RVIZ. This will generate an error if the goal waypoint is not on the global map. If this occurs move the robot closer or enlarge the global map.
+
+Problem: The robot facing east on startup should result in all the transforms aligning in RVIZ. The actual behavior was the map transform was 180 degrees off from the odom and baselink transforms. I suspect this is caused by a change I made in the cns driver code. I sent a command to the cns to compensate for it being physically mounted at 180 degrees from the way the KVH instructions said it should.
+
+Next Step: Revert the cns code and retest.

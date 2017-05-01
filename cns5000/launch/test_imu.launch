@@ -9,10 +9,50 @@
 <node name="novatel_CNS5000" pkg="cns5000" type="usma_novatel_driver.py" output="screen">
 	<remap from="gps/fix" to="/navsat/fix"/>   
 </node>  -->
-<node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen"/>
+<node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000"/>
 
-<!-- Start an rviz node with a custom configuration  -->
+<node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
+    <param name="frame_id" value="imu_frame"/>
+    <param name="frame_local" value="ENU"/>
+    <param name="frame_local_imu" value="ENU"/>
+    <param name="device" value="/dev/mti700"/>
+    <param name="baudrate" value="115200"/>
+</node>
+
+<!-- 
+
+<node pkg="imu_compass" type="imu_compass" name="imu_compass" output="screen" ns="cns5000" >
+    <remap from="imu/data" to="/cns5000/imu/raw" />
+    <remap from="imu/mag" to="/xsens/magnetic" />
+</node>
+
+
+<node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
+    <remap from="imu/data_raw" to="/cns5000/imu/raw" />
+    <remap from="imu/data" to="/cns5000bag/imu/data" />
+    <remap from="imu/mag" to="/xsens/magnetic" />
+    <param name="pub_tf" value="false"/>
+    <param name="fixed_frame" value="odom"/>
+    <param name="stateless" value="false"/>
+    <param name="reverse_tf" value="true"/>
+    <param name="world_frame" value="enu"/>
+</node>    
+Start an rviz node with a custom configuration  -->
 <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find cns5000)/launch/config/demobag_imu.rviz"/>
 
 </launch>
 
+<!--
+/imu/compass_heading
+/imu/data
+/imu/data_compass
+/imu/declination
+/imu/mag
+/imu/mag_calib
+/imu/raw_compass_heading
+/rosout
+/rosout_agg
+/statistics
+/tf
+/tf_static
+-->

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--   -->  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 map odom 100" />
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_cns_frame" args="-0.28 0 1.18 0 0 0 base_link cns5000_frame 100" />
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame" args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
+
+    #### cns5000 GPS NODE ###############################################
+    <node name="novatel_gps" pkg="cns5000" type="usma_novatel_driver.py" output="screen" ns="cns5000">
+        <remap from="gps/fix" to="/cns5000/fix"/>  
+    </node> 
+
+     
+    <!-- 
+    <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="cns5000"/>   -->
+    #### cns5000 IMU NODES ###############################################
+    <node name="kvh_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
+        <remap from="imu/raw" to="imu/data"/>        
+    </node>
+    
+    <!-- output topic is imu/data 
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" output="screen" ns="cns5000">
+        <remap from="imu/mag" to="/xsens/magnetic" />
+        <param name="pub_tf" value="false"/>
+        <param name="fixed_frame" value="odom2"/>
+        <param name="reverse_tf" value="true"/>
+        <param name="stateless" value="true"/>
+    </node>  -->
+    #### XSENS IMU NODES ###############################################
+    <node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" respawn="true" output="screen" ns="xsens" >
+        <remap from="imu/data" to="imu/data_raw" />
+        <param name="frame_id" value="imu_frame"/>
+        <param name="frame_local" value="ENU"/>
+        <param name="frame_local_imu" value="ENU"/>
+        <param name="device" value="/dev/mti700"/>
+        <param name="baudrate" value="115200"/>
+    </node>
+
+    #### Clearpath IMU_COMPASS ###############################################
+    <node name="xsens_imu_compass" pkg="imu_compass" type="imu_compass" output="screen" ns="xsenscompass">
+        <remap from="imu/data" to="/xsens/imu/data_raw"/>        
+        <remap from="imu/mag" to="/xsens/magnetic" />
+    </node>
+
+    <node name="cns_imu_compass" pkg="imu_compass" type="imu_compass" output="screen" ns="cnscompass">
+        <remap from="imu/data" to="/cns5000/imu/data"/>        
+        <remap from="imu/mag" to="/xsens/magnetic" />
+    </node>
+<!--
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" respawn="true" name="imu_filter_node" ns="xsens">
+        <remap from="imu/mag" to="/xsens/magnetic" />
+        <param name="pub_tf" value="false"/>
+        <param name="fixed_frame" value="odom3"/>
+        <param name="reverse_tf" value="true"/>
+    </node>
+    -->
+    #### LOCALIZATION  ###############################################
+
+    <!--     <rosparam command="load" file="$(find iggy_control)/config/test_single_ekf_iggy.yaml" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
+        <remap from="odometry/filtered" to="odometry/filtered_map"/>
+    </node>
+
+    -->
+
+    <!-- <node pkg="rosbag" type="record" name="rosbagrecord" args="-a -o /home/user1/Data/"/>
+
+<param name="child_frame_id" value="base_link"/>
+
+Publications: 
+ * /odometry/gps [nav_msgs/Odometry]
+ * /tf_static [tf2_msgs/TFMessage]
+ * /rosout [rosgraph_msgs/Log]
+
+Subscriptions: 
+ * /tf [tf2_msgs/TFMessage]
+ * /tf_static [tf2_msgs/TFMessage]
+ * /clock [rosgraph_msgs/Clock]
+ * /cns5000/fix [sensor_msgs/NavSatFix]
+ * /cns5000/odom/gps [nav_msgs/Odometry]
+
+
+
+
+ -->
+
+</launch>

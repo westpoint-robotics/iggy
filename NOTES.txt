@@ -1,3 +1,65 @@
+Command LIne method for removing gedit backup files recursively:
+find . -type f -name '*~' -delete
+
+Command line find and replace string in all files recursively
+egrep -rl 'novatel' iggy_control/config | xargs sed -i 's/novatel/cns5000/g'
+
+
+20170417 - TODO 
+=================================
+Analyze INSPVAA usage.
+
+
+
+20170409 - TODO branch larkinIRL
+==================================
+node novatel_CNS5000 renamed to ns=cns5000 and node novatelgps
+/cmd_vel_relay should publish /iggy_velocity_controller/cmd_vel and generate /iggy_velocity_controller/odom
+IRL uses gps_conv to get /iggy_velocity_controller/odom. Check if being published.
+
+TODO:
+SIMULATION 
+==================================================
+TODO: Add the /autonomous topic being published
+TODO: Add the /voltage topic being published
+
+TODO: Stop the publishing of /cns5000/vel and all /cns5000 except /cns5000/fix and /cns5000/imu_data
+
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic info /gps/filtered 
+Type: sensor_msgs/NavSatFix
+
+Publishers: 
+ * /navsat_transform (http://192.168.2.200:39692/)
+
+Subscribers: None
+
+------------------------------
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic info /iggy_velocity_controller/cmd_vel
+Type: geometry_msgs/Twist
+
+Publishers: 
+ * /cmd_vel_relay (http://192.168.2.200:55316/)
+
+Subscribers: 
+ * /gazebo (http://192.168.2.200:38918/)
+
+
+
+IN IRL:
+TODO: Below is appears uneeded
+user1@igvc2:~/catkin_ws/src/iggy$ rostopic info /odom/fix 
+Type: sensor_msgs/NavSatFix
+
+Publishers: None
+
+Subscribers: 
+ * /gps_conv (http://192.168.2.200:57118/)
+
+
+=====================================================================================================
+=====================================================================================================
+=====================================================================================================
+
 git difftool -d origin/irl 
 
 

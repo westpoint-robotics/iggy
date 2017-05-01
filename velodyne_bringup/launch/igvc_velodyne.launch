@@ -8,7 +8,7 @@
   <!-- declare arguments with default values -->
   <arg name="pcap" default="" />
   <!--arg name="pcap" default="/home/igvc/catkin_ws/data/velodyne64.pcap"/> -->
-<arg name="calibration" default="$(find velodyne_bringup)/params/db.yaml"/>
+<arg name="calibration" default="$(find velodyne_bringup)/params/64E_Factory.yaml"/>
 
  <!-- <arg name="calibration" default="$(find velodyne_bringup)/params/ll243.yaml"/> -->
 
@@ -38,6 +38,8 @@
     <param name="range_max" value="50"/>
     
 </node>
+
+
 <!--
 <node name="pointcloud_to_laserscan_lines" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
 

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="joy_dev" default="/dev/input/js0" />
+
+
+    <node pkg="joy" type="joy_node" name="joy_node" />
+
+    <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
+      <remap from="cmd_vel" to="/cmd_vel" />
+    </node>
+
+        <node pkg="iggy_control" type="odom_from_cmdvel.py" name="cmd_odom" output="screen"/>
+
+</launch>

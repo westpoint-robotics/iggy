@@ -15,7 +15,7 @@ from geometry_msgs.msg import Vector3
 # configure the serial connections 
 try:
     ser = serial.Serial(
-        port='/dev/ttyACM1',
+        port='/dev/arduino',
         baudrate=9600, #8N1
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
@@ -25,7 +25,7 @@ except:
     raise
 #    try:
 #        ser = serial.Serial(
-#            port='/dev/ttyACM1',
+#            port='/dev/arduino',
 #            baudrate=9600, #8N1
 #            parity=serial.PARITY_NONE,
 #            stopbits=serial.STOPBITS_ONE,
@@ -50,10 +50,11 @@ def moveCallback(data):
     if (timenow - lastTime > rospy.Duration(.0001)):
         lastTime = timenow    
         switch = data.z
-        if (switch == 1): 
+        print switch
+        if (switch == 1.0): 
             ser.write('a')
             #print('a')
-        elif (switch ==0):
+        elif (switch ==0.0):
             ser.write('b')
             #print('b')
         else:

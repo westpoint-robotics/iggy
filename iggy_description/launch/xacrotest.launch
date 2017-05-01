@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+<!--  <arg name="config" default="base" />
+
+  <param name="robot_description"
+         command="$(find iggy_description)/scripts/env_run
+                    $(find iggy_description)/urdf/configs/$(arg config)
+                    $(find xacro)/xacro $(find iggy_description)/urdf/iggy.urdf.xacro" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>
+
+ Convert xacro and put on parameter server -->
+<param name="robot_description" command="$(find xacro)/xacro.py $(find iggy_description)/urdf/iggy2.urdf.xacro" />
+
+<!-- Spawn a robot into Gazebo -->
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model robot" />
+</launch>
+<!--
+Code for testing of urdf files generated using xacro
+
+rosrun xacro xacro.py `rospack find iggy_description`/urdf/iggy.urdf.xacro -o deletme.urdf
+
+check_urdf deletme.urdf 
+
+
+
+-->
