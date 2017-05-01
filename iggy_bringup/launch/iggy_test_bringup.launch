@@ -6,6 +6,7 @@
     <arg name="use_xsens" default="false" />
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
+	<arg name="use_stereo" default="false" />
 
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
@@ -16,8 +17,6 @@
     <arg name="roll" default="0"/>
     <arg name="pitch" default="0"/>
     <arg name="yaw" default="0"/>
-
-    <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 map odom 100" />
 
     <!-- TRANSFORMS  -->
     <include file="$(find iggy_bringup)/launch/config/tf.launch"/>
@@ -76,6 +75,16 @@
         <include file="$(find iggy_control)/launch/teleopIRL.launch">
             <arg name="joystick" value="true"/>
         </include>
+    </group>
+	
+	<group if="$(arg use_stereo)">      
+    #### STEREO VISION ######################################################
+        <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu password="ubuntu"
+			env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
+			default="false" />
+
+		<node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
+
     </group>
         
     <!-- Wheel Motor Controller  -->
