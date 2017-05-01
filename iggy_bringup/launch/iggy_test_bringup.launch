@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="use_laser" default="false" />
+    <arg name="use_laser" default="true" />
     <arg name="use_phidgets" default="false" />
-    <arg name="use_xsens" default="false" />
+    <arg name="use_xsens" default="true" />
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
+    <arg name="use_stereo" default="false" />
 
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
@@ -50,6 +51,14 @@
         </node> 
     </group>
     
+<group if="$(arg use_stereo)">      
+    #### STEREO VISION ######################################################
+        <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
+			env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
+			default="false" />
+		<node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
+    </group>
+
     <group if="$(arg use_xsens)">        
     #### XSENS IMU NODES ###############################################
         <node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
