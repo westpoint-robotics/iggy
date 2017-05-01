@@ -73,18 +73,18 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_link:
-          Value: true
-        cns5000_frame:
           Value: false
+        cns5000_frame:
+          Value: true
+        imu_frame:
+          Value: true
         left_wheel_frame:
           Value: false
         map:
           Value: true
         odom:
-          Value: true
-        right_wheel_frame:
           Value: false
-        utm:
+        right_wheel_frame:
           Value: false
         velodyne:
           Value: false
@@ -102,14 +102,14 @@ Visualization Manager:
               base_link:
                 cns5000_frame:
                   {}
+                imu_frame:
+                  {}
                 left_wheel_frame:
                   {}
                 right_wheel_frame:
                   {}
                 velodyne:
                   {}
-            utm:
-              {}
       Update Interval: 0
       Value: true
     - Alpha: 1

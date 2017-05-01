@@ -6,7 +6,7 @@
     args="0.21 0 1.58 0 0 0 base_link velodyne 100" />
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_cns_frame"
-    args="-0.28 0 1.18 -1.5708 0 0 base_link cns5000_frame 100" />
+    args="-0.28 0 1.18 0 0 0 base_link cns5000_frame 100" />
 
 
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_left_wheel_frame"
