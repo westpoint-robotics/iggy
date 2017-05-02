@@ -41,12 +41,9 @@ outFile = open(fName, "wb")
 # Send commands to CNS-5000 to start the logs
 ser.write('unlogall\r\n')
 time.sleep(0.03)
+#TODO Move these commands to the big while loop and only run them if needed.
 ser.write('ASSIGNLBANDBEAM AUTO\r\n')
 time.sleep(0.03)
-#ser.write('VEHICLEBODYROTATION 0 0 180\r\n')
-#time.sleep(0.03)
-#ser.write('APPLYVEHICLEBODYROTATION ENABLE\r\n')
-#time.sleep(0.03)
 ser.write('LOG COM1 INSPVAA ONTIME 0.5\r\n')
 time.sleep(0.03)
 ser.write('LOG COM1 BESTPOSA ONTIME 1\r\n')
