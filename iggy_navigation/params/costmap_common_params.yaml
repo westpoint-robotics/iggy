@@ -22,7 +22,7 @@ obstacles_layer:
 
     laser_scan_sensor: {sensor_frame: front_laser, data_type: LaserScan, topic: /scan1, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0, cost_scaling_factor: 5.0}
 
-    white_lines: {enabled: true, sensor_frame: zed_current_frame, data_type: PointCloud2, topic: /point_cloud/white_cloud2, marking: true, clearing: false, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
+    white_lines: {enabled: true, sensor_frame: map, data_type: PointCloud2, topic: /point_cloud/white_cloud2, marking: true, clearing: false, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
 
 inflater_layer:
  inflation_radius: 2.50
