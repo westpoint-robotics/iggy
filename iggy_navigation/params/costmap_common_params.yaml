@@ -13,16 +13,9 @@ meter_scoring: true
 footprint: [[-0.21, -0.165], [-0.21, 0.165], [0.21, 0.165], [0.21, -0.165]]
 footprint_padding: 0.1
 
-plugins:
-- {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
-- {name: inflater_layer, type: "costmap_2d::InflationLayer"}
+observation_sources:  laser_scan_sensor
 
-obstacles_layer:
-    observation_sources: white_lines laser_scan_sensor
+laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0, cost_scaling_factor: 5.0, inf_is_valid: true}
 
-    laser_scan_sensor: {sensor_frame: front_laser, data_type: LaserScan, topic: /scan1, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0, cost_scaling_factor: 5.0}
+#white_lines: {clearing: true, enabled: true, sensor_frame: base_link, data_type: PointCloud2, topic: /point_cloud/white_cloud, marking: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
 
-    white_lines: {enabled: true, sensor_frame: map, data_type: PointCloud2, topic: /point_cloud/white_cloud2, marking: true, clearing: false, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
-
-inflater_layer:
- inflation_radius: 2.50

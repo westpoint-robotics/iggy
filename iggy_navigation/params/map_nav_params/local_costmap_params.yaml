@@ -8,3 +8,6 @@ local_costmap:
    resolution: 0.1
    static_map: false
    rolling_window: true
+
+
+

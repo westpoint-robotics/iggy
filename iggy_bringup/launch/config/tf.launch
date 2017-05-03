@@ -21,8 +21,8 @@
 <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_frame"
     args="0.28 0.0 0.39 0 0 0 base_link imu_frame 100" />
 	
-<node pkg="tf" type="static_transform_publisher" name="zed_to_map"
-    args="0.44 0.0 1.18 0 0.52 0 map zed_current_frame 100" machine="igvc-stereo"/>
+<node pkg="tf" type="static_transform_publisher" name="zed_to_base_link"
+    args="0.44 0.0 1.18 0 0.52 0 base_link zed_current_frame 100" machine="igvc-stereo"/>
 
 <!--<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link"
     args="0 0 0.11 0 0 0 1 base_footprint base_link 100" /> 

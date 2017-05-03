@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="use_laser" default="false" />
+    <arg name="use_laser" default="true" />
     <arg name="use_phidgets" default="false" />
     <arg name="use_xsens" default="false" />
     <arg name="use_cns5000" default="true" />
@@ -65,9 +65,6 @@
     #### LASER RANGE FINDER NODES #######################################
     <group if="$(arg use_laser)">    
         <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />
-
-        <!-- FOR INDOOR NAVIGATION USE  -->   
-        <include file="$(find laser_scan_matcher)/demo/iggy_laser_scan_matcher.launch"/> 
     </group>
     
     #### Controllers #######################################
