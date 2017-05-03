@@ -31,7 +31,6 @@
         <node name="kvh_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
             <remap from="imu/raw" to="imu/data"/>        
         </node>
-
         <node pkg="iggy_navigation" type="gps_odom.py" name="gps_odom" output="screen" ns="cns5000"/>
     </group>
     
