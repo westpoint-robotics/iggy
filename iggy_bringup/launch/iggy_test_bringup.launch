@@ -79,12 +79,12 @@
         <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
 	    env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
 	    default="false" />
-
-	<node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
-
+	    <node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
         <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
 
-    </group>
+        <node pkg="tf" type="static_transform_publisher" name="zed_to_base_link"
+            args="0.44 0.0 1.18 0 0.52 0 base_link zed_current_frame 100" machine="igvc-stereo"/>
+    </group> 
 
     <!-- Wheel Motor Controller  -->
     <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
