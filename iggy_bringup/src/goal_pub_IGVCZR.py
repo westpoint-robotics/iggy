@@ -30,9 +30,6 @@ from random import sample
 from math import pow, sqrt
 from LatLongUTMconversion import LLtoUTM, UTMtoLL
 
-
-
-
 class NavTest():
     def __init__(self):     
         rospy.init_node('nav_test', anonymous=True)        

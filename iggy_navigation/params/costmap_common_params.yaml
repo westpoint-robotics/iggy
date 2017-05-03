@@ -15,7 +15,7 @@ footprint_padding: 0.1
 
 observation_sources:  laser_scan_sensor
 
-laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0, cost_scaling_factor: 5.0, inf_is_valid: true}
+laser_scan_sensor: {data_type: LaserScan, topic: /scan, marking: true, clearing: true}
 
 #white_lines: {clearing: true, enabled: true, sensor_frame: base_link, data_type: PointCloud2, topic: /point_cloud/white_cloud, marking: true, max_obstacle_height: 4.0, min_obstacle_height: -4.0}
 
