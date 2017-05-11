@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <opencv2/core/core.hpp>
-using namespace std;
 #include <opencv2/gpu/gpu.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -87,30 +86,25 @@ void ColorFilter::configCallback(igvc_stereo::color_filter_paramsConfig &config,
  *     6. finally, take this processed image and find the lines using
  * Probabilistic Hough Transform HoughLinesP
  */
-//cv::gpu::GpuMat ColorFilter::findLines(const cv::Mat& src_image)
-cv::Mat ColorFilter::findLines(const cv::Mat& src_image)
+cv::gpu::GpuMat ColorFilter::findLines(const cv::Mat& src_image)
 {
-    this->original_image = src_image;//.upload(src_image);
+    this->original_image.upload(src_image);
     // Convert the BGR image to Gray scale
-    //cv::gpu::cvtColor(this->original_image, this->gray_image, CV_BGR2GRAY);
-    cv::cvtColor(this->original_image, this->gray_image, CV_BGR2GRAY);
+    cv::gpu::cvtColor(this->original_image, this->gray_image, CV_BGR2GRAY);
 
     // Reduce resolution of image
-    //cv::gpu::GaussianBlur(this->gray_image, this->blur_image, cv::Size(7, 7), 0.0, 0.0,
-    cv::GaussianBlur(this->gray_image, this->blur_image, cv::Size(7, 7), 0.0, 0.0,
+    cv::gpu::GaussianBlur(this->gray_image, this->blur_image, cv::Size(7, 7), 0.0, 0.0,
         cv::BORDER_DEFAULT);
 
     // Threshold the image
-    //cv::gpu::threshold(this->blur_image, this->thresh_image, this->thresh_val, 1,
-    cv::threshold(this->blur_image, this->thresh_image, this->thresh_val, 1,
+    cv::gpu::threshold(this->blur_image, this->thresh_image, this->thresh_val, 1,
         cv::THRESH_TOZERO);
 
     // Erode the image
     cv::Mat element = getStructuringElement(
         cv::MORPH_ELLIPSE, cv::Size(2 * erosion_size + 1, 2 * erosion_size + 1),
         cv::Point(erosion_size, erosion_size));
-    //cv::gpu::erode(this->thresh_image, this->eroded_image, element);
-    cv::erode(this->thresh_image, this->eroded_image, element);
+    cv::gpu::erode(this->thresh_image, this->eroded_image, element);
 
     // Canny edge detection TODO: make Canny values dynamic
     //cv::gpu::Canny(this->eroded_image, this->canny_image, 50, 250, 3);
@@ -253,8 +247,7 @@ void ColorFilter::displayOriginal()
     try {
         // Show the images in a window for debug purposes
 	cv::Mat orgImage;
-	//this->original_image.download(orgImage);
-  orgImage = this->original_image;
+	this->original_image.download(orgImage);
         cv::Mat disImage;
         cv::resize(orgImage, disImage, cv::Size(400, 300));
         cv::imshow("Original Image", disImage);
@@ -277,8 +270,7 @@ void ColorFilter::displayThreshold()
     try {
         // Show the images in a window for debug purposes
 	cv::Mat orgImage;
-	//this->thresh_image.download(orgImage);
-  orgImage = this->thresh_image;
+	this->thresh_image.download(orgImage);
         cv::Mat disImage;
         cv::resize(orgImage, disImage, cv::Size(400, 300));
         cv::imshow("Threshold Image", disImage);
@@ -301,8 +293,7 @@ void ColorFilter::displayEroded()
     try {
         // Show the images in a window for debug purposes
 	cv::Mat orgImage;
-	//this->eroded_image.download(orgImage);
-  orgImage = this->eroded_image;
+	this->eroded_image.download(orgImage);
         cv::Mat disImage;
         cv::resize(orgImage, disImage, cv::Size(400, 300));
         cv::imshow("Eroded Image", disImage);
@@ -325,8 +316,7 @@ void ColorFilter::displayCanny()
     try {
         // Show the images in a window for debug purposes
 	cv::Mat orgImage;
-	//this->canny_image.download(orgImage);
-  orgImage = this->canny_image;
+	this->canny_image.download(orgImage);
         cv::Mat disImage;
         cv::resize(orgImage, disImage, cv::Size(400, 300));
         cv::imshow("Canny Edge Image", disImage);

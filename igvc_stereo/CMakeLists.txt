@@ -20,7 +20,7 @@ elseif(CMAKE_SYSTEM_NAME2 MATCHES "armv7l" ) # Jetson TK1
     set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 else() # Ubuntu Desktop
     SET(OCV_VERSION "3.1")
-    SET(CUDA_VERSION "7.5")
+    SET(CUDA_VERSION "8.0")
     message("*** On Ubuntu 14, change line 30 of CMakeLists.txt to CUDA 7.5")
 endif()
 
@@ -87,7 +87,7 @@ link_directories(${PCL_LIBRARY_DIRS})
 ###############################################################################
 # EXECUTABLE
 
-add_definitions(-std=c++11 -lopencv_gpu)# -m64) #-Wall)
+add_definitions(-std=c++11)# -m64) #-Wall)
 
 set(LINK_LIBRARIES
   ${catkin_LIBRARIES}

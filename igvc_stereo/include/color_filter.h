@@ -14,7 +14,7 @@ public:
 
 	//! Callback function for dynamic reconfigure server.
 	void configCallback(igvc_stereo::color_filter_paramsConfig &config, uint32_t level);
-	cv::Mat findLines(const cv::Mat& src_image);
+	cv::gpu::GpuMat findLines(const cv::Mat& src_image);
 
 	int rgb2hsv(uint32_t rgb);
 	bool checkRed(float rgb);
@@ -31,7 +31,7 @@ private:
 	dynamic_reconfigure::Server<igvc_stereo::color_filter_paramsConfig> dr_srv_;
 
 	// 2016 Includes
-	std::vector<cv::Vec4i> lines;
+	cv::vector<cv::Vec4i> lines;
 	std::vector<cv::Point2i> pixels;
 	int thresh_val; // The threshold value used to identify white in the image
 	int erosion_size; // The  size of our kernel to erode the image with
@@ -40,14 +40,14 @@ private:
 	int h_thresh; // Accumulator threshold parameter. Only those lines are returned that get enough votes (hough transform)
 	int h_minLineLen; // Line segments shorter than that are rejected (hough transform)
 	int h_maxLineGap; // Maximum allowed gap between points on the same line to link them (hough transform)
-	cv::Mat original_image; // The original source image
-	cv::Mat gray_image; // The image after it is converted to grayscale
-	cv::Mat blur_image; // The image after it a blur effect is applied
-	cv::Mat thresh_image; // The image after the colors are categorized by defined threshold values
-	cv::Mat eroded_image; // The image after an erosion filter is applied
-	cv::Mat canny_image; // The image after canny edge detection is complete
-	cv::Mat hough_image; // The image with the hugh line transform is applied
-	cv::Mat cyan_image; // The image after all detected white lines are drawn in cyan color
+	cv::gpu::GpuMat original_image; // The original source image
+	cv::gpu::GpuMat gray_image; // The image after it is converted to grayscale
+	cv::gpu::GpuMat blur_image; // The image after it a blur effect is applied
+	cv::gpu::GpuMat thresh_image; // The image after the colors are categorized by defined threshold values
+	cv::gpu::GpuMat eroded_image; // The image after an erosion filter is applied
+	cv::gpu::GpuMat canny_image; // The image after canny edge detection is complete
+	cv::gpu::GpuMat hough_image; // The image with the hugh line transform is applied
+	cv::gpu::GpuMat cyan_image; // The image after all detected white lines are drawn in cyan color
 	int lower_limit; // The image after all detected white lines are drawn in cyan color
 	int upper_limit; // The image after all detected white lines are drawn in cyan color
 

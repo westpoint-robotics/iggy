@@ -17,7 +17,6 @@
 
 #include <ros/ros.h>
 #include <opencv2/opencv.hpp>
-using namespace std;
 #include <opencv2/gpu/gpu.hpp>
 
 // 2016 Pipeline includes
@@ -120,7 +119,7 @@ int main(int argc, char** argv) {
     blue_cloud.clear();
     white_cloud.clear();
     cv::Vec3b wl_point;
-    //cv::gpu::GpuMat image;//(height, width, CV_8UC4, 1);
+    cv::gpu::GpuMat image;//(height, width, CV_8UC4, 1);
     cv::Mat host_image;//(height, width, CV_8UC4, 1);
     cv::Mat cloud_image;
 
@@ -149,9 +148,8 @@ int main(int argc, char** argv) {
 		//Filter the image for white lines and red/blue flags
 		cv::cvtColor(slMat2cvMat(zed->retrieveImage(sl::zed::SIDE::LEFT)), host_image, CV_RGBA2RGB);
 
-		//cv::gpu::GpuMat cv_filteredImage = color_filter.findLines(host_image);
-    cloud_image = color_filter.findLines(host_image);
-		//cv_filteredImage.download(cloud_image);
+		cv::gpu::GpuMat cv_filteredImage = color_filter.findLines(host_image);
+		cv_filteredImage.download(cloud_image);
 
 		//printf("Cloud height: %d\n", height);
 		//printf("filtered height: %d\n", cloud_image.rows);
