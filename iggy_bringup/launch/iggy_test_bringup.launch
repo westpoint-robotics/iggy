@@ -6,7 +6,6 @@
     <arg name="use_xsens" default="false" />
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
-    <arg name="use_stereo" default="true" />
 
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
@@ -72,17 +71,7 @@
             <arg name="joystick" value="true"/>
         </include>
     </group>
-	
-    <group if="$(arg use_stereo)">      
-    #### STEREO VISION ######################################################
-        <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
-	        env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
-	        default="false" />
-	    <node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
-        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
-
-    </group> 
-
+   
     <!-- Wheel Motor Controller  -->
     <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
 
