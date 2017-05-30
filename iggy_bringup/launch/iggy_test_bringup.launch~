@@ -76,8 +76,8 @@
     <group if="$(arg use_stereo)">      
     #### STEREO VISION ######################################################
         <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
-	        env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
-	        default="false" />
+	    env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
+	    default="false" />
 	    <node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
         <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
 

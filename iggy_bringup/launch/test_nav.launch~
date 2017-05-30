@@ -3,6 +3,10 @@
   <!-- TRANSFORMS   -->
   <include file="$(find iggy_bringup)/launch/config/tf.launch"/> 
 
+        <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
+	        env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
+	        default="false" />
+
   <!-- 
 <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
     args="0 0 0 0 0 0 1 odom base_link 100" />    -->
