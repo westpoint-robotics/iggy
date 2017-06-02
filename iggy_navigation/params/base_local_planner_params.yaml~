@@ -4,7 +4,7 @@ TrajectoryPlannerROS:
   acc_lim_x: 10.0  # 10.0
   acc_lim_theta: 20.0  #  20.0
 
-  max_vel_x: 0.9 #.5 # 5mph = 2.2352 m/s
+  max_vel_x: 0.6 #.5 # 5mph = 2.2352 m/s
   min_vel_x: 0.3
 
   max_vel_theta: 1.75 #1.75

@@ -4,8 +4,6 @@
 The Roboteq Controller has a script running on it that will enable and disable the ESTOP with no
 interaction from this code. The ESTOP and manual driving modes are not effected by this script, they
 are independent of Iggy's computer.
-
-
 SYMBOLS USED FOR SERIAL COMMO:
 ~ Read configuration operation 
 ^ Write configuration operation 
@@ -13,10 +11,8 @@ SYMBOLS USED FOR SERIAL COMMO:
 ? Run time queries
 % Maintenance Commans
 _ Carriage return
-
 + Command acknowledgement
 - Command not recognized or accepted
-
 '''
 import serial
 import rospy
@@ -117,6 +113,8 @@ def initalizeController():
     time.sleep(.01)
     result = getdata()   
     ser.write('!R 0\r') # Stop any scripts running on the roboteq device
+
+    ser.inWaiting() > 0: 
     time.sleep(.01)
     result = getdata()
     # Below are the initial configurations for the Roboteq motor controller required by Iggy. See RoboteqIggySettings.pdf.
@@ -127,12 +125,13 @@ def initalizeController():
     for cmd in configCmds:
         result = getdata()
         ser.write(cmd)
-        time.sleep(.01)
+        time.sleep(.1)
         result = getdata()
+        rospy.loginfo("CONFIG FEEDBACK : %s " %result)
         if (result != '+\r'): # If setting the configuration fails
             ser.write('!E 1\r') # Turn on the ESTOP
             ser.write('!R 0\r') # Stop any scripts
-            rospy.loginfo("ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: ", cmd,"\n")
+            rospy.loginfo("ERROR: ROBOTEQ DRIVER FAILED TO SET CONFIGURATION WITH: %s \n" %cmd)
             rospy.loginfo("ERROR: ROBOTEQ DRIVER CONFIGURATION FAILED. NOW EXITING ROBOTEQ DRIVER\n\n")
             exit()
 
@@ -142,7 +141,6 @@ def initalizeController():
     rospy.loginfo("SUCCESSFULLY CONFIGURED THE ROBOTEQ MOTOR CONTROLLER\n")
     
 if __name__ == "__main__":
-    global controlMode
 
     # configure the serial connections 
     try:

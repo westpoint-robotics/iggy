@@ -5,7 +5,7 @@
   <remap from="cmd_vel" to="/cmd_vel"/>
   </node>
  -->
-  <node pkg="usma_roboteq" type="iggy_roboteq_driver.py" name="roboteq_driver" output="screen">
+  <node pkg="usma_roboteq" type="iggy_roboteq_driver.py" name="roboteq_driver" respawn="true" output="screen">
   </node> 
 
 </launch>
