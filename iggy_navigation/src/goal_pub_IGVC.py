@@ -90,7 +90,7 @@ class Navigator():
         rest_time = rospy.get_param("~rest_time", 0)
 
         # DML read the filename from rosparam server
-        wp_file = rospy.get_param("~waypoint_file", "waypoint.csv")
+        wp_file = rospy.get_param("~waypoint_file", "handballfieldTuning.csv")
         #wp_file = "params/waypoints3.csv"
         rospy.loginfo("Waypoing file is: %s",wp_file)
         # TODO getGoals in odom frame, make a list in odom frame. 
@@ -149,7 +149,6 @@ class Navigator():
             if (i >= len(goals)):
                 rospy.signal_shutdown("NO MORE GOALS TO ACHIEVE")        
             firstRun=False
-            rospy.sleep(rest_time)
 
     def setInitialPose(self):            
         # Make sure we have the initial pose
@@ -190,6 +189,7 @@ class Navigator():
         #    rospy.loginfo("Waiting for initial position")
         # Load and parse waypoints from file.
         wps = self.loadWaypoints(filename)
+        restDur=0.0
         goalstemp=[]
         for waypointLat,waypointLong,search_duration,rest_duration,unused,identity in wps:
             goal_pose=Pose()
@@ -200,7 +200,7 @@ class Navigator():
             goal_pose.orientation.x,goal_pose.orientation.y,goal_pose.orientation.z,goal_pose.orientation.w=[0,0,0,1] #(wpNorthing - self.initial_utm[2])  
             self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
             rospy.loginfo("x,y for waypoint#: %s in odom frame: (%.4f, %.4f)"%(identity[-2:],goal_pose.position.x, goal_pose.position.y))
-            goalstemp.append((goal_pose, search_duration, rest_duration))
+            goalstemp.append((goal_pose, search_duration, restDur))
         return goalstemp
 
     def update_current_pose_map(self, current_pose_map):
