@@ -91,8 +91,8 @@ def initalizeController():
 
 # Updates the global variable for current_mode
 def getControlMode():
-    mode =0
     try:
+        mode = 0
         getdata()   #clear buffer
         ser.write('?PI 4\r') #pulse input of pulse-in 4 (switch - up)
         time.sleep(.005)
@@ -112,12 +112,13 @@ def getControlMode():
         else:
             #print ("ROBOTEQ DRIVER PWM for Pin 4 an 5 not LEN of 8 4:%d 5:%d\n",len(pi4),len(pi5))
             pass
+        return mode
     except (KeyboardInterrupt, SystemExit):
         raise
     except: # catch *all other* exceptions
         e = sys.exc_info()[0]
         rospy.loginfo( "<p>ROBOTEQ Error in getControlMode: %s</p>", e )
-    return mode
+    return 0
 
 def moveCallback(data):
     global cmd_vel
