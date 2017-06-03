@@ -78,7 +78,7 @@
     #### STEREO VISION ######################################################    
     <group if="$(arg use_camera)"> 
     <node pkg="tf" type="static_transform_publisher" name="base_link_to_zed"
-    args="0.44 0.0 1.18 0 0.52 0 base_link zed_current_frame 100" machine="igvc-stereo"/>       
+    args="0.44 0.0 1.18 0 0.80 0 base_link zed_current_frame 100" machine="igvc-stereo"/>       
     
         <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
 	        env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
@@ -94,10 +94,12 @@
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_cns" clear_params="true">
         <remap from="odometry/filtered" to="odometry/filtered_cns"/>
     </node>
-    
-    
+       
+    <!-- Lighting -->
+    <node pkg="rosserial_python" name="lighting" type="serial_node.py" args="/dev/arduino" output="screen"> 
+    </node>
 
-    <!-- Navigation -->
+ <!-- Navigation -->
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
 
     <!-- Start RVIZ -->
@@ -106,7 +108,7 @@
 
 <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
     <param name="waypoint_file" value="$(find iggy_navigation)/params/qualificationCourse.csv" /> 
-</node> 
+</node>  
 
 
 </launch>

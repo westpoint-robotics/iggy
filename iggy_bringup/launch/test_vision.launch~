@@ -4,10 +4,10 @@
 <param name="pub_images" type="bool" value="true"/>
 
 
-  <!-- TRANSFORMS  -->
+  <!-- TRANSFORMS 
 
     <node pkg="tf" type="static_transform_publisher" name="map_zed_current_frame" args="0 0 0 0 0 0 map zed_current_frame 100"/>
-
+-->
     
 
  

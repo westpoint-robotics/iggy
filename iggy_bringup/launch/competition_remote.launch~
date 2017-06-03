@@ -104,7 +104,7 @@
 
 
 <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
-    <param name="waypoint_file" value="$(find iggy_navigation)/params/qualificationCourse.csv" /> 
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/qualificationCourse Intermediate.csv" /> 
 </node>  
 
 

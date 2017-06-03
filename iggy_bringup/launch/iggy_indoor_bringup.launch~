@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- TRANSFORMS  -->
+  <include file="$(find iggy_bringup)/launch/config/tf.launch"/>
+
+  <!-- Robot Pose 
+  <arg name="x" default="-3.714"/>
+  <arg name="y" default="-21.26"/>  -->
+  <arg name="x" default="0"/>
+  <arg name="y" default="0"/>
+  <arg name="z" default="0"/>
+  <arg name="roll" default="0"/>
+  <arg name="pitch" default="0"/>
+  <arg name="yaw" default="0"/>
+
+  #### cns5000 IMU NODES###############################################
+  <node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000">
+    <remap from="imu/raw" to="imu/data"/>        
+  </node>
+
+ <!-- Combine Magnetic from XSens with cns5000 accelerometers to get global orientation -->
+  <node pkg="iggy_bringup" type="imu_filter.py" name="cs5000filter" output="screen" ns="cns5000">        
+    <remap from="imu/raw" to="imu/data"/>        
+    <remap from="magnetic" to="/xsens/magnetic"/> <!-- Use /xsens/ to overwite local namespace -->
+    <param name="imu_frame" value="cnsImu"/>
+    <param name="pub_tf" value="false"/>
+  </node>
+
+  #### Phidgets IMU NODES ######################################################
+  <node pkg="phidgets_imu" type="phidgets_imu_node" name="phidgets_imu" output="screen" ns="phidget">
+    <param name="period" value="40"/>
+  </node>
+
+ <!-- Combine Magnetic and accelerometers to get global orientation -->
+  <node pkg="iggy_bringup" type="imu_filter.py" name="phidgfilter" output="screen" ns="phidget">        
+    <remap from="imu/raw" to="imu/data_raw"/>        
+    <remap from="magnetic" to="imu/mag"/>
+    <param name="imu_frame" value="phidgImu"/>
+    <param name="pub_tf" value="false"/>
+  </node>
+
+  #### XSENS IMU NODES ###############################################
+	<node pkg="xsens_driver" type="mtnode_new.py" name="xsens_driver" output="screen" ns="xsens" >
+		<param name="frame_id" value="imu_frame"/>
+		<param name="frame_local" value="ENU"/>
+		<param name="frame_local_imu" value="ENU"/>
+    	<param name="device" value="/dev/mti700"/>
+    	<param name="baudrate" value="115200"/>
+	</node>
+
+  <node pkg="iggy_bringup" type="imu_filter.py" name="xsensfilter" output="screen" ns="xsens">        
+    <remap from="imu/raw" to="imu/data"/>        
+    <remap from="magnetic" to="magnetic"/>
+    <param name="imu_frame" value="xsensImu"/>
+    <param name="pub_tf" value="false"/>
+  </node>
+
+  #### LASER RANGE FINDER NODES #######################################
+    <include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" /> 
+
+<!-- FOR INDOOR NAVIGATION USE-->
+    <include file="$(find laser_scan_matcher)/demo/iggy_laser_scan_matcher.launch"/> 
+
+  #### OTHER STUFF #######################################
+  <!-- Wheel Motor Controller  -->
+  <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
+
+  <!-- Robot Control  -->
+  <include file="$(find iggy_control)/launch/indoor_control.launch"/>
+  <include file="$(find iggy_control)/launch/teleopIRL.launch">
+    <arg name="joystick" value="true"/>
+  </include>
+
+  <!-- Navigation -->
+  <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
+
+  <!-- Start RVIZ -->
+  <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>
+
+<node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+	<remap from="/odometry/gps" to="/cns5000/odometry/gps"/>   <!--Working 
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/waypoints.csv" />
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/ThayerRoof2.csv" />
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/waypoints3.csv" />
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/ThayerRoof.csv" />  -->
+
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/handballfieldTuning.csv" /> 
+
+
+</node>  
+</launch>

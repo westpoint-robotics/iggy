@@ -1,13 +1,20 @@
 local_costmap:
-   global_frame: map
-   robot_base_frame: base_link
-   update_frequency: 10.0
-   publish_frequency: 2.0
-   width: 10.0
-   height: 10.0
-   resolution: 0.1
-   static_map: false
-   rolling_window: true
+    global_frame: map
+    robot_base_frame: base_link
+    update_frequency: 10.0
+    publish_frequency: 2.0
+    width: 10.0
+    height: 10.0
+    resolution: 0.1
+    static_map: false
+    rolling_window: true
+    
+    obstacles_layer:
+        observation_sources: white_lines laser_scan_sensor
+        laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true, cost_scaling_factor: 5.0, raytrace_range: 20.0, obstacle_range: 40.0, min_obstacle_height: 0.70}
+        white_lines: {sensor_frame: base_link, data_type: PointCloud2, topic: /point_cloud/white_cloud, marking: true, clearing: true, cost_scaling_factor: 5.0, raytrace_range: 20.0, obstacle_range: 20.0, min_obstacle_height: -4.0, max_obstacle_height: 0.2}
+
+
 
 
 

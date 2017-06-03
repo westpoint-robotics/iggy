@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <launch>
-    <param name="pub_images" type="bool" value="true"/>
+
     <arg name="use_laser" default="true" />
     <arg name="use_phidgets" default="false" />
     <arg name="use_xsens" default="false" />
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
-     <arg name="use_camera" default="true" />
-    
+
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
     <arg name="y" default="-21.26"/>  -->
@@ -75,36 +74,23 @@
    
     <!-- Wheel Motor Controller  -->
     <include file="$(find usma_roboteq)/launch/roboteq_driver_irl.launch"/>   
-    #### STEREO VISION ######################################################    
-    <group if="$(arg use_camera)"> 
-    <node pkg="tf" type="static_transform_publisher" name="base_link_to_zed"
-    args="0.44 0.0 1.18 0 0.80 0 base_link zed_current_frame 100" machine="igvc-stereo"/>       
-    
-        <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
-	        env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
-	        default="false" />
-	   <!--  <node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/> 
-        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" /> 
-        <include machine= "igvc-stereo" file="$(find igvc_stereo)/launch/igvc_stereo.launch" />-->
-    <node pkg="igvc_stereo" type="whitevision2" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/> 
-   </group>
-    #### LOCALIZATION  ###############################################
+
+   #### LOCALIZATION  ###############################################
    <rosparam command="load" file="$(find iggy_control)/config/test_single_ekf_iggy.yaml" />
 
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_cns" clear_params="true">
         <remap from="odometry/filtered" to="odometry/filtered_cns"/>
     </node>
     
-    <!-- Lighting -->
-    <node pkg="rosserial_python" name="lighting" type="serial_node.py" args="/dev/arduino" output="screen"> 
-    </node>
-
     <!-- Navigation -->
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
 
+    <!-- Start RVIZ -->
+    <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>
+
 
 <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
-    <param name="waypoint_file" value="$(find iggy_navigation)/params/qualificationCourse.csv" /> 
+    <param name="waypoint_file" value="$(find iggy_navigation)/params/handballfieldTuning.csv" /> 
 </node>  
 
 

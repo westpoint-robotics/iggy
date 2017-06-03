@@ -189,7 +189,7 @@ class Navigator():
         #    rospy.loginfo("Waiting for initial position")
         # Load and parse waypoints from file.
         wps = self.loadWaypoints(filename)
-        restDur=0
+        restDur=0.0
         goalstemp=[]
         for waypointLat,waypointLong,search_duration,rest_duration,unused,identity in wps:
             goal_pose=Pose()

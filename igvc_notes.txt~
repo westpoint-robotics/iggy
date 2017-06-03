@@ -1,0 +1,13 @@
+export ROS_MASTER_URI=http://192.168.2.200:11311
+
+rosrun dynamic_reconfigure dynparam set /node parameter_name value
+rosrun dynamic_reconfigure dynparam list
+
+rosrun dynamic_reconfigure dynparam set /zed_ros_wrapper thresh_val_param 180
+
+rosservice call /move_base/clear_costmaps 
+
+user1@igvc2:~/catkin_ws/src/iggy$ rosrun tf static_transform_publisher 0.44 0.0 1.18 0 0.52 0 base_link zed_current_frame 100
+
+
+    args="0.44 0.0 1.18 0 0.52 0 base_link zed_current_frame 100" machine="igvc-stereo"/>       
