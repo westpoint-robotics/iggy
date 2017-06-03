@@ -7,6 +7,9 @@
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
      <arg name="use_camera" default="true" />
+    <arg name="do_south" default="false" />
+    <arg name="do_north" default="true" />
+    
     
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
@@ -102,10 +105,10 @@
     <!-- Navigation -->
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
 
-
-<node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
-    <param name="waypoint_file" value="$(find iggy_navigation)/params/qualificationCourse Intermediate.csv" /> 
-</node>  
-
+<group if="$(arg do_south)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseSouth.csv" /> 
+    </node>  
+</group>
 
 </launch>

@@ -51,6 +51,7 @@ class Navigator():
 
         # Subscribe to the move_base action server
         self.goal = MoveBaseGoal()
+        self.goal.
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)        
         rospy.loginfo("Waiting for move_base action server...")        
         # Wait upto 60 seconds for the action server to become available
