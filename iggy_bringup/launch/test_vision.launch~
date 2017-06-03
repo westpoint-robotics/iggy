@@ -4,21 +4,23 @@
 <param name="pub_images" type="bool" value="true"/>
 
 
-    <!-- TRANSFORMS  -->
-    <include file="$(find iggy_bringup)/launch/config/tf.launch"/>
+  <!-- TRANSFORMS  -->
 
-    <node pkg="tf" type="static_transform_publisher" name="odom_to_baselink"
-            args="0 0 0 0 0 0 odom base_link 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="map_zed_current_frame" args="0 0 0 0 0 0 map zed_current_frame 100"/>
+
+    
+
+ 
 
       
     #### STEREO VISION ######################################################
         <machine name="igvc-stereo" address="igvc-stereo" user="ubuntu" password="ubuntu"
 	        env-loader="/home/ubuntu/catkin_ws/devel/env.sh"
 	        default="false" />
-	    <node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>
-        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
-
-     <!-- Start RVIZ -->
-    <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_vision.rviz"/>
+	   <!--  <node pkg="igvc_stereo" type="zed-ros" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/> 
+        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" /> 
+        <include machine= "igvc-stereo" file="$(find igvc_stereo)/launch/igvc_stereo.launch" />-->
+    <node pkg="igvc_stereo" type="whitevision2" output="screen" name="zed_ros_wrapper" machine="igvc-stereo"/>        
+       <!-- TRANSFORMS  -->
 
 </launch>
