@@ -10,11 +10,9 @@ rosservice call /move_base/clear_costmaps
 rosparam set pub_images true 
 
 ssh user1@igvc2
-roscore &
 
 ssh ubuntu@igvc-stereo
 
-
-user1@igvc2:~$ roslaunch iggy_bringup competition_remote.launch 
+roslaunch iggy_bringup competition_remote.launch 
 
 
