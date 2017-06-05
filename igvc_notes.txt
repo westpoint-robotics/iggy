@@ -1,18 +1,62 @@
-export ROS_MASTER_URI=http://192.168.2.200:11311
-
-rosrun dynamic_reconfigure dynparam set /node parameter_name value
-rosrun dynamic_reconfigure dynparam list
-
-rosrun dynamic_reconfigure dynparam set /zed_ros_wrapper thresh_val_param 180
-
+**clearing the cost map**
 rosservice call /move_base/clear_costmaps 
-
-rosparam set pub_images true 
-
-ssh user1@igvc2
 
 ssh ubuntu@igvc-stereo
 
+**Terminal**
+
+ssh user1@igvc2
+igvcpass
+
 roslaunch iggy_bringup competition_remote.launch 
 
+<<<<<<< HEAD
+ssh user1@igvc2
+=======
+**Terminal to bring up RVIZ**
+>>>>>>> 32bdf0b3d1166ace02dba9de87b8b59f7fbecb46
+
+export ROS_MASTER_URI=http://192.168.2.200:11311
+rviz -d ~/catkin_ws/src/iggy/iggy_bringup/launch/config/iggy_bringup.rviz
+
+**Terminal to calibrate vision for detecting white lines**
+
+export ROS_MASTER_URI=http://192.168.2.200:11311
+
+rosrun dynamic_reconfigure dynparam set /zed_ros_wrapper thresh_val_param 180
+
+<<<<<<< HEAD
+roslaunch iggy_bringup competition_remote.launch 
+=======
+changing final value, opens at 230, *bright go up, dark go down
+255 is the max, bright days are typically around 245
+
+helpful to use
+rosrun dynamic_reconfigure dynparam list
+>>>>>>> 32bdf0b3d1166ace02dba9de87b8b59f7fbecb46
+
+to check the value
+rosrun dynamic_reconfigure dynparam get /zed_ros_wrapper
+looking for 'thresh_val_param':
+
+**If this happens...You lose connection to the machine, reconnect, but lose the terminal and cannot quit
+roscore cannot run as another roscore/master is already running. 
+Please kill other roscore/master processes before relaunching.
+The ROS_MASTER_URI is http://192.168.2.200:11311/
+The traceback for the exception was written to the log file
+
+user1@igvc2:~$ ps aux | grep ros
+user1    21927  0.8  0.1 293692 22540 pts/1    Sl+  20:10   0:00 /usr/bin/python /opt/ros/indigo/bin/roscore
+user1    21939  0.6  0.1 430128 19408 ?        Ssl  20:10   0:00 /usr/bin/python /opt/ros/indigo/bin/rosmaster --core -p 11311 -w 3 __log:=/home/user1/.ros/log/3c10ce9e-48ba-11e7-bd45-0050b60a2f31/master.log
+user1    21952  0.1  0.0 259568  8220 ?        Ssl  20:10   0:00 /opt/ros/indigo/lib/rosout/rosout __name:=rosout __log:=/home/user1/.ros/log/3c10ce9e-48ba-11e7-bd45-0050b60a2f31/rosout-1.log
+user1    21982  0.0  0.0  15956  2196 pts/21   S+   20:11   0:00 grep --color=auto ros
+
+user1@igvc2:~$ ps -e | grep ros
+21927 pts/1    00:00:00 roscore
+21939 ?        00:00:00 rosmaster
+21952 ?        00:00:00 rosout
+
+user1@igvc2:~$ killall roscore
+user1@igvc2:~$ ps -e | grep ros
+user1@igvc2:~$ 
 

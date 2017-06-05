@@ -9,9 +9,11 @@
     <arg name="use_camera" default="true" />
     <arg name="do_south" default="false" />
     <arg name="do_north" default="false" />
-    <arg name="do_practice" default="false" />
+    <arg name="do_practice" default="true" />
     <arg name ="do_south_revised" default = "false" />
-    <arg name ="do_north_revised" default = "true" />
+    <arg name ="do_north_revised" default = "false" />
+    <arg name ="do_south_revised2" default = "false" />
+
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
     <arg name="y" default="-21.26"/>  -->
@@ -102,6 +104,9 @@
     <!-- Lighting -->
     <node pkg="rosserial_python" name="lighting" type="serial_node.py" args="/dev/arduino" output="screen"> 
     </node>
+    <!-- Face -->
+    <node pkg="iggy_navigation" name="iggyface" type="iggyface.py" output="screen"> 
+    </node>
 
  <!-- Navigation -->
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
@@ -133,6 +138,12 @@
 <group if="$(arg do_north_revised)">        
     <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
         <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseNorthRevised.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_south_revised2)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseSouthRev2.csv" /> 
     </node>  
 </group>
 
