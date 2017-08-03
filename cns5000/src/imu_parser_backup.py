@@ -233,8 +233,7 @@ if __name__ == '__main__':
         Vx_old=0.0
         Vy_old=0.0
         Vz_old=0.0
-        current_time = 0.0
-		  previous_time = 0.0
+        Time_step=0.1
         while not rospy.is_shutdown():  
             ### start of loop back test ###
             #testdata="\xfe\x81\xff\x55\x35\x80\x66\xd8\xb5\xe1\xc8\xbe\x35\x91\xdd\x76\x38\xe4\x92\x24\x39\xfc\x05\xd7\x3d\xc8\xfb\x66\x00\x00\x00\x00\x77\x4c\x0e\x34"

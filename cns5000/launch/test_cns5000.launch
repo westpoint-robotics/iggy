@@ -10,7 +10,7 @@
 	<remap from="gps/fix" to="/cns5000/fix"/>   
 </node>  
 
-<node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen"/>
+<node name="novatel_CNS5000_imu" pkg="cns5000" type="imu_parser.py" output="screen" ns="cns5000"/>
 
 <!--utm odom converter node for current location
 <node name="gps_conv" pkg="gps_common" type="utm_odometry_node">
