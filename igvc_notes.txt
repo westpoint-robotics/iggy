@@ -10,7 +10,11 @@ igvcpass
 
 roslaunch iggy_bringup competition_remote.launch 
 
+<<<<<<< HEAD
+ssh user1@igvc2
+=======
 **Terminal to bring up RVIZ**
+>>>>>>> 32bdf0b3d1166ace02dba9de87b8b59f7fbecb46
 
 export ROS_MASTER_URI=http://192.168.2.200:11311
 rviz -d ~/catkin_ws/src/iggy/iggy_bringup/launch/config/iggy_bringup.rviz
@@ -21,11 +25,15 @@ export ROS_MASTER_URI=http://192.168.2.200:11311
 
 rosrun dynamic_reconfigure dynparam set /zed_ros_wrapper thresh_val_param 180
 
+<<<<<<< HEAD
+roslaunch iggy_bringup competition_remote.launch 
+=======
 changing final value, opens at 230, *bright go up, dark go down
 255 is the max, bright days are typically around 245
 
 helpful to use
 rosrun dynamic_reconfigure dynparam list
+>>>>>>> 32bdf0b3d1166ace02dba9de87b8b59f7fbecb46
 
 to check the value
 rosrun dynamic_reconfigure dynparam get /zed_ros_wrapper

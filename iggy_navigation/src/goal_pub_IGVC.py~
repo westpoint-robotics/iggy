@@ -51,7 +51,6 @@ class Navigator():
 
         # Subscribe to the move_base action server
         self.goal = MoveBaseGoal()
-        self.goal.
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)        
         rospy.loginfo("Waiting for move_base action server...")        
         # Wait upto 60 seconds for the action server to become available
@@ -192,12 +191,19 @@ class Navigator():
         wps = self.loadWaypoints(filename)
         restDur=0.0
         goalstemp=[]
+        xOffSet = rospy.set_param("xOffSet", 0.0) #lattitude aka east-west
+        yOffSet = rospy.set_param("yOffSet", 0.0) #longitude aka north - south
+        xOffSet = rospy.get_param("xOffSet")
+        yOffSet = rospy.get_param("yOffSet")
         for waypointLat,waypointLong,search_duration,rest_duration,unused,identity in wps:
             goal_pose=Pose()
             (wpZone,wpEasting,wpNorthing)=LLtoUTM(23, waypointLat,waypointLong)
             goal_pose.position=deepcopy(self.initial_pose.pose.pose.position) 
             goal_pose.position.x=(wpEasting - self.initial_utm[1]) # REP103 says x is east and y is north
             goal_pose.position.y=(wpNorthing - self.initial_utm[2])  
+            if(identity[0]!="a"):
+                goal_pose.position.x=goal_pose.position.x -xOffSet # REP103 says x is east and y is north
+                goal_pose.position.y= goal_pose.position.y - yOffSet
             goal_pose.orientation.x,goal_pose.orientation.y,goal_pose.orientation.z,goal_pose.orientation.w=[0,0,0,1] #(wpNorthing - self.initial_utm[2])  
             self.vis_pub.publish( make_waypoint_viz(goal_pose,identity[-2:],int(identity[-2:]) ))
             rospy.loginfo("x,y for waypoint#: %s in odom frame: (%.4f, %.4f)"%(identity[-2:],goal_pose.position.x, goal_pose.position.y))

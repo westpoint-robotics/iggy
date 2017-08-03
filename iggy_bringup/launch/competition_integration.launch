@@ -8,7 +8,10 @@
     <arg name="use_joystick" default="false" />
     <arg name="use_camera" default="true" />
     <arg name="do_south" default="false" />
-    <arg name="do_north" default="true" />
+    <arg name="do_north" default="false" />
+    <arg name="do_practice" default="false" />
+    <arg name ="do_south_revised" default = "false" />
+    <arg name ="do_north_revised" default = "true" />
     
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
@@ -104,6 +107,9 @@
  <!-- Navigation -->
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
 
+    <!-- Face -->
+    <node pkg="iggy_navigation" name="iggyface" type="iggyface.py" output="screen"> 
+    </node>
     <!-- Start RVIZ -->
   <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find iggy_gazebo)/launch/iggy_gazebo.rviz"/>
 
@@ -121,5 +127,21 @@
     </node>  
 </group>
 
+<group if="$(arg do_practice)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/practiceCourse.csv" /> 
+    </node>  
+</group>
 
+<group if="$(arg do_south_revised)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseSouthRevised.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_north_revised)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseNorthRevised.csv" /> 
+    </node>  
+</group>
 </launch>

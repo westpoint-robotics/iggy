@@ -7,8 +7,8 @@ global_costmap:
     width: 75
     height: 75
     resolution: 0.10
-    origin_x: -23
-    origin_y: -24
+    origin_x: -5
+    origin_y: -50
     static_map: true
     rolling_window: false
 

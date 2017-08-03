@@ -6,11 +6,14 @@
     <arg name="use_xsens" default="false" />
     <arg name="use_cns5000" default="true" />
     <arg name="use_joystick" default="false" />
-     <arg name="use_camera" default="true" />
+    <arg name="use_camera" default="true" />
     <arg name="do_south" default="false" />
-    <arg name="do_north" default="true" />
-    
-    
+    <arg name="do_north" default="false" />
+    <arg name="do_practice" default="true" />
+    <arg name ="do_south_revised" default = "false" />
+    <arg name ="do_north_revised" default = "false" />
+    <arg name ="do_south_revised2" default = "false" />
+
     <!-- Robot Pose 
     <arg name="x" default="-3.714"/>
     <arg name="y" default="-21.26"/>  -->
@@ -97,17 +100,50 @@
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_cns" clear_params="true">
         <remap from="odometry/filtered" to="odometry/filtered_cns"/>
     </node>
-    
+       
     <!-- Lighting -->
     <node pkg="rosserial_python" name="lighting" type="serial_node.py" args="/dev/arduino" output="screen"> 
     </node>
+    <!-- Face -->
+    <node pkg="iggy_navigation" name="iggyface" type="iggyface.py" output="screen"> 
+    </node>
 
-    <!-- Navigation -->
+ <!-- Navigation -->
     <include file="$(find iggy_navigation)/launch/include/move_base.launch"/>
 
 <group if="$(arg do_south)">        
     <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
         <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseSouth.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_north)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseNorth.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_practice)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/practiceCourse.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_south_revised)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseSouthRevised.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_north_revised)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseNorthRevised.csv" /> 
+    </node>  
+</group>
+
+<group if="$(arg do_south_revised2)">        
+    <node name="waypoint_provider" pkg="iggy_navigation" type="goal_pub_IGVC.py" output="screen">
+        <param name="waypoint_file" value="$(find iggy_navigation)/params/obstacleCourseSouthRev2.csv" /> 
     </node>  
 </group>
 
